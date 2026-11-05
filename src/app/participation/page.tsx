@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   HelpCircle,
 } from 'lucide-react';
+import { LanguageNote } from '@/components/retreat/LanguageNote';
 
 export const metadata: Metadata = {
   title: 'Participation & Accommodation Inclusions | Beyond the Mind 2027',
@@ -74,7 +75,7 @@ export default function ParticipationPage() {
 
       <main className="pt-24 sm:pt-28">
         {/* Header Hero */}
-        <section className="relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
+        <section className="page-header relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
               <Sparkles className="w-3.5 h-3.5 text-gold-400" />
@@ -106,6 +107,10 @@ export default function ParticipationPage() {
         </div>
 
         {/* Accommodation & Attendance Tiers */}
+        <div className="pb-10">
+          <LanguageNote />
+        </div>
+
         <section className="py-8 pb-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {participationTiers.map((tier, idx) => (
