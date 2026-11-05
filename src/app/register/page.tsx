@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { RegistrationForm } from '@/components/forms/RegistrationForm';
 import { getSiteSettings } from '@/lib/storage/store';
 import { Sparkles, ShieldCheck, Lock, CheckCircle2 } from 'lucide-react';
+import { LanguageNote } from '@/components/retreat/LanguageNote';
 
 export const metadata: Metadata = {
   title: 'Enquiry & Registration | Beyond the Mind 2027',
@@ -26,7 +27,7 @@ export default async function RegisterPage({
 
       <main className="pt-24 sm:pt-28 pb-24">
         {/* Header Hero */}
-        <section className="relative py-16 sm:py-24 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
+        <section className="page-header relative py-16 sm:py-24 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
               <Sparkles className="w-3.5 h-3.5 text-gold-400" />
@@ -45,6 +46,10 @@ export default async function RegisterPage({
         </section>
 
         {/* Registration Form Component */}
+        <div className="pb-10">
+          <LanguageNote />
+        </div>
+
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
           <RegistrationForm
             allowPaymentProof={settings.payment_proof_upload_enabled}

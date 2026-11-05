@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
 
       <main className="pt-24 sm:pt-28 pb-24">
         {/* Header Hero */}
-        <section className="relative py-16 sm:py-20 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
+        <section className="page-header relative py-16 sm:py-20 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
               <ShieldCheck className="w-3.5 h-3.5 text-gold-400" />

@@ -20,7 +20,7 @@ export default function AboutPage() {
 
       <main className="pt-24 sm:pt-28">
         {/* Editorial Hero Header */}
-        <section className="relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
+        <section className="page-header relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
               <Sparkles className="w-3.5 h-3.5 text-gold-400" />
@@ -39,18 +39,17 @@ export default function AboutPage() {
         </section>
 
         {/* Philosophy & Meaning — Warm Ivory Editorial Magazine Section */}
-        <section className="py-24 bg-[#FAF8F5] text-[#191D19]">
+        <section className="py-24 bg-[#05201a] text-ivory-100 mandala-section">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <SectionHeading
-              light
               eyebrow="The Essence"
               title="The Meaning Behind &lsquo;Beyond the Mind&rsquo;"
               subtitle="Transcending cognitive identification to rest in pure unconditioned presence."
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-5 text-sm sm:text-base text-stone-700 leading-relaxed font-light">
-                <p className="font-serif text-xl sm:text-2xl text-[#031713] leading-snug">
+              <div className="space-y-5 text-sm sm:text-base text-ivory-200/80 leading-relaxed font-light">
+                <p className="font-serif text-xl sm:text-2xl text-ivory-50 leading-snug">
                   The mind is an extraordinary instrument for navigating the external world, yet it was never
                   designed to be our ultimate master.
                 </p>
@@ -76,27 +75,27 @@ export default function AboutPage() {
             </div>
 
             {/* Core Pillars */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-stone-200">
-              <div className="p-6 rounded-2xl bg-white border border-gold-600/20 shadow-sm space-y-3">
-                <Compass className="w-6 h-6 text-gold-700" />
-                <h4 className="font-serif text-lg text-[#031713] font-semibold">Direct Experience</h4>
-                <p className="text-xs text-stone-600 leading-relaxed">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-gold-500/20">
+              <div className="p-6 rounded-2xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-3">
+                <Compass className="w-6 h-6 text-gold-400" />
+                <h4 className="font-serif text-lg text-ivory-50 font-semibold">Direct Experience</h4>
+                <p className="text-xs text-ivory-200/70 leading-relaxed">
                   Focusing on tangible energetic and somatic shifts rather than philosophical theorizing.
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white border border-gold-600/20 shadow-sm space-y-3">
-                <Heart className="w-6 h-6 text-gold-700" />
-                <h4 className="font-serif text-lg text-[#031713] font-semibold">Compassionate Space</h4>
-                <p className="text-xs text-stone-600 leading-relaxed">
+              <div className="p-6 rounded-2xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-3">
+                <Heart className="w-6 h-6 text-gold-400" />
+                <h4 className="font-serif text-lg text-ivory-50 font-semibold">Compassionate Space</h4>
+                <p className="text-xs text-ivory-200/70 leading-relaxed">
                   A tender, judgment-free field where inner child wounds and grief can safely emerge and resolve.
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white border border-gold-600/20 shadow-sm space-y-3">
-                <Sun className="w-6 h-6 text-gold-700" />
-                <h4 className="font-serif text-lg text-[#031713] font-semibold">Grounded Awakening</h4>
-                <p className="text-xs text-stone-600 leading-relaxed">
+              <div className="p-6 rounded-2xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-3">
+                <Sun className="w-6 h-6 text-gold-400" />
+                <h4 className="font-serif text-lg text-ivory-50 font-semibold">Grounded Awakening</h4>
+                <p className="text-xs text-ivory-200/70 leading-relaxed">
                   Harmonizing the subtle spiritual channels with practical daily living in modern society.
                 </p>
               </div>
