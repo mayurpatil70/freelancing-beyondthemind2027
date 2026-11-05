@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+**/node_modules/
+/.pnp
+.pnp.js
+
+# Next.js build output
+/.next/
+**/.next/
+/out/
+
+# Production build artifacts
+build/
+dist/
+
+# Environment variables
+.env*.local
+.env
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Legacy / Sub-repository
+yoga-and-meditation/
+
+# Private uploads
+/public/uploads/*
+!/public/uploads/.gitkeep

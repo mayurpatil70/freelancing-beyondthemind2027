@@ -1,0 +1,465 @@
+{
+  "settings": {
+    "hero_title": "BEYOND THE MIND 2027",
+    "hero_subtitle": "THE DIVINE RETREAT",
+    "hero_tagline": "A journey into the Infinite within.",
+    "retreat_dates": "October 6–9, 2027",
+    "retreat_days": "Wednesday – Saturday (4 Days)",
+    "retreat_location": "Rishikesh",
+    "retreat_state": "Uttarakhand, India",
+    "video_url": "",
+    "poster_url": "/images/posters/btm2027-invitation.jpg",
+    "whatsapp_number": "+91 8075572018",
+    "whatsapp_display": "+91 8075572018",
+    "email": "moolabrahman@gmail.com",
+    "instagram_url": "https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm",
+    "facebook_url": "https://www.facebook.com/profile.php?id=61595374757132",
+    "daily_meditation_time": "7:30 PM IST",
+    "daily_meditation_days": "Monday to Friday",
+    "daily_meditation_platform": "Zoom (Live Guided Meditation)",
+    "payment_proof_upload_enabled": true,
+    "announcement_banner": {
+      "enabled": true,
+      "badge": "Sanctuary Open",
+      "text": "Beyond the Mind 2027: Limited single occupancy accommodations remaining."
+    }
+  },
+  "experiences": [
+    {
+      "id": "exp-1",
+      "slug": "deep-relaxation",
+      "title": "Deep Relaxation",
+      "subtitle": "Shanti & Prana Rejuvenation",
+      "short_desc": "Release deep somatic tension, quiet the mental chatter, and enter an effortless state of nervous system restoration.",
+      "full_desc": "Through gentle conscious breathing, guided grounding, and silence by the Himalayan riverbanks, allow your autonomic nervous system to shift from chronic vigilance into restorative stillness. Reclaim peace in body and mind.",
+      "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
+      "icon_name": "Feather",
+      "order": 1,
+      "spiritual_dimension": "Physical & Mental Stillness",
+      "highlights": [
+        "Release unconscious muscular and cellular holding patterns",
+        "Soothe the nervous system with Himalayan stillness",
+        "Cultivate the baseline for higher energetic receptivity"
+      ]
+    },
+    {
+      "id": "exp-2",
+      "slug": "kundalini-awakening",
+      "title": "Kundalini Awakening",
+      "subtitle": "Prana Shakti Elevation",
+      "short_desc": "A carefully guided initiation to stir dormant spiritual energy, balancing the subtle channels for safe inner ascent.",
+      "full_desc": "Guided with reverent precision by Pradeep Sir, experience the awakening of Prana Shakti. Learn subtle energetic alignment, channel purification (Nadi Shuddhi), and the safe integration of elevated consciousness.",
+      "image": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
+      "icon_name": "Flame",
+      "order": 2,
+      "spiritual_dimension": "Subtle Energy & Spiritual Ignition",
+      "highlights": [
+        "Sacred activation of the spinal energetic corridor",
+        "Balance of Ida, Pingala, and Sushumna Nadis",
+        "Safe, structured integration without overwhelm"
+      ]
+    },
+    {
+      "id": "exp-3",
+      "slug": "activate-your-energy-field",
+      "title": "Activate Your Energy Field",
+      "subtitle": "Aura Purification & Expansion",
+      "short_desc": "Cleanse subtle bio-fields, activate the Maha Theerthas and sacred energy vortexes, expanding your vibrational presence.",
+      "full_desc": "Experience experiential activation of the Maha Theerthas and three Shiva Lingams. Cleanse karmic stagnation and strengthen your auric boundaries so you embody radiant vitality and unwavering inner composure.",
+      "image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80",
+      "icon_name": "Sun",
+      "order": 3,
+      "spiritual_dimension": "Bio-Field & Pranic Expansion",
+      "highlights": [
+        "Activation of the subtle sacred Theerthas and Shiva Lingams",
+        "Purification of emotional and environmental density",
+        "Harmonization of electromagnetic and spiritual bio-fields"
+      ]
+    },
+    {
+      "id": "exp-4",
+      "slug": "soul-liberation",
+      "title": "Soul Liberation",
+      "subtitle": "Moksha Bhavana & Shiva Mandala",
+      "short_desc": "Dissolve long-standing karmic burdens, untangle psychic knots, and experience union in the sacred Shiva Mandala.",
+      "full_desc": "A profound ceremonial journey of liberation. Through the sacred Shiva Mandala merging process and entity purification insights, dissolve energetic entanglements and rest in pristine, unconditioned awareness.",
+      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+      "icon_name": "Sparkles",
+      "order": 4,
+      "spiritual_dimension": "Karmic Untangling & Freedom",
+      "highlights": [
+        "Ceremonial merging within the Shiva Mandala",
+        "Insights into spirit guides and subtle dimensional discernment",
+        "Profound lightness and liberation from past psychic weight"
+      ]
+    },
+    {
+      "id": "exp-5",
+      "slug": "inner-child-healing",
+      "title": "Inner Child Healing",
+      "subtitle": "Compassionate Integration",
+      "short_desc": "Meet and embrace the wounded or neglected facets of your younger self with deep unconditional presence.",
+      "full_desc": "Journey gently back into the sanctuary of your personal timeline. In this compassionate space, offer the safety, validation, and divine love your inner child longed for, mending the fractured roots of self-trust.",
+      "image": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=80",
+      "icon_name": "Heart",
+      "order": 5,
+      "spiritual_dimension": "Emotional Harmony & Self-Reconciliation",
+      "highlights": [
+        "Heal unconscious developmental fears and emotional wounds",
+        "Re-establish innate warmth, playfulness, and innocence",
+        "Anchor a permanent sanctuary of self-compassion within"
+      ]
+    },
+    {
+      "id": "exp-6",
+      "slug": "soul-retrieval",
+      "title": "Soul Retrieval",
+      "subtitle": "Wholeness & Vitality Integration",
+      "short_desc": "Reclaim lost essence fragments separated by past shock, heartbreak, or grief, returning to complete inner wholeness.",
+      "full_desc": "When trauma or intense life transitions occur, vital aspects of our energetic essence can become dissociated. Through structured shamanic and spiritual retrieval guided by Pradeep Sir, gather and integrate these golden soul fragments back into your heart center.",
+      "image": "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?auto=format&fit=crop&w=1200&q=80",
+      "icon_name": "Compass",
+      "order": 6,
+      "spiritual_dimension": "Essence Reclamation & Wholeness",
+      "highlights": [
+        "Identify moments of energetic fragmentation",
+        "Reclaim vital life-force and creative sovereignty",
+        "Seal and integrate returned soul essence in grounded awareness"
+      ]
+    }
+  ],
+  "programme": [
+    {
+      "day_number": 1,
+      "date": "2027-10-06",
+      "formatted_date": "Wednesday, October 6, 2027",
+      "day_name": "Day 1",
+      "theme": "Arrival, Sacred Dedication & Pooja Veppu",
+      "subtitle": "Crossing the Threshold into Himalayan Stillness",
+      "summary": "Welcome to Rishikesh. The journey begins with sacred arrival, orientation, and self-dedication through traditional Pooja Veppu to anchor pure intention for the days ahead.",
+      "sessions": [
+        {
+          "phase": "Afternoon",
+          "title": "Arrival & Sanctuary Check-In",
+          "description": "Welcome drink, settling into peaceful rooms, and introductory briefing with the retreat concierge."
+        },
+        {
+          "phase": "Early Evening",
+          "title": "Sacred Pooja Veppu Dedication",
+          "description": "Individual dedication ceremony to awaken personal intention and consecrate the retreat space."
+        },
+        {
+          "phase": "Night",
+          "title": "Opening Circle & Ganges Reflection",
+          "description": "Initial contemplation by the riverside, grounding the nervous system in mountain silence."
+        }
+      ]
+    },
+    {
+      "day_number": 2,
+      "date": "2027-10-07",
+      "formatted_date": "Thursday, October 7, 2027",
+      "day_name": "Day 2",
+      "theme": "Maha Theerthas & Pranic Activation",
+      "subtitle": "Awakening the Subtle Energetic Corridors",
+      "summary": "Diving into core energetic awakening. Experiential activation of the sacred Maha Theerthas and three Shiva Lingams, followed by guided Kundalini alignment.",
+      "sessions": [
+        {
+          "phase": "Morning",
+          "title": "Sunrise Ganga Prana & Deep Relaxation",
+          "description": "Breathing by the morning mist to quieten cognitive agitation and attune body rhythms."
+        },
+        {
+          "phase": "Midday",
+          "title": "Maha Theerthas & Three Shiva Lingams Activation",
+          "description": "Direct energetic work guided by Pradeep Sir, opening subtle vibrational sensations across the spinal column."
+        },
+        {
+          "phase": "Evening",
+          "title": "Subtle Energy Alignment & Group Satsang",
+          "description": "Personal guidance on processing vibrational shifts and harmonizing the aura."
+        }
+      ]
+    },
+    {
+      "day_number": 3,
+      "date": "2027-10-08",
+      "formatted_date": "Friday, October 8, 2027",
+      "day_name": "Day 3",
+      "theme": "Inner Child Reconciliation & Soul Retrieval",
+      "subtitle": "Healing the Emotional Roots & Reclaiming Wholeness",
+      "summary": "A gentle yet profound day devoted to emotional healing, timeline regression, inner child compassion, and retrieving fragmented vitality.",
+      "sessions": [
+        {
+          "phase": "Morning",
+          "title": "Inner Child Dialogue & Compassion Practice",
+          "description": "Unraveling historic protective patterns with unconditional loving awareness."
+        },
+        {
+          "phase": "Afternoon",
+          "title": "Soul Retrieval Ceremony",
+          "description": "Gathering dissociated life force and restoring unbroken sovereignty in the heart space."
+        },
+        {
+          "phase": "Night",
+          "title": "Himalayan Fire & Sacred Chanting",
+          "description": "Celebration of wholeness under the Himalayan night sky."
+        }
+      ]
+    },
+    {
+      "day_number": 4,
+      "date": "2027-10-09",
+      "formatted_date": "Saturday, October 9, 2027",
+      "day_name": "Day 4",
+      "theme": "Soul Liberation, Shiva Mandala & Departure",
+      "subtitle": "The Final Merging & Anchoring the Infinite",
+      "summary": "The pinnacle culmination. Experience the expansive Shiva Mandala merging process, soul liberation, and closing blessings to carry the infinite stillness back into everyday life.",
+      "sessions": [
+        {
+          "phase": "Morning",
+          "title": "Shiva Mandala Merging & Soul Liberation",
+          "description": "The signature meditation immersion of transcendental stillness and supreme connection."
+        },
+        {
+          "phase": "Afternoon",
+          "title": "Closing Circle, Blessings & Gratitude",
+          "description": "Sharing insights, teacher blessings, and departure with renewed spiritual clarity."
+        }
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "test-1",
+      "name": "Arjun Pradeep",
+      "location": "Bangalore",
+      "edition": "BTM 2026",
+      "highlight_quote": "During the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body... On the last day's meditation, I felt something really special during the Shiva Mandala and the merging process.",
+      "full_testimonial": "The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.\n\nWe started the first day with Pooja Veppu for ourselves, which was a great way to begin.\n\nDuring the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body.\n\nOn the last day's meditation, even though there were many mandalas, I felt something really special during the Shiva Mandala and the merging process.\n\nLearning about entity removal and getting to know about our spirit guides was very insightful. The soul liberation process was also a very good and experiential process.\n\nOverall, it gave me a wonderful sense of calm and connection.\n\nThank you Pradeep Sir and a heartfelt thanks to all who were part of this retreat.",
+      "poster_url": "/images/posters/btm2026-testimonial.jpg",
+      "is_featured": true
+    },
+    {
+      "id": "test-2",
+      "name": "Community Circle Reflection",
+      "location": "Beyond the Mind 2026",
+      "edition": "BTM 2026",
+      "highlight_quote": "Going from chaotic laughter to a quiet room is the hardest part... I'm already counting down the days until we gather again.",
+      "full_testimonial": "A reflection captured on the official BTM 2026 gathering poster, embodying the deep familial kinship, shared tears of release, and warm laughter that naturally blossoms when seekers come together under sincere guidance.",
+      "poster_url": "/images/posters/btm2026-gathering.jpg",
+      "is_featured": true
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1",
+      "title": "Meditation along the Sacred Ganges",
+      "category": "Rishikesh",
+      "image_url": "/images/rishikesh/meditation-ganges.jpg",
+      "caption": "A seeker seated in deep contemplation by the morning waters of Rishikesh, where mountain air meets timeless current.",
+      "location": "Rishikesh Ghats, Uttarakhand"
+    },
+    {
+      "id": "gal-2",
+      "title": "Beyond the Mind 2027 Invitation",
+      "category": "Retreat Experience",
+      "image_url": "/images/posters/btm2027-invitation.jpg",
+      "caption": "Official Beyond the Mind 2027 retreat announcement for Rishikesh, October 6–9, 2027.",
+      "location": "Rishikesh, Uttarakhand"
+    },
+    {
+      "id": "gal-3",
+      "title": "BTM 2026 Gathering & Kinship",
+      "category": "Participants",
+      "image_url": "/images/posters/btm2026-gathering.jpg",
+      "caption": "Warm smiles, shared stories, and deep family warmth among participants at the close of a retreat day.",
+      "location": "BTM Community"
+    },
+    {
+      "id": "gal-4",
+      "title": "BTM 2026 Testimonial Poster",
+      "category": "Sacred Moments",
+      "image_url": "/images/posters/btm2026-testimonial.jpg",
+      "caption": "Official testimonial artwork by Arjun Pradeep sharing his experiences of Maha Theerthas and Shiva Mandala.",
+      "location": "BTM Archives"
+    },
+    {
+      "id": "gal-5",
+      "title": "Sunrise over the Himalayan Foothills",
+      "category": "Nature & Mountains",
+      "image_url": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+      "caption": "Golden dawn breaking across the mist-clad ridges surrounding Rishikesh.",
+      "location": "Garhwal Himalayas"
+    },
+    {
+      "id": "gal-6",
+      "title": "Silent Pranic Concentration",
+      "category": "Meditation",
+      "image_url": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
+      "caption": "Morning seated meditation aligning breath with the mountain stillness.",
+      "location": "Meditation Hall"
+    },
+    {
+      "id": "gal-7",
+      "title": "Sacred Riverbank Aarti Glow",
+      "category": "Sacred Moments",
+      "image_url": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
+      "caption": "Evening brass lamps reflecting upon the sacred waters of Mother Ganga.",
+      "location": "Parmarth Niketan Ghat, Rishikesh"
+    },
+    {
+      "id": "gal-8",
+      "title": "Kundalini & Subtle Prana Channeling",
+      "category": "Kundalini Awakening",
+      "image_url": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80",
+      "caption": "Deep alignment and subtle energy circulation during spiritual practice.",
+      "location": "Retreat Sanctuary"
+    },
+    {
+      "id": "gal-9",
+      "title": "The Sway of Lakshman Jhula",
+      "category": "Rishikesh",
+      "image_url": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+      "caption": "The iconic Himalayan valley crossing over the emerald waters of Rishikesh.",
+      "location": "Rishikesh, Uttarakhand"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq-1",
+      "category": "General & Dates",
+      "question": "When and where does Beyond the Mind 2027 take place?",
+      "answer": "Beyond the Mind 2027 takes place across four transformative days from Wednesday, October 6 to Saturday, October 9, 2027 in the sacred destination of Rishikesh, Uttarakhand, India."
+    },
+    {
+      "id": "faq-2",
+      "category": "Retreat Experience",
+      "question": "Do I need prior meditation or yoga experience to attend?",
+      "answer": "No prior experience is necessary. Beyond the Mind welcomes sincere first-time seekers, experienced meditation practitioners, professionals, and international visitors alike. Every practice is introduced progressively with clear personal guidance by Pradeep Sir."
+    },
+    {
+      "id": "faq-3",
+      "category": "Retreat Experience",
+      "question": "What language will the retreat sessions be conducted in?",
+      "answer": "The retreat sessions are conducted primarily in English. Hindi translation assistance is readily available for participants who require it, ensuring complete clarity and depth for all attendees."
+    },
+    {
+      "id": "faq-4",
+      "category": "Registration & Payment",
+      "question": "Do I need to create an account or password to register?",
+      "answer": "No. Participants do not need to register an account or set a password. Simply fill out the registration inquiry form with your contact details. Our team will review your application and personally reach out via WhatsApp and email with confirmation details."
+    },
+    {
+      "id": "faq-5",
+      "category": "Registration & Payment",
+      "question": "How does the optional payment proof upload work?",
+      "answer": "Once your application is reviewed and our team shares official retreat payment details, you may upload a screenshot of your bank transfer or UPI transaction reference. All uploaded screenshots are stored in a private, encrypted environment and marked as 'Pending Verification' until verified by our retreat administrator."
+    },
+    {
+      "id": "faq-6",
+      "category": "Daily Guided Meditation",
+      "question": "What is the Daily Guided Meditation program?",
+      "answer": "In addition to the annual retreat, our team hosts regular online guided meditation sessions every Monday to Friday at 7:30 PM IST via Zoom. These are paid, interactive group sessions designed to anchor daily peace and discipline. You can inquire through our website or directly via WhatsApp."
+    },
+    {
+      "id": "faq-7",
+      "category": "Location & Travel",
+      "question": "How do I reach Rishikesh for the retreat?",
+      "answer": "Rishikesh is well connected. By air, fly into Jolly Grant Airport (Dehradun, ~21 km). By train, arrive at Yog Nagari Rishikesh Railway Station or Haridwar Junction (~25 km). By road, deluxe coaches and private cabs connect easily from New Delhi (~240 km). Our concierge provides international and domestic travel assistance via WhatsApp."
+    },
+    {
+      "id": "faq-8",
+      "category": "Accommodations & Meals",
+      "question": "What are the accommodation and meal arrangements?",
+      "answer": "We offer configurable options including private single rooms, twin-sharing options, and non-residential participation. Pure, sattvic, nourishing vegetarian meals are provided to support deep meditative practice. Specific dietary requirements can be indicated during registration."
+    },
+    {
+      "id": "faq-9",
+      "category": "Retreat Experience",
+      "question": "Who is guiding the retreat?",
+      "answer": "The retreat is guided by Pradeep Sir under the spiritual vision of Beyond the Mind and Moola Brahman. Guidance focuses on inner awakening, subtle energy channel balance, and compassionate personal transformation without sectarian dogma."
+    }
+  ],
+  "registrations": [
+    {
+      "id": "BTM27-2211",
+      "full_name": "Maya Sundaram",
+      "email": "maya.sundaram@innerclarity.org",
+      "country_code": "+91",
+      "phone": "9820123456",
+      "country": "India",
+      "city": "Mumbai",
+      "programme": "4-Day Divine Retreat Rishikesh (Oct 6-9, 2027)",
+      "language_preference": "English",
+      "dietary_requirements": "Sattvic vegetarian",
+      "message": "Deeply seeking guidance on Kundalini awakening and inner child integration.",
+      "privacy_consent": true,
+      "status": "Contacted",
+      "payment_status": "None",
+      "created_at": "2026-11-05T17:09:31.388Z",
+      "updated_at": "2026-11-05T17:15:21.535Z",
+      "admin_notes": [
+        {
+          "id": "note-1793898921557-y8uk",
+          "text": "Spoke with Maya on WhatsApp. She confirmed single room preference.",
+          "author": "Admin Concierge",
+          "created_at": "2026-11-05T17:15:21.557Z"
+        }
+      ]
+    },
+    {
+      "id": "BTM27-1001",
+      "full_name": "Dr. Evelyn Vance",
+      "email": "evelyn.vance@wellnessarchive.org",
+      "country_code": "+1",
+      "phone": "4155552671",
+      "country": "United States",
+      "city": "San Francisco",
+      "programme": "4-Day Divine Retreat Rishikesh",
+      "language_preference": "English",
+      "dietary_requirements": "Sattvic vegan, gluten-free",
+      "message": "Seeking deep inner stillness and guidance on Kundalini energetic integration.",
+      "privacy_consent": true,
+      "status": "Confirmed",
+      "payment_status": "Verified",
+      "created_at": "2026-11-02T17:07:39.312Z",
+      "updated_at": "2026-11-03T17:07:39.585Z",
+      "admin_notes": [
+        {
+          "id": "note-1",
+          "text": "Verified bank transfer. Single room reserved by the quiet garden wing.",
+          "author": "Admin Concierge",
+          "created_at": "2026-11-03T17:07:39.585Z"
+        }
+      ]
+    },
+    {
+      "id": "BTM27-1002",
+      "full_name": "Rajesh Nair",
+      "email": "rajesh.nair@keralaheritage.in",
+      "country_code": "+91",
+      "phone": "9847012345",
+      "country": "India",
+      "city": "Kochi",
+      "programme": "4-Day Divine Retreat Rishikesh",
+      "language_preference": "English & Hindi",
+      "dietary_requirements": "Traditional vegetarian",
+      "message": "Attended BTM 2026 Kanyakumari. Keen to experience the sacred Ganga energy and Shiva Mandala.",
+      "privacy_consent": true,
+      "status": "Payment Verification",
+      "payment_status": "Pending Verification",
+      "payment_proof_url": "/images/posters/btm2026-testimonial.jpg",
+      "created_at": "2026-11-04T17:07:39.585Z",
+      "updated_at": "2026-11-04T17:07:39.585Z",
+      "admin_notes": [
+        {
+          "id": "note-2",
+          "text": "Uploaded transaction receipt. Awaiting bank clearance check.",
+          "author": "Admin Concierge",
+          "created_at": "2026-11-04T17:07:39.585Z"
+        }
+      ]
+    }
+  ]
+}
