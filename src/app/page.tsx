@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AnnouncementBanner } from '@/components/layout/AnnouncementBanner';
-import { HeroVideoPlayer } from '@/components/media/HeroVideoPlayer';
+import { MandalaHero } from '@/components/hero/MandalaHero';
+import { RetreatAtAGlance } from '@/components/retreat/RetreatAtAGlance';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ExperienceCard } from '@/components/experiences/ExperienceCard';
 import { ProgrammeTimeline } from '@/components/programme/ProgrammeTimeline';
@@ -17,11 +18,9 @@ import {
   getGallery,
 } from '@/lib/storage/store';
 import {
-  Calendar,
   MapPin,
   Sparkles,
   ArrowRight,
-  ChevronDown,
   Video,
   Clock,
   ShieldCheck,
@@ -50,94 +49,32 @@ export default async function HomePage() {
       )}
 
       {/* Premium Floating Navigation */}
-      <Navbar />
+      <Navbar syncWithHeroIntro />
 
       <main>
-        {/* ========================================================================= */}
-        {/* SECTION 2: CINEMATIC FULL-SCREEN HERO */}
-        {/* ========================================================================= */}
-        <section className="relative min-h-screen flex items-center justify-center pt-20 pb-16 overflow-hidden">
-          {/* Dedicated Hero Video / Poster Layer */}
-          <div className="absolute inset-0 z-0">
-            <HeroVideoPlayer
-              videoUrl={settings.video_url}
-              posterUrl={settings.poster_url || '/images/rishikesh/meditation-ganges.jpg'}
-              fallbackImageUrl="/images/rishikesh/meditation-ganges.jpg"
-              overlayOpacity="bg-emerald-950/70"
-            />
-          </div>
+        <MandalaHero
+          title={settings.hero_title}
+          subtitle={settings.hero_subtitle}
+          tagline={settings.hero_tagline}
+          dates={settings.retreat_dates}
+          location={settings.retreat_location}
+          videoUrl={settings.video_url || undefined}
+        />
 
-          {/* Hero Content Overlay */}
-          <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 pt-12 sm:pt-16">
-            {/* Official Logo Display (Untouched Aspect Ratio) */}
-            <div className="inline-block relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-gold-400/70 shadow-gold-md mb-2">
-              <Image
-                src="/images/brand/logo.jpg"
-                alt="Beyond the Mind 2027 Official Emblem"
-                fill
-                sizes="112px"
-                className="object-contain"
-                priority
-              />
-            </div>
-
-            {/* Date & Location Pill */}
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-gold-400/40 text-gold-300 text-xs sm:text-sm font-medium tracking-widest uppercase">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                {settings.retreat_dates}
-              </span>
-              <span className="text-gold-500/40">•</span>
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-gold-400" />
-                {settings.retreat_location}, {settings.retreat_state}
-              </span>
-            </div>
-
-            {/* Main Editorial Typography */}
-            <div className="space-y-3">
-              <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-ivory-50 font-light leading-[1.05]">
-                {settings.hero_title}
-              </h1>
-              <p className="font-serif text-xl sm:text-2xl md:text-3xl tracking-[0.25em] text-gold-300 uppercase font-light">
-                {settings.hero_subtitle}
-              </p>
-              <p className="text-sm sm:text-base md:text-lg text-stone-subtle/90 font-light max-w-2xl mx-auto tracking-wide italic pt-1">
-                &ldquo;{settings.hero_tagline}&rdquo;
-              </p>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-              <Link
-                href="/register"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 hover:from-gold-400 hover:via-gold-300 hover:to-gold-500 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
-              >
-                Begin Your Journey
-              </Link>
-              <Link
-                href="/about"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-emerald-950/70 hover:bg-emerald-900/90 text-gold-300 border border-gold-400/50 backdrop-blur-md font-semibold text-xs tracking-widest uppercase transition-all hover:scale-105"
-              >
-                Explore The Retreat
-              </Link>
-            </div>
-
-            {/* Subtle Scroll Indicator */}
-            <div className="pt-8 flex flex-col items-center justify-center text-stone-subtle/60 text-xs tracking-widest uppercase gap-1 animate-bounce">
-              <span className="text-[10px] text-gold-400/80">Descend into Stillness</span>
-              <ChevronDown className="w-4 h-4 text-gold-400" />
-            </div>
-          </div>
-        </section>
+        <RetreatAtAGlance
+          className="pt-12 sm:pt-16"
+          dates={settings.retreat_dates}
+          location={settings.retreat_location}
+          meditationDays="Mon–Fri"
+          meditationTime="7:30 PM IST"
+        />
 
         {/* ========================================================================= */}
         {/* SECTION 3: RETREAT INTRODUCTION (EDITORIAL) */}
         {/* ========================================================================= */}
-        <section className="relative py-24 sm:py-32 bg-[#FAF8F5] text-[#191D19] overflow-hidden">
+        <section className="relative py-24 sm:py-32 bg-[#05201a] text-ivory-100 mandala-section overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              light
               eyebrow="The Philosophy"
               title="Beyond the Noise. Beyond the Ordinary. Beyond the Mind."
               subtitle="An invitation to step away from repetitive cognitive cycles and experience the pristine silence of your own essential nature."
@@ -145,8 +82,8 @@ export default async function HomePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               {/* Editorial Prose */}
-              <div className="lg:col-span-7 space-y-6 text-sm sm:text-base leading-relaxed text-[#191D19]/80 font-light">
-                <p className="text-lg sm:text-xl font-serif text-[#031713] leading-snug">
+              <div className="lg:col-span-7 space-y-6 text-sm sm:text-base leading-relaxed text-ivory-200/80 font-light">
+                <p className="text-lg sm:text-xl font-serif text-ivory-50 leading-snug">
                   Modern life conditions us to exist perpetually in the head — calculating, anticipating,
                   and reacting. In the sacred foothills of Rishikesh, where the holy Ganges descends from the
                   Himalayas, we create a sanctuary for your consciousness to soften, drop into the heart, and expand.
@@ -159,19 +96,19 @@ export default async function HomePage() {
                 </p>
 
                 <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-normal">
-                  <div className="p-4 rounded-xl bg-ivory-100 border border-gold-600/30">
-                    <span className="font-serif text-sm font-semibold text-[#031713] block">
+                  <div className="p-4 rounded-xl bg-emerald-950/60 border border-gold-600/30">
+                    <span className="font-serif text-sm font-semibold text-ivory-50 block">
                       Authentic Transmission
                     </span>
-                    <span className="text-stone-700 mt-1 block">
+                    <span className="text-ivory-200/80 mt-1 block">
                       Direct, grounded experiential methods without dogmatic constraints.
                     </span>
                   </div>
-                  <div className="p-4 rounded-xl bg-ivory-100 border border-gold-600/30">
-                    <span className="font-serif text-sm font-semibold text-[#031713] block">
+                  <div className="p-4 rounded-xl bg-emerald-950/60 border border-gold-600/30">
+                    <span className="font-serif text-sm font-semibold text-ivory-50 block">
                       Intimate Circle
                     </span>
-                    <span className="text-stone-700 mt-1 block">
+                    <span className="text-ivory-200/80 mt-1 block">
                       Carefully curated cohort ensuring attentive personal energetic support.
                     </span>
                   </div>
@@ -180,7 +117,7 @@ export default async function HomePage() {
                 <div className="pt-4">
                   <Link
                     href="/about"
-                    className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-emerald-900 hover:text-gold-700 transition-colors"
+                    className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-gold-300 hover:text-gold-200 transition-colors"
                   >
                     <span>Read The Complete Philosophy</span>
                     <ArrowRight className="w-4 h-4" />
@@ -347,46 +284,39 @@ export default async function HomePage() {
         {/* ========================================================================= */}
         {/* SECTION 7: DAILY GUIDED MEDITATION */}
         {/* ========================================================================= */}
-        <section className="py-24 sm:py-32 bg-[#FAF8F5] text-[#191D19] relative">
+        <section className="py-24 sm:py-32 bg-[#05201a] text-ivory-100 mandala-section relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              light
               eyebrow="Regular Online Practice"
               title="A Daily Pause. A Deeper Connection."
               subtitle="Sustaining inner quietude between retreats through live daily guided meditation sessions."
             />
 
-            <div className="max-w-4xl mx-auto rounded-3xl bg-[#FFFFFF] border border-gold-600/30 p-8 sm:p-12 shadow-xl space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center border-b border-stone-200 pb-8">
-                <div className="space-y-1">
-                  <span className="text-[10px] uppercase tracking-widest text-gold-700 font-semibold block">
-                    Schedule
-                  </span>
-                  <span className="font-serif text-xl font-medium text-[#031713]">
-                    {settings.daily_meditation_days}
-                  </span>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[10px] uppercase tracking-widest text-gold-700 font-semibold block">
-                    Session Time
-                  </span>
-                  <span className="font-serif text-xl font-medium text-[#031713]">
-                    {settings.daily_meditation_time}
-                  </span>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[10px] uppercase tracking-widest text-gold-700 font-semibold block">
-                    Mode & Platform
-                  </span>
-                  <span className="font-serif text-xl font-medium text-[#031713]">
-                    {settings.daily_meditation_platform}
-                  </span>
-                </div>
+            <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-br from-[#07261F] to-[#041a15] border border-gold-600/30 p-8 sm:p-12 shadow-xl space-y-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center border-b border-gold-500/20 pb-8">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Mode</span>
+                <span className="font-serif text-xl font-medium text-ivory-50 block">Online</span>
+                <span className="text-[11px] text-gold-300/80 block">Live, from anywhere</span>
               </div>
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Timings</span>
+                <span className="font-serif text-xl font-medium text-ivory-50 block">7:30 PM IST</span>
+                <span className="text-[11px] text-gold-300/80 block">Monday to Friday</span>
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Session fee</span>
+                <span className="font-serif text-xl font-medium text-ivory-50 block">Paid sessions</span>
+                <span className="text-[11px] text-gold-300/80 block">Shared on enquiry</span>
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Platform</span>
+                <span className="font-serif text-xl font-medium text-ivory-50 block">Zoom</span>
+                <span className="text-[11px] text-gold-300/80 block">Link sent after joining</span>
+              </div>
+            </div>
 
-              <div className="space-y-4 text-sm sm:text-base text-stone-700 leading-relaxed font-light">
+              <div className="space-y-4 text-sm sm:text-base text-ivory-200/80 leading-relaxed font-light">
                 <p>
                   True transformation is anchored in steady daily discipline. Join our dedicated community for
                   regular paid guided meditation sessions designed to recalibrate your nervous system, clear
@@ -401,7 +331,7 @@ export default async function HomePage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
                 <Link
                   href="/daily-meditation"
-                  className="w-full sm:w-auto px-7 py-3 rounded-full bg-emerald-950 text-gold-300 font-semibold text-xs tracking-widest uppercase hover:bg-emerald-900 transition-all text-center shadow-md"
+                  className="w-full sm:w-auto px-7 py-3 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase hover:scale-[1.03] transition-all text-center shadow-md"
                 >
                   Learn More About Daily Practice
                 </Link>
