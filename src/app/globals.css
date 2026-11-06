@@ -135,3 +135,25 @@
 @media (prefers-reduced-motion: reduce) {
   .mandala-section::before, .page-header::before { animation: none; }
 }
+
+.site-flight {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+[data-fly='out'] {
+  opacity: 0;
+  transform: perspective(900px) translate3d(0, 70px, -160px) rotateX(10deg);
+}
+[data-fly='in'] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.9s ease var(--fly-delay, 0ms), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1) var(--fly-delay, 0ms);
+}

@@ -3,7 +3,7 @@
 .gl { transition: opacity 1s; }
 .video { object-fit: cover; opacity: 0; transition: opacity 1s; transform-origin: 50% 40%; }
 .dust { mix-blend-mode: screen; pointer-events: none; }
-.hero[data-mode='video'] .video { opacity: 1; }
+.hero[data-mode='video'] .video { opacity: 1; filter: brightness(0.86); }
 .hero[data-mode='video'] .gl { opacity: 0; }
 .hero::after {
   content: '';

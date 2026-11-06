@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { AnnouncementBanner } from '@/components/layout/AnnouncementBanner';
 import { MandalaHero } from '@/components/hero/MandalaHero';
 import { RetreatAtAGlance } from '@/components/retreat/RetreatAtAGlance';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -39,14 +38,6 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
-      {/* Announcement Banner if configured */}
-      {settings.announcement_banner?.enabled && (
-        <AnnouncementBanner
-          badge={settings.announcement_banner.badge}
-          text={settings.announcement_banner.text}
-          link={settings.announcement_banner.link}
-        />
-      )}
 
       {/* Premium Floating Navigation */}
       <Navbar syncWithHeroIntro />
