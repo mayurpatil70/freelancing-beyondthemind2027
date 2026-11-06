@@ -205,6 +205,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
       </header>
 
       <div id="nav-sheet" ref={sheetRef} className={cn(styles.sheet, sheetOpen && styles.sheetOpen)} aria-hidden={!sheetOpen}>
+        <div className={styles.sheetScroll}>
         <ol>
           {sheetLinks.map((l, i) => (
             <li key={l.href} style={{ transitionDelay: sheetOpen ? `${0.25 + i * 0.05}s` : '0s' }}>
@@ -218,6 +219,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
         <Link href="/register" className={cn(styles.cta, styles.sheetCta)} tabIndex={sheetOpen ? 0 : -1}>
           Begin your journey
         </Link>
+        </div>
       </div>
     </>
   );

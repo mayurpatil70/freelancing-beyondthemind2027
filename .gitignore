@@ -32,3 +32,6 @@ yoga-and-meditation/
 # Private uploads
 /public/uploads/*
 !/public/uploads/.gitkeep
+
+# Source footage (too large for GitHub)
+/public/videos/hero/chakras.mp4

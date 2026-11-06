@@ -22,14 +22,19 @@ interface MandalaHeroProps {
 }
 
 const VIDEOS = {
-  landscape: { src: '/videos/hero/mandala-landscape.mp4', poster: '/videos/hero/mandala-landscape.jpg' },
-  portrait: { src: '/videos/hero/mandala-portrait.mp4', poster: '/videos/hero/mandala-portrait.jpg' },
+  landscape: { src: '/videos/hero/chakras-landscape.mp4', poster: '/videos/hero/chakras-landscape.jpg' },
+  portrait: { src: '/videos/hero/chakras-portrait.mp4', poster: '/videos/hero/chakras-portrait.jpg' },
 };
 
 function splitTitle(raw: string) {
   const clean = raw.replace(/\s+\d{4}\s*$/, '').trim();
   const text = clean === clean.toUpperCase() ? clean.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()) : clean;
   return text.split(/\s+/).map((w) => (w.toLowerCase() === 'the' ? { word: 'the', accent: true } : { word: w, accent: false }));
+}
+
+function isSlowNetwork() {
+  const c = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  return !!c && (c.saveData === true || c.effectiveType === '2g' || c.effectiveType === 'slow-2g');
 }
 
 function isLowEnd() {
@@ -72,6 +77,10 @@ export function MandalaHero({
     if (m === 'video') {
       const pick = hero.offsetWidth / hero.offsetHeight < 0.8 ? VIDEOS.portrait : VIDEOS.landscape;
       const src = videoUrl || pick.src;
+      if (isSlowNetwork()) {
+        v.poster = pick.poster;
+        return;
+      }
       if (!v.src.endsWith(src)) {
         if (!videoUrl) v.poster = pick.poster;
         v.src = src;
@@ -101,7 +110,7 @@ export function MandalaHero({
     setAnimateIntro(playIntro);
     const revealId = requestAnimationFrame(() => requestAnimationFrame(() => setPhase('ready')));
 
-    const gl = cv.getContext('webgl', { antialias: false, premultipliedAlpha: false });
+    const gl = lowEnd ? null : cv.getContext('webgl', { antialias: false, premultipliedAlpha: false });
     let uni: Record<string, WebGLUniformLocation | null> | null = null;
     if (gl) {
       try {
@@ -129,7 +138,9 @@ export function MandalaHero({
       }
     }
 
-    switchMode(!uni || lowEnd ? 'video' : 'live');
+    switchMode('video');
+    const onVideoError = () => { if (uni) switchMode('live'); };
+    vid.addEventListener('error', onVideoError);
 
     const dctx = dust.getContext('2d')!;
     let parts: { x: number; y: number; r: number; vx: number; vy: number; a: number; ph: number }[] = [];
@@ -271,7 +282,7 @@ export function MandalaHero({
         gl.uniform1f(uni.uSize, layout.size);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
       }
-      drawDust(reduce ? 0 : t, b);
+      if (!lowEnd) drawDust(reduce ? 0 : t, b);
     };
     raf = requestAnimationFrame(frame);
 
@@ -279,6 +290,7 @@ export function MandalaHero({
       cancelAnimationFrame(raf);
       cancelAnimationFrame(revealId);
       io.disconnect();
+      vid.removeEventListener('error', onVideoError);
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointer);
       window.removeEventListener('scroll', onScroll);
@@ -326,7 +338,7 @@ export function MandalaHero({
   let ci = 0;
 
   return (
-    <section ref={heroRef} className={cn(styles.hero, styles[phase])} data-mode={mode} aria-label={title}>
+    <section ref={heroRef} className={cn(styles.hero, styles[phase])} data-mode={mode} data-hero aria-label={title}>
       <canvas ref={glRef} className={cn(styles.layer, styles.gl)} aria-hidden="true" />
       <video ref={videoRef} className={cn(styles.layer, styles.video)} muted loop playsInline preload="none" aria-hidden="true" />
       <canvas ref={dustRef} className={cn(styles.layer, styles.dust)} aria-hidden="true" />
