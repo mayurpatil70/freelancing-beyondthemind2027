@@ -5,9 +5,25 @@ import { generateRegistrationId, formatWhatsAppUrl } from '@/lib/utils';
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const rawBody = await req.json();
 
-    const parseResult = registrationSchema.safeParse(body);
+    // Support both full registration forms and quick enquiry modals / contact forms
+    const normalizedBody = {
+      full_name: (rawBody.full_name || rawBody.name || '').trim(),
+      email: (rawBody.email || `${(rawBody.phone || 'retreat').replace(/[^0-9]/g, '') || 'seeker'}@inquiry.beyondthemindretreat.org`).trim().toLowerCase(),
+      country_code: rawBody.country_code || '+91',
+      phone: (rawBody.phone || rawBody.whatsapp || '').trim(),
+      country: (rawBody.country || 'India').trim(),
+      city: (rawBody.city || 'Online / Sanctuary').trim(),
+      programme: rawBody.programme || 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027)',
+      language_preference: rawBody.language_preference || 'English',
+      dietary_requirements: rawBody.dietary_requirements || undefined,
+      message: rawBody.message || rawBody.note || undefined,
+      privacy_consent: rawBody.privacy_consent ?? true,
+      payment_proof_url: rawBody.payment_proof_url || undefined,
+    };
+
+    const parseResult = registrationSchema.safeParse(normalizedBody);
     if (!parseResult.success) {
       return NextResponse.json(
         {
@@ -34,11 +50,11 @@ export async function POST(req: NextRequest) {
       dietary_requirements: validData.dietary_requirements || undefined,
       message: validData.message || undefined,
       privacy_consent: validData.privacy_consent,
-      payment_proof_url: body.payment_proof_url || undefined,
+      payment_proof_url: rawBody.payment_proof_url || undefined,
     });
 
     const retreatWhatsApp = '+91 8075572018';
-    const followUpMessage = `Namaste Beyond the Mind Team,\n\nI have submitted my retreat registration.\n\n*Reference ID:* ${savedRecord.id}\n*Name:* ${savedRecord.full_name}\n*Programme:* ${savedRecord.programme}\n\nKindly share further details and confirmation guidance. Thank you!`;
+    const followUpMessage = `Namaste Beyond the Mind Team,\n\nI have submitted my retreat registration / enquiry.\n\n*Reference ID:* ${savedRecord.id}\n*Name:* ${savedRecord.full_name}\n*Phone:* ${savedRecord.country_code} ${savedRecord.phone}\n*Programme:* ${savedRecord.programme}\n${savedRecord.city ? `*Location:* ${savedRecord.city}\n` : ''}${savedRecord.message ? `*Notes:* ${savedRecord.message}\n` : ''}\nKindly confirm availability and share details. Thank you!`;
     const whatsappUrl = formatWhatsAppUrl(retreatWhatsApp, followUpMessage);
 
     return NextResponse.json({

@@ -375,13 +375,13 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   onChange={(e) => setSelectedStatus(e.target.value)}
                   className="px-3 py-2 rounded-xl bg-emerald-950/80 border border-gold-500/25 text-xs text-ivory-100 focus:outline-none focus:border-gold-400"
                 >
-                  <option value="All">All Statuses</option>
-                  <option value="New">New</option>
-                  <option value="Contacted">Contacted</option>
-                  <option value="Awaiting Payment">Awaiting Payment</option>
-                  <option value="Payment Verification">Payment Verification</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="All" className="bg-[#07261F] text-ivory-100">All Statuses</option>
+                  <option value="New" className="bg-[#07261F] text-ivory-100">New</option>
+                  <option value="Contacted" className="bg-[#07261F] text-ivory-100">Contacted</option>
+                  <option value="Awaiting Payment" className="bg-[#07261F] text-ivory-100">Awaiting Payment</option>
+                  <option value="Payment Verification" className="bg-[#07261F] text-ivory-100">Payment Verification</option>
+                  <option value="Confirmed" className="bg-[#07261F] text-ivory-100">Confirmed</option>
+                  <option value="Cancelled" className="bg-[#07261F] text-ivory-100">Cancelled</option>
                 </select>
                 <button
                   type="button"
@@ -458,12 +458,12 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                               onChange={(e) => handleStatusChange(r.id, e.target.value as RegistrationStatus)}
                               className="px-2.5 py-1 rounded-lg bg-emerald-950 border border-gold-500/30 text-xs text-gold-300 focus:outline-none"
                             >
-                              <option value="New">New</option>
-                              <option value="Contacted">Contacted</option>
-                              <option value="Awaiting Payment">Awaiting Payment</option>
-                              <option value="Payment Verification">Payment Verification</option>
-                              <option value="Confirmed">Confirmed</option>
-                              <option value="Cancelled">Cancelled</option>
+                              <option value="New" className="bg-[#07261F] text-ivory-100">New</option>
+                              <option value="Contacted" className="bg-[#07261F] text-ivory-100">Contacted</option>
+                              <option value="Awaiting Payment" className="bg-[#07261F] text-ivory-100">Awaiting Payment</option>
+                              <option value="Payment Verification" className="bg-[#07261F] text-ivory-100">Payment Verification</option>
+                              <option value="Confirmed" className="bg-[#07261F] text-ivory-100">Confirmed</option>
+                              <option value="Cancelled" className="bg-[#07261F] text-ivory-100">Cancelled</option>
                             </select>
 
                             {r.payment_proof_url && (
@@ -1077,10 +1077,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                           }}
                           className="w-full px-2.5 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                         >
-                          <option value="Adrenaline & Adventure">Adrenaline & Adventure</option>
-                          <option value="Sacred Heritage">Sacred Heritage</option>
-                          <option value="Nature & Scenic">Nature & Scenic</option>
-                          <option value="Wellness & Peace">Wellness & Peace</option>
+                          <option value="Adrenaline & Adventure" className="bg-[#07261F] text-ivory-100">Adrenaline & Adventure</option>
+                          <option value="Sacred Heritage" className="bg-[#07261F] text-ivory-100">Sacred Heritage</option>
+                          <option value="Nature & Scenic" className="bg-[#07261F] text-ivory-100">Nature & Scenic</option>
+                          <option value="Wellness & Peace" className="bg-[#07261F] text-ivory-100">Wellness & Peace</option>
                         </select>
                       </div>
 

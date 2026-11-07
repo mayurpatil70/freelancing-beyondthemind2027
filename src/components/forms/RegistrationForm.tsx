@@ -15,15 +15,46 @@ import {
   ArrowRight,
   CheckCircle2,
 } from 'lucide-react';
+import { ThemeSelect } from '@/components/ui/ThemeSelect';
+import { openWhatsApp } from '@/lib/utils';
 
 interface RegistrationFormProps {
   allowPaymentProof?: boolean;
   defaultProgramme?: string;
 }
 
+const PROGRAMME_OPTIONS = [
+  {
+    value: 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027)',
+    label: 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027 • Arrival Oct 5 at 2:45 PM)',
+  },
+  {
+    value: 'The Divine Retreat 2027 (Online Live Stream)',
+    label: 'The Divine Retreat 2027 (Online Live Stream)',
+  },
+  {
+    value: 'Daily Guided Meditation (Online Zoom Mon–Fri 7:30 PM)',
+    label: 'Daily Guided Meditation (Online Zoom Mon–Fri 7:30 PM)',
+  },
+  {
+    value: 'Both Retreat & Daily Meditation',
+    label: 'Both Retreat & Daily Meditation',
+  },
+  {
+    value: 'General Spiritual Inquiry / Custom',
+    label: 'General Spiritual Inquiry / Custom',
+  },
+];
+
+const LANGUAGE_OPTIONS = [
+  { value: 'English', label: 'English' },
+  { value: 'Hindi', label: 'Hindi (Translation Available)' },
+  { value: 'English & Hindi', label: 'English & Hindi Comfortable' },
+];
+
 export function RegistrationForm({
   allowPaymentProof = true,
-  defaultProgramme = '4-Day Divine Retreat Rishikesh (Oct 6–9, 2027)',
+  defaultProgramme = 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027)',
 }: RegistrationFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -44,16 +75,22 @@ export function RegistrationForm({
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
       programme: defaultProgramme,
       country_code: '+91',
+      country: 'India',
       language_preference: 'English',
       privacy_consent: true,
     },
   });
+
+  const selectedProgramme = watch('programme') || defaultProgramme;
+  const selectedLanguage = watch('language_preference') || 'English';
 
   const onSubmit = async (data: RegistrationFormData) => {
     setSubmitting(true);
@@ -103,6 +140,11 @@ export function RegistrationForm({
         programme: json.data.programme,
         whatsappUrl: json.whatsappUrl,
       });
+
+      // Automatically launch WhatsApp with booking reference and details
+      if (json.whatsappUrl) {
+        openWhatsApp(json.whatsappUrl);
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setServerError(err.message);
@@ -290,26 +332,12 @@ export function RegistrationForm({
             <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
               Interested Programme *
             </label>
-            <select
-              {...register('programme')}
-              className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
-            >
-              <option value="The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027)">
-                The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027 • Arrival Oct 5 at 2:45 PM)
-              </option>
-              <option value="The Divine Retreat 2027 (Online Live Stream)">
-                The Divine Retreat 2027 (Online Live Stream)
-              </option>
-              <option value="Daily Guided Meditation (Online Zoom Mon–Fri 7:30 PM)">
-                Daily Guided Meditation (Online Zoom Mon–Fri 7:30 PM)
-              </option>
-              <option value="Both Retreat & Daily Meditation">
-                Both Retreat & Daily Meditation
-              </option>
-              <option value="General Spiritual Inquiry / Custom">
-                General Spiritual Inquiry / Custom
-              </option>
-            </select>
+            <ThemeSelect
+              value={selectedProgramme}
+              onChange={(val) => setValue('programme', val, { shouldValidate: true })}
+              options={PROGRAMME_OPTIONS}
+              className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs flex items-center justify-between focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
+            />
             {errors.programme && (
               <p className="text-[11px] text-red-400">{errors.programme.message}</p>
             )}
@@ -319,14 +347,16 @@ export function RegistrationForm({
             <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
               Language Preference *
             </label>
-            <select
-              {...register('language_preference')}
-              className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
-            >
-              <option value="English">English</option>
-              <option value="Hindi">Hindi (Translation Needed)</option>
-              <option value="English & Hindi">English & Hindi Comfortable</option>
-            </select>
+            <ThemeSelect
+              value={selectedLanguage}
+              onChange={(val) =>
+                setValue('language_preference', val as 'English' | 'Hindi' | 'English & Hindi', {
+                  shouldValidate: true,
+                })
+              }
+              options={LANGUAGE_OPTIONS}
+              className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs flex items-center justify-between focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
+            />
             {errors.language_preference && (
               <p className="text-[11px] text-red-400">{errors.language_preference.message}</p>
             )}

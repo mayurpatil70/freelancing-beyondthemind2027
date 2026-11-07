@@ -2,12 +2,42 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, User, Phone, Calendar, Users, MessageSquare } from 'lucide-react';
+import { ThemeSelect, ThemeSelectOption } from '@/components/ui/ThemeSelect';
+import { openWhatsApp } from '@/lib/utils';
 
 interface WhatsAppInquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultProgram?: string;
 }
+
+const BASE_PROGRAM_OPTIONS: ThemeSelectOption[] = [
+  {
+    value: 'The Divine Retreat - Rishikesh 2027 (Offline)',
+    label: 'The Divine Retreat 2027 (Offline • Rishikesh)',
+    description: 'Arrival Oct 5 at 2:45 PM • Oct 6–9 (4 Days)',
+  },
+  {
+    value: 'The Divine Retreat 2027 (Online Live Stream)',
+    label: 'The Divine Retreat 2027 (Online Live Stream)',
+    description: 'Full 4-day digital immersive transmission',
+  },
+  {
+    value: 'Daily Guided Meditation (Online Zoom Mon-Fri 7:30 PM)',
+    label: 'Daily Guided Meditation (Zoom • Mon-Fri 7:30 PM)',
+    description: 'Daily practice • Ongoing activity • Paid sessions',
+  },
+  {
+    value: 'Both Divine Retreat & Daily Guided Meditation',
+    label: 'Both Divine Retreat & Daily Practice',
+    description: 'Flagship retreat + daily meditation sessions',
+  },
+  {
+    value: 'General Spiritual Inquiry / Guidance',
+    label: 'General Spiritual Inquiry / Guidance',
+    description: 'Speak with our retreat coordinators',
+  },
+];
 
 export function WhatsAppInquiryModal({
   isOpen,
@@ -19,6 +49,22 @@ export function WhatsAppInquiryModal({
   const [selectedProgram, setSelectedProgram] = useState(defaultProgram);
   const [participants, setParticipants] = useState(1);
   const [message, setMessage] = useState('');
+
+  // Dynamically include defaultProgram if it's a custom activity (e.g. Bungee Jumping)
+  const programOptions: ThemeSelectOption[] = React.useMemo(() => {
+    const exists = BASE_PROGRAM_OPTIONS.some((opt) => opt.value === defaultProgram);
+    if (defaultProgram && !exists) {
+      return [
+        {
+          value: defaultProgram,
+          label: defaultProgram,
+          description: 'Special Rishikesh activity / custom inquiry',
+        },
+        ...BASE_PROGRAM_OPTIONS,
+      ];
+    }
+    return BASE_PROGRAM_OPTIONS;
+  }, [defaultProgram]);
 
   useEffect(() => {
     if (defaultProgram) {
@@ -62,7 +108,26 @@ export function WhatsAppInquiryModal({
       .join('\n');
 
     const whatsappUrl = `https://wa.me/918075572018?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+    // Also log enquiry to CRM database in background
+    try {
+      fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: fullName || 'Seeker',
+          phone: phone,
+          programme: selectedProgram,
+          message: `${message ? `${message}\n` : ''}[Travelers: ${participants}]`,
+          privacy_consent: true,
+        }),
+      }).catch((err) => console.error('Enquiry log error:', err));
+    } catch (err) {
+      console.error('Enquiry failed to save:', err);
+    }
+
+    // Direct redirection to WhatsApp
+    openWhatsApp(whatsappUrl);
     onClose();
   };
 
@@ -74,7 +139,7 @@ export function WhatsAppInquiryModal({
       role="dialog"
     >
       <div
-        className="relative w-full max-w-lg rounded-2xl bg-[#071F1B] border border-[#D4AF37]/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(212,175,55,0.15)] text-[#FAF8F5] p-6 sm:p-8 overflow-hidden animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-lg rounded-2xl bg-[#071F1B] border border-[#D4AF37]/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(212,175,55,0.15)] text-[#FAF8F5] p-6 sm:p-8 overflow-visible animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Subtle Ambient Radial Gold Glow */}
@@ -150,27 +215,13 @@ export function WhatsAppInquiryModal({
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
                 <span>Session / Program of Interest</span>
               </label>
-              <select
+              <ThemeSelect
                 value={selectedProgram}
-                onChange={(e) => setSelectedProgram(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#041512] border border-gold-500/30 text-xs sm:text-sm text-ivory-50 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400/40 transition-all appearance-none cursor-pointer"
-              >
-                <option value="The Divine Retreat - Rishikesh 2027 (Offline)">
-                  The Divine Retreat 2027 (Offline • Rishikesh)
-                </option>
-                <option value="The Divine Retreat 2027 (Online Live Stream)">
-                  The Divine Retreat 2027 (Online Live Stream)
-                </option>
-                <option value="Daily Guided Meditation (Online Zoom Mon-Fri 7:30 PM)">
-                  Daily Guided Meditation (Zoom • Mon-Fri 7:30 PM)
-                </option>
-                <option value="Both Divine Retreat & Daily Guided Meditation">
-                  Both Divine Retreat & Daily Practice
-                </option>
-                <option value="General Spiritual Inquiry / Guidance">
-                  General Spiritual Inquiry
-                </option>
-              </select>
+                onChange={setSelectedProgram}
+                options={programOptions}
+                placeholder="Choose program..."
+                className="w-full px-3 py-2.5 rounded-lg bg-[#041512] border border-gold-500/30 text-xs sm:text-sm text-ivory-50 flex items-center justify-between focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400/40 transition-all"
+              />
             </div>
 
             <div className="sm:col-span-4 space-y-1.5">

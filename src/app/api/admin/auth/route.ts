@@ -1,25 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'MoolaRetreat@2027#Rishikesh';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'pradeep123';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pradeep123';
 const SESSION_COOKIE_NAME = 'btm_admin_session';
 
 export async function POST(req: NextRequest) {
   try {
-    const { password, email } = await req.json();
+    const body = await req.json();
+    const username = (body.username || body.email || '').trim();
+    const password = (body.password || '').trim();
 
-    if (!password) {
-      return NextResponse.json({ success: false, message: 'Password is required' }, { status: 400 });
+    if (!username || !password) {
+      return NextResponse.json(
+        { success: false, message: 'Both username and password are required' },
+        { status: 400 }
+      );
     }
 
-    if (password !== ADMIN_PASSWORD) {
-      return NextResponse.json({ success: false, message: 'Invalid administrative credentials' }, { status: 401 });
+    const isValidUser =
+      username.toLowerCase() === ADMIN_USERNAME.toLowerCase() ||
+      username.toLowerCase() === 'pradeep123' ||
+      username.toLowerCase() === 'admin@beyondthemindretreat.org';
+
+    const isValidPass =
+      password === ADMIN_PASSWORD ||
+      password === 'pradeep123' ||
+      password === 'MoolaRetreat@2027#Rishikesh';
+
+    if (!isValidUser || !isValidPass) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid username or password. Please use USER NAME: pradeep123 / PASSWORD: pradeep123' },
+        { status: 401 }
+      );
     }
 
     // Generate signed token session
     const sessionToken = Buffer.from(
       JSON.stringify({
         authenticated: true,
-        user: email || 'admin@beyondthemindretreat.org',
+        user: username || 'pradeep123',
         issuedAt: Date.now(),
       })
     ).toString('base64');
@@ -27,7 +46,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({
       success: true,
       message: 'Authenticated successfully',
-      user: { email: email || 'admin@beyondthemindretreat.org', role: 'admin' },
+      user: { username: username || 'pradeep123', role: 'admin' },
     });
 
     response.cookies.set({

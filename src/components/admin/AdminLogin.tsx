@@ -9,8 +9,8 @@ interface AdminLoginProps {
 }
 
 export function AdminLogin({ onSuccess }: AdminLoginProps) {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
       const res = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, email }),
+        body: JSON.stringify({ username, password }),
       });
 
       const json = await res.json();
@@ -80,20 +80,22 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
-              Administrator Email
+              User Name *
             </label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@beyondthemindretreat.org"
+              type="text"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="pradeep123"
+              autoComplete="username"
               className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/70 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
             />
           </div>
 
           <div className="space-y-1.5">
             <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
-              Access Secret Key *
+              Password *
             </label>
             <div className="relative">
               <input
@@ -101,13 +103,14 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter admin password..."
+                placeholder="pradeep123"
+                autoComplete="current-password"
                 className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-emerald-950/70 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
               />
               <Lock className="w-4 h-4 text-gold-400/60 absolute right-3 top-1/2 -translate-y-1/2" />
             </div>
             <p className="text-[10px] text-stone-subtle/60 pt-0.5">
-              Default access configured via environment variables.
+              Secure credentials: USER NAME: <code className="text-gold-300">pradeep123</code> &amp; PASSWORD: <code className="text-gold-300">pradeep123</code>
             </p>
           </div>
 

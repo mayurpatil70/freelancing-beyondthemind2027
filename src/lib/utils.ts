@@ -34,3 +34,15 @@ export function formatWhatsAppUrl(number: string, message: string): string {
   return `https://wa.me/${cleaned}?text=${encodeURIComponent(message)}`;
 }
 
+export function openWhatsApp(url: string) {
+  if (typeof window === 'undefined') return;
+  try {
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      window.location.href = url;
+    }
+  } catch {
+    window.location.href = url;
+  }
+}
+
