@@ -157,6 +157,7 @@ export function MandalaHero({
       cv.height = Math.round(H * scale);
       if (gl) gl.viewport(0, 0, cv.width, cv.height);
       const asp = W / H;
+      if (modeRef.current === 'video') switchMode('video');
       layout = asp < 0.8 ? { cx: 0, cy: 0.2, size: Math.min(0.36, asp * 0.62) } : asp < 1.3 ? { cx: 0, cy: 0.12, size: 0.34 } : { cx: 0, cy: 0.1, size: 0.4 };
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       dust.width = W * dpr;
