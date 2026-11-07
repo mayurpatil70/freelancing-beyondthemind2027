@@ -47,6 +47,17 @@ export const metadata: Metadata = {
   authors: [{ name: 'Beyond the Mind' }],
   creator: 'Beyond the Mind',
   publisher: 'Beyond the Mind',
+  alternates: {
+    canonical: 'https://beyondthemindretreat.org',
+  },
+  icons: {
+    icon: '/images/brand/logo.jpg',
+    shortcut: '/images/brand/logo.jpg',
+    apple: '/images/brand/logo.jpg',
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'beyond-the-mind-2027',
+  },
   openGraph: {
     title: 'Beyond the Mind 2027 — The Divine Retreat',
     description: 'A transformative 4-day sanctuary in the sacred land of Rishikesh. October 6–9, 2027.',
@@ -87,34 +98,117 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  // Enhanced GEO & AEO Knowledge Graph Schemas for AI Agents (ChatGPT, Perplexity, Gemini, Google Search)
+  const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'Event',
-    name: 'Beyond the Mind 2027 — The Divine Retreat',
-    startDate: '2027-10-05T14:45:00+05:30',
-    endDate: '2027-10-09T18:00:00+05:30',
-    eventStatus: 'https://schema.org/EventScheduled',
-    eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
-    location: {
-      '@type': 'Place',
-      name: 'Rishikesh Sanctuary',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Rishikesh',
-        addressRegion: 'Uttarakhand',
-        addressCountry: 'India',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://beyondthemindretreat.org/#website',
+        url: 'https://beyondthemindretreat.org',
+        name: 'Beyond the Mind',
+        description: 'The Divine Retreat & Daily Guided Meditation — A Journey Into the Infinite Within.',
+        publisher: {
+          '@id': 'https://beyondthemindretreat.org/#organization',
+        },
       },
-    },
-    image: ['/images/brand/logo.jpg', '/images/posters/btm2027-invitation.jpg'],
-    description:
-      'A transformative 4-day retreat in the sacred land of Rishikesh to reconnect with your True Self, release inner blocks and awaken the vastness within.',
-    organizer: {
-      '@type': 'Organization',
-      name: 'Beyond the Mind & Moola Brahman',
-      url: 'https://beyondthemindretreat.org',
-      telephone: '+918075572018',
-      email: 'moolabrahman@gmail.com',
-    },
+      {
+        '@type': 'Organization',
+        '@id': 'https://beyondthemindretreat.org/#organization',
+        name: 'Beyond the Mind',
+        url: 'https://beyondthemindretreat.org',
+        logo: 'https://beyondthemindretreat.org/images/brand/logo.jpg',
+        telephone: '+918075572018',
+        email: 'moolabrahman@gmail.com',
+        sameAs: [
+          'https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm',
+          'https://www.facebook.com/profile.php?id=61595374757132',
+        ],
+      },
+      {
+        '@type': 'Event',
+        '@id': 'https://beyondthemindretreat.org/#retreat2027',
+        name: 'Beyond the Mind 2027 — The Divine Retreat',
+        description:
+          'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Sir. Arrival: October 5, 2027 at 2:45 PM. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 7 sacred sessions.',
+        startDate: '2027-10-05T14:45:00+05:30',
+        endDate: '2027-10-09T18:00:00+05:30',
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
+        location: {
+          '@type': 'Place',
+          name: 'Rishikesh Sanctuary beside holy Ganga',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Rishikesh',
+            addressRegion: 'Uttarakhand',
+            addressCountry: 'India',
+          },
+        },
+        image: ['https://beyondthemindretreat.org/images/brand/logo.jpg'],
+        organizer: {
+          '@id': 'https://beyondthemindretreat.org/#organization',
+        },
+        performer: {
+          '@type': 'Person',
+          name: 'Pradeep Sir',
+        },
+      },
+      {
+        '@type': 'EducationalEvent',
+        '@id': 'https://beyondthemindretreat.org/#dailymeditation',
+        name: 'Daily Guided Meditation — A Journey Within',
+        description:
+          'Ongoing weekday guided meditation sessions by Beyond the Mind. Online via Zoom from Monday to Friday at 7:30 PM IST. Paid sessions focusing on cultivating awareness, exploring inner silence, and transcending mental chatter.',
+        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+        eventSchedule: {
+          '@type': 'Schedule',
+          repeatFrequency: 'P1W',
+          byDay: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          startTime: '19:30:00+05:30',
+        },
+        organizer: {
+          '@id': 'https://beyondthemindretreat.org/#organization',
+        },
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'When does Beyond the Mind 2027 take place?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Participants arrive on October 5, 2027 at 2:45 PM. The 4-day retreat sessions run from October 6 to October 9, 2027 in Rishikesh, Uttarakhand, India.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Can I participate online?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes! The Divine Retreat 2027 is available both in-person (offline in Rishikesh) and online via live stream.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What language will the retreat be conducted in?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The retreat sessions are conducted in English, with Hindi translation available for participants who require it.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What are the Daily Guided Meditation sessions?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Daily Guided Meditation is an ongoing regular activity of Beyond the Mind conducted online via Zoom Monday to Friday at 7:30 PM IST.',
+            },
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -122,7 +216,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
       <body className="bg-[#031713] text-[#FAF8F5] antialiased selection:bg-[#D4AF37] selection:text-[#031713]">

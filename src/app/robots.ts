@@ -8,8 +8,28 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin', '/api/', '/uploads/'],
       },
+      {
+        userAgent: 'Google-Extended',
+        allow: '/',
+        disallow: ['/admin', '/api/'],
+      },
+      {
+        userAgent: 'GPTBot',
+        allow: '/',
+        disallow: ['/admin', '/api/'],
+      },
+      {
+        userAgent: 'PerplexityBot',
+        allow: '/',
+        disallow: ['/admin', '/api/'],
+      },
+      {
+        userAgent: 'ClaudeBot',
+        allow: '/',
+        disallow: ['/admin', '/api/'],
+      },
     ],
     sitemap: 'https://beyondthemindretreat.org/sitemap.xml',
+    host: 'https://beyondthemindretreat.org',
   };
 }
-

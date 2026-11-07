@@ -160,6 +160,8 @@ export interface SiteSettings {
   registration_google_form_enabled: boolean;
   payment_proof_upload_enabled: boolean;
   meta_keywords?: Record<string, string>;
+  google_search_console_token?: string;
+  google_analytics_id?: string;
   announcement_banner?: {
     enabled: boolean;
     text: string;

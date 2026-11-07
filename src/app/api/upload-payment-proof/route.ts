@@ -37,7 +37,13 @@ export async function POST(req: NextRequest) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const safeExt = path.extname(file.name) || (file.type === 'application/pdf' ? '.pdf' : '.jpg');
+    const allowedExts = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
+    const rawExt = path.extname(file.name).toLowerCase();
+    const safeExt = allowedExts.includes(rawExt)
+      ? rawExt
+      : file.type === 'application/pdf'
+      ? '.pdf'
+      : '.jpg';
     const filename = `proof-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${safeExt}`;
     const destination = path.join(uploadsDir, filename);
 

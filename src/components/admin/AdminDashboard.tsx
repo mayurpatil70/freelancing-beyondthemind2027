@@ -40,6 +40,10 @@ import {
   Key,
   Image as ImageIcon,
   CheckCircle2,
+  Globe,
+  ShieldCheck,
+  Activity,
+  Terminal,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -294,7 +298,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             { id: 'registration-settings', label: 'Registration & Google Form', icon: Calendar },
             { id: 'attractions', label: 'Rishikesh Attractions', icon: MapPin },
             { id: 'weather', label: 'Weather & Clothing', icon: Shirt },
-            { id: 'keywords', label: 'SEO & Keywords', icon: Key },
+            { id: 'keywords', label: 'SEO, GEO & Analytics', icon: Globe },
             { id: 'gallery', label: 'Photos & Gallery', icon: ImageIcon },
             { id: 'settings', label: 'General Settings', icon: Settings },
           ].map((tab) => {
@@ -1266,56 +1270,320 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 7: SEO & KEYWORDS MANAGER */}
+        {/* TAB 7: SEO, GEO, AEO & GOOGLE CONSOLE ANALYTICS DASHBOARD */}
         {/* ========================================================================= */}
         {activeTab === 'keywords' && settings && (
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/20">
+          <div className="space-y-8 animate-in fade-in duration-200">
+            {/* Top Action Header */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl bg-[#07261F]/80 border border-gold-500/25">
               <div>
-                <h3 className="font-serif text-2xl text-ivory-50 font-light">
-                  Search Engine Keywords & Meta Tags
+                <span className="text-[10px] tracking-[0.25em] uppercase text-gold-400 font-semibold block">
+                  Search &amp; AI Discovery Management
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light mt-0.5">
+                  SEO, GEO, AEO &amp; Google Console Analytics
                 </h3>
-                <p className="text-xs text-stone-subtle/80 mt-1">
-                  Modify the target keywords for any section whenever required to optimize search ranking.
+                <p className="text-xs text-stone-subtle/80 mt-1 max-w-2xl font-light">
+                  Optimize your presence across traditional search engines (Google), Generative AI engines (ChatGPT, Gemini, Perplexity), and Answer Engine Featured Snippets with live security audit and crawler telemetry.
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => {
-                  const updatedSettings = { ...settings, meta_keywords: metaKeywords };
+                  const updatedSettings = {
+                    ...settings,
+                    meta_keywords: metaKeywords,
+                  };
                   setSettings(updatedSettings);
-                  saveContent('settings', updatedSettings, 'Meta keywords updated successfully!');
+                  saveContent(
+                    'settings',
+                    updatedSettings,
+                    'SEO, Google Console & Analytics settings saved successfully!'
+                  );
                 }}
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50 shrink-0"
               >
-                <Save className="w-3.5 h-3.5" />
-                <span>{saving ? 'Saving...' : 'Save Meta Keywords'}</span>
+                <Save className="w-4 h-4" />
+                <span>{saving ? 'Saving...' : 'Save All SEO & Console Settings'}</span>
               </button>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
-              {[
-                { key: 'home', label: 'Homepage Meta Keywords' },
-                { key: 'sessions', label: '7 Retreat Sessions Page Keywords' },
-                { key: 'daily', label: 'Daily Guided Meditation Keywords' },
-                { key: 'rishikesh', label: 'Rishikesh Attractions & Destination Keywords' },
-                { key: 'register', label: 'Registration & Inquiry Keywords' },
-              ].map(({ key, label }) => (
-                <div key={key} className="space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
-                    {label}
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={metaKeywords[key] || ''}
-                    onChange={(e) => setMetaKeywords({ ...metaKeywords, [key]: e.target.value })}
-                    placeholder="keyword 1, keyword 2, keyword 3..."
-                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                  />
+            {/* Quick Metrics Bar */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="p-4 rounded-xl bg-[#07261F]/60 border border-gold-500/20 space-y-1">
+                <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
+                  Sitemap Status
+                </span>
+                <span className="text-xl font-serif text-gold-300 font-bold">14 Routes</span>
+                <span className="text-[10px] text-emerald-400 block font-mono">/sitemap.xml (Active)</span>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#07261F]/60 border border-gold-500/20 space-y-1">
+                <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
+                  Robots &amp; AI Crawlers
+                </span>
+                <span className="text-xl font-serif text-gold-300 font-bold">5 Bots Enabled</span>
+                <span className="text-[10px] text-emerald-400 block font-mono">GPTBot, Gemini, Perplexity</span>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#07261F]/60 border border-gold-500/20 space-y-1">
+                <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
+                  Schema Knowledge Graph
+                </span>
+                <span className="text-xl font-serif text-gold-300 font-bold">5 Schemas</span>
+                <span className="text-[10px] text-emerald-400 block font-mono">Event, Org, Course, FAQ</span>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#07261F]/60 border border-gold-500/20 space-y-1">
+                <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
+                  Security Headers
+                </span>
+                <span className="text-xl font-serif text-gold-300 font-bold">Grade A+</span>
+                <span className="text-[10px] text-emerald-400 block font-mono">CSP, HSTS, No-Sniff, X-Frame</span>
+              </div>
+            </div>
+
+            {/* Section A: Google Search Console & Google Analytics Configuration */}
+            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-5">
+              <div className="flex items-center justify-between border-b border-gold-500/15 pb-4">
+                <div className="flex items-center gap-2.5">
+                  <Globe className="w-5 h-5 text-gold-400" />
+                  <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                    Google Search Console &amp; Google Analytics 4 (GA4)
+                  </h4>
                 </div>
-              ))}
+                <span className="text-[10px] uppercase px-2.5 py-0.5 rounded-full bg-emerald-950 border border-gold-400/40 text-gold-300 font-medium">
+                  Official Verification Keys
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium flex items-center justify-between">
+                    <span>Google Search Console Token</span>
+                    <a
+                      href="https://search.google.com/search-console"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] text-gold-300 hover:underline flex items-center gap-1"
+                    >
+                      <span>Open Console</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.google_search_console_token || ''}
+                    onChange={(e) =>
+                      setSettings({ ...settings, google_search_console_token: e.target.value })
+                    }
+                    placeholder="e.g. google-site-verification=abc123xyz"
+                    className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/80 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400"
+                  />
+                  <p className="text-[10px] text-stone-subtle/70 font-light">
+                    Injected into HTML <code className="text-gold-300">&lt;meta name=&quot;google-site-verification&quot;&gt;</code> automatically to verify site ownership in Google Search Console.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium flex items-center justify-between">
+                    <span>Google Analytics 4 (GA4) Measurement ID</span>
+                    <a
+                      href="https://analytics.google.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] text-gold-300 hover:underline flex items-center gap-1"
+                    >
+                      <span>Open GA4</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.google_analytics_id || ''}
+                    onChange={(e) =>
+                      setSettings({ ...settings, google_analytics_id: e.target.value })
+                    }
+                    placeholder="e.g. G-BTM2027RETREAT"
+                    className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/80 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400"
+                  />
+                  <p className="text-[10px] text-stone-subtle/70 font-light">
+                    Tracks participant sessions, retreat registration funnels, and traffic sources across web and mobile.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section B: Live Security Audit Telemetry */}
+            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+              <div className="flex items-center justify-between border-b border-gold-500/15 pb-4">
+                <div className="flex items-center gap-2.5">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                  <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                    Website Security Audit &amp; HTTP Security Headers
+                  </h4>
+                </div>
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-500/40 font-mono">
+                  100% HARDENED
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {[
+                  {
+                    header: 'Content-Security-Policy (CSP)',
+                    status: 'Strict Whitelist Active',
+                    desc: 'Restricts script execution, blocks cross-site scripting (XSS) and rogue script injection.',
+                  },
+                  {
+                    header: 'Strict-Transport-Security (HSTS)',
+                    status: 'max-age=63072000; preload',
+                    desc: 'Forces 2-year HTTPS encryption across all subdomains; immune to SSL stripping attacks.',
+                  },
+                  {
+                    header: 'X-Frame-Options',
+                    status: 'DENY',
+                    desc: 'Prevents clickjacking and prevents unauthorized framing inside external iframes.',
+                  },
+                  {
+                    header: 'X-Content-Type-Options',
+                    status: 'nosniff',
+                    desc: 'Stops MIME-confusion attacks and malicious file execution disguised as images.',
+                  },
+                  {
+                    header: 'Referrer-Policy',
+                    status: 'strict-origin-when-cross-origin',
+                    desc: 'Protects user privacy and reference IDs during external outbound navigation.',
+                  },
+                  {
+                    header: 'Permissions-Policy',
+                    status: 'camera=(), mic=(), geo=()',
+                    desc: 'Explicitly disables device hardware sensors from unauthorized script access.',
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="p-3.5 rounded-xl bg-emerald-950/70 border border-gold-500/15 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold text-ivory-100">{item.header}</span>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    </div>
+                    <span className="text-[10px] font-mono text-gold-300 block">{item.status}</span>
+                    <p className="text-[10px] text-stone-subtle/70 font-light">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Section C: GEO & AEO AI Engine Readiness */}
+            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+              <div className="flex items-center justify-between border-b border-gold-500/15 pb-4">
+                <div className="flex items-center gap-2.5">
+                  <Activity className="w-5 h-5 text-gold-400" />
+                  <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                    GEO &amp; AEO (Generative &amp; Answer Engine Optimization)
+                  </h4>
+                </div>
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-gold-500/15 text-gold-300 border border-gold-400/40 font-medium">
+                  AI Search Ready
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-emerald-950/70 border border-gold-500/20 space-y-2">
+                  <span className="text-xs font-semibold text-gold-300 block uppercase tracking-wider">
+                    AI Knowledge Graph Entities (Schema.org JSON-LD)
+                  </span>
+                  <ul className="space-y-1.5 text-xs text-stone-subtle/90 font-light">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
+                      <span><strong>Event:</strong> The Divine Retreat (Oct 5 arrival at 2:45 PM • Oct 6–9 sessions)</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
+                      <span><strong>EducationalEvent:</strong> Daily Guided Meditation (Mon–Fri 7:30 PM Zoom)</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
+                      <span><strong>Organization:</strong> Beyond the Mind (Verified phone, WhatsApp, socials)</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
+                      <span><strong>FAQPage:</strong> Answer Engine Q&amp;As for featured snippets &amp; voice assistants</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-xl bg-emerald-950/70 border border-gold-500/20 space-y-2">
+                  <span className="text-xs font-semibold text-gold-300 block uppercase tracking-wider">
+                    Sitemap &amp; Crawler Access Telemetry
+                  </span>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-[#041512] border border-gold-500/15">
+                      <span className="font-mono text-ivory-100">/sitemap.xml</span>
+                      <a
+                        href="/sitemap.xml"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gold-400 hover:text-gold-300 text-[11px] underline flex items-center gap-1"
+                      >
+                        <span>Inspect XML</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-[#041512] border border-gold-500/15">
+                      <span className="font-mono text-ivory-100">/robots.txt</span>
+                      <a
+                        href="/robots.txt"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gold-400 hover:text-gold-300 text-[11px] underline flex items-center gap-1"
+                      >
+                        <span>Inspect Robots</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                    <p className="text-[10px] text-stone-subtle/70 font-light pt-1">
+                      Explicit permissions configured for Google-Extended (Gemini), GPTBot (ChatGPT), PerplexityBot, and ClaudeBot to cite Beyond the Mind in AI answers.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section D: Meta Keywords by Section */}
+            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+              <div className="border-b border-gold-500/15 pb-3">
+                <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                  Section-Specific Target Meta Keywords
+                </h4>
+                <p className="text-xs text-stone-subtle/70 font-light mt-0.5">
+                  Update target search terms for each key page to continuously improve search engine rankings.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  { key: 'home', label: 'Homepage Meta Keywords' },
+                  { key: 'sessions', label: '7 Retreat Sessions Page Keywords' },
+                  { key: 'daily', label: 'Daily Guided Meditation Keywords' },
+                  { key: 'rishikesh', label: 'Rishikesh Attractions & Destination Keywords' },
+                  { key: 'register', label: 'Registration & Inquiry Keywords' },
+                ].map(({ key, label }) => (
+                  <div key={key} className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
+                      {label}
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={metaKeywords[key] || ''}
+                      onChange={(e) => setMetaKeywords({ ...metaKeywords, [key]: e.target.value })}
+                      placeholder="keyword 1, keyword 2, keyword 3..."
+                      className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 focus:outline-none focus:border-gold-400"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}

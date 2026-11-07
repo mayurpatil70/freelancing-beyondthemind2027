@@ -3,28 +3,27 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://beyondthemindretreat.org';
 
-  const routes = [
-    '',
-    '/about',
-    '/experiences',
-    '/daily-meditation',
-    '/programme',
-    '/rishikesh',
-    '/reach',
-    '/participation',
-    '/testimonials',
-    '/gallery',
-    '/faq',
-    '/register',
-    '/contact',
-    '/privacy-policy',
+  const routeConfig: Array<{ path: string; priority: number; changeFrequency: 'daily' | 'weekly' | 'monthly' }> = [
+    { path: '', priority: 1.0, changeFrequency: 'daily' },
+    { path: '/register', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/daily-meditation', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/programme', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/experiences', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/rishikesh', priority: 0.85, changeFrequency: 'weekly' },
+    { path: '/about', priority: 0.85, changeFrequency: 'weekly' },
+    { path: '/participation', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/testimonials', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/gallery', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/faq', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/reach', priority: 0.75, changeFrequency: 'monthly' },
+    { path: '/contact', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/privacy-policy', priority: 0.5, changeFrequency: 'monthly' },
   ];
 
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
+  return routeConfig.map((item) => ({
+    url: `${baseUrl}${item.path}`,
     lastModified: new Date(),
-    changeFrequency: route === '' ? 'daily' : 'weekly',
-    priority: route === '' ? 1.0 : route === '/register' ? 0.9 : 0.8,
+    changeFrequency: item.changeFrequency,
+    priority: item.priority,
   }));
 }
-

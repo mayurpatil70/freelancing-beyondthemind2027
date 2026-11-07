@@ -87,7 +87,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="pradeep123"
+              placeholder="Enter admin username"
               autoComplete="username"
               className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/70 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
             />
@@ -103,14 +103,15 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="pradeep123"
+                placeholder="••••••••"
                 autoComplete="current-password"
                 className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-emerald-950/70 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
               />
               <Lock className="w-4 h-4 text-gold-400/60 absolute right-3 top-1/2 -translate-y-1/2" />
             </div>
-            <p className="text-[10px] text-stone-subtle/60 pt-0.5">
-              Secure credentials: USER NAME: <code className="text-gold-300">pradeep123</code> &amp; PASSWORD: <code className="text-gold-300">pradeep123</code>
+            <p className="text-[10px] text-stone-subtle/50 pt-0.5 flex items-center gap-1.5">
+              <Lock className="w-3 h-3 text-gold-400/60 shrink-0" />
+              <span>Restricted administrative portal. Authorized personnel only.</span>
             </p>
           </div>
 

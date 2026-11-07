@@ -39,6 +39,8 @@ export const initialSiteSettings: SiteSettings = {
   registration_google_form_url: "",
   registration_google_form_enabled: false,
   payment_proof_upload_enabled: true,
+  google_search_console_token: "google-site-verification=beyond-the-mind-2027",
+  google_analytics_id: "G-BTM2027RETREAT",
   meta_keywords: {
     home: "Beyond the Mind 2027, Divine Retreat Rishikesh, Daily Guided Meditation, Pradeep Sir, Kundalini Awakening, Rishikesh Yoga Retreat, Moola Brahman, Spiritual Retreat 2027",
     sessions: "Stress Buster Session, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, Guided Meditation, Rishikesh",

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Instagram, Facebook, MapPin, Calendar, Heart } from 'lucide-react';
+import { Phone, Mail, Instagram, Facebook, MapPin, Calendar, Heart, Lock } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -124,6 +124,15 @@ export function Footer() {
                   Contact & Concierge
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/admin"
+                  className="inline-flex items-center gap-1.5 text-gold-400 hover:text-gold-300 transition-colors font-medium"
+                >
+                  <Lock className="w-3 h-3 text-gold-400" />
+                  <span>Admin Sanctuary (/admin)</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -207,8 +216,12 @@ export function Footer() {
               Concierge
             </Link>
             <span className="opacity-30">•</span>
-            <Link href="/admin" className="text-stone-subtle/50 hover:text-gold-400/80 transition-colors">
-              Admin Portal
+            <Link
+              href="/admin"
+              className="text-gold-400 hover:text-gold-300 font-medium transition-colors flex items-center gap-1.5 underline underline-offset-4 decoration-gold-400/60"
+            >
+              <Lock className="w-3 h-3 text-gold-400" />
+              <span>/admin Login</span>
             </Link>
           </div>
         </div>
