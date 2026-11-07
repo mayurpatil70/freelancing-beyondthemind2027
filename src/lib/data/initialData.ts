@@ -415,7 +415,7 @@ export const initialWeatherClothing: WeatherClothingGuide = {
 export const initialTestimonials: Testimonial[] = [
   {
     id: "test-1",
-    name: "Arjun Pradeep",
+    name: "Seeker Reflection",
     location: "Bangalore",
     edition: "BTM 2026",
     highlight_quote: "During the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body... On the last day's meditation, I felt something really special during the Shiva Mandala and the merging process.",
@@ -432,7 +432,6 @@ Learning about entity removal and getting to know about our spirit guides was ve
 Overall, it gave me a wonderful sense of calm and connection.
 
 Thank you Pradeep Sir and a heartfelt thanks to all who were part of this retreat.`,
-    poster_url: "/images/posters/btm2026-testimonial.jpg",
     is_featured: true,
   },
   {
@@ -479,14 +478,6 @@ export const initialGallery: GalleryItem[] = [
     image_url: "/images/posters/btm2026-gathering.jpg",
     caption: "Warm smiles, shared stories, and deep family warmth among participants at the close of a retreat day.",
     location: "BTM Community",
-  },
-  {
-    id: "gal-4",
-    title: "BTM 2026 Testimonial Poster",
-    category: "Sacred Moments",
-    image_url: "/images/posters/btm2026-testimonial.jpg",
-    caption: "Official testimonial artwork by Arjun Pradeep sharing his experiences of Maha Theerthas and Shiva Mandala.",
-    location: "BTM Archives",
   },
   {
     id: "gal-5",

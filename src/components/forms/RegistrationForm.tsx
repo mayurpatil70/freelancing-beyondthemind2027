@@ -242,7 +242,7 @@ export function RegistrationForm({
             <input
               type="text"
               {...register('full_name')}
-              placeholder="e.g. Arjun Sharma"
+              placeholder="e.g. Rahul Sharma"
               className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
             />
             {errors.full_name && (

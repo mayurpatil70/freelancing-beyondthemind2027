@@ -11,7 +11,7 @@ import { Quote, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Guest Testimonials & Participant Reflections | Beyond the Mind 2027',
   description:
-    'Read authentic reflections from Beyond the Mind participants, featuring Arjun Pradeep from Bangalore sharing his experience of Maha Theerthas, Shiva Lingams, and the Shiva Mandala.',
+    'Read authentic reflections from Beyond the Mind participants sharing their transformative experiences of Maha Theerthas, Shiva Lingams, and the Shiva Mandala.',
 };
 
 export default async function TestimonialsPage() {

@@ -35,7 +35,7 @@ Every route is fully implemented, responsive, and SEO-optimized:
 | `/rishikesh` | **Rishikesh Destination** | High-resolution storytelling of Mother Ganga, Garhwal Himalayan foothills, evening aarti, and venue sanctity notice. |
 | `/reach` | **How to Reach** | Detailed travel guide: Air (Jolly Grant Dehradun DED, 21km), Train (Yog Nagari Rishikesh YNRK & Haridwar HW), and Road (Delhi-Meerut-Rishikesh expressway), with WhatsApp concierge. |
 | `/participation` | **Participation & Inclusions** | Configurable options: Single Sanctuary Room, Shared Twin Room, Non-Residential Seeker, Sattvic dining, retreat journals, and inquiry-only transparent booking notes. |
-| `/testimonials` | **Guest Testimonials** | Authentic reflections from BTM 2026, featuring Arjun Pradeep (Bangalore) on Maha Theerthas, Shiva Lingams, and the Shiva Mandala, plus full-size poster lightboxes. |
+| `/testimonials` | **Guest Testimonials** | Authentic reflections from BTM 2026 participants on Maha Theerthas, Shiva Lingams, and the Shiva Mandala, plus full-size poster lightboxes. |
 | `/gallery` | **Visual Sanctuary Gallery** | 7-category filtering (Retreat Experience, Participants, Meditation, Kundalini, Nature & Mountains, Rishikesh, Sacred Moments) with full-screen keyboard-accessible lightbox. |
 | `/faq` | **Frequently Asked Questions** | Searchable iOS-style accordion with category tabs and direct WhatsApp routing for custom inquiries. |
 | `/register` | **Enquiry & Registration** | Frictionless booking (no account/password required), Zod client/server validation, unique reference ID generator (e.g. `BTM27-xxxx`), confirmation card, WhatsApp fast-track, and optional payment receipt upload. |

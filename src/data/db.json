@@ -298,12 +298,11 @@
   "testimonials": [
     {
       "id": "test-1",
-      "name": "Arjun Pradeep",
+      "name": "Seeker Reflection",
       "location": "Bangalore",
       "edition": "BTM 2026",
       "highlight_quote": "During the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body... On the last day's meditation, I felt something really special during the Shiva Mandala and the merging process.",
       "full_testimonial": "The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.\n\nWe started the first day with Pooja Veppu for ourselves, which was a great way to begin.\n\nDuring the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body.\n\nOn the last day's meditation, even though there were many mandalas, I felt something really special during the Shiva Mandala and the merging process.\n\nLearning about entity removal and getting to know about our spirit guides was very insightful. The soul liberation process was also a very good and experiential process.\n\nOverall, it gave me a wonderful sense of calm and connection.\n\nThank you Pradeep Sir and a heartfelt thanks to all who were part of this retreat.",
-      "poster_url": "/images/posters/btm2026-testimonial.jpg",
       "is_featured": true
     },
     {
@@ -349,14 +348,6 @@
       "image_url": "/images/posters/btm2026-gathering.jpg",
       "caption": "Warm smiles, shared stories, and deep family warmth among participants at the close of a retreat day.",
       "location": "BTM Community"
-    },
-    {
-      "id": "gal-4",
-      "title": "BTM 2026 Testimonial Poster",
-      "category": "Sacred Moments",
-      "image_url": "/images/posters/btm2026-testimonial.jpg",
-      "caption": "Official testimonial artwork by Arjun Pradeep sharing his experiences of Maha Theerthas and Shiva Mandala.",
-      "location": "BTM Archives"
     },
     {
       "id": "gal-5",

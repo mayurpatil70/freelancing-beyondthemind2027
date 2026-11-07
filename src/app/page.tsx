@@ -372,7 +372,7 @@ export default async function HomePage() {
               subtitle="The original artwork and announcements designed for Beyond the Mind."
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* Poster 1: 2027 Invitation */}
               <div className="group relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-lg bg-[#07261F]">
                 <div className="relative aspect-[2/3] w-full">
@@ -380,7 +380,7 @@ export default async function HomePage() {
                     src="/images/posters/btm2027-retreat-sessions.jpg"
                     alt="Beyond the Mind 2027 Retreat Sessions Poster"
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -401,7 +401,7 @@ export default async function HomePage() {
                     src="/images/posters/btm2026-gathering.jpg"
                     alt="Beyond the Mind 2026 Gathering Poster"
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -411,27 +411,6 @@ export default async function HomePage() {
                   </span>
                   <span className="text-[11px] text-stone-subtle/70 uppercase tracking-wider">
                     Sacred Fellowship & Kinship
-                  </span>
-                </div>
-              </div>
-
-              {/* Poster 3: 2026 Testimonial */}
-              <div className="group relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-lg bg-[#07261F]">
-                <div className="relative aspect-[2/3] w-full">
-                  <Image
-                    src="/images/posters/btm2026-testimonial.jpg"
-                    alt="BTM 2026 Arjun Pradeep Testimonial Poster"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <span className="font-serif text-base text-gold-300 font-medium block">
-                    BTM 2026 Testimonial Poster
-                  </span>
-                  <span className="text-[11px] text-stone-subtle/70 uppercase tracking-wider">
-                    Arjun Pradeep (Bangalore)
                   </span>
                 </div>
               </div>
