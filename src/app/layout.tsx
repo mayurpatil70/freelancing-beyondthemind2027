@@ -91,10 +91,10 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: 'Beyond the Mind 2027 — The Divine Retreat',
-    startDate: '2027-10-06T09:00:00+05:30',
+    startDate: '2027-10-05T14:45:00+05:30',
     endDate: '2027-10-09T18:00:00+05:30',
     eventStatus: 'https://schema.org/EventScheduled',
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
     location: {
       '@type': 'Place',
       name: 'Rishikesh Sanctuary',

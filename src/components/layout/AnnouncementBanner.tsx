@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface AnnouncementBannerProps {
   badge?: string;
@@ -12,8 +12,8 @@ export function AnnouncementBanner({ badge = 'Retreat Update', text, link }: Ann
   return (
     <aside data-announcement aria-label="Retreat Announcement" className="relative z-50 bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 border-b border-gold-500/25 py-2 px-4 text-center">
       <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 sm:gap-3 text-xs flex-wrap">
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gold-500/20 text-gold-300 text-[10px] tracking-wider uppercase font-semibold border border-gold-500/30">
-          <Sparkles className="w-2.5 h-2.5 text-gold-400" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gold-500/20 text-gold-300 text-[10px] tracking-wider uppercase font-semibold border border-gold-500/30">
+          <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
           {badge}
         </span>
         <span className="text-ivory-100 font-light tracking-wide">{text}</span>

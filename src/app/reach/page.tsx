@@ -4,19 +4,19 @@ import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { Plane, Train, Car, MessageCircle, MapPin, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Plane, Train, Car, MessageCircle, MapPin, ArrowRight, ShieldCheck, Calendar, Sun, Shirt } from 'lucide-react';
 import { formatWhatsAppUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'How to Reach Rishikesh | Travel Guide | Beyond the Mind 2027',
+  title: 'How to Reach Rishikesh (Arrival: Oct 5 at 2:45 PM) | Travel Guide | Beyond the Mind 2027',
   description:
-    'Comprehensive travel information for reaching Beyond the Mind 2027 in Rishikesh via Dehradun Airport, Yog Nagari Rishikesh Railway, and Delhi highways.',
+    'Travel guide and connectivity for arriving in Rishikesh on October 5, 2027 by 2:45 PM via Dehradun Airport, Yog Nagari railway, and Delhi highways. Plus October weather & packing guide.',
 };
 
 export default function ReachPage() {
   const whatsappUrl = formatWhatsAppUrl(
     '+91 8075572018',
-    'Namaste Beyond the Mind Concierge,\n\nI need travel assistance and guidance on planning my journey to Rishikesh for Beyond the Mind 2027.'
+    'Namaste Beyond the Mind Concierge,\n\nI need travel assistance and guidance on planning my journey to Rishikesh for Beyond the Mind 2027 (Arrival Oct 5 at 2:45 PM).'
   );
 
   return (
@@ -27,9 +27,9 @@ export default function ReachPage() {
         {/* Header Hero */}
         <section className="page-header relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
-              <Sparkles className="w-3.5 h-3.5 text-gold-400" />
-              Travel & Logistics
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
+              Travel & Logistics Guide
             </span>
 
             <h1 className="font-serif text-4xl sm:text-6xl text-ivory-50 font-light leading-tight">
@@ -37,8 +37,15 @@ export default function ReachPage() {
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Practical travel connectivity for domestic and international seekers arriving for Beyond the Mind 2027.
+              Practical travel connectivity for domestic and international seekers arriving for Beyond the Mind 2027 on <strong>Tuesday, October 5, 2027 by 2:45 PM</strong>.
             </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
+              <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                <Calendar className="w-3.5 h-3.5 text-gold-400" />
+                <span>Arrival: October 5, 2027 at 2:45 PM</span>
+              </span>
+            </div>
           </div>
         </section>
 

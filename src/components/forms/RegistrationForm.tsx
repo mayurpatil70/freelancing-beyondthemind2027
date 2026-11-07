@@ -8,11 +8,12 @@ import {
   CheckCircle,
   AlertCircle,
   Upload,
-  Sparkles,
   MessageCircle,
   FileText,
   Calendar,
   Lock,
+  ArrowRight,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface RegistrationFormProps {
@@ -171,7 +172,7 @@ export function RegistrationForm({
     <div className="max-w-3xl mx-auto rounded-3xl bg-[#07261F]/80 backdrop-blur-xl border border-gold-500/25 p-6 sm:p-10 shadow-2xl">
       <div className="text-center space-y-2 mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-400/30 text-[10px] tracking-widest uppercase text-gold-300 font-semibold">
-          <Sparkles className="w-3 h-3 text-gold-400" />
+          <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
           Frictionless Participation Enquiry
         </div>
         <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
@@ -293,14 +294,20 @@ export function RegistrationForm({
               {...register('programme')}
               className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
             >
-              <option value="4-Day Divine Retreat Rishikesh (Oct 6–9, 2027)">
-                4-Day Divine Retreat Rishikesh (Oct 6–9, 2027)
+              <option value="The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027)">
+                The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027 • Arrival Oct 5 at 2:45 PM)
               </option>
-              <option value="Daily Guided Meditation (Online Zoom Mon–Fri)">
-                Daily Guided Meditation (Online Zoom Mon–Fri)
+              <option value="The Divine Retreat 2027 (Online Live Stream)">
+                The Divine Retreat 2027 (Online Live Stream)
+              </option>
+              <option value="Daily Guided Meditation (Online Zoom Mon–Fri 7:30 PM)">
+                Daily Guided Meditation (Online Zoom Mon–Fri 7:30 PM)
               </option>
               <option value="Both Retreat & Daily Meditation">
                 Both Retreat & Daily Meditation
+              </option>
+              <option value="General Spiritual Inquiry / Custom">
+                General Spiritual Inquiry / Custom
               </option>
             </select>
             {errors.programme && (
@@ -412,7 +419,7 @@ export function RegistrationForm({
             <span>Processing Sanctuary Registration...</span>
           ) : (
             <>
-              <Sparkles className="w-4 h-4 fill-current" />
+              <CheckCircle2 className="w-4 h-4" />
               <span>Submit Retreat Enquiry</span>
             </>
           )}

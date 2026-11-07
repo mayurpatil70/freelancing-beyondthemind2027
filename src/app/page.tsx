@@ -18,13 +18,14 @@ import {
 } from '@/lib/storage/store';
 import {
   MapPin,
-  Sparkles,
   ArrowRight,
   Video,
   Clock,
   ShieldCheck,
   CheckCircle,
   MessageCircle,
+  Calendar,
+  Languages,
 } from 'lucide-react';
 
 export const revalidate = 60; // Regenerate at most once per minute
@@ -142,7 +143,7 @@ export default async function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 4: SIX SACRED EXPERIENCES */}
+        {/* SECTION 4: SEVEN RETREAT SESSIONS */}
         {/* ========================================================================= */}
         <section className="py-24 sm:py-32 bg-[#031713] relative overflow-hidden">
           {/* Subtle background glow */}
@@ -151,8 +152,8 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <SectionHeading
               eyebrow="The Journey Within"
-              title="Six Sacred Experiences"
-              subtitle="Progressive dimensions of purification, energetic awakening, and soul wholeness."
+              title="Seven Retreat Sessions"
+              subtitle="The exact experiential progression of Beyond the Mind 2027 — from somatic stress release to transcendental stillness."
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -166,7 +167,7 @@ export default async function HomePage() {
                 href="/experiences"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm"
               >
-                <span>Discover All Six Spiritual Dimensions</span>
+                <span>Discover All Seven Retreat Sessions & Attractions</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -174,14 +175,14 @@ export default async function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 5: FOUR DAYS OF TRANSFORMATION */}
+        {/* SECTION 5: FOUR DAYS OF TRANSFORMATION (Arrival Oct 5 at 2:45 PM) */}
         {/* ========================================================================= */}
         <section className="py-24 sm:py-32 bg-[#07261F]/60 border-y border-gold-500/20 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow="October 6, 7, 8 & 9, 2027"
+              eyebrow="Arrival: Oct 5, 2027 at 2:45 PM • Sessions: Oct 6–9"
               title="Four Days of Transformation"
-              subtitle="An intentional, progressive timetable from sacred arrival and Pooja Veppu to the boundless Shiva Mandala."
+              subtitle="Arrive on October 5 at 2:45 PM for sanctuary check-in, orientation, and Ganga acclimatization, followed by four days of progressive spiritual sessions."
             />
 
             <ProgrammeTimeline days={programme} />
@@ -273,50 +274,55 @@ export default async function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 7: DAILY GUIDED MEDITATION */}
+        {/* SECTION 7: DAILY GUIDED MEDITATION (Regular Activity of Beyond the Mind) */}
         {/* ========================================================================= */}
         <section className="py-24 sm:py-32 bg-[#05201a] text-ivory-100 mandala-section relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow="Regular Online Practice"
-              title="A Daily Pause. A Deeper Connection."
-              subtitle="Sustaining inner quietude between retreats through live daily guided meditation sessions."
+              eyebrow="Regular Ongoing Practice"
+              title="Daily Meditation - A Journey Within"
+              subtitle="Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within."
             />
 
             <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-br from-[#07261F] to-[#041a15] border border-gold-600/30 p-8 sm:p-12 shadow-xl space-y-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center border-b border-gold-500/20 pb-8">
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Mode</span>
-                <span className="font-serif text-xl font-medium text-ivory-50 block">Online</span>
-                <span className="text-[11px] text-gold-300/80 block">Live, from anywhere</span>
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Mode</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 block">Online</span>
+                  <span className="text-[11px] text-gold-300/80 block">Live from anywhere</span>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Timings</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 block">7:30 PM IST</span>
+                  <span className="text-[11px] text-gold-300/80 block">Monday to Friday</span>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Session Fee</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 block">Paid Sessions</span>
+                  <span className="text-[11px] text-gold-300/80 block">Details on enquiry</span>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Platform</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 block">Zoom</span>
+                  <span className="text-[11px] text-gold-300/80 block">Link sent after joining</span>
+                </div>
               </div>
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Timings</span>
-                <span className="font-serif text-xl font-medium text-ivory-50 block">7:30 PM IST</span>
-                <span className="text-[11px] text-gold-300/80 block">Monday to Friday</span>
-              </div>
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Session fee</span>
-                <span className="font-serif text-xl font-medium text-ivory-50 block">Paid sessions</span>
-                <span className="text-[11px] text-gold-300/80 block">Shared on enquiry</span>
-              </div>
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Platform</span>
-                <span className="font-serif text-xl font-medium text-ivory-50 block">Zoom</span>
-                <span className="text-[11px] text-gold-300/80 block">Link sent after joining</span>
-              </div>
-            </div>
 
-              <div className="space-y-4 text-sm sm:text-base text-ivory-200/80 leading-relaxed font-light">
-                <p>
-                  True transformation is anchored in steady daily discipline. Join our dedicated community for
-                  regular paid guided meditation sessions designed to recalibrate your nervous system, clear
-                  daily cognitive fatigue, and deepen the subtle spiritual channels.
+              <div className="space-y-4 text-sm sm:text-base text-ivory-200/90 leading-relaxed font-light">
+                <p className="text-base sm:text-lg text-ivory-50 font-serif italic">
+                  &ldquo;Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within.&rdquo;
                 </p>
                 <p>
-                  Sessions are held online via Zoom. To maintain sanctuary sanctity, private access credentials
-                  and registration fees are shared directly upon enquiry.
+                  Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves.
                 </p>
+                <p>
+                  Whether you are beginning your meditation journey or have an established practice, these sessions offer an opportunity to pause, observe and reconnect with your inner being.
+                </p>
+                <div className="pt-2 text-center">
+                  <span className="inline-block px-5 py-2 rounded-full bg-gold-500/10 border border-gold-400/30 text-gold-300 font-serif tracking-[0.2em] text-sm uppercase">
+                    Pause. Observe. Transcend.
+                  </span>
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -324,13 +330,13 @@ export default async function HomePage() {
                   href="/daily-meditation"
                   className="w-full sm:w-auto px-7 py-3 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase hover:scale-[1.03] transition-all text-center shadow-md"
                 >
-                  Learn More About Daily Practice
+                  Learn More & View Benefits
                 </Link>
                 <a
                   href="https://wa.me/918075572018?text=Namaste%20Beyond%20the%20Mind%20Team%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20Monday%E2%80%93Friday%207%3A30%20PM%20Daily%20Guided%20Meditation%20sessions."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-7 py-3 rounded-full border border-gold-600 text-gold-800 font-semibold text-xs tracking-widest uppercase hover:bg-gold-50 transition-all text-center flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-7 py-3 rounded-full border border-gold-500/50 text-gold-300 hover:text-white hover:bg-gold-500/20 font-semibold text-xs tracking-widest uppercase transition-all text-center flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   <span>Enquire via WhatsApp</span>
@@ -371,8 +377,8 @@ export default async function HomePage() {
               <div className="group relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-lg bg-[#07261F]">
                 <div className="relative aspect-[2/3] w-full">
                   <Image
-                    src="/images/posters/btm2027-invitation.jpg"
-                    alt="Beyond the Mind 2027 Invitation Poster"
+                    src="/images/posters/btm2027-retreat-sessions.jpg"
+                    alt="Beyond the Mind 2027 Retreat Sessions Poster"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -380,10 +386,10 @@ export default async function HomePage() {
                 </div>
                 <div className="p-4 text-center">
                   <span className="font-serif text-base text-gold-300 font-medium block">
-                    BTM 2027 Official Invitation
+                    BTM 2027 Retreat Sessions
                   </span>
                   <span className="text-[11px] text-stone-subtle/70 uppercase tracking-wider">
-                    October 6–9, 2027 • Rishikesh
+                    Arrival Oct 5 (2:45 PM) • Oct 6–9, 2027
                   </span>
                 </div>
               </div>
@@ -449,38 +455,40 @@ export default async function HomePage() {
         <section className="py-20 bg-[#031713] text-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-semibold block">
-              Sanctuary Summary
+              Flagship Sanctuary Summary
             </span>
             <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">
-              Four Days of Sacred Stillness
+              The Divine Retreat - Rishikesh 2027
             </h3>
             <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              October 6–9, 2027 in Rishikesh, Uttarakhand. Delivered in English with Hindi translation
-              assistance available. Intimate cohort ensuring individual energetic attention and safe guidance.
+              Arrival on <strong>Tuesday, October 5, 2027 at 2:45 PM</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Delivered in English, with Hindi translation available for participants who require it. Available in both offline (in-person at Rishikesh) and online live streaming modes.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs text-gold-300">
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                Private & Shared Options
+                Arrival: Oct 5 at 2:45 PM
+              </span>
+              <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                Offline & Online Options
+              </span>
+              <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                English with Hindi Translation
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 Nourishing Sattvic Dining
-              </span>
-              <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                Dedicated Travel Concierge
               </span>
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 11: FINAL CONVERSION SECTION */}
+        {/* SECTION 11: FINAL CONVERSION SECTION (Cleaned AI Star) */}
         {/* ========================================================================= */}
         <section className="py-24 sm:py-32 bg-gradient-to-b from-[#07261F] to-[#02100d] text-center relative overflow-hidden border-t border-gold-500/25">
           <div className="absolute inset-0 bg-gold-radial opacity-30 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/40">
-              <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/40">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
               Your Invitation
             </span>
 
@@ -498,7 +506,7 @@ export default async function HomePage() {
                 href="/register"
                 className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 hover:from-gold-400 hover:via-gold-300 hover:to-gold-500 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
               >
-                Begin Your Enquiry
+                Begin Your Registration
               </Link>
               <Link
                 href="/contact"

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ProgrammeDay } from '@/types';
-import { Calendar, Clock, ChevronDown, Sparkles, Languages, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ChevronDown, Languages, ArrowRight, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProgrammeTimelineProps {
@@ -12,21 +12,21 @@ interface ProgrammeTimelineProps {
 }
 
 export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelineProps) {
-  const [activeDay, setActiveDay] = useState<number>(1);
+  const [activeDay, setActiveDay] = useState<number>(days.length > 0 ? days[0].day_number : 0);
 
   return (
     <div className="space-y-10">
-      {/* Language Arrangement Banner */}
+      {/* Language & Arrival Arrangement Banner */}
       <div className="p-4 rounded-xl bg-emerald-950/70 border border-gold-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2 text-gold-300">
-          <Languages className="w-4 h-4 text-gold-400" />
+          <Languages className="w-4 h-4 text-gold-400 shrink-0" />
           <span className="font-medium tracking-wide">Language Accommodations:</span>
           <span className="text-ivory-100 font-light">
-            Sessions are held in English, with Hindi translation support provided for all attendees.
+            Sessions conducted in English, with Hindi translation available for participants who require it.
           </span>
         </div>
-        <span className="text-[11px] uppercase tracking-wider text-stone-subtle/80">
-          October 6–9, 2027
+        <span className="text-[11px] uppercase tracking-wider text-gold-400 font-medium shrink-0">
+          Arrival: Oct 5 (2:45 PM) • Sessions: Oct 6–9, 2027
         </span>
       </div>
 
@@ -73,7 +73,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
               </div>
 
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/30 text-xs text-gold-300 font-medium shrink-0">
-                <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+                <MapPin className="w-3.5 h-3.5 text-gold-400" />
                 <span>Rishikesh Sanctuary</span>
               </div>
             </div>

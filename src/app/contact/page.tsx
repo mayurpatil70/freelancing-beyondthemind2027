@@ -11,7 +11,6 @@ import {
   Facebook,
   MapPin,
   Clock,
-  Sparkles,
   MessageCircle,
   ExternalLink,
 } from 'lucide-react';
@@ -58,8 +57,8 @@ export default function ContactPage() {
         {/* Header Hero */}
         <section className="page-header relative py-16 sm:py-24 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
-              <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
               Retreat Concierge
             </span>
 

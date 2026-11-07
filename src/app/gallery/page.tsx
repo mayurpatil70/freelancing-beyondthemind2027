@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { GalleryGrid } from '@/components/gallery/GalleryGrid';
 import { getGallery } from '@/lib/storage/store';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Visual Sanctuary Gallery | Beyond the Mind 2027',
@@ -25,8 +25,8 @@ export default async function GalleryPage() {
         {/* Header Hero */}
         <section className="page-header relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
-              <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
               Sanctuary Visuals
             </span>
 

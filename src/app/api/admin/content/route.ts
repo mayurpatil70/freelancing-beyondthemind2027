@@ -8,6 +8,12 @@ import {
   updateProgrammeData,
   getFAQs,
   updateFAQsData,
+  getAttractions,
+  updateAttractionsData,
+  getWeatherClothing,
+  updateWeatherClothingData,
+  getGallery,
+  updateGalleryData,
 } from '@/lib/storage/store';
 
 function checkAuth(req: NextRequest): boolean {
@@ -26,6 +32,9 @@ export async function GET() {
   const experiences = await getExperiences();
   const programme = await getProgramme();
   const faqs = await getFAQs();
+  const attractions = await getAttractions();
+  const weatherClothing = await getWeatherClothing();
+  const gallery = await getGallery();
 
   return NextResponse.json({
     success: true,
@@ -34,6 +43,9 @@ export async function GET() {
       experiences,
       programme,
       faqs,
+      attractions,
+      weatherClothing,
+      gallery,
     },
   });
 }
@@ -64,6 +76,21 @@ export async function POST(req: NextRequest) {
 
     if (type === 'faqs') {
       const updated = await updateFAQsData(payload);
+      return NextResponse.json({ success: true, data: updated });
+    }
+
+    if (type === 'attractions') {
+      const updated = await updateAttractionsData(payload);
+      return NextResponse.json({ success: true, data: updated });
+    }
+
+    if (type === 'weatherClothing') {
+      const updated = await updateWeatherClothingData(payload);
+      return NextResponse.json({ success: true, data: updated });
+    }
+
+    if (type === 'gallery') {
+      const updated = await updateGalleryData(payload);
       return NextResponse.json({ success: true, data: updated });
     }
 

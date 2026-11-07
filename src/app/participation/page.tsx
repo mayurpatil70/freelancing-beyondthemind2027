@@ -10,11 +10,13 @@ import {
   Utensils,
   BookOpen,
   Car,
-  Sparkles,
   ShieldAlert,
   ArrowRight,
   CheckCircle2,
   HelpCircle,
+  Calendar,
+  Video,
+  Languages,
 } from 'lucide-react';
 import { LanguageNote } from '@/components/retreat/LanguageNote';
 
@@ -77,9 +79,9 @@ export default function ParticipationPage() {
         {/* Header Hero */}
         <section className="page-header relative py-20 sm:py-28 bg-gradient-to-b from-[#07261F] via-[#031713] to-[#031713] text-center overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
-              <Sparkles className="w-3.5 h-3.5 text-gold-400" />
-              Retreat Inclusions
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs tracking-widest uppercase font-semibold border border-gold-400/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
+              Retreat Inclusions & Participation Modes
             </span>
 
             <h1 className="font-serif text-4xl sm:text-6xl text-ivory-50 font-light leading-tight">
@@ -88,8 +90,23 @@ export default function ParticipationPage() {
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Thoughtfully curated participation options to support peaceful contemplation, sacred rest, and
-              wholesome nourishment throughout our four days in Rishikesh.
+              wholesome nourishment. Available both offline in Rishikesh (Arrival Oct 5 at 2:45 PM) and online via live stream.
             </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                <Calendar className="w-3.5 h-3.5 text-gold-400" />
+                <span>Arrival: Oct 5 at 2:45 PM • Sessions: Oct 6–9</span>
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                <Video className="w-3.5 h-3.5 text-gold-400" />
+                <span>Offline (Rishikesh) & Online Stream</span>
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                <Languages className="w-3.5 h-3.5 text-gold-400" />
+                <span>English (Hindi Translation Available)</span>
+              </span>
+            </div>
           </div>
         </section>
 

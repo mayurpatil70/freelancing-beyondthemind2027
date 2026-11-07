@@ -2,10 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SacredExperience } from '@/types';
-import { Feather, Flame, Sun, Sparkles, Heart, Compass, ArrowRight, Layers, MapPin, Users } from 'lucide-react';
+import { Feather, Flame, Sun, Heart, Compass, Flower2, CircleDot, ArrowRight, Layers, MapPin, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const iconMap: Record<string, React.ElementType> = { Feather, Flame, Sun, Sparkles, Heart, Compass };
+const iconMap: Record<string, React.ElementType> = {
+  Feather,
+  Flame,
+  Sun,
+  Heart,
+  Compass,
+  Flower2,
+  CircleDot,
+};
 
 interface ExperienceCardProps {
   experience: SacredExperience;
@@ -13,12 +21,12 @@ interface ExperienceCardProps {
 }
 
 export function ExperienceCard({ experience, featured = false }: ExperienceCardProps) {
-  const Icon = iconMap[experience.icon_name] || Sparkles;
+  const Icon = iconMap[experience.icon_name] || CircleDot;
   const meta = [
-    { icon: Layers, text: `Stage ${String(experience.order).padStart(2, '0')}` },
+    { icon: Layers, text: `Session ${String(experience.order).padStart(2, '0')}` },
     { icon: Icon, text: experience.subtitle },
     { icon: MapPin, text: 'Rishikesh' },
-    { icon: Users, text: 'In person' },
+    { icon: Users, text: 'In-Person & Online' },
   ];
 
   return (

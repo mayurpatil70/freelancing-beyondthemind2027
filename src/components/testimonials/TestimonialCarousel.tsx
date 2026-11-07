@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Testimonial } from '@/types';
-import { Quote, ChevronLeft, ChevronRight, Maximize2, MapPin, Sparkles } from 'lucide-react';
+import { Quote, ChevronLeft, ChevronRight, Maximize2, MapPin } from 'lucide-react';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
 
 interface TestimonialCarouselProps {
@@ -45,7 +45,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
           <div className="lg:col-span-7 space-y-6">
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-400/30 text-[10px] tracking-widest uppercase text-gold-300 font-semibold">
-                <Sparkles className="w-3 h-3 text-gold-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
                 Verified Seeker Experience
               </span>
               <span className="text-xs text-stone-subtle/70">{current.edition}</span>

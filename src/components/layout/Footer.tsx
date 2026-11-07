@@ -36,14 +36,14 @@ export function Footer() {
               release deep-seated blocks, and awaken the vastness of being amidst the serenity of Rishikesh.
             </p>
 
-            <div className="flex items-center gap-4 text-xs text-gold-400/90 font-light pt-1">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-gold-400/90 font-light pt-1">
               <span className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                Oct 6–9, 2027
+                <Calendar className="w-3.5 h-3.5 text-gold-400 shrink-0" />
+                Arrival: Oct 5, 2027 (2:45 PM) • Sessions: Oct 6–9
               </span>
-              <span className="text-gold-500/40">•</span>
+              <span className="text-gold-500/40 hidden sm:inline">•</span>
               <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-gold-400" />
+                <MapPin className="w-3.5 h-3.5 text-gold-400 shrink-0" />
                 Rishikesh, Uttarakhand
               </span>
             </div>
@@ -183,9 +183,20 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom bar matching Screenshot 4 */}
         <div className="mt-14 pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-subtle/70 gap-4">
-          <p>© 2027 Beyond the Mind. All Rights Reserved. Rishikesh, Uttarakhand, India.</p>
+          <p>
+            © 2027 Beyond the Mind. All Rights Reserved. Built with <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500 mx-0.5" /> by{' '}
+            <a
+              href="https://linktr.ee/hackerfromhills"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold-400 hover:text-gold-300 underline underline-offset-4 decoration-gold-400/80 font-medium transition-colors"
+            >
+              Team Hackerfromhills
+            </a>
+            .
+          </p>
 
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-gold-300 transition-colors">

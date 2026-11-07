@@ -31,7 +31,7 @@ const moreLinks = [
 
 const sheetLinks = [
   { label: 'Retreat', href: '/about', tag: 'About' },
-  { label: 'Experiences', href: '/experiences', tag: 'Six' },
+  { label: 'Experiences', href: '/experiences', tag: '7 sessions' },
   { label: 'Programme', href: '/programme', tag: '4 days' },
   { label: 'Rishikesh', href: '/rishikesh', tag: 'Ganga' },
   { label: 'Daily Meditation', href: '/daily-meditation', tag: '7:30 pm' },

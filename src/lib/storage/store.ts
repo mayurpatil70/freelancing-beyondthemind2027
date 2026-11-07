@@ -10,6 +10,8 @@ import {
   GalleryItem,
   FAQItem,
   SiteSettings,
+  RishikeshAttraction,
+  WeatherClothingGuide,
 } from '@/types';
 import {
   initialSiteSettings,
@@ -18,6 +20,8 @@ import {
   initialTestimonials,
   initialGallery,
   initialFAQs,
+  initialAttractions,
+  initialWeatherClothing,
 } from '@/lib/data/initialData';
 import { getAdminSupabase, isServerSupabaseConfigured } from '@/lib/supabase/server';
 
@@ -28,6 +32,8 @@ interface LocalDatabase {
   testimonials: Testimonial[];
   gallery: GalleryItem[];
   faqs: FAQItem[];
+  attractions?: RishikeshAttraction[];
+  weatherClothing?: WeatherClothingGuide;
   registrations: Registration[];
 }
 
@@ -47,6 +53,8 @@ function ensureLocalDb(): LocalDatabase {
       testimonials: initialTestimonials,
       gallery: initialGallery,
       faqs: initialFAQs,
+      attractions: initialAttractions,
+      weatherClothing: initialWeatherClothing,
       registrations: [
         {
           id: 'BTM27-1001',
@@ -109,7 +117,32 @@ function ensureLocalDb(): LocalDatabase {
 
   try {
     const raw = fs.readFileSync(DB_PATH, 'utf-8');
-    return JSON.parse(raw) as LocalDatabase;
+    const parsed = JSON.parse(raw) as LocalDatabase;
+    let mutated = false;
+    if (!parsed.attractions || parsed.attractions.length === 0) {
+      parsed.attractions = initialAttractions;
+      mutated = true;
+    }
+    if (!parsed.weatherClothing) {
+      parsed.weatherClothing = initialWeatherClothing;
+      mutated = true;
+    }
+    if (!parsed.experiences || parsed.experiences.length < 7) {
+      parsed.experiences = initialExperiences;
+      mutated = true;
+    }
+    if (!parsed.programme || parsed.programme.length < 5 || parsed.programme[0].day_number !== 0) {
+      parsed.programme = initialProgramme;
+      mutated = true;
+    }
+    if (!parsed.settings || !parsed.settings.arrival_date || !parsed.settings.daily_meditation_headline) {
+      parsed.settings = { ...initialSiteSettings, ...(parsed.settings || {}) };
+      mutated = true;
+    }
+    if (mutated) {
+      fs.writeFileSync(DB_PATH, JSON.stringify(parsed, null, 2), 'utf-8');
+    }
+    return parsed;
   } catch {
     return {
       settings: initialSiteSettings,
@@ -118,6 +151,8 @@ function ensureLocalDb(): LocalDatabase {
       testimonials: initialTestimonials,
       gallery: initialGallery,
       faqs: initialFAQs,
+      attractions: initialAttractions,
+      weatherClothing: initialWeatherClothing,
       registrations: [],
     };
   }
@@ -368,5 +403,36 @@ export async function updateFAQsData(faqs: FAQItem[]) {
   db.faqs = faqs;
   writeLocalDb(db);
   return db.faqs;
+}
+
+export async function getAttractions(): Promise<RishikeshAttraction[]> {
+  const db = ensureLocalDb();
+  return db.attractions || initialAttractions;
+}
+
+export async function updateAttractionsData(attractions: RishikeshAttraction[]) {
+  const db = ensureLocalDb();
+  db.attractions = attractions;
+  writeLocalDb(db);
+  return db.attractions;
+}
+
+export async function getWeatherClothing(): Promise<WeatherClothingGuide> {
+  const db = ensureLocalDb();
+  return db.weatherClothing || initialWeatherClothing;
+}
+
+export async function updateWeatherClothingData(data: WeatherClothingGuide) {
+  const db = ensureLocalDb();
+  db.weatherClothing = data;
+  writeLocalDb(db);
+  return db.weatherClothing;
+}
+
+export async function updateGalleryData(gallery: GalleryItem[]) {
+  const db = ensureLocalDb();
+  db.gallery = gallery;
+  writeLocalDb(db);
+  return db.gallery;
 }
 
