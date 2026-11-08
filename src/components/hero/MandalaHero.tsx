@@ -21,10 +21,14 @@ interface MandalaHeroProps {
   videoUrl?: string;
 }
 
-const VIDEOS = {
-  landscape: { src: '/videos/hero/chakras-landscape.mp4', poster: '/videos/hero/chakras-landscape.jpg' },
-  portrait: { src: '/videos/hero/chakras-portrait.mp4', poster: '/videos/hero/chakras-portrait.jpg' },
-};
+const HERO_CLIPS = ['colourful-chakras', 'lotus-chakras', 'chakras'] as const;
+
+function heroVideos() {
+  const q = new URLSearchParams(window.location.search).get('hero');
+  const name = HERO_CLIPS.find((c) => c === q) ?? HERO_CLIPS[0];
+  const v = (o: string) => ({ src: `/videos/hero/${name}-${o}.mp4`, poster: `/videos/hero/${name}-${o}.jpg` });
+  return { landscape: v('landscape'), portrait: v('portrait') };
+}
 
 function splitTitle(raw: string) {
   const clean = raw.replace(/\s+\d{4}\s*$/, '').trim();
@@ -75,7 +79,8 @@ export function MandalaHero({
     const hero = heroRef.current;
     if (!v || !hero) return;
     if (m === 'video') {
-      const pick = hero.offsetWidth / hero.offsetHeight < 0.8 ? VIDEOS.portrait : VIDEOS.landscape;
+      const videos = heroVideos();
+      const pick = hero.offsetWidth / hero.offsetHeight < 0.8 ? videos.portrait : videos.landscape;
       const src = videoUrl || pick.src;
       if (isSlowNetwork()) {
         v.poster = pick.poster;
