@@ -15,7 +15,6 @@ import {
   Sun,
   Shirt,
 } from 'lucide-react';
-import { RegistrationForm } from '@/components/forms/RegistrationForm';
 import { WhatsAppInquiryModal } from '@/components/layout/WhatsAppInquiryModal';
 
 interface RegistrationCardProps {
@@ -31,11 +30,12 @@ export function RegistrationCard({
   googleFormUrl = '',
   googleFormEnabled = false,
 }: RegistrationCardProps) {
-  const [activeMode, setActiveMode] = useState<'demo-form' | 'google-form'>(
-    googleFormEnabled && googleFormUrl ? 'google-form' : 'demo-form'
-  );
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [modalProgram, setModalProgram] = useState(defaultProgramme);
+
+  const effectiveGoogleFormUrl =
+    googleFormUrl ||
+    'https://docs.google.com/forms/d/1HPHKNuIo1eNX7yKxNypG6dQi0XlhRJTV2iTlMUvHEpA/edit?pli=1&pli=1&edit_requested=true';
 
   const openWhatsApp = (prog: string) => {
     setModalProgram(prog);
@@ -297,117 +297,76 @@ export function RegistrationCard({
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. REGISTRATION FORM & GOOGLE FORM DEMO SWITCHER */}
+      {/* 3. OFFICIAL GOOGLE FORM REGISTRATION SECTION */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl bg-[#07261F]/90 border border-gold-500/30 p-6 sm:p-10 shadow-2xl space-y-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-gold-500/20 pb-6">
-          <div>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold block">
-              Official Registration
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
-              Submit Your Registration Details
-            </h2>
-          </div>
+      <div className="rounded-3xl bg-[#07261F]/90 border border-gold-500/30 p-6 sm:p-10 md:p-12 shadow-2xl space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-4">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-400/30 text-[10px] tracking-widest uppercase text-gold-300 font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
+            Official Sanctuary Registration
+          </span>
 
-          {/* Form Mode Toggle */}
-          <div className="inline-flex rounded-full p-1 bg-emerald-950 border border-gold-500/30">
+          <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-tight">
+            Register via Official Google Form
+          </h2>
+
+          <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed">
+            All retreat enquiries and sanctuary place reservations for Beyond the Mind 2027 in Rishikesh and Daily Guided Meditation are processed securely through our official Google Form. Click below to submit your details directly.
+          </p>
+
+          {/* Action Buttons: Google Form & WhatsApp */}
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={effectiveGoogleFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 hover:from-gold-400 hover:via-gold-300 hover:to-gold-500 text-emerald-950 font-bold text-xs uppercase tracking-widest shadow-gold-md hover:scale-105 transition-all text-center"
+            >
+              <span>Open Official Google Form</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+
             <button
               type="button"
-              onClick={() => setActiveMode('demo-form')}
-              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeMode === 'demo-form'
-                  ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 shadow-sm'
-                  : 'text-ivory-200/80 hover:text-gold-300'
-              }`}
+              onClick={() => openWhatsApp(defaultProgramme)}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-gold-500/50 hover:border-gold-400 text-gold-300 hover:text-white hover:bg-gold-500/15 font-semibold text-xs tracking-widest uppercase transition-all"
             >
-              Demo Registration Form
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveMode('google-form')}
-              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeMode === 'google-form'
-                  ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 shadow-sm'
-                  : 'text-ivory-200/80 hover:text-gold-300'
-              }`}
-            >
-              Google Form Mode
+              <MessageCircle className="w-4 h-4 text-gold-400" />
+              <span>Enquire via WhatsApp</span>
             </button>
           </div>
         </div>
 
-        {/* Content based on Active Mode */}
-        {activeMode === 'google-form' ? (
-          <div className="space-y-6 text-center py-8">
-            <div className="max-w-xl mx-auto space-y-4">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-400/30 text-[10px] tracking-widest uppercase text-gold-300 font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
-                Google Form Integration Container
-              </span>
-              <h3 className="font-serif text-2xl text-ivory-50 font-medium">
-                Official Google Registration Form
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
-                {googleFormUrl ? (
-                  'You can complete the official registration form directly embedded below, or click to open it in a new window.'
-                ) : (
-                  'The official Google Form link will be added by the retreat administrator. In the meantime, you can use the Demo Registration Form tab or connect with our coordinators directly on WhatsApp.'
-                )}
-              </p>
+        {/* Embedded Google Form View */}
+        <div className="mt-8 rounded-2xl overflow-hidden border border-gold-500/30 bg-white shadow-2xl">
+          <iframe
+            src={effectiveGoogleFormUrl}
+            width="100%"
+            height="850"
+            frameBorder="0"
+            marginHeight={0}
+            marginWidth={0}
+            title="Official Beyond the Mind Google Registration Form"
+            className="w-full"
+          >
+            Loading Google Form...
+          </iframe>
+        </div>
 
-              {googleFormUrl ? (
-                <div className="pt-4">
-                  <a
-                    href={googleFormUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
-                  >
-                    <span>Open Official Google Form</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-
-                  <div className="mt-8 rounded-2xl overflow-hidden border border-gold-500/30 bg-white">
-                    <iframe
-                      src={googleFormUrl}
-                      width="100%"
-                      height="800"
-                      frameBorder="0"
-                      marginHeight={0}
-                      marginWidth={0}
-                      title="Registration Google Form"
-                    >
-                      Loading Google Form...
-                    </iframe>
-                  </div>
-                </div>
-              ) : (
-                <div className="p-8 rounded-2xl bg-emerald-950/60 border border-gold-500/20 max-w-md mx-auto space-y-4 text-center">
-                  <p className="text-xs text-gold-300">
-                    💡 <em>Admin Tip:</em> You can easily configure the Google Form URL anytime in the{' '}
-                    <Link href="/admin" className="underline font-semibold text-white">
-                      Admin Panel
-                    </Link>{' '}
-                    without touching any code.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setActiveMode('demo-form')}
-                    className="px-6 py-2.5 rounded-full bg-gold-500/20 text-gold-300 border border-gold-400/40 text-xs uppercase tracking-wider font-semibold hover:bg-gold-500 hover:text-emerald-950 transition-all"
-                  >
-                    Switch to Demo Form
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <RegistrationForm
-            allowPaymentProof={allowPaymentProof}
-            defaultProgramme={defaultProgramme}
-          />
-        )}
+        <div className="text-center pt-2">
+          <p className="text-xs text-stone-subtle/70">
+            If the form does not display above, please{' '}
+            <a
+              href={effectiveGoogleFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold-300 underline font-medium hover:text-gold-200"
+            >
+              click here to open the Google Form directly
+            </a>
+            .
+          </p>
+        </div>
       </div>
 
       {/* WhatsApp Modal */}

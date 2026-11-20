@@ -908,39 +908,67 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
             <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-6">
               {/* Google Form Section */}
-              <div className="p-5 rounded-xl bg-emerald-950/70 border border-gold-400/30 space-y-4">
-                <div className="flex items-center justify-between">
+              <div className="p-6 rounded-2xl bg-emerald-950/80 border-2 border-gold-400/40 space-y-4 shadow-xl">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
-                    <h4 className="font-serif text-base text-gold-300 font-semibold">
-                      Google Form Integration
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-400/30 text-[10px] tracking-widest uppercase text-gold-300 font-semibold mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
+                      Website Registration Form URL
+                    </div>
+                    <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                      Google Form Link Management
                     </h4>
-                    <p className="text-xs text-stone-subtle/80">
-                      Paste the Google Form link here. When enabled, the registration page offers instant access to your form.
+                    <p className="text-xs text-stone-subtle/80 mt-1 max-w-2xl leading-relaxed">
+                      Update the official Google Form link anytime. When you click Save, this link updates immediately across the entire website for both on-click redirection and embedded registration.
                     </p>
                   </div>
 
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  <label className="flex items-center gap-2 cursor-pointer bg-[#031713] px-3.5 py-2 rounded-xl border border-gold-500/30 shrink-0">
                     <input
                       type="checkbox"
                       checked={settings.registration_google_form_enabled}
                       onChange={(e) => setSettings({ ...settings, registration_google_form_enabled: e.target.checked })}
                       className="w-4 h-4 rounded text-gold-500 focus:ring-gold-400 bg-emerald-950 border-gold-500/40"
                     />
-                    <span className="text-xs text-ivory-100 font-medium">Enable Google Form Mode</span>
+                    <span className="text-xs text-ivory-100 font-medium">Google Form Active</span>
                   </label>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
-                    Google Form URL (View or Embed link)
+                <div className="space-y-2 pt-2">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
+                    Official Google Form Link (View, Edit, or Share URL)
                   </label>
                   <input
                     type="url"
                     value={settings.registration_google_form_url}
                     onChange={(e) => setSettings({ ...settings, registration_google_form_url: e.target.value })}
-                    placeholder="https://docs.google.com/forms/d/e/.../viewform?embedded=true"
-                    className="w-full px-3 py-2 rounded-xl bg-[#031713] border border-gold-500/30 text-xs text-ivory-100"
+                    placeholder="https://docs.google.com/forms/d/..."
+                    className="w-full px-4 py-3 rounded-xl bg-[#031713] border border-gold-500/40 text-xs text-ivory-100 focus:border-gold-400 focus:ring-1 focus:ring-gold-400 font-mono"
                   />
+                </div>
+
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => saveContent('settings', settings, 'Google Form link saved successfully and updated live across the website!')}
+                    disabled={saving}
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
+                  >
+                    <Save className="w-3.5 h-3.5" />
+                    <span>{saving ? 'Saving...' : 'Save Google Form URL'}</span>
+                  </button>
+
+                  {settings.registration_google_form_url && (
+                    <a
+                      href={settings.registration_google_form_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors"
+                    >
+                      <span>Test Form Link</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                 </div>
               </div>
 

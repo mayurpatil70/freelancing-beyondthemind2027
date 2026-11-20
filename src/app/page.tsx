@@ -66,7 +66,7 @@ export default async function HomePage() {
         />
 
         {/* ========================================================================= */}
-        {/* SECTION 3: RETREAT INTRODUCTION (EDITORIAL) */}
+        {/* SECTION 3: RETREAT INTRODUCTION (EDITORIAL & PHILOSOPHY) */}
         {/* ========================================================================= */}
         <section className="relative py-24 sm:py-32 bg-[#05201a] text-ivory-100 mandala-section overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,18 +77,41 @@ export default async function HomePage() {
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              {/* Editorial Prose */}
-              <div className="lg:col-span-7 space-y-6 text-sm sm:text-base leading-relaxed text-ivory-200/80 font-light">
-                <p className="text-lg sm:text-xl font-serif text-ivory-50 leading-snug">
-                  Modern life conditions us to exist perpetually in the head — calculating, anticipating,
-                  and reacting. In the sacred foothills of Rishikesh, where the holy Ganges descends from the
-                  Himalayas, we create a sanctuary for your consciousness to soften, drop into the heart, and expand.
+              {/* Imagery Feature (LEFT SIDE on Desktop) */}
+              <div className="lg:col-span-5 order-2 lg:order-1">
+                <div className="relative rounded-3xl overflow-hidden border-2 border-gold-500/40 shadow-2xl aspect-[4/5] group">
+                  <Image
+                    src="/images/rishikesh/meditation-himalayas.jpg"
+                    alt="Meditation along the Holy Ganges in the Sacred Foothills of Rishikesh"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#031713]/85 via-black/20 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6 text-white text-xs">
+                    <span className="text-[10px] tracking-widest uppercase text-gold-300 font-semibold block">
+                      Rishikesh Sanctuary
+                    </span>
+                    <p className="font-serif text-base text-ivory-50 mt-0.5">
+                      Where the sacred river carries the breath of the Himalayas.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Editorial Prose (RIGHT SIDE on Desktop) */}
+              <div className="lg:col-span-7 order-1 lg:order-2 space-y-6 text-sm sm:text-base leading-relaxed text-ivory-200/90 font-light">
+                <p className="text-lg sm:text-xl font-serif text-ivory-50 leading-relaxed">
+                  Modern life draws us into a constant cycle of thinking, anticipating and reacting, keeping us immersed in the activity of the mind. In the sacred foothills of Rishikesh, where the holy Ganges flows from the majestic Himalayas, Beyond the Mind offers a space to pause, turn inward and reconnect with the deeper dimensions of your being.
                 </p>
 
-                <p>
-                  Guided by Pradeep Muthukulam and anchored in the spiritual vision of Moola Brahman, Beyond the Mind
-                  is not an intellectual study or standard physical exercise regimen. It is an experiential initiation
-                  into internal space, subtle energy balance, and emotional liberation.
+                <p className="leading-relaxed">
+                  Guided by Pradeep Muthukulam, Beyond the Mind is an invitation to move beyond intellectual understanding and discover spirituality through direct experience.
+                </p>
+
+                <p className="leading-relaxed">
+                  More than a conventional meditation programme or physical practice, it is an experiential journey into inner stillness, subtle energy awareness and emotional liberation. Through guided practices and transformative experiences, participants are invited to explore the silence within, deepen their consciousness and discover a more profound connection with their true essence.
                 </p>
 
                 <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-normal">
@@ -118,28 +141,6 @@ export default async function HomePage() {
                     <span>Read The Complete Philosophy</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                </div>
-              </div>
-
-              {/* Imagery Feature */}
-              <div className="lg:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden border-2 border-gold-500/40 shadow-xl aspect-[4/5]">
-                  <Image
-                    src="/images/rishikesh/meditation-ganges.jpg"
-                    alt="Meditation beside the Sacred Ganges in Rishikesh"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6 text-white text-xs">
-                    <span className="text-[10px] tracking-widest uppercase text-gold-300 font-semibold block">
-                      Rishikesh Sanctuary
-                    </span>
-                    <p className="font-serif text-base text-ivory-50 mt-0.5">
-                      Where the sacred river carries the breath of the Himalayas.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>

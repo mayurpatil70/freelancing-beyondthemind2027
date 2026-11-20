@@ -36,8 +36,9 @@ export const initialSiteSettings: SiteSettings = {
   daily_meditation_fee: "Paid sessions (Details shared on enquiry)",
   daily_meditation_description:
     "Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within. Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves. Whether you are beginning your meditation journey or have an established practice, these sessions offer an opportunity to pause, observe and reconnect with your inner being. Pause. Observe. Transcend.",
-  registration_google_form_url: "",
-  registration_google_form_enabled: false,
+  registration_google_form_url:
+    "https://docs.google.com/forms/d/1HPHKNuIo1eNX7yKxNypG6dQi0XlhRJTV2iTlMUvHEpA/edit?pli=1&pli=1&edit_requested=true",
+  registration_google_form_enabled: true,
   payment_proof_upload_enabled: true,
   google_search_console_token: "google-site-verification=beyond-the-mind-2027",
   google_analytics_id: "G-BTM2027RETREAT",
@@ -437,65 +438,32 @@ export const initialWeatherClothing: WeatherClothingGuide = {
 export const initialTestimonials: Testimonial[] = [
   {
     id: "test-1",
-    name: "About The Retreat & What We Do",
-    location: "Rishikesh, Uttarakhand, India",
-    edition: "Beyond the Mind 2027",
-    highlight_quote: "A retreat is a sacred opportunity to step away from the demands of everyday life and turn inward. It is not merely a physical getaway, but a transformation of consciousness — a journey from the outer world to the infinite world within.",
-    full_testimonial: `ABOUT THE RETREAT:
-A retreat is a sacred opportunity to step away from the demands of everyday life and turn inward. It is a journey of self-discovery, where we quiet the mind, deepen our awareness, reconnect with our inner being, and experience the peace, wisdom, and divinity that reside within us.
-
-"Quiet the mind, Deepen your awareness, Reconnect with your inner being, Experience the divine within."
-
-WHAT WE DO:
-During the retreat, we engage in guided meditation, spiritual practices, kundalini awakening, soul liberation, soul retrieval, deep relaxation, self-reflection, and teachings that help us understand the mind and transcend its limitations. We learn to quiet our thoughts, release emotional burdens, deepen our awareness, and experience inner peace, clarity, and harmony.
-
-BEYOND THE MIND 2026 — A BEAUTIFUL JOURNEY COMPLETED:
-This year's Beyond the Mind – The Divine Retreat concluded on 21st October 2026 at Kanyakumari, with beautiful souls coming together for a transformative experience.
-
-OUR NEXT RETREAT — BEYOND THE MIND 2027:
-October 6, 7, 8, 9, 2027 (Wednesday – Saturday) • 4 Days in Rishikesh, Uttarakhand, India.
-Contact: +91 8075572018 | moolabrahman@gmail.com`,
-    poster_url: "/images/posters/retreat-about-overview.jpg",
+    name: "Beyond the Mind 2026 Testimonial Gathering",
+    location: "Kanyakumari & Rishikesh",
+    edition: "Beyond the Mind 2026",
+    highlight_quote: "A sacred fellowship of seekers coming together for transformative inner awakening.",
+    full_testimonial: "",
+    poster_url: "/images/posters/btm2026-testimonial.jpg",
     is_featured: true,
   },
   {
     id: "test-2",
-    name: "A Journey Into the Infinite Within",
+    name: "Beyond the Mind Sacred Fellowship",
     location: "Rishikesh, Uttarakhand, India",
-    edition: "Beyond the Mind 2027",
-    highlight_quote: "Pause • Turn Inward • Reconnect • Experience the Divine Within",
-    full_testimonial: `Beyond the Mind 2027 — The Divine Retreat invites seekers into a profound spiritual sanctuary along the holy Ganga in Rishikesh.
-
-PAUSE • TURN INWARD • RECONNECT • EXPERIENCE THE DIVINE WITHIN
-
-Surrounded by the whispering Himalayan breezes, ancient riverside temples, and transcendental silence, this 4-day immersion offers a rare sanctuary to dissolve outer distractions and experience the infinite stillness that lives at your core. Guided with deep reverence and energetic clarity under Pradeep Muthukulam.
-
-Dates: October 6, 7, 8, 9, 2027 (Wednesday – Saturday) • 4 Days
-Arrival: October 5, 2027
-Location: Rishikesh, Uttarakhand, India
-Contact: +91 8075572018 | moolabrahman@gmail.com`,
-    poster_url: "/images/posters/divine-retreat-rishikesh.jpg",
+    edition: "Beyond the Mind 2026",
+    highlight_quote: "Quiet the mind, Deepen your awareness, Reconnect with your inner being, Experience the divine within.",
+    full_testimonial: "",
+    poster_url: "/images/posters/btm2026-tribe.jpg",
     is_featured: true,
   },
   {
     id: "test-3",
-    name: "Seven Sacred Retreat Sessions",
+    name: "Kundalini Awakening & Inner Stillness",
     location: "Rishikesh, Uttarakhand, India",
     edition: "Beyond the Mind 2027",
-    highlight_quote: "A structured energetic progression from nervous system reset to light-body dimensional activation and transcendental stillness.",
-    full_testimonial: `The complete 7-stage experiential curriculum of Beyond the Mind 2027 in Rishikesh:
-
-1. STRESS BUSTER SESSION — Release accumulated stress, calm the nervous system and experience deep relaxation and inner lightness.
-2. SOUL RETRIEVAL — Reclaim lost parts of your soul, restore wholeness and reconnect with your true essence.
-3. KUNDALINI AWAKENING — Activate your dormant energy, awaken higher consciousness and experience your inner potential.
-4. SOUL LIBERATION — Release limitations, dissolve old patterns and experience the freedom of your true self.
-5. MERKABA ACTIVATION — Activate your energy field, align with higher dimensions and expand your consciousness.
-6. INNER CHILD HEALING — Heal past wounds, nurture your inner child and reconnect with joy, self-love and emotional freedom.
-7. GUIDED MEDITATION — Experience deep stillness, clarity and inner connection through powerful guided meditations.
-
-October 6, 7, 8, 9, 2027 (Wednesday – Saturday) • 4 Days in Rishikesh, Uttarakhand, India.
-Contact: +91 8075572018 | moolabrahman@gmail.com`,
-    poster_url: "/images/posters/seven-retreat-sessions.jpg",
+    highlight_quote: "Awaken higher consciousness and explore the profound silence within.",
+    full_testimonial: "",
+    poster_url: "/images/posters/btm-kundalini.jpg",
     is_featured: true,
   },
 ];
