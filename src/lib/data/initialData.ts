@@ -20,7 +20,7 @@ export const initialSiteSettings: SiteSettings = {
   retreat_location: "Rishikesh",
   retreat_state: "Uttarakhand, India",
   retreat_modes: "Offline (In-Person Rishikesh) & Online Live",
-  retreat_languages: "English (Hindi translation available for participants who require it)",
+  retreat_languages: "Available in English, Hindi, and Malayalam",
   video_url: "",
   poster_url: "/images/posters/btm2027-retreat-sessions.jpg",
   whatsapp_number: "+91 8075572018",
@@ -61,8 +61,8 @@ export const initialSiteSettings: SiteSettings = {
   hero_notice_card: {
     enabled: true,
     badge: "Next Gathering Notice",
-    title: "October 6–9, 2027 in Rishikesh",
-    description: "Limited to 25 seekers for profound spiritual depth. Arrival on Oct 5. Enquire now for early reservation details and room selection.",
+    title: "Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028",
+    description: "Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028",
     discount_text: "Exclusive Sanctuary Inclusions",
     cta_text: "Enquire for Retreat",
     cta_link: "/register",
@@ -570,7 +570,7 @@ export const initialFAQs: FAQItem[] = [
     id: "faq-2",
     category: "Retreat Experience",
     question: "What language will the retreat sessions be conducted in?",
-    answer: "The retreat sessions will be conducted in English, with Hindi translation available for participants who require it. This ensures all participants experience complete clarity and depth throughout every session.",
+    answer: "The retreat sessions and daily meditations are available in English, Hindi, and Malayalam. This ensures all seekers experience complete clarity, immersion, and spiritual depth throughout every session.",
   },
   {
     id: "faq-3",

@@ -40,6 +40,9 @@ const iconMap: Record<string, React.ElementType> = {
   CircleDot,
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function ExperiencesPage() {
   const experiences = await getExperiences();
   const attractions = await getAttractions();
@@ -78,7 +81,7 @@ export default async function ExperiencesPage() {
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Languages className="w-3.5 h-3.5 text-gold-400" />
-                <span>English (Hindi translation available)</span>
+                <span>Available in English, Hindi & Malayalam</span>
               </span>
             </div>
           </div>

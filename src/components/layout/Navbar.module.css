@@ -28,16 +28,47 @@
 .left { justify-content: flex-end; }
 .right { justify-content: flex-start; }
 
-.wordmark {
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-  white-space: nowrap;
-  transition: opacity 0.4s, width 0.5s;
+.desktopLogo {
+  display: none;
 }
-.wordmark b { font-family: var(--font-cormorant); font-weight: 600; letter-spacing: 0.22em; font-size: 14px; color: #FAF8F5; }
-.wordmark span { font-size: 9.5px; letter-spacing: 0.32em; text-transform: uppercase; color: #D4AF37; margin-top: 3px; }
+
+@media (min-width: 881px) {
+  .desktopLogo {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .desktopLogo:hover {
+    transform: scale(1.08);
+  }
+  .desktopLogoWrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: relative;
+    border: 2px solid #D4AF37;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 4px 14px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    background: #031713;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+  .desktopLogoImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.wordmark {
+  display: none;
+}
 
 .link {
   position: relative;
@@ -154,7 +185,7 @@
   box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(245, 229, 164, 0.06);
 }
 .scrolled .emblem { width: 40px; height: 40px; margin: 0 12px; }
-.scrolled .wordmark { opacity: 0; width: 0; overflow: hidden; }
+.scrolled .desktopLogoWrapper { width: 44px; height: 44px; }
 .scrolled .cta { padding: 9px 18px; }
 
 .burger { display: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.35); position: relative; background: none; cursor: pointer; }

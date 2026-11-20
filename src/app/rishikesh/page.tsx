@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     'Discover Rishikesh, Uttarakhand — holy Ganges, top attractions including bungee jumping and river rafting, October weather, and packing guidance for Beyond the Mind 2027.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function RishikeshPage() {
   const attractions = await getAttractions();
   const weather = await getWeatherClothing();

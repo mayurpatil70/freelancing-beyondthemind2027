@@ -1871,10 +1871,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <div className="flex items-center justify-between border-b border-gold-500/20 pb-3">
                 <div>
                   <h4 className="font-serif text-lg text-ivory-50 font-medium">
-                    Homepage Hero Floating Notice &amp; Offer Card
+                    Homepage Floating News Channel Marquee Ticker
                   </h4>
                   <p className="text-xs text-stone-subtle/80 mt-0.5">
-                    Render custom notices, discounts, next session countdowns, or announcements as an interactive floating card on the homepage hero.
+                    Render live retreat announcements floating like a news channel ticker from left to right. When updated here, it immediately reflects across the live website.
                   </p>
                 </div>
 
@@ -1887,8 +1887,8 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         ...settings,
                         hero_notice_card: {
                           ...(settings.hero_notice_card || {
-                            title: 'October 6–9, 2027 in Rishikesh',
-                            description: 'Limited to 25 seekers for profound spiritual depth.',
+                            title: 'Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028',
+                            description: 'Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028',
                           }),
                           enabled: e.target.checked,
                         },
@@ -1896,7 +1896,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     }
                     className="w-4 h-4 rounded text-gold-500 focus:ring-gold-400 bg-emerald-950 border-gold-500/40"
                   />
-                  <span className="text-xs text-ivory-100 font-medium">Card Active</span>
+                  <span className="text-xs text-ivory-100 font-medium">Marquee Ticker Active</span>
                 </label>
               </div>
 
@@ -1917,7 +1917,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         },
                       })
                     }
-                    placeholder="e.g. Next Gathering Notice, Special Offer, Limited Seats"
+                    placeholder="e.g. Next Gathering Notice, Breaking Announcement"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
@@ -1938,14 +1938,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         },
                       })
                     }
-                    placeholder="e.g. 15% OFF, Next Session Oct 6, Special Inclusions"
+                    placeholder="e.g. Exclusive Sanctuary Inclusions"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
 
                 <div className="sm:col-span-2 space-y-1">
                   <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
-                    Card Title / Headline
+                    Floating Announcement Ticker Headline (Rendered in Marquee)
                   </label>
                   <input
                     type="text"
@@ -1959,14 +1959,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         },
                       })
                     }
-                    placeholder="e.g. October 6–9, 2027 in Rishikesh"
+                    placeholder="e.g. Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
 
                 <div className="sm:col-span-2 space-y-1">
                   <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
-                    Notice Description / Details
+                    Notice Description / Sub-details
                   </label>
                   <textarea
                     rows={2}
@@ -1980,7 +1980,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         },
                       })
                     }
-                    placeholder="e.g. Limited to 25 seekers for profound spiritual depth. Arrival on Oct 5. Enquire now for early reservation details."
+                    placeholder="e.g. Enquire now for early reservation details, accommodation selection, and participation guidelines."
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
@@ -2001,7 +2001,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         },
                       })
                     }
-                    placeholder="e.g. Enquire for Retreat or Claim Offer"
+                    placeholder="e.g. Enquire for Retreat"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
@@ -2026,6 +2026,22 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
+              </div>
+
+              {/* Dedicated Save Button directly on the Floating Notice Card */}
+              <div className="pt-3 border-t border-gold-500/20 flex items-center justify-between">
+                <span className="text-[11px] text-stone-subtle">
+                  Changes save directly and update live on the homepage without rebuild.
+                </span>
+                <button
+                  type="button"
+                  onClick={() => saveContent('settings', settings, 'Floating gathering notice updated and published live!')}
+                  disabled={saving}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50 cursor-pointer"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{saving ? 'Publishing...' : 'Save & Publish Notice Live'}</span>
+                </button>
               </div>
             </div>
           </div>

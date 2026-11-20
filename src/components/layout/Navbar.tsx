@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { shouldPlayIntro } from '@/components/hero/intro';
-import { LanguageToggle } from '@/components/layout/LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { WhatsAppInquiryModal } from '@/components/layout/WhatsAppInquiryModal';
 import styles from './Navbar.module.css';
@@ -147,9 +146,8 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
 
   return (
     <>
-      {/* Desktop Sticky Right Top Corner Action Group: Language Toggle, Clean Separate Enquire & Prominent Logo */}
+      {/* Desktop Sticky Right Top Corner Action Group: Clean Separate Enquire CTA */}
       <div className={styles.topRightCluster} aria-label="Quick Actions">
-        <LanguageToggle />
         <button
           type="button"
           onClick={() => setIsInquiryModalOpen(true)}
@@ -157,16 +155,6 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
         >
           {t('nav.enquire', 'Enquire')}
         </button>
-        <Link href="/" className={styles.cornerLogo} aria-label="Beyond the Mind Home">
-          <Image
-            src="/images/brand/logo.jpg"
-            alt="Beyond the Mind Logo"
-            fill
-            sizes="56px"
-            priority
-            className="object-cover rounded-full"
-          />
-        </Link>
       </div>
 
       <header
@@ -175,9 +163,18 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
       >
         <nav className={styles.inner} aria-label="Main" onMouseLeave={() => setHovered(null)}>
           <div className={cn(styles.side, styles.left)}>
-            <Link href="/" className={styles.wordmark}>
-              <b>BEYOND THE MIND</b>
-              <span>The Divine Retreat</span>
+            {/* Desktop-only Big Prominent Circular Gold Logo */}
+            <Link href="/" className={styles.desktopLogo} aria-label="Beyond the Mind Home">
+              <div className={styles.desktopLogoWrapper}>
+                <Image
+                  src="/images/brand/logo.jpg"
+                  alt="Beyond the Mind Logo"
+                  width={64}
+                  height={64}
+                  priority
+                  className={styles.desktopLogoImg}
+                />
+              </div>
             </Link>
             {leftLinks.map(navLink)}
           </div>
@@ -219,9 +216,6 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
                 ))}
               </div>
             </div>
-
-            {/* Mobile-only Language Toggle */}
-            <LanguageToggle className="sm:hidden" />
 
             <button
               type="button"

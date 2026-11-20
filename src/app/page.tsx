@@ -29,7 +29,8 @@ import {
   Languages,
 } from 'lucide-react';
 
-export const revalidate = 60; // Regenerate at most once per minute
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function HomePage() {
   const settings = await getSiteSettings();
@@ -443,7 +444,7 @@ export default async function HomePage() {
               The Divine Retreat - Rishikesh 2027
             </h3>
             <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Arrival on <strong>Tuesday, October 5, 2027</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Delivered in English, with Hindi translation available for participants who require it. Available in both offline (in-person at Rishikesh) and online live streaming modes. Strict vegetarian food during retreat.
+              Arrival on <strong>Tuesday, October 5, 2027</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Sessions and retreat are available in English, Hindi, and Malayalam. Available in both offline (in-person at Rishikesh) and online live streaming modes. Strict vegetarian food during retreat.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs text-gold-300">
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
@@ -456,7 +457,7 @@ export default async function HomePage() {
                 Offline & Online Options
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                English with Hindi Translation
+                Available in English, Hindi & Malayalam
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 Nourishing Sattvic Dining

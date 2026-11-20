@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     'Overview of retreat participation options for Beyond the Mind 2027 in Rishikesh, including private room, twin sharing, sattvic dining, and retreat materials.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function ParticipationPage() {
   const participationTiers = [
     {
@@ -104,7 +107,7 @@ export default function ParticipationPage() {
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Languages className="w-3.5 h-3.5 text-gold-400" />
-                <span>English (Hindi Translation Available)</span>
+                <span>Available in English, Hindi & Malayalam</span>
               </span>
             </div>
           </div>

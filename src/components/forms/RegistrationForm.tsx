@@ -48,8 +48,9 @@ const PROGRAMME_OPTIONS = [
 
 const LANGUAGE_OPTIONS = [
   { value: 'English', label: 'English' },
-  { value: 'Hindi', label: 'Hindi (Translation Available)' },
-  { value: 'English & Hindi', label: 'English & Hindi Comfortable' },
+  { value: 'Hindi', label: 'Hindi' },
+  { value: 'Malayalam', label: 'Malayalam' },
+  { value: 'English, Hindi & Malayalam', label: 'English, Hindi & Malayalam' },
 ];
 
 export function RegistrationForm({

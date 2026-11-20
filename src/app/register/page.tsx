@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     'Reserve your sanctuary place for Beyond the Mind 2027 in Rishikesh (Arrival Oct 5 • Sessions Oct 6–9) or join Daily Guided Meditation on Zoom. Strict vegetarian food during retreat.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function RegisterPage({
   searchParams,
 }: {
@@ -54,7 +57,7 @@ export default async function RegisterPage({
               </span>
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Languages className="w-3.5 h-3.5 text-gold-400" />
-                <span>English (Hindi Translation Available)</span>
+                <span>Available in English, Hindi & Malayalam</span>
               </span>
             </div>
           </div>

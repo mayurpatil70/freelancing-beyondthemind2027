@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     'Read authentic reflections from Beyond the Mind participants sharing their transformative experiences of Maha Theerthas, Shiva Lingams, and the Shiva Mandala.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function TestimonialsPage() {
   const testimonials = await getTestimonials();
 

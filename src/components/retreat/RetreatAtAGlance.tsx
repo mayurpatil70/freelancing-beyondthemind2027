@@ -15,7 +15,7 @@ export function RetreatAtAGlance({ dates, location, meditationDays, meditationTi
     { icon: Calendar, label: 'Dates', value: 'Oct 6–9, 2027', note: 'Arrival: Oct 5' },
     { icon: Video, label: 'Mode', value: 'Offline & Online', note: 'Rishikesh & Live Stream' },
     { icon: MapPin, label: 'Location', value: location, note: 'Garhwal Himalayan foothills' },
-    { icon: Languages, label: 'Language', value: 'English', note: 'Hindi translation available' },
+    { icon: Languages, label: 'Languages', value: 'English, Hindi & Malayalam', note: 'All sessions & retreats' },
     { icon: Users, label: 'Guided by', value: 'Pradeep Muthukulam', note: 'Curated intimate circle' },
     { icon: Clock, label: 'Regular Practice', value: 'Daily Meditation', note: `${meditationDays} · ${meditationTime} (Zoom)` },
   ];

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import {
   getSiteSettings,
   updateSiteSettings,
@@ -15,6 +16,26 @@ import {
   getGallery,
   updateGalleryData,
 } from '@/lib/storage/store';
+
+function revalidateAllPages() {
+  try {
+    revalidatePath('/', 'layout');
+    revalidatePath('/');
+    revalidatePath('/about');
+    revalidatePath('/experiences');
+    revalidatePath('/programme');
+    revalidatePath('/rishikesh');
+    revalidatePath('/testimonials');
+    revalidatePath('/faq');
+    revalidatePath('/reach');
+    revalidatePath('/participation');
+    revalidatePath('/daily-meditation');
+    revalidatePath('/register');
+    revalidatePath('/contact');
+  } catch (err) {
+    console.warn('Revalidate error:', err);
+  }
+}
 
 function checkAuth(req: NextRequest): boolean {
   const session = req.cookies.get('btm_admin_session');
@@ -61,36 +82,43 @@ export async function POST(req: NextRequest) {
 
     if (type === 'settings') {
       const updated = await updateSiteSettings(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 
     if (type === 'experiences') {
       const updated = await updateExperiencesData(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 
     if (type === 'programme') {
       const updated = await updateProgrammeData(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 
     if (type === 'faqs') {
       const updated = await updateFAQsData(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 
     if (type === 'attractions') {
       const updated = await updateAttractionsData(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 
     if (type === 'weatherClothing') {
       const updated = await updateWeatherClothingData(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 
     if (type === 'gallery') {
       const updated = await updateGalleryData(payload);
+      revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
 

@@ -9,9 +9,11 @@ export function LanguageNote() {
           <Languages className="w-4.5 h-4.5 text-gold-300" aria-hidden="true" />
         </span>
         <p className="text-sm text-ivory-200/85 leading-relaxed">
-          <span className="block text-[10px] tracking-[0.3em] uppercase text-gold-400 mb-0.5">Language</span>
-          Retreat sessions are conducted in <strong className="font-medium text-ivory-50">English</strong>, with{' '}
-          <strong className="font-medium text-ivory-50">Hindi translation</strong> available for participants who require it.
+          <span className="block text-[10px] tracking-[0.3em] uppercase text-gold-400 mb-0.5">Language Inclusivity</span>
+          Retreat and daily meditation sessions are available in{' '}
+          <strong className="font-medium text-ivory-50">English</strong>,{' '}
+          <strong className="font-medium text-ivory-50">Hindi</strong>, and{' '}
+          <strong className="font-medium text-ivory-50">Malayalam</strong>.
         </p>
       </div>
     </div>

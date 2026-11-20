@@ -34,7 +34,7 @@ export const registrationSchema = z.object({
     .min(1, { message: 'Please select a programme' })
     .default('4-Day Divine Retreat Rishikesh (Oct 6–9, 2027)'),
   language_preference: z
-    .enum(['English', 'Hindi', 'English & Hindi'], {
+    .enum(['English', 'Hindi', 'Malayalam', 'English & Hindi', 'English, Hindi & Malayalam'], {
       errorMap: () => ({ message: 'Please select a preferred language' }),
     })
     .default('English'),

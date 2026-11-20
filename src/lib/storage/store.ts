@@ -48,12 +48,32 @@ function ensureLocalDb(): LocalDatabase {
   }
 
   let raw: string | null = null;
+
+  // Check TMP_DB_PATH first if it exists and has newer runtime admin updates
   try {
-    if (fs.existsSync(DB_PATH)) {
-      raw = fs.readFileSync(DB_PATH, 'utf-8');
+    if (fs.existsSync(TMP_DB_PATH)) {
+      if (fs.existsSync(DB_PATH)) {
+        const tmpTime = fs.statSync(TMP_DB_PATH).mtimeMs;
+        const dbTime = fs.statSync(DB_PATH).mtimeMs;
+        if (tmpTime >= dbTime) {
+          raw = fs.readFileSync(TMP_DB_PATH, 'utf-8');
+        }
+      } else {
+        raw = fs.readFileSync(TMP_DB_PATH, 'utf-8');
+      }
     }
   } catch {
     raw = null;
+  }
+
+  if (!raw) {
+    try {
+      if (fs.existsSync(DB_PATH)) {
+        raw = fs.readFileSync(DB_PATH, 'utf-8');
+      }
+    } catch {
+      raw = null;
+    }
   }
 
   if (!raw) {
@@ -73,7 +93,8 @@ function ensureLocalDb(): LocalDatabase {
       if (!parsed.weatherClothing) parsed.weatherClothing = initialWeatherClothing;
       if (!parsed.experiences || parsed.experiences.length === 0) parsed.experiences = initialExperiences;
       if (!parsed.programme || parsed.programme.length === 0) parsed.programme = initialProgramme;
-      if (!parsed.settings || !parsed.settings.arrival_date) parsed.settings = { ...initialSiteSettings, ...(parsed.settings || {}) };
+      if (!parsed.settings) parsed.settings = initialSiteSettings;
+      else parsed.settings = { ...initialSiteSettings, ...parsed.settings };
       memoryDb = parsed;
       return parsed;
     } catch {
@@ -162,11 +183,13 @@ function writeLocalDb(data: LocalDatabase) {
     fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
   } catch (err) {
     console.warn('Could not write to DB_PATH, attempting fallback to TMP_DB_PATH:', err);
-    try {
-      fs.writeFileSync(TMP_DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
-    } catch (tmpErr) {
-      console.warn('Could not write to TMP_DB_PATH either, data preserved in-memory:', tmpErr);
-    }
+  }
+
+  // Always write to TMP_DB_PATH so serverless functions retain latest admin changes
+  try {
+    fs.writeFileSync(TMP_DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (tmpErr) {
+    console.warn('Could not write to TMP_DB_PATH:', tmpErr);
   }
 }
 

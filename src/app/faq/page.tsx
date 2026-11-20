@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     "Answers to common questions regarding Beyond the Mind 2027 in Rishikesh, travel arrangements, dietary needs, session languages, and daily online meditation.",
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function FAQPage() {
   const faqs = await getFAQs();
 

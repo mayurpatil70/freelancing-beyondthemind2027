@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     'Discover the vision, sacred philosophy, and personal guidance behind Beyond the Mind 2027 in Rishikesh. An experiential sanctuary guided by Pradeep Muthukulam under Moola Brahman.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
