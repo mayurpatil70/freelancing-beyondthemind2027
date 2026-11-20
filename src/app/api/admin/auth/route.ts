@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     if (!isValidUser || !isValidPass) {
       return NextResponse.json(
-        { success: false, message: 'Invalid username or password. Please use USER NAME: pradeep123 / PASSWORD: pradeep123' },
+        { success: false, message: 'Invalid username or password. Please check your administrative credentials and try again.' },
         { status: 401 }
       );
     }

@@ -52,7 +52,7 @@ export function MandalaHero({
   tagline,
   dates,
   location,
-  startsAt = '2027-10-05T14:45:00+05:30',
+  startsAt = '2027-10-05T00:00:00+05:30',
   videoUrl,
 }: MandalaHeroProps) {
   const heroRef = useRef<HTMLElement>(null);

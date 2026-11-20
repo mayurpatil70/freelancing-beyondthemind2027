@@ -44,7 +44,7 @@ export default async function RishikeshPage() {
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                <span>Arrival: October 5, 2027 at 2:45 PM • Sessions: Oct 6–9</span>
+                <span>Arrival: October 5, 2027 • Sessions: Oct 6–9</span>
               </span>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default async function RishikeshPage() {
                 </span>
                 <p>
                   To protect retreat peace and privacy, our dedicated sanctuary location is shared privately with
-                  confirmed participants prior to arrival on October 5 at 2:45 PM.
+                  confirmed participants prior to arrival on October 5. Strict vegetarian food during retreat.
                 </p>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default async function RishikeshPage() {
                 <span className="w-6 h-px bg-gold-400/60 inline-block" />
               </div>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-ivory-50 font-light">
-                Weather & Clothes Required During Retreat Days
+                Weather & Needed Clothes in Night in Low Temperature
               </h2>
               <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
                 {weather.summary}
@@ -242,7 +242,7 @@ export default async function RishikeshPage() {
               Plan Your Journey to Rishikesh
             </h3>
             <p className="text-xs sm:text-sm text-stone-subtle/85 font-light">
-              Arrival on Tuesday, October 5, 2027 at 2:45 PM. Connect with our concierge for assistance with airport transfers, train connectivity, and local travel arrangements.
+              Arrival on Tuesday, October 5, 2027. Connect with our concierge for assistance with airport transfers, train connectivity, and local travel arrangements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link

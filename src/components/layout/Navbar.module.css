@@ -102,6 +102,9 @@
   margin-left: auto;
   padding: 11px 22px;
   border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   white-space: nowrap;
   font-size: 11px;
   font-weight: 600;
@@ -217,13 +220,72 @@
   .wordmark { display: none; }
   .link { padding: 10px; letter-spacing: 0.14em; }
 }
+@media (min-width: 881px) {
+  .right .cta { display: none; }
+}
+
+.topRightCluster {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
+  right: max(20px, env(safe-area-inset-right, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.separateCta {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #031713;
+  background: linear-gradient(135deg, #F5E5A4, #D4AF37 55%, #C5A059);
+  box-shadow: 0 0 0 1px rgba(245, 229, 164, 0.4), 0 6px 20px -4px rgba(212, 175, 55, 0.55);
+  transition: transform 0.25s, box-shadow 0.25s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.separateCta:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 0 0 1px rgba(245, 229, 164, 0.7), 0 8px 24px -4px rgba(212, 175, 55, 0.75);
+}
+
+.cornerLogo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  border: 2px solid rgba(212, 175, 55, 0.65);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cornerLogo:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.8);
+}
+.cornerLogo img {
+  border-radius: 50%;
+}
+
 @media (max-width: 880px) {
+  .topRightCluster { display: none; }
   .inner { grid-template-columns: auto 1fr; }
   .left, .right .link, .right .more { display: none; }
   .emblem { order: -1; margin: 0; width: 52px; height: 52px; }
   .scrolled .emblem { margin: 0; }
-  .right { justify-content: flex-end; gap: 10px; }
-  .right .cta { padding: 10px 16px; font-size: 10px; }
+  .right { justify-content: flex-end; gap: 8px; }
+  .right .cta { padding: 9px 14px; font-size: 10px; display: inline-flex; }
   .burger { display: block; }
   .scrolled .inner { max-width: 520px; }
 }

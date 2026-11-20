@@ -10,7 +10,7 @@ import { LanguageNote } from '@/components/retreat/LanguageNote';
 export const metadata: Metadata = {
   title: 'Enquiry & Registration | The Divine Retreat & Daily Meditation | Beyond the Mind',
   description:
-    'Reserve your sanctuary place for Beyond the Mind 2027 in Rishikesh (Arrival Oct 5 at 2:45 PM • Sessions Oct 6–9) or join Daily Guided Meditation on Zoom.',
+    'Reserve your sanctuary place for Beyond the Mind 2027 in Rishikesh (Arrival Oct 5 • Sessions Oct 6–9) or join Daily Guided Meditation on Zoom. Strict vegetarian food during retreat.',
 };
 
 export default async function RegisterPage({
@@ -46,7 +46,7 @@ export default async function RegisterPage({
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                <span>Arrival: October 5, 2027 at 2:45 PM</span>
+                <span>Arrival: October 5, 2027</span>
               </span>
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Video className="w-3.5 h-3.5 text-gold-400" />

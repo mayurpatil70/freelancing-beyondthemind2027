@@ -51,15 +51,16 @@
 
 .title {
   margin: 0;
-  font-family: var(--font-cormorant);
+  font-family: var(--font-cormorant), Georgia, serif;
   font-weight: 300;
+  font-style: normal;
   line-height: 0.92;
   font-size: clamp(48px, 9.2vw, 136px);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   text-wrap: balance;
 }
-.ch { display: inline-block; white-space: pre; }
-.accent { font-style: italic; color: #F5E5A4; }
+.ch { display: inline-block; white-space: pre; font-style: normal; }
+.accent { font-style: normal; color: #F5E5A4; }
 
 .sub {
   display: flex;

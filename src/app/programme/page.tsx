@@ -9,9 +9,9 @@ import { getProgramme } from '@/lib/storage/store';
 import { Calendar, Languages, ShieldCheck, ArrowRight, Sun, Shirt } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Retreat Timetable (Arrival Oct 5 at 2:45 PM • Sessions Oct 6–9, 2027) | Beyond the Mind',
+  title: 'Retreat Timetable (Arrival Oct 5 • Sessions Oct 6–9, 2027) | Beyond the Mind',
   description:
-    'Detailed retreat schedule for Beyond the Mind 2027 in Rishikesh. Arrival on Tuesday, October 5 at 2:45 PM, followed by four days of sacred sessions from Stress Buster to Shiva Mandala.',
+    'Detailed retreat schedule for Beyond the Mind 2027 in Rishikesh. Arrival on Tuesday, October 5, followed by four days of sacred sessions from Stress Buster to Shiva Mandala.',
 };
 
 export default async function ProgrammePage() {
@@ -35,13 +35,13 @@ export default async function ProgrammePage() {
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Arrival in Rishikesh on <strong>Tuesday, October 5, 2027 at 2:45 PM</strong>. Intensive sessions run across four days from <strong>Wednesday, October 6 to Saturday, October 9, 2027</strong>.
+              Arrival in Rishikesh on <strong>Tuesday, October 5, 2027</strong>. Intensive sessions run across four days from <strong>Wednesday, October 6 to Saturday, October 9, 2027</strong>. Strict vegetarian food during retreat.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                <span>Sanctuary Arrival: Oct 5 at 2:45 PM</span>
+                <span>Sanctuary Arrival: Oct 5</span>
               </span>
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Languages className="w-3.5 h-3.5 text-gold-400" />
@@ -60,11 +60,11 @@ export default async function ProgrammePage() {
             <div className="flex items-center gap-3">
               <Sun className="w-5 h-5 text-gold-400" />
               <h4 className="font-serif text-lg text-ivory-50 font-medium">
-                Weather & Clothes Required During Retreat Days
+                Weather & Needed Clothes in Night in Low Temperature
               </h4>
             </div>
             <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
-              October brings crystal-clear autumn skies to Rishikesh. Expect comfortable warm daytime temperatures around <strong>28°C–30°C</strong> and cool, crisp mornings and evenings around <strong>15°C–18°C</strong>. Please pack comfortable, loose cotton/linen clothing for meditation postures (modest attire covering shoulders and knees), easy slip-on sandals, and a light woolen shawl or cardigan for early morning and evening riverside sessions.
+              October brings crystal-clear autumn skies to Rishikesh. Expect comfortable warm daytime temperatures around <strong>28°C–30°C</strong> and cool, crisp mornings and nights around <strong>15°C–18°C</strong>. <strong>Needed clothes in night in low temperature:</strong> Please pack warm woolen shawls, cardigans, light jackets, or layers for early morning and evening riverside sessions by Ganga, along with comfortable, loose cotton/linen clothing for daytime meditation postures (modest attire covering shoulders and knees) and easy slip-on sandals.
             </p>
           </div>
 

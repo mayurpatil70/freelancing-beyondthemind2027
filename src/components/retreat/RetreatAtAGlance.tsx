@@ -12,11 +12,11 @@ interface Props {
 
 export function RetreatAtAGlance({ dates, location, meditationDays, meditationTime, className }: Props) {
   const items = [
-    { icon: Calendar, label: 'Dates', value: 'Oct 6–9, 2027', note: 'Arrival: Oct 5 at 2:45 PM' },
+    { icon: Calendar, label: 'Dates', value: 'Oct 6–9, 2027', note: 'Arrival: Oct 5' },
     { icon: Video, label: 'Mode', value: 'Offline & Online', note: 'Rishikesh & Live Stream' },
     { icon: MapPin, label: 'Location', value: location, note: 'Garhwal Himalayan foothills' },
     { icon: Languages, label: 'Language', value: 'English', note: 'Hindi translation available' },
-    { icon: Users, label: 'Guided by', value: 'Pradeep Sir', note: 'Curated intimate circle' },
+    { icon: Users, label: 'Guided by', value: 'Pradeep Muthukulam', note: 'Curated intimate circle' },
     { icon: Clock, label: 'Regular Practice', value: 'Daily Meditation', note: `${meditationDays} · ${meditationTime} (Zoom)` },
   ];
 

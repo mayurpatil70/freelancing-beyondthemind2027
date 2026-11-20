@@ -38,6 +38,7 @@ import {
   Sun,
   Shirt,
   Key,
+  Upload,
   Image as ImageIcon,
   CheckCircle2,
   Globe,
@@ -134,6 +135,8 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     fetchAllContent();
   }, [fetchRegistrations]);
 
+  const [uploading, setUploading] = useState<string | null>(null);
+
   const showSaveSuccess = (msg: string) => {
     setSaveSuccessMessage(msg);
     setTimeout(() => setSaveSuccessMessage(null), 4000);
@@ -148,16 +151,41 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type, payload }),
       });
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success !== false) {
         showSaveSuccess(successMsg);
       } else {
-        alert('Failed to save changes. Please try again.');
+        alert(data.message || 'Failed to save changes. Please try again.');
       }
     } catch (e) {
       console.error('Save error:', e);
       alert('Error connecting to server.');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleUploadImage = async (file: File, onDone: (url: string) => void, uploadId: string) => {
+    setUploading(uploadId);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        onDone(json.url);
+        showSaveSuccess('Photo uploaded successfully! Remember to click save.');
+      } else {
+        alert(json.message || 'Upload failed');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Upload failed. Please check your network connection.');
+    } finally {
+      setUploading(null);
     }
   };
 
@@ -1729,11 +1757,16 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               </button>
             </div>
 
+            {/* Contact Coordinates */}
             <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+              <h4 className="font-serif text-lg text-ivory-50 font-medium border-b border-gold-500/20 pb-2">
+                Official Contact & Social Coordinates
+              </h4>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
-                    WhatsApp Number (International with +)
+                    Primary WhatsApp / Phone (+91...)
                   </label>
                   <input
                     type="text"
@@ -1745,12 +1778,38 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
-                    Official Email
+                    Secondary / Alternate Phone
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.secondary_phone || ''}
+                    onChange={(e) => setSettings({ ...settings, secondary_phone: e.target.value })}
+                    placeholder="e.g. +91 8075572018"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Primary Official Email
                   </label>
                   <input
                     type="email"
                     value={settings.email}
                     onChange={(e) => setSettings({ ...settings, email: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Secondary / Support Email
+                  </label>
+                  <input
+                    type="email"
+                    value={settings.secondary_email || ''}
+                    onChange={(e) => setSettings({ ...settings, secondary_email: e.target.value })}
+                    placeholder="support@beyondthemindretreat.org"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
@@ -1775,6 +1834,195 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     type="text"
                     value={settings.facebook_url}
                     onChange={(e) => setSettings({ ...settings, facebook_url: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    YouTube Channel URL
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.youtube_url || ''}
+                    onChange={(e) => setSettings({ ...settings, youtube_url: e.target.value })}
+                    placeholder="https://www.youtube.com/@BeyondTheMindRetreat"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Twitter / X URL
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.twitter_url || ''}
+                    onChange={(e) => setSettings({ ...settings, twitter_url: e.target.value })}
+                    placeholder="https://twitter.com/beyondthemind"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Homepage Hero Floating Notice / Offer / Discount Card CMS */}
+            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+              <div className="flex items-center justify-between border-b border-gold-500/20 pb-3">
+                <div>
+                  <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                    Homepage Hero Floating Notice &amp; Offer Card
+                  </h4>
+                  <p className="text-xs text-stone-subtle/80 mt-0.5">
+                    Render custom notices, discounts, next session countdowns, or announcements as an interactive floating card on the homepage hero.
+                  </p>
+                </div>
+
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.hero_notice_card?.enabled ?? true}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || {
+                            title: 'October 6–9, 2027 in Rishikesh',
+                            description: 'Limited to 25 seekers for profound spiritual depth.',
+                          }),
+                          enabled: e.target.checked,
+                        },
+                      })
+                    }
+                    className="w-4 h-4 rounded text-gold-500 focus:ring-gold-400 bg-emerald-950 border-gold-500/40"
+                  />
+                  <span className="text-xs text-ivory-100 font-medium">Card Active</span>
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Notice Badge Tag
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.hero_notice_card?.badge || ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || { enabled: true, title: '', description: '' }),
+                          badge: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. Next Gathering Notice, Special Offer, Limited Seats"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Discount / Special Inclusions Tag
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.hero_notice_card?.discount_text || ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || { enabled: true, title: '', description: '' }),
+                          discount_text: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. 15% OFF, Next Session Oct 6, Special Inclusions"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Card Title / Headline
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.hero_notice_card?.title || ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || { enabled: true, description: '' }),
+                          title: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. October 6–9, 2027 in Rishikesh"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Notice Description / Details
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={settings.hero_notice_card?.description || ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || { enabled: true, title: '' }),
+                          description: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. Limited to 25 seekers for profound spiritual depth. Arrival on Oct 5. Enquire now for early reservation details."
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    CTA Button Label
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.hero_notice_card?.cta_text || ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || { enabled: true, title: '', description: '' }),
+                          cta_text: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. Enquire for Retreat or Claim Offer"
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    CTA Action Link / Route
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.hero_notice_card?.cta_link || ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        hero_notice_card: {
+                          ...(settings.hero_notice_card || { enabled: true, title: '', description: '' }),
+                          cta_link: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. /register or /contact or whatsapp"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>

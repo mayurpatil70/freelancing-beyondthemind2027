@@ -11,16 +11,11 @@ interface WhatsAppInquiryModalProps {
   defaultProgram?: string;
 }
 
-const BASE_PROGRAM_OPTIONS: ThemeSelectOption[] = [
+export const RETREAT_INQUIRY_OPTIONS: ThemeSelectOption[] = [
   {
-    value: 'The Divine Retreat - Rishikesh 2027 (Offline)',
-    label: 'The Divine Retreat 2027 (Offline • Rishikesh)',
-    description: 'Arrival Oct 5 at 2:45 PM • Oct 6–9 (4 Days)',
-  },
-  {
-    value: 'The Divine Retreat 2027 (Online Live Stream)',
-    label: 'The Divine Retreat 2027 (Online Live Stream)',
-    description: 'Full 4-day digital immersive transmission',
+    value: 'The Divine Retreat 2027',
+    label: 'The Divine Retreat 2027 (Rishikesh)',
+    description: 'Arrival Oct 5, 2027 • Oct 6–9 (4 Days in Rishikesh)',
   },
   {
     value: 'Daily Guided Meditation (Online Zoom Mon-Fri 7:30 PM)',
@@ -33,6 +28,11 @@ const BASE_PROGRAM_OPTIONS: ThemeSelectOption[] = [
     description: 'Flagship retreat + daily meditation sessions',
   },
   {
+    value: 'Accommodation & Travel Inquiry',
+    label: 'Accommodation & Travel Inquiry',
+    description: 'Room arrangements & travel coordination in Rishikesh',
+  },
+  {
     value: 'General Spiritual Inquiry / Guidance',
     label: 'General Spiritual Inquiry / Guidance',
     description: 'Speak with our retreat coordinators',
@@ -42,7 +42,7 @@ const BASE_PROGRAM_OPTIONS: ThemeSelectOption[] = [
 export function WhatsAppInquiryModal({
   isOpen,
   onClose,
-  defaultProgram = 'The Divine Retreat - Rishikesh 2027 (Offline)',
+  defaultProgram = 'The Divine Retreat 2027',
 }: WhatsAppInquiryModalProps) {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -52,7 +52,7 @@ export function WhatsAppInquiryModal({
 
   // Dynamically include defaultProgram if it's a custom activity (e.g. Bungee Jumping)
   const programOptions: ThemeSelectOption[] = React.useMemo(() => {
-    const exists = BASE_PROGRAM_OPTIONS.some((opt) => opt.value === defaultProgram);
+    const exists = RETREAT_INQUIRY_OPTIONS.some((opt) => opt.value === defaultProgram);
     if (defaultProgram && !exists) {
       return [
         {
@@ -60,10 +60,10 @@ export function WhatsAppInquiryModal({
           label: defaultProgram,
           description: 'Special Rishikesh activity / custom inquiry',
         },
-        ...BASE_PROGRAM_OPTIONS,
+        ...RETREAT_INQUIRY_OPTIONS,
       ];
     }
-    return BASE_PROGRAM_OPTIONS;
+    return RETREAT_INQUIRY_OPTIONS;
   }, [defaultProgram]);
 
   useEffect(() => {
@@ -93,10 +93,12 @@ export function WhatsAppInquiryModal({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const chosenProgram = selectedProgram || 'The Divine Retreat 2027';
+
     const text = [
       `*Namaste Beyond the Mind Team,*`,
       ``,
-      `I would like to enquire about: *${selectedProgram}*`,
+      `I would like to enquire about: *${chosenProgram}*`,
       fullName ? `• *Full Name:* ${fullName}` : null,
       phone ? `• *Phone/WhatsApp:* ${phone}` : null,
       `• *Participants/Travelers:* ${participants}`,

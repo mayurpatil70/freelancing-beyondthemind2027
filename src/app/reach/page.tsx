@@ -8,15 +8,15 @@ import { Plane, Train, Car, MessageCircle, MapPin, ArrowRight, ShieldCheck, Cale
 import { formatWhatsAppUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'How to Reach Rishikesh (Arrival: Oct 5 at 2:45 PM) | Travel Guide | Beyond the Mind 2027',
+  title: 'How to Reach Rishikesh (Arrival: Oct 5) | Travel Guide | Beyond the Mind 2027',
   description:
-    'Travel guide and connectivity for arriving in Rishikesh on October 5, 2027 by 2:45 PM via Dehradun Airport, Yog Nagari railway, and Delhi highways. Plus October weather & packing guide.',
+    'Travel guide and connectivity for arriving in Rishikesh on October 5, 2027 via Dehradun Airport, Yog Nagari railway, and Delhi highways. Plus October weather & packing guide.',
 };
 
 export default function ReachPage() {
   const whatsappUrl = formatWhatsAppUrl(
     '+91 8075572018',
-    'Namaste Beyond the Mind Concierge,\n\nI need travel assistance and guidance on planning my journey to Rishikesh for Beyond the Mind 2027 (Arrival Oct 5 at 2:45 PM).'
+    'Namaste Beyond the Mind Concierge,\n\nI need travel assistance and guidance on planning my journey to Rishikesh for Beyond the Mind 2027 (Arrival Oct 5).'
   );
 
   return (
@@ -37,13 +37,13 @@ export default function ReachPage() {
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Practical travel connectivity for domestic and international seekers arriving for Beyond the Mind 2027 on <strong>Tuesday, October 5, 2027 by 2:45 PM</strong>.
+              Practical travel connectivity for domestic and international seekers arriving for Beyond the Mind 2027 on <strong>Tuesday, October 5, 2027</strong>.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                <span>Arrival: October 5, 2027 at 2:45 PM</span>
+                <span>Arrival: October 5, 2027</span>
               </span>
             </div>
           </div>

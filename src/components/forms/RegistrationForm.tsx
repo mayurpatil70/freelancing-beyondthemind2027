@@ -26,7 +26,7 @@ interface RegistrationFormProps {
 const PROGRAMME_OPTIONS = [
   {
     value: 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027)',
-    label: 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027 • Arrival Oct 5 at 2:45 PM)',
+    label: 'The Divine Retreat Rishikesh (Offline: Oct 5–9, 2027 • Arrival Oct 5 • Strict Vegetarian)',
   },
   {
     value: 'The Divine Retreat 2027 (Online Live Stream)',

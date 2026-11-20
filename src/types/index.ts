@@ -51,6 +51,7 @@ export interface SacredExperience {
   order: number;
   spiritual_dimension: string;
   highlights: string[];
+  keywords?: string;
 }
 
 export interface ProgrammeDay {
@@ -135,9 +136,9 @@ export interface SiteSettings {
   hero_subtitle: string;
   hero_tagline: string;
   arrival_date: string; // e.g. "October 5, 2027"
-  arrival_time: string; // e.g. "2:45 PM"
+  arrival_time: string; // e.g. "October 5"
   retreat_dates: string; // e.g. "October 6–9, 2027 (Wednesday – Saturday)"
-  retreat_days: string; // e.g. "4 Days (Oct 6–9) • Arrival Oct 5 at 2:45 PM"
+  retreat_days: string; // e.g. "4 Days (Oct 6–9) • Arrival Oct 5"
   retreat_location: string;
   retreat_state: string;
   retreat_modes: string; // e.g. "Offline (Rishikesh) & Online Live"
@@ -162,6 +163,19 @@ export interface SiteSettings {
   meta_keywords?: Record<string, string>;
   google_search_console_token?: string;
   google_analytics_id?: string;
+  youtube_url?: string;
+  twitter_url?: string;
+  secondary_phone?: string;
+  secondary_email?: string;
+  hero_notice_card?: {
+    enabled: boolean;
+    badge?: string;
+    title: string;
+    description: string;
+    discount_text?: string;
+    cta_text?: string;
+    cta_link?: string;
+  };
   announcement_banner?: {
     enabled: boolean;
     text: string;

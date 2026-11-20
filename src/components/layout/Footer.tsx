@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Instagram, Facebook, MapPin, Calendar, Heart, Lock } from 'lucide-react';
+import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Lock } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -39,7 +39,7 @@ export function Footer() {
             <div className="flex flex-wrap items-center gap-3 text-xs text-gold-400/90 font-light pt-1">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-gold-400 shrink-0" />
-                Arrival: Oct 5, 2027 (2:45 PM) • Sessions: Oct 6–9
+                Arrival: Oct 5, 2027 • Sessions: Oct 6–9
               </span>
               <span className="text-gold-500/40 hidden sm:inline">•</span>
               <span className="flex items-center gap-1.5">
@@ -186,6 +186,24 @@ export function Footer() {
                   className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
                 >
                   <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@BeyondTheMindRetreat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube Channel"
+                  className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://twitter.com/beyondthemind"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter / X"
+                  className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                >
+                  <Twitter className="w-4 h-4" />
                 </a>
               </div>
             </div>

@@ -10,7 +10,7 @@ import { Heart, Compass, ShieldCheck, ArrowRight, Sun, Award, Calendar } from 'l
 export const metadata: Metadata = {
   title: 'About the Retreat & Spiritual Guidance | Beyond the Mind 2027',
   description:
-    'Discover the vision, sacred philosophy, and personal guidance behind Beyond the Mind 2027 in Rishikesh. An experiential sanctuary guided by Pradeep Sir under Moola Brahman.',
+    'Discover the vision, sacred philosophy, and personal guidance behind Beyond the Mind 2027 in Rishikesh. An experiential sanctuary guided by Pradeep Muthukulam under Moola Brahman.',
 };
 
 export default function AboutPage() {
@@ -103,24 +103,24 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Guidance by Pradeep Sir & Moola Brahman */}
+        {/* Guidance by Pradeep Muthukulam & Moola Brahman */}
         <section className="py-24 sm:py-32 bg-[#031713] text-[#FAF8F5] relative">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <SectionHeading
               eyebrow="Spiritual Mentorship"
-              title="Guidance by Pradeep Sir"
+              title="Guidance by Pradeep Muthukulam"
               subtitle="Quiet mastery, energetic precision, and compassionate personal stewardship."
             />
 
             <div className="rounded-3xl bg-[#07261F]/80 border border-gold-500/30 p-8 sm:p-12 shadow-2xl space-y-8">
               <div className="flex flex-col md:flex-row gap-8 items-center">
-                <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-2 border-gold-400/60 shadow-gold-sm shrink-0">
+                <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border-2 border-gold-400/80 shadow-gold-md shrink-0">
                   <Image
-                    src="/images/brand/logo.jpg"
-                    alt="Beyond the Mind Spiritual Vision"
+                    src="/images/brand/pradeep-muthukulam.jpg"
+                    alt="Pradeep Muthukulam - Lead Spiritual Guide"
                     fill
-                    sizes="192px"
-                    className="object-contain"
+                    sizes="208px"
+                    className="object-cover"
                   />
                 </div>
 
@@ -128,9 +128,9 @@ export default function AboutPage() {
                   <span className="text-xs tracking-widest uppercase text-gold-400 font-semibold block">
                     Lead Spiritual Guide & Founder
                   </span>
-                  <h3 className="font-serif text-3xl text-ivory-50 font-light">Pradeep Sir</h3>
+                  <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">Pradeep Muthukulam</h3>
                   <p className="text-sm text-stone-subtle/85 font-light leading-relaxed">
-                    Under the spiritual canopy of Moola Brahman, Pradeep Sir guides seekers with clarity,
+                    Under the spiritual canopy of Moola Brahman, Pradeep Muthukulam guides seekers with clarity,
                     reverence, and an unwavering commitment to safe energetic evolution. With deep attunement
                     to the Maha Theerthas, subtle Kundalini channels, and the Shiva Mandala, his role is not to
                     command, but to hold the sacred field wherein each soul remembers its innate divinity.
@@ -155,7 +155,7 @@ export default function AboutPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
               >
-                <span>Reserve Your Place with Pradeep Sir</span>
+                <span>Reserve Your Place with Pradeep Muthukulam</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

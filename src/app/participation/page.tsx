@@ -35,8 +35,8 @@ export default function ParticipationPage() {
         'A tranquil private room designed for deep individual contemplation and undisturbed rest between intensive meditative processes.',
       inclusions: [
         'Single private room with en-suite bath',
-        'Four days of retreat sessions with Pradeep Sir',
-        'All nourishing sattvic vegetarian meals & teas',
+        'Four days of retreat sessions with Pradeep Muthukulam',
+        'Strict vegetarian food during retreat (nourishing sattvic meals)',
         'Retreat initiation materials & journal',
         'Direct personal energetic check-ins',
       ],
@@ -49,8 +49,8 @@ export default function ParticipationPage() {
         'Share comfortable accommodations with a fellow retreat participant or come with a friend or partner to share the sacred experience.',
       inclusions: [
         'Twin-sharing room with separate beds & en-suite bath',
-        'Four days of retreat sessions with Pradeep Sir',
-        'All nourishing sattvic vegetarian meals & teas',
+        'Four days of retreat sessions with Pradeep Muthukulam',
+        'Strict vegetarian food during retreat (nourishing sattvic meals)',
         'Retreat initiation materials & journal',
         'Shared communal kinship & reflection',
       ],
@@ -63,8 +63,8 @@ export default function ParticipationPage() {
         'Ideal for seekers who have arranged their own accommodations in Rishikesh or residents of Uttarakhand attending the daily programme.',
       inclusions: [
         'Full daily access to all retreat sessions & ceremonies',
-        'Midday sattvic lunch and evening retreat dinner',
-        'Morning & afternoon herbal tea refreshments',
+        'Midday sattvic lunch and evening retreat dinner (Strict vegetarian food)',
+        'Herbal infusions & drinking water',
         'Complete retreat materials & ceremony access',
       ],
       statusNote: 'Enquiry-based availability • Subject to venue capacity',
@@ -90,13 +90,13 @@ export default function ParticipationPage() {
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Thoughtfully curated participation options to support peaceful contemplation, sacred rest, and
-              wholesome nourishment. Available both offline in Rishikesh (Arrival Oct 5 at 2:45 PM) and online via live stream.
+              wholesome nourishment. Available both offline in Rishikesh (Arrival Oct 5) and online via live stream.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                <span>Arrival: Oct 5 at 2:45 PM • Sessions: Oct 6–9</span>
+                <span>Arrival: Oct 5 • Sessions: Oct 6–9</span>
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Video className="w-3.5 h-3.5 text-gold-400" />
@@ -178,22 +178,14 @@ export default function ParticipationPage() {
               Nourishment for Body & Spirit
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 sm:gap-8">
               <div className="p-6 rounded-2xl bg-emerald-950/60 border border-gold-500/15 space-y-2">
                 <Utensils className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-100 font-medium">Pure Sattvic Dining</h4>
+                <h4 className="font-serif text-lg text-ivory-100 font-medium">Strict Vegetarian Food During Retreat</h4>
                 <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
-                  Carefully prepared fresh vegetarian meals designed to keep the digestive tract calm and subtle
-                  energy channels responsive.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-emerald-950/60 border border-gold-500/15 space-y-2">
-                <BookOpen className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-100 font-medium">Retreat Manual & Journal</h4>
-                <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
-                  Supplied guidance materials to document energetic insights, inner child revelations, and
-                  meditation reflections.
+                  Strict vegetarian food during retreat. Wholesome, carefully prepared fresh sattvic vegetarian meals
+                  designed to keep the digestive tract calm and subtle energy channels responsive. We do not provide
+                  any welcome drinks or non-vegetarian items.
                 </p>
               </div>
 
@@ -201,8 +193,8 @@ export default function ParticipationPage() {
                 <HelpCircle className="w-6 h-6 text-gold-400" />
                 <h4 className="font-serif text-lg text-ivory-100 font-medium">Dietary Accommodations</h4>
                 <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
-                  Vegan, gluten-free, or special medical dietary needs can be noted during registration and accommodated
-                  by our kitchen team.
+                  Strict vegetarian, vegan, gluten-free, or special medical dietary needs can be noted during registration
+                  and accommodated by our dedicated kitchen team.
                 </p>
               </div>
             </div>

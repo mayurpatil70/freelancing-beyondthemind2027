@@ -66,7 +66,7 @@ export function RegistrationCard({
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
               <div className="flex items-center gap-2 text-gold-300 font-medium">
                 <Calendar className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Arrival: October 5, 2027 at 2:45 PM</span>
+                <span>Arrival: October 5, 2027</span>
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Clock className="w-4 h-4 text-gold-400 shrink-0" />
@@ -83,14 +83,14 @@ export function RegistrationCard({
             </div>
 
             <p className="text-xs text-stone-subtle/80 leading-relaxed font-light">
-              Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, sattvic meals, and guided Himalayan ceremonies.
+              Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, strict vegetarian food, and guided Himalayan ceremonies.
             </p>
 
             <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
               {[
-                'All 7 Retreat Sessions with Pradeep Sir',
+                'All 7 Retreat Sessions with Pradeep Muthukulam',
                 'Pooja Veppu & Shiva Mandala Merging',
-                'Fresh Sattvic Vegetarian Nourishment',
+                'Strict Vegetarian Food During Retreat (Fresh Sattvic)',
                 'Private single or twin sharing rooms',
                 'Dedicated Concierge & Airport Assistance',
               ].map((inc, i) => (
@@ -281,16 +281,16 @@ export function RegistrationCard({
             </p>
           </div>
 
-          {/* Early Morning / Evening Shawl */}
+          {/* Needed Clothes in Night in Low Temperature */}
           <div className="p-5 rounded-2xl bg-emerald-950/60 border border-gold-500/15 space-y-2">
             <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
-              Morning & Evening Layers
+              Needed Clothes in Night in Low Temperature
             </span>
             <p className="text-ivory-50 font-medium text-base">
-              Light Shawl, Cardigan & Slip-ons
+              Warm Shawl, Cardigan, Light Jacket & Layers
             </p>
             <p className="text-stone-subtle/85 font-light leading-relaxed text-xs">
-              Riverside Ganga Aarti and dawn meditations can be breezy. Bring a light woolen shawl or cardigan, plus easy slip-on sandals.
+              Night and dawn temperatures in Rishikesh drop to 15°C–18°C with crisp Himalayan river winds. Warm woolens, shawls, cardigans, or light jackets are strictly needed for evening riverside Ganga Aarti and dawn meditations, along with easy slip-on sandals.
             </p>
           </div>
         </div>

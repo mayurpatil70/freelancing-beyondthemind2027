@@ -53,7 +53,7 @@ export default async function TestimonialsPage() {
             <p className="text-xs sm:text-sm text-stone-subtle/80 font-light leading-relaxed max-w-2xl mx-auto">
               We never fabricate ratings, buy reviews, or publish simulated endorsements. Every testimony
               published by Beyond the Mind originates from a real participant who completed an in-person or online
-              immersion with Pradeep Sir.
+              immersion with Pradeep Muthukulam.
             </p>
           </div>
 

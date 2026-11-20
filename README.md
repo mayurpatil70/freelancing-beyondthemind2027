@@ -3,7 +3,7 @@
 
 > **"A journey into the Infinite within."**  
 > **October 6–9, 2027 • Rishikesh, Uttarakhand, India**  
-> Guided by **Pradeep Sir** under the spiritual canopy of **Moola Brahman**.
+> Guided by **Pradeep Muthukulam** under the spiritual canopy of **Moola Brahman**.
 
 ---
 
@@ -28,7 +28,7 @@ Every route is fully implemented, responsive, and SEO-optimized:
 | Route | Name | Purpose & Features |
 |---|---|---|
 | `/` | **Grand Sanctuary (Home)** | Full-screen cinematic hero with `HeroVideoPlayer`, editorial introduction, Six Sacred Experiences, 4-day timetable preview, Rishikesh destination showcase, daily online meditation, seeker testimonials, archival poster gallery, registration CTA, and footer. |
-| `/about` | **About the Retreat** | Editorial magazine layout covering the philosophy of Beyond the Mind, meaning of transcending mental narratives, guidance by Pradeep Sir, and community reflections. |
+| `/about` | **About the Retreat** | Editorial magazine layout covering the philosophy of Beyond the Mind, meaning of transcending mental narratives, guidance by Pradeep Muthukulam, and community reflections. |
 | `/experiences` | **Six Sacred Experiences** | Deep Relaxation, Kundalini Awakening, Activate Your Energy Field, Soul Liberation, Inner Child Healing, and Soul Retrieval with anchors, highlights, and guidance ethics. |
 | `/daily-meditation` | **Daily Guided Meditation** | Dedicated page for Monday–Friday 7:30 PM IST paid online Zoom sessions with purpose, session flow, WhatsApp inquiry, and registration. |
 | `/programme` | **Four-Day Divine Programme** | Wednesday Oct 6 to Saturday Oct 9, 2027 expandable day timeline with language support (English with Hindi translation assistance). |

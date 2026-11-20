@@ -177,7 +177,7 @@ export default async function DailyMeditationPage() {
                   The Divine Retreat - Rishikesh 2027
                 </h3>
                 <p className="text-xs sm:text-sm text-stone-subtle/85 font-light max-w-xl">
-                  Arrival: October 5, 2027 at 2:45 PM • Sessions: October 6–9, 2027 in Rishikesh, Uttarakhand. Available both offline in Rishikesh and online via live stream.
+                  Arrival: October 5, 2027 • Sessions: October 6–9, 2027 in Rishikesh, Uttarakhand. Available both offline in Rishikesh and online via live stream. Strict vegetarian food during retreat.
                 </p>
               </div>
               <Link

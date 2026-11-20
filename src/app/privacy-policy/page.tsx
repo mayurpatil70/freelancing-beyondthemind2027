@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
                 <li>Your full name and contact information (email, phone number, and city/country).</li>
                 <li>Your language preferences and interested programme choices.</li>
                 <li>Voluntarily shared dietary preferences or special accommodation considerations.</li>
-                <li>Any personal contemplation or question you choose to share with Pradeep Sir and the retreat team.</li>
+                <li>Any personal contemplation or question you choose to share with Pradeep Muthukulam and the retreat team.</li>
               </ul>
               <p>
                 Participants do not need to register a user account or create an access password to participate.

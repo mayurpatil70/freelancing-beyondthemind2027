@@ -57,10 +57,11 @@ export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2, 'Name is required'),
-  email: z.string().trim().email('Valid email is required'),
+  email: z.string().trim().email('Valid email is required').optional().or(z.literal('')),
   phone: z.string().trim().min(6, 'Valid phone number is required'),
-  subject: z.string().trim().min(3, 'Subject is required'),
-  message: z.string().trim().min(10, 'Message must be at least 10 characters'),
+  subject: z.string().trim().default('The Divine Retreat 2027'),
+  participants: z.coerce.number().min(1).max(25).default(1),
+  message: z.string().trim().min(1, 'Message is required'),
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;

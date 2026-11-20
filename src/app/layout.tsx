@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { Cormorant_Garamond, Inter, Cinzel } from 'next/font/google';
 import './globals.css';
 import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 import { SiteFlight } from '@/components/layout/SiteFlight';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -15,6 +16,13 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cinzel',
   display: 'swap',
 });
 
@@ -32,17 +40,21 @@ export const metadata: Metadata = {
     template: '%s | Beyond the Mind 2027',
   },
   description:
-    'A transformative 4-day spiritual retreat into the Infinite within. Guided by Pradeep Sir in sacred Rishikesh, Uttarakhand from October 6–9, 2027. Featuring Kundalini Awakening, Energy Field Activation, Soul Liberation & Shiva Mandala.',
+    'A transformative 4-day spiritual retreat into the Infinite within. Guided by Pradeep Muthukulam in sacred Rishikesh, Uttarakhand from October 6–9, 2027 (Arrival: October 5). Featuring Kundalini Awakening, Energy Field Activation, Soul Liberation & Shiva Mandala.',
   keywords: [
     'Beyond the Mind 2027',
     'The Divine Retreat',
+    'Pradeep Muthukulam',
+    'Pradeep Muthukulam Meditation',
     'Rishikesh Spiritual Retreat',
     'Kundalini Awakening Retreat India',
     'Meditation Retreat Rishikesh',
-    'Pradeep Sir Meditation',
     'Moola Brahman Retreat',
     'Ganges Meditation Retreat',
     'Soul Liberation Shiva Mandala',
+    'Bio Field Dimensional Expansion',
+    'Daily Guided Meditation Zoom',
+    'Strict vegetarian food during retreat',
   ],
   authors: [{ name: 'Beyond the Mind' }],
   creator: 'Beyond the Mind',
@@ -130,14 +142,19 @@ export default function RootLayout({
         '@id': 'https://beyondthemindretreat.org/#retreat2027',
         name: 'Beyond the Mind 2027 — The Divine Retreat',
         description:
-          'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Sir. Arrival: October 5, 2027 at 2:45 PM. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 7 sacred sessions.',
-        startDate: '2027-10-05T14:45:00+05:30',
+          'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Muthukulam. Arrival: October 5, 2027. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 7 sacred sessions.',
+        startDate: '2027-10-05T00:00:00+05:30',
         endDate: '2027-10-09T18:00:00+05:30',
         eventStatus: 'https://schema.org/EventScheduled',
         eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
         location: {
           '@type': 'Place',
           name: 'Rishikesh Sanctuary beside holy Ganga',
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: '30.0869',
+            longitude: '78.2676',
+          },
           address: {
             '@type': 'PostalAddress',
             addressLocality: 'Rishikesh',
@@ -151,7 +168,9 @@ export default function RootLayout({
         },
         performer: {
           '@type': 'Person',
-          name: 'Pradeep Sir',
+          name: 'Pradeep Muthukulam',
+          jobTitle: 'Lead Spiritual Guide',
+          image: 'https://beyondthemindretreat.org/images/brand/pradeep-muthukulam.jpg',
         },
       },
       {
@@ -179,7 +198,7 @@ export default function RootLayout({
             name: 'When does Beyond the Mind 2027 take place?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Participants arrive on October 5, 2027 at 2:45 PM. The 4-day retreat sessions run from October 6 to October 9, 2027 in Rishikesh, Uttarakhand, India.',
+              text: 'Participants arrive on October 5, 2027. The 4-day retreat sessions run from October 6 to October 9, 2027 in Rishikesh, Uttarakhand, India.',
             },
           },
           {
@@ -212,17 +231,23 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable} ${cinzel.variable}`}>
       <head>
+        <meta name="geo.region" content="IN-UT" />
+        <meta name="geo.placename" content="Rishikesh" />
+        <meta name="geo.position" content="30.0869;78.2676" />
+        <meta name="ICBM" content="30.0869, 78.2676" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
       <body className="bg-[#031713] text-[#FAF8F5] antialiased selection:bg-[#D4AF37] selection:text-[#031713]">
-        {children}
-        <SiteFlight />
-        <WhatsAppFloat />
+        <LanguageProvider>
+          {children}
+          <SiteFlight />
+          <WhatsAppFloat />
+        </LanguageProvider>
       </body>
     </html>
   );

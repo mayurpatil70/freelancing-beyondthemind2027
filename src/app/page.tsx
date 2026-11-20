@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { MandalaHero } from '@/components/hero/MandalaHero';
+import { HeroNoticeCard } from '@/components/hero/HeroNoticeCard';
 import { RetreatAtAGlance } from '@/components/retreat/RetreatAtAGlance';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ExperienceCard } from '@/components/experiences/ExperienceCard';
@@ -53,6 +54,8 @@ export default async function HomePage() {
           videoUrl={settings.video_url || undefined}
         />
 
+        <HeroNoticeCard notice={settings.hero_notice_card} />
+
         <RetreatAtAGlance
           className="pt-12 sm:pt-16"
           dates={settings.retreat_dates}
@@ -82,7 +85,7 @@ export default async function HomePage() {
                 </p>
 
                 <p>
-                  Guided by Pradeep Sir and anchored in the spiritual vision of Moola Brahman, Beyond the Mind
+                  Guided by Pradeep Muthukulam and anchored in the spiritual vision of Moola Brahman, Beyond the Mind
                   is not an intellectual study or standard physical exercise regimen. It is an experiential initiation
                   into internal space, subtle energy balance, and emotional liberation.
                 </p>
@@ -175,14 +178,14 @@ export default async function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 5: FOUR DAYS OF TRANSFORMATION (Arrival Oct 5 at 2:45 PM) */}
+        {/* SECTION 5: FOUR DAYS OF TRANSFORMATION (Arrival Oct 5) */}
         {/* ========================================================================= */}
         <section className="py-24 sm:py-32 bg-[#07261F]/60 border-y border-gold-500/20 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow="Arrival: Oct 5, 2027 at 2:45 PM • Sessions: Oct 6–9"
+              eyebrow="Arrival: Oct 5, 2027 • Sessions: Oct 6–9"
               title="Four Days of Transformation"
-              subtitle="Arrive on October 5 at 2:45 PM for sanctuary check-in, orientation, and Ganga acclimatization, followed by four days of progressive spiritual sessions."
+              subtitle="Arrive on October 5 for sanctuary check-in, orientation, and Ganga acclimatization, followed by four days of progressive spiritual sessions."
             />
 
             <ProgrammeTimeline days={programme} />
@@ -389,7 +392,7 @@ export default async function HomePage() {
                     BTM 2027 Retreat Sessions
                   </span>
                   <span className="text-[11px] text-stone-subtle/70 uppercase tracking-wider">
-                    Arrival Oct 5 (2:45 PM) • Oct 6–9, 2027
+                    Arrival Oct 5 • Oct 6–9, 2027
                   </span>
                 </div>
               </div>
@@ -440,11 +443,14 @@ export default async function HomePage() {
               The Divine Retreat - Rishikesh 2027
             </h3>
             <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Arrival on <strong>Tuesday, October 5, 2027 at 2:45 PM</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Delivered in English, with Hindi translation available for participants who require it. Available in both offline (in-person at Rishikesh) and online live streaming modes.
+              Arrival on <strong>Tuesday, October 5, 2027</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Delivered in English, with Hindi translation available for participants who require it. Available in both offline (in-person at Rishikesh) and online live streaming modes. Strict vegetarian food during retreat.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs text-gold-300">
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                Arrival: Oct 5 at 2:45 PM
+                Arrival: Oct 5, 2027
+              </span>
+              <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
+                Strict Vegetarian Food
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 Offline & Online Options

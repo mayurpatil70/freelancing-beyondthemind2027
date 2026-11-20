@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import {
   Registration,
   RegistrationStatus,
@@ -38,132 +39,135 @@ interface LocalDatabase {
 }
 
 const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
+const TMP_DB_PATH = path.join(os.tmpdir(), 'btm-db.json');
+let memoryDb: LocalDatabase | null = null;
 
 function ensureLocalDb(): LocalDatabase {
-  const dir = path.dirname(DB_PATH);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  if (memoryDb) {
+    return memoryDb;
   }
 
-  if (!fs.existsSync(DB_PATH)) {
-    const initialDb: LocalDatabase = {
-      settings: initialSiteSettings,
-      experiences: initialExperiences,
-      programme: initialProgramme,
-      testimonials: initialTestimonials,
-      gallery: initialGallery,
-      faqs: initialFAQs,
-      attractions: initialAttractions,
-      weatherClothing: initialWeatherClothing,
-      registrations: [
-        {
-          id: 'BTM27-1001',
-          full_name: 'Dr. Evelyn Vance',
-          email: 'evelyn.vance@wellnessarchive.org',
-          country_code: '+1',
-          phone: '4155552671',
-          country: 'United States',
-          city: 'San Francisco',
-          programme: '4-Day Divine Retreat Rishikesh',
-          language_preference: 'English',
-          dietary_requirements: 'Sattvic vegan, gluten-free',
-          message: 'Seeking deep inner stillness and guidance on Kundalini energetic integration.',
-          privacy_consent: true,
-          status: 'Confirmed',
-          payment_status: 'Verified',
-          created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
-          updated_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-          admin_notes: [
-            {
-              id: 'note-1',
-              text: 'Verified bank transfer. Single room reserved by the quiet garden wing.',
-              author: 'Admin Concierge',
-              created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-            },
-          ],
-        },
-        {
-          id: 'BTM27-1002',
-          full_name: 'Rajesh Nair',
-          email: 'rajesh.nair@keralaheritage.in',
-          country_code: '+91',
-          phone: '9847012345',
-          country: 'India',
-          city: 'Kochi',
-          programme: '4-Day Divine Retreat Rishikesh',
-          language_preference: 'English & Hindi',
-          dietary_requirements: 'Traditional vegetarian',
-          message: 'Attended BTM 2026 Kanyakumari. Keen to experience the sacred Ganga energy and Shiva Mandala.',
-          privacy_consent: true,
-          status: 'Payment Verification',
-          payment_status: 'Pending Verification',
-          payment_proof_url: '/images/posters/btm2026-testimonial.jpg',
-          created_at: new Date(Date.now() - 86400000).toISOString(),
-          updated_at: new Date(Date.now() - 86400000).toISOString(),
-          admin_notes: [
-            {
-              id: 'note-2',
-              text: 'Uploaded transaction receipt. Awaiting bank clearance check.',
-              author: 'Admin Concierge',
-              created_at: new Date(Date.now() - 86400000).toISOString(),
-            },
-          ],
-        },
-      ],
-    };
-    fs.writeFileSync(DB_PATH, JSON.stringify(initialDb, null, 2), 'utf-8');
-    return initialDb;
-  }
-
+  let raw: string | null = null;
   try {
-    const raw = fs.readFileSync(DB_PATH, 'utf-8');
-    const parsed = JSON.parse(raw) as LocalDatabase;
-    let mutated = false;
-    if (!parsed.attractions || parsed.attractions.length === 0) {
-      parsed.attractions = initialAttractions;
-      mutated = true;
+    if (fs.existsSync(DB_PATH)) {
+      raw = fs.readFileSync(DB_PATH, 'utf-8');
     }
-    if (!parsed.weatherClothing) {
-      parsed.weatherClothing = initialWeatherClothing;
-      mutated = true;
-    }
-    if (!parsed.experiences || parsed.experiences.length < 7) {
-      parsed.experiences = initialExperiences;
-      mutated = true;
-    }
-    if (!parsed.programme || parsed.programme.length < 5 || parsed.programme[0].day_number !== 0) {
-      parsed.programme = initialProgramme;
-      mutated = true;
-    }
-    if (!parsed.settings || !parsed.settings.arrival_date || !parsed.settings.daily_meditation_headline) {
-      parsed.settings = { ...initialSiteSettings, ...(parsed.settings || {}) };
-      mutated = true;
-    }
-    if (mutated) {
-      fs.writeFileSync(DB_PATH, JSON.stringify(parsed, null, 2), 'utf-8');
-    }
-    return parsed;
   } catch {
-    return {
-      settings: initialSiteSettings,
-      experiences: initialExperiences,
-      programme: initialProgramme,
-      testimonials: initialTestimonials,
-      gallery: initialGallery,
-      faqs: initialFAQs,
-      attractions: initialAttractions,
-      weatherClothing: initialWeatherClothing,
-      registrations: [],
-    };
+    raw = null;
   }
+
+  if (!raw) {
+    try {
+      if (fs.existsSync(TMP_DB_PATH)) {
+        raw = fs.readFileSync(TMP_DB_PATH, 'utf-8');
+      }
+    } catch {
+      raw = null;
+    }
+  }
+
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw) as LocalDatabase;
+      if (!parsed.attractions || parsed.attractions.length === 0) parsed.attractions = initialAttractions;
+      if (!parsed.weatherClothing) parsed.weatherClothing = initialWeatherClothing;
+      if (!parsed.experiences || parsed.experiences.length === 0) parsed.experiences = initialExperiences;
+      if (!parsed.programme || parsed.programme.length === 0) parsed.programme = initialProgramme;
+      if (!parsed.settings || !parsed.settings.arrival_date) parsed.settings = { ...initialSiteSettings, ...(parsed.settings || {}) };
+      memoryDb = parsed;
+      return parsed;
+    } catch {
+      // Fall through to initial
+    }
+  }
+
+  const initialDb: LocalDatabase = {
+    settings: initialSiteSettings,
+    experiences: initialExperiences,
+    programme: initialProgramme,
+    testimonials: initialTestimonials,
+    gallery: initialGallery,
+    faqs: initialFAQs,
+    attractions: initialAttractions,
+    weatherClothing: initialWeatherClothing,
+    registrations: [
+      {
+        id: 'BTM27-1001',
+        full_name: 'Dr. Evelyn Vance',
+        email: 'evelyn.vance@wellnessarchive.org',
+        country_code: '+1',
+        phone: '4155552671',
+        country: 'United States',
+        city: 'San Francisco',
+        programme: '4-Day Divine Retreat Rishikesh',
+        language_preference: 'English',
+        dietary_requirements: 'Strict vegetarian, gluten-free',
+        message: 'Seeking deep inner stillness and guidance on Kundalini energetic integration.',
+        privacy_consent: true,
+        status: 'Confirmed',
+        payment_status: 'Verified',
+        created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
+        updated_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+        admin_notes: [
+          {
+            id: 'note-1',
+            text: 'Verified bank transfer. Single room reserved by the quiet garden wing.',
+            author: 'Admin Concierge',
+            created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+          },
+        ],
+      },
+      {
+        id: 'BTM27-1002',
+        full_name: 'Rajesh Nair',
+        email: 'rajesh.nair@keralaheritage.in',
+        country_code: '+91',
+        phone: '9847012345',
+        country: 'India',
+        city: 'Kochi',
+        programme: '4-Day Divine Retreat Rishikesh',
+        language_preference: 'English & Hindi',
+        dietary_requirements: 'Strict vegetarian',
+        message: 'Attended BTM 2026 Kanyakumari. Keen to experience the sacred Ganga energy and Shiva Mandala.',
+        privacy_consent: true,
+        status: 'Payment Verification',
+        payment_status: 'Pending Verification',
+        payment_proof_url: '/images/posters/btm2026-testimonial.jpg',
+        created_at: new Date(Date.now() - 86400000).toISOString(),
+        updated_at: new Date(Date.now() - 86400000).toISOString(),
+        admin_notes: [
+          {
+            id: 'note-2',
+            text: 'Uploaded transaction receipt. Awaiting bank clearance check.',
+            author: 'Admin Concierge',
+            created_at: new Date(Date.now() - 86400000).toISOString(),
+          },
+        ],
+      },
+    ],
+  };
+
+  writeLocalDb(initialDb);
+  memoryDb = initialDb;
+  return initialDb;
 }
 
 function writeLocalDb(data: LocalDatabase) {
-  const dir = path.dirname(DB_PATH);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  memoryDb = data;
+  try {
+    const dir = path.dirname(DB_PATH);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Could not write to DB_PATH, attempting fallback to TMP_DB_PATH:', err);
+    try {
+      fs.writeFileSync(TMP_DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
+    } catch (tmpErr) {
+      console.warn('Could not write to TMP_DB_PATH either, data preserved in-memory:', tmpErr);
+    }
   }
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
 }
 
 // ============================================================================

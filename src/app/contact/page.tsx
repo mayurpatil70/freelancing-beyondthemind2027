@@ -9,6 +9,8 @@ import {
   Mail,
   Instagram,
   Facebook,
+  Youtube,
+  Twitter,
   MapPin,
   Clock,
   MessageCircle,
@@ -140,7 +142,7 @@ export default function ContactPage() {
                   <span className="text-xs uppercase tracking-wider text-gold-400 font-semibold block mb-3">
                     Follow Our Spiritual Journey
                   </span>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <a
                       href="https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm"
                       target="_blank"
@@ -148,7 +150,7 @@ export default function ContactPage() {
                       className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
                     >
                       <Instagram className="w-4 h-4 text-gold-400" />
-                      <span>@thedivineretreat</span>
+                      <span>Instagram</span>
                     </a>
 
                     <a
@@ -158,7 +160,27 @@ export default function ContactPage() {
                       className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
                     >
                       <Facebook className="w-4 h-4 text-gold-400" />
-                      <span>Facebook Community</span>
+                      <span>Facebook</span>
+                    </a>
+
+                    <a
+                      href="https://www.youtube.com/@BeyondTheMindRetreat"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                    >
+                      <Youtube className="w-4 h-4 text-gold-400" />
+                      <span>YouTube</span>
+                    </a>
+
+                    <a
+                      href="https://twitter.com/beyondthemind"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                    >
+                      <Twitter className="w-4 h-4 text-gold-400" />
+                      <span>Twitter / X</span>
                     </a>
                   </div>
                 </div>

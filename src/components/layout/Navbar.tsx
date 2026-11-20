@@ -7,6 +7,9 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { shouldPlayIntro } from '@/components/hero/intro';
+import { LanguageToggle } from '@/components/layout/LanguageToggle';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { WhatsAppInquiryModal } from '@/components/layout/WhatsAppInquiryModal';
 import styles from './Navbar.module.css';
 
 const leftLinks = [
@@ -56,6 +59,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
   const [hidden, setHidden] = useState(syncWithHeroIntro);
   const [introDelay, setIntroDelay] = useState('0s');
   const [topOffset, setTopOffset] = useState(0);
+  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -139,8 +143,32 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
     </Link>
   );
 
+  const { t } = useLanguage();
+
   return (
     <>
+      {/* Desktop Sticky Right Top Corner Action Group: Language Toggle, Clean Separate Enquire & Prominent Logo */}
+      <div className={styles.topRightCluster} aria-label="Quick Actions">
+        <LanguageToggle />
+        <button
+          type="button"
+          onClick={() => setIsInquiryModalOpen(true)}
+          className={styles.separateCta}
+        >
+          {t('nav.enquire', 'Enquire')}
+        </button>
+        <Link href="/" className={styles.cornerLogo} aria-label="Beyond the Mind Home">
+          <Image
+            src="/images/brand/logo.jpg"
+            alt="Beyond the Mind Logo"
+            fill
+            sizes="56px"
+            priority
+            className="object-cover rounded-full"
+          />
+        </Link>
+      </div>
+
       <header
         className={cn(styles.nav, scrolled && styles.scrolled, hidden && styles.intro)}
         style={{ '--d': introDelay, top: topOffset } as React.CSSProperties}
@@ -178,16 +206,30 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
               </button>
               <div id="nav-more" className={cn(styles.panel, moreOpen && styles.panelOpen)}>
                 {moreLinks.map((l) => (
-                  <Link key={l.href} href={l.href} tabIndex={moreOpen ? 0 : -1}>
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    target="_self"
+                    onClick={() => setMoreOpen(false)}
+                    tabIndex={moreOpen ? 0 : -1}
+                  >
                     <b>{l.label}</b>
                     <span>{l.note}</span>
                   </Link>
                 ))}
               </div>
             </div>
-            <Link href="/register" className={styles.cta}>
+
+            {/* Mobile-only Language Toggle */}
+            <LanguageToggle className="sm:hidden" />
+
+            <button
+              type="button"
+              onClick={() => setIsInquiryModalOpen(true)}
+              className={styles.cta}
+            >
               Enquire
-            </Link>
+            </button>
             <button
               ref={burgerRef}
               type="button"
@@ -206,21 +248,41 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
 
       <div id="nav-sheet" ref={sheetRef} className={cn(styles.sheet, sheetOpen && styles.sheetOpen)} aria-hidden={!sheetOpen}>
         <div className={styles.sheetScroll}>
-        <ol>
-          {sheetLinks.map((l, i) => (
-            <li key={l.href} style={{ transitionDelay: sheetOpen ? `${0.25 + i * 0.05}s` : '0s' }}>
-              <Link href={l.href} className={cn(isActive(l.href) && styles.active)} tabIndex={sheetOpen ? 0 : -1}>
-                {l.label}
-                {l.tag && <small>{l.tag}</small>}
-              </Link>
-            </li>
-          ))}
-        </ol>
-        <Link href="/register" className={cn(styles.cta, styles.sheetCta)} tabIndex={sheetOpen ? 0 : -1}>
-          Begin your journey
-        </Link>
+          <ol>
+            {sheetLinks.map((l, i) => (
+              <li key={l.href} style={{ transitionDelay: sheetOpen ? `${0.25 + i * 0.05}s` : '0s' }}>
+                <Link
+                  href={l.href}
+                  target="_self"
+                  onClick={() => setSheetOpen(false)}
+                  className={cn(isActive(l.href) && styles.active)}
+                  tabIndex={sheetOpen ? 0 : -1}
+                >
+                  {l.label}
+                  {l.tag && <small>{l.tag}</small>}
+                </Link>
+              </li>
+            ))}
+          </ol>
+          <button
+            type="button"
+            onClick={() => {
+              setSheetOpen(false);
+              setIsInquiryModalOpen(true);
+            }}
+            className={cn(styles.cta, styles.sheetCta)}
+            tabIndex={sheetOpen ? 0 : -1}
+          >
+            Begin your journey — Enquire
+          </button>
         </div>
       </div>
+
+      <WhatsAppInquiryModal
+        isOpen={isInquiryModalOpen}
+        onClose={() => setIsInquiryModalOpen(false)}
+        defaultProgram="The Divine Retreat 2027"
+      />
     </>
   );
 }

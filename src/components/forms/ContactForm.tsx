@@ -4,14 +4,18 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema, ContactFormData } from '@/lib/validation/registration';
-import { Send, CheckCircle, MessageCircle } from 'lucide-react';
+import { Send, CheckCircle, MessageCircle, Calendar, Users } from 'lucide-react';
 import { formatWhatsAppUrl, openWhatsApp } from '@/lib/utils';
+import { ThemeSelect } from '@/components/ui/ThemeSelect';
+import { RETREAT_INQUIRY_OPTIONS } from '@/components/layout/WhatsAppInquiryModal';
 
 const RETREAT_WHATSAPP = '+91 8075572018';
 
 export function ContactForm() {
   const [submittedUrl, setSubmittedUrl] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState('The Divine Retreat 2027');
+  const [participants, setParticipants] = useState(1);
 
   const {
     register,
@@ -20,22 +24,27 @@ export function ContactForm() {
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      subject: 'The Divine Retreat 2027',
+      participants: 1,
+    },
   });
 
   const onSubmit = async (data: ContactFormData) => {
     setSubmitting(true);
 
+    const chosenProgram = selectedProgram || data.subject || 'The Divine Retreat 2027';
+
     const messageText = [
-      'Namaste Beyond the Mind Team,',
+      '*Namaste Beyond the Mind Team,*',
       '',
-      'I am reaching out via the website enquiry desk:',
-      `• *Name:* ${data.name}`,
-      `• *Email:* ${data.email}`,
+      `I would like to enquire about: *${chosenProgram}*`,
+      `• *Full Name:* ${data.name}`,
       `• *Phone/WhatsApp:* ${data.phone}`,
-      `• *Subject:* ${data.subject}`,
-      `• *Message:* ${data.message}`,
+      `• *Participants/Travelers:* ${participants || 1}`,
+      `• *Note/Query:* ${data.message}`,
       '',
-      'Kindly assist and respond at your earliest convenience. Thank you!',
+      'Kindly share further details, schedule, and participation fee. Thank you!',
     ].join('\n');
 
     const whatsappUrl = formatWhatsAppUrl(RETREAT_WHATSAPP, messageText);
@@ -50,8 +59,8 @@ export function ContactForm() {
           full_name: data.name,
           email: data.email,
           phone: data.phone,
-          programme: `Contact Desk: ${data.subject}`,
-          message: data.message,
+          programme: chosenProgram,
+          message: `${data.message}\n[Travelers: ${participants || 1}]`,
           privacy_consent: true,
         }),
       }).catch((err) => console.error('Contact log error:', err));
@@ -113,21 +122,6 @@ export function ContactForm() {
 
         <div className="space-y-1">
           <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
-            Email Address *
-          </label>
-          <input
-            type="email"
-            {...register('email')}
-            placeholder="email@domain.com"
-            className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
-          />
-          {errors.email && <p className="text-[11px] text-red-400">{errors.email.message}</p>}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
             Phone / WhatsApp *
           </label>
           <input
@@ -138,29 +132,60 @@ export function ContactForm() {
           />
           {errors.phone && <p className="text-[11px] text-red-400">{errors.phone.message}</p>}
         </div>
+      </div>
 
-        <div className="space-y-1">
-          <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
-            Subject *
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+        <div className="sm:col-span-8 space-y-1">
+          <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 text-gold-400" />
+            <span>Enquiry Subject / Program *</span>
+          </label>
+          <ThemeSelect
+            value={selectedProgram}
+            onChange={setSelectedProgram}
+            options={RETREAT_INQUIRY_OPTIONS}
+            placeholder="Select enquiry subject..."
+            className="w-full px-3 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-xs text-ivory-100 focus:outline-none focus:border-gold-400"
+          />
+        </div>
+
+        <div className="sm:col-span-4 space-y-1">
+          <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium flex items-center gap-1.5">
+            <Users className="w-3.5 h-3.5 text-gold-400" />
+            <span>Travelers *</span>
           </label>
           <input
-            type="text"
-            {...register('subject')}
-            placeholder="e.g. Travel Inquiry, Daily Meditation..."
-            className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
+            type="number"
+            min={1}
+            max={25}
+            value={participants}
+            onChange={(e) => setParticipants(parseInt(e.target.value) || 1)}
+            className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs text-center focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
           />
-          {errors.subject && <p className="text-[11px] text-red-400">{errors.subject.message}</p>}
         </div>
       </div>
 
       <div className="space-y-1">
         <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
-          Message *
+          Email Address (Optional)
+        </label>
+        <input
+          type="email"
+          {...register('email')}
+          placeholder="email@domain.com (optional)"
+          className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
+        />
+        {errors.email && <p className="text-[11px] text-red-400">{errors.email.message}</p>}
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium">
+          Note / Query *
         </label>
         <textarea
           {...register('message')}
-          rows={4}
-          placeholder="How may our retreat concierge assist your spiritual journey?"
+          rows={3}
+          placeholder="Your inquiry details or questions..."
           className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 resize-none"
         />
         {errors.message && <p className="text-[11px] text-red-400">{errors.message.message}</p>}

@@ -70,7 +70,7 @@ export default async function ExperiencesPage() {
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-gold-300 pt-2">
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Calendar className="w-3.5 h-3.5 text-gold-400" />
-                <span>Arrival: Oct 5 (2:45 PM) • Sessions: Oct 6–9, 2027</span>
+                <span>Arrival: Oct 5 • Sessions: Oct 6–9, 2027</span>
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Video className="w-3.5 h-3.5 text-gold-400" />
@@ -92,7 +92,7 @@ export default async function ExperiencesPage() {
               <strong className="text-gold-300 font-medium">
                 Sacred Ethics & Guidance:
               </strong>{" "}
-              These sessions are offered as experiential contemplative and energetic practices for inner stillness, self-awareness, and spiritual growth. Guided under the reverence of Pradeep Sir and Beyond the Mind.
+              These sessions are offered as experiential contemplative and energetic practices for inner stillness, self-awareness, and spiritual growth. Guided under the reverence of Pradeep Muthukulam and Beyond the Mind.
             </p>
           </div>
         </div>
@@ -177,6 +177,25 @@ export default async function ExperiencesPage() {
                         ))}
                       </div>
 
+                      {/* SEO Search Keywords for Google & AI Engines */}
+                      {exp.keywords && (
+                        <div className="pt-3">
+                          <span className="text-[10px] uppercase tracking-widest text-gold-400/80 font-semibold block mb-1.5">
+                            Focus Dimensions & SEO Keywords:
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {exp.keywords.split(',').map((kw, ki) => (
+                              <span
+                                key={ki}
+                                className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-gold-500/25 text-gold-300 font-light"
+                              >
+                                #{kw.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       <div className="pt-4 flex flex-wrap items-center gap-4">
                         <Link
                           href={`/register?programme=${encodeURIComponent(exp.title)}`}
@@ -215,7 +234,7 @@ export default async function ExperiencesPage() {
                 Ready to Experience These Seven Dimensions?
               </h3>
               <p className="text-sm text-stone-subtle/85 font-light max-w-xl mx-auto leading-relaxed">
-                Join our intimate gathering in Rishikesh. Arrival on October 5, 2027 at 2:45 PM, with sessions running October 6–9, 2027. Available both in-person and online live stream.
+                Join our intimate gathering in Rishikesh. Arrival on October 5, 2027, with sessions running October 6–9, 2027. Available both in-person and online live stream.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
                 <Link

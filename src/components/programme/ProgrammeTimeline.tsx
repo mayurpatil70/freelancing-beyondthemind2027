@@ -26,7 +26,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
           </span>
         </div>
         <span className="text-[11px] uppercase tracking-wider text-gold-400 font-medium shrink-0">
-          Arrival: Oct 5 (2:45 PM) • Sessions: Oct 6–9, 2027
+          Arrival: Oct 5 • Sessions: Oct 6–9, 2027
         </span>
       </div>
 
@@ -110,7 +110,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
             </div>
 
             <p className="text-[11px] text-stone-subtle/60 italic pt-2">
-              Note: Exact hour-by-hour sequence is attuned organically by Pradeep Sir based on group energetic receptivity and atmospheric rhythms.
+              Note: Exact hour-by-hour sequence is attuned organically by Pradeep Muthukulam based on group energetic receptivity and atmospheric rhythms. Strict vegetarian food during retreat.
             </p>
           </div>
         ))}
