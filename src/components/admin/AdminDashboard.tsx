@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -13,7 +13,9 @@ import {
   WeatherClothingGuide,
   GalleryItem,
   FAQItem,
+  CustomContactLink,
 } from '@/types';
+import { broadcastCMSUpdate } from '@/contexts/CMSContext';
 import {
   Users,
   Settings,
@@ -89,6 +91,34 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   // Receipt Modal state
   const [receiptModalUrl, setReceiptModalUrl] = useState<string | null>(null);
 
+  // New Session Creation Modal state
+  const [showAddSessionModal, setShowAddSessionModal] = useState(false);
+  const [newSessionData, setNewSessionData] = useState<Partial<SacredExperience>>({
+    title: '',
+    subtitle: '',
+    order: 1,
+    spiritual_dimension: '',
+    image: '',
+    short_desc: '',
+    full_desc: '',
+    highlights: [],
+  });
+
+  // New Attraction Creation Modal state
+  const [showAddAttractionModal, setShowAddAttractionModal] = useState(false);
+  const [newAttractionData, setNewAttractionData] = useState<Partial<RishikeshAttraction>>({
+    title: '',
+    category: 'Adrenaline & Adventure',
+    duration: '',
+    location_tip: '',
+    image_url: '',
+    description: '',
+    highlights: [],
+  });
+
+  // Gallery File Input ref
+  const galleryFileInputRef = useRef<HTMLInputElement>(null);
+
   // Fetch registrations
   const fetchRegistrations = useCallback(async () => {
     setLoadingRegs(true);
@@ -154,6 +184,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.success !== false) {
         showSaveSuccess(successMsg);
+        broadcastCMSUpdate(type, payload);
       } else {
         alert(data.message || 'Failed to save changes. Please try again.');
       }
@@ -548,20 +579,17 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <button
                   type="button"
                   onClick={() => {
-                    const newSession: SacredExperience = {
-                      id: `exp-${Date.now()}`,
-                      slug: `session-${experiences.length + 1}`,
-                      title: 'NEW RETREAT SESSION',
-                      subtitle: 'Session Subtitle & Dimension',
-                      short_desc: 'Brief session summary displayed on cards.',
-                      full_desc: 'Detailed experiential description of the practice.',
-                      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80',
-                      icon_name: 'CircleDot',
+                    setNewSessionData({
+                      title: '',
+                      subtitle: '',
                       order: experiences.length + 1,
-                      spiritual_dimension: 'Inner Stillness',
-                      highlights: ['Practice highlight 1', 'Practice highlight 2'],
-                    };
-                    setExperiences([...experiences, newSession]);
+                      spiritual_dimension: '',
+                      image: '',
+                      short_desc: '',
+                      full_desc: '',
+                      highlights: [],
+                    });
+                    setShowAddSessionModal(true);
                   }}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
                 >
@@ -682,27 +710,60 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       />
                     </div>
 
-                    {/* Photo / Image URL */}
-                    <div className="sm:col-span-12 space-y-1">
-                      <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold flex items-center justify-between">
-                        <span>Photo / Image URL</span>
+                    {/* Photo / Image URL & Device Media Upload */}
+                    <div className="sm:col-span-12 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                          Session Photo (Upload from Device or Enter URL)
+                        </label>
                         {exp.image && (
-                          <a href={exp.image} target="_blank" rel="noopener noreferrer" className="text-gold-300 underline">
+                          <a href={exp.image} target="_blank" rel="noopener noreferrer" className="text-gold-300 underline text-[11px]">
                             Preview Image
                           </a>
                         )}
-                      </label>
-                      <input
-                        type="text"
-                        value={exp.image}
-                        onChange={(e) => {
-                          const updated = [...experiences];
-                          updated[index].image = e.target.value;
-                          setExperiences(updated);
-                        }}
-                        placeholder="https://images.unsplash.com/... or /images/..."
-                        className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                      />
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-2 items-center">
+                        <input
+                          type="text"
+                          value={exp.image}
+                          onChange={(e) => {
+                            const updated = [...experiences];
+                            updated[index].image = e.target.value;
+                            setExperiences(updated);
+                          }}
+                          placeholder="https://... or /images/..."
+                          className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                        />
+                        <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>{uploading === `exp-${exp.id}` ? 'Uploading...' : 'Upload Device Image'}</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            disabled={uploading !== null}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                handleUploadImage(
+                                  file,
+                                  (url) => {
+                                    const updated = [...experiences];
+                                    updated[index].image = url;
+                                    setExperiences(updated);
+                                  },
+                                  `exp-${exp.id}`
+                                );
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                      {exp.image && (
+                        <div className="relative w-28 h-20 rounded-lg overflow-hidden border border-gold-500/25 mt-1">
+                          <img src={exp.image} alt={exp.title} className="w-full h-full object-cover" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Short Description */}
@@ -1057,17 +1118,16 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <button
                   type="button"
                   onClick={() => {
-                    const newAttr: RishikeshAttraction = {
-                      id: `attr-${Date.now()}`,
-                      title: 'New Rishikesh Attraction',
+                    setNewAttractionData({
+                      title: '',
                       category: 'Adrenaline & Adventure',
-                      description: 'Experience exciting adventures in Rishikesh...',
-                      highlights: ['Certified safety gear', 'Experienced local guides'],
-                      image_url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
-                      location_tip: 'Rishikesh Valley',
-                      duration: '2 - 3 Hours',
-                    };
-                    setAttractions([...attractions, newAttr]);
+                      duration: '',
+                      location_tip: '',
+                      image_url: '',
+                      description: '',
+                      highlights: [],
+                    });
+                    setShowAddAttractionModal(true);
                   }}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
                 >
@@ -1173,18 +1233,59 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       />
                     </div>
 
-                    <div>
-                      <label className="text-[10px] uppercase text-gold-400 block font-semibold">Photo Image URL</label>
-                      <input
-                        type="text"
-                        value={attr.image_url}
-                        onChange={(e) => {
-                          const updated = [...attractions];
-                          updated[index].image_url = e.target.value;
-                          setAttractions(updated);
-                        }}
-                        className="w-full px-3 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                      />
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <label className="text-[10px] uppercase text-gold-400 block font-semibold">
+                          Photo Image (Upload or URL)
+                        </label>
+                        {attr.image_url && (
+                          <a href={attr.image_url} target="_blank" rel="noopener noreferrer" className="text-gold-300 underline text-[10px]">
+                            Preview
+                          </a>
+                        )}
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-2 items-center">
+                        <input
+                          type="text"
+                          value={attr.image_url}
+                          onChange={(e) => {
+                            const updated = [...attractions];
+                            updated[index].image_url = e.target.value;
+                            setAttractions(updated);
+                          }}
+                          placeholder="https://... or /images/..."
+                          className="w-full px-3 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                        />
+                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>{uploading === `attr-${attr.id}` ? 'Uploading...' : 'Upload Image'}</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            disabled={uploading !== null}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                handleUploadImage(
+                                  file,
+                                  (url) => {
+                                    const updated = [...attractions];
+                                    updated[index].image_url = url;
+                                    setAttractions(updated);
+                                  },
+                                  `attr-${attr.id}`
+                                );
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                      {attr.image_url && (
+                        <div className="relative w-24 h-16 rounded-lg overflow-hidden border border-gold-500/25 mt-1">
+                          <img src={attr.image_url} alt={attr.title} className="w-full h-full object-cover" />
+                        </div>
+                      )}
                     </div>
 
                     <div>
@@ -1662,22 +1763,39 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => {
-                    const newItem: GalleryItem = {
-                      id: `gal-${Date.now()}`,
-                      title: 'New Gallery Image',
-                      category: 'Retreat Experience',
-                      image_url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80',
-                      caption: 'Photo caption and description...',
-                      location: 'Rishikesh, Uttarakhand',
-                    };
-                    setGalleryItems([newItem, ...galleryItems]);
-                  }}
+                  onClick={() => galleryFileInputRef.current?.click()}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
                 >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add Photo</span>
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>{uploading === 'gallery-add' ? 'Uploading...' : 'Add Photo (From Device)'}</span>
                 </button>
+                <input
+                  ref={galleryFileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      handleUploadImage(
+                        file,
+                        (url) => {
+                          const cleanTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                          const newItem: GalleryItem = {
+                            id: `gal-${Date.now()}`,
+                            title: cleanTitle || 'New Gallery Photo',
+                            category: 'Retreat Experience',
+                            image_url: url,
+                            caption: '',
+                            location: 'Rishikesh, Uttarakhand',
+                          };
+                          setGalleryItems([newItem, ...galleryItems]);
+                        },
+                        'gallery-add'
+                      );
+                    }
+                  }}
+                />
 
                 <button
                   type="button"
@@ -1714,17 +1832,41 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-xs text-ivory-100 font-medium"
                     />
 
-                    <input
-                      type="text"
-                      value={item.image_url}
-                      onChange={(e) => {
-                        const updated = [...galleryItems];
-                        updated[index].image_url = e.target.value;
-                        setGalleryItems(updated);
-                      }}
-                      placeholder="Image URL"
-                      className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-[11px] text-stone-subtle/80"
-                    />
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={item.image_url}
+                        onChange={(e) => {
+                          const updated = [...galleryItems];
+                          updated[index].image_url = e.target.value;
+                          setGalleryItems(updated);
+                        }}
+                        placeholder="Image URL"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-[11px] text-stone-subtle/80"
+                      />
+                      <label className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer shrink-0 transition-colors" title="Upload Replacement Photo">
+                        <Upload className="w-3.5 h-3.5" />
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              handleUploadImage(
+                                file,
+                                (url) => {
+                                  const updated = [...galleryItems];
+                                  updated[index].image_url = url;
+                                  setGalleryItems(updated);
+                                },
+                                `gal-item-${item.id}`
+                              );
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
 
                     <input
                       type="text"
@@ -1890,6 +2032,119 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     placeholder="https://twitter.com/beyondthemind"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
+                </div>
+              </div>
+
+              {/* Customizable Contacts & Additional Links */}
+              <div className="pt-4 border-t border-gold-500/20 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h5 className="font-serif text-sm text-gold-300 font-semibold uppercase tracking-wider">
+                      Custom Contacts & Additional Links
+                    </h5>
+                    <p className="text-[11px] text-stone-subtle/70">
+                      Add customizable phone numbers, email addresses, or external links with custom labels.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const list = settings.custom_contacts || [];
+                      const newItem: CustomContactLink = {
+                        id: `contact-${Date.now()}`,
+                        label: 'New Contact / Link',
+                        type: 'phone',
+                        value: '',
+                      };
+                      setSettings({ ...settings, custom_contacts: [...list, newItem] });
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950 border border-gold-500/30 text-gold-300 hover:bg-emerald-900 text-[11px] font-semibold uppercase tracking-wider shrink-0"
+                  >
+                    <Plus className="w-3 h-3" />
+                    <span>Add Custom Link / Contact</span>
+                  </button>
+                </div>
+
+                {(!settings.custom_contacts || settings.custom_contacts.length === 0) && (
+                  <p className="text-xs text-stone-subtle/60 italic py-2">
+                    No custom contacts added yet. Click &quot;Add Custom Link / Contact&quot; to create one.
+                  </p>
+                )}
+
+                <div className="space-y-3">
+                  {(settings.custom_contacts || []).map((c, cIdx) => (
+                    <div
+                      key={c.id}
+                      className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center p-3 rounded-xl bg-emerald-950/70 border border-gold-500/20"
+                    >
+                      <div className="sm:col-span-4 space-y-1">
+                        <label className="text-[10px] uppercase text-gold-400 font-semibold block">Label</label>
+                        <input
+                          type="text"
+                          value={c.label}
+                          placeholder="e.g. Booking Desk, Telegram..."
+                          onChange={(e) => {
+                            const list = [...(settings.custom_contacts || [])];
+                            list[cIdx].label = e.target.value;
+                            setSettings({ ...settings, custom_contacts: list });
+                          }}
+                          className="w-full px-3 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                        />
+                      </div>
+
+                      <div className="sm:col-span-3 space-y-1">
+                        <label className="text-[10px] uppercase text-gold-400 font-semibold block">Type</label>
+                        <select
+                          value={c.type}
+                          onChange={(e) => {
+                            const list = [...(settings.custom_contacts || [])];
+                            list[cIdx].type = e.target.value as 'phone' | 'email' | 'link';
+                            setSettings({ ...settings, custom_contacts: list });
+                          }}
+                          className="w-full px-3 py-1.5 rounded-lg bg-[#041d17] border border-gold-500/30 text-xs text-ivory-100 focus:outline-none focus:border-gold-400"
+                        >
+                          <option value="phone" className="bg-[#031713] text-ivory-100">Phone Number</option>
+                          <option value="email" className="bg-[#031713] text-ivory-100">Email Address</option>
+                          <option value="link" className="bg-[#031713] text-ivory-100">Web Link / URL</option>
+                        </select>
+                      </div>
+
+                      <div className="sm:col-span-4 space-y-1">
+                        <label className="text-[10px] uppercase text-gold-400 font-semibold block">Value</label>
+                        <input
+                          type="text"
+                          value={c.value}
+                          placeholder={
+                            c.type === 'phone'
+                              ? '+91 8075572018'
+                              : c.type === 'email'
+                              ? 'name@domain.com'
+                              : 'https://...'
+                          }
+                          onChange={(e) => {
+                            const list = [...(settings.custom_contacts || [])];
+                            list[cIdx].value = e.target.value;
+                            setSettings({ ...settings, custom_contacts: list });
+                          }}
+                          className="w-full px-3 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                        />
+                      </div>
+
+                      <div className="sm:col-span-1 flex justify-end pt-2 sm:pt-4">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const list = (settings.custom_contacts || []).filter((item) => item.id !== c.id);
+                            setSettings({ ...settings, custom_contacts: list });
+                          }}
+                          className="p-1.5 rounded-lg bg-red-950/60 hover:bg-red-900 border border-red-500/30 text-red-300"
+                          title="Remove custom contact"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -2198,6 +2453,414 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             </button>
             <div className="relative w-full aspect-[3/4]">
               <Image src={receiptModalUrl} alt="Payment Receipt" fill className="object-contain" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* New Session Creation Popup Modal */}
+      {showAddSessionModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+        >
+          <div className="relative w-full max-w-2xl rounded-3xl bg-gradient-to-br from-[#07261F] to-[#031713] border-2 border-gold-400/50 p-6 sm:p-8 shadow-2xl space-y-5 my-8">
+            <div className="flex items-center justify-between border-b border-gold-500/20 pb-3">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
+                  New Retreat Session Card
+                </span>
+                <h4 className="font-serif text-xl sm:text-2xl text-ivory-50 font-medium">
+                  Add New Session
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAddSessionModal(false)}
+                className="w-8 h-8 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-stone-300 hover:text-white flex items-center justify-center"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                <div className="sm:col-span-8 space-y-1">
+                  <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                    Session Title *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newSessionData.title || ''}
+                    placeholder="e.g. STRESS BUSTER SESSION"
+                    onChange={(e) => setNewSessionData({ ...newSessionData, title: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+                <div className="sm:col-span-4 space-y-1">
+                  <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                    Order Sequence
+                  </label>
+                  <input
+                    type="number"
+                    value={newSessionData.order || experiences.length + 1}
+                    onChange={(e) => setNewSessionData({ ...newSessionData, order: parseInt(e.target.value) || 1 })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Subtitle
+                </label>
+                <input
+                  type="text"
+                  value={newSessionData.subtitle || ''}
+                  placeholder="e.g. Nervous System Calm & Inner Lightness"
+                  onChange={(e) => setNewSessionData({ ...newSessionData, subtitle: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Spiritual Dimension Tag
+                </label>
+                <input
+                  type="text"
+                  value={newSessionData.spiritual_dimension || ''}
+                  placeholder="e.g. Deep Relaxation & Somatic Calm"
+                  onChange={(e) => setNewSessionData({ ...newSessionData, spiritual_dimension: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
+
+              {/* Session Photo Upload */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Session Photo (Upload from Device or Enter URL)
+                </label>
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
+                  <input
+                    type="text"
+                    value={newSessionData.image || ''}
+                    placeholder="https://... or /images/..."
+                    onChange={(e) => setNewSessionData({ ...newSessionData, image: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                  <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{uploading === 'new-session-img' ? 'Uploading...' : 'Upload Device Image'}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          handleUploadImage(file, (url) => setNewSessionData((prev) => ({ ...prev, image: url })), 'new-session-img');
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+                {newSessionData.image && (
+                  <div className="relative w-28 h-20 rounded-lg overflow-hidden border border-gold-500/30 mt-1">
+                    <img src={newSessionData.image} alt="Preview" className="w-full h-full object-cover" />
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Card Summary (Short Description)
+                </label>
+                <textarea
+                  rows={2}
+                  value={newSessionData.short_desc || ''}
+                  placeholder="Brief 1-2 sentence overview shown on retreat cards..."
+                  onChange={(e) => setNewSessionData({ ...newSessionData, short_desc: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 resize-none"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Full Practice Description
+                </label>
+                <textarea
+                  rows={3}
+                  value={newSessionData.full_desc || ''}
+                  placeholder="Detailed experiential explanation of what seekers practice..."
+                  onChange={(e) => setNewSessionData({ ...newSessionData, full_desc: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Key Practice Highlights (One per line)
+                </label>
+                <textarea
+                  rows={3}
+                  value={(newSessionData.highlights || []).join('\n')}
+                  placeholder="Highlight point 1&#10;Highlight point 2"
+                  onChange={(e) =>
+                    setNewSessionData({
+                      ...newSessionData,
+                      highlights: e.target.value.split('\n').filter((l) => l.trim().length > 0),
+                    })
+                  }
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 font-mono"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-gold-500/20">
+              <button
+                type="button"
+                onClick={() => setShowAddSessionModal(false)}
+                className="px-5 py-2 rounded-full border border-gold-500/30 text-xs text-stone-subtle hover:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!newSessionData.title}
+                onClick={async () => {
+                  if (!newSessionData.title) return;
+                  const newSession: SacredExperience = {
+                    id: `exp-${Date.now()}`,
+                    slug: `session-${experiences.length + 1}`,
+                    title: newSessionData.title.trim().toUpperCase(),
+                    subtitle: newSessionData.subtitle?.trim() || '',
+                    short_desc: newSessionData.short_desc?.trim() || '',
+                    full_desc: newSessionData.full_desc?.trim() || '',
+                    image:
+                      newSessionData.image?.trim() ||
+                      'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80',
+                    icon_name: 'CircleDot',
+                    order: Number(newSessionData.order) || experiences.length + 1,
+                    spiritual_dimension: newSessionData.spiritual_dimension?.trim() || 'Inner Awakening',
+                    highlights:
+                      newSessionData.highlights && newSessionData.highlights.length > 0
+                        ? newSessionData.highlights
+                        : ['Sacred energy alignment', 'Experiential inner stillness'],
+                  };
+                  const updated = [...experiences, newSession];
+                  setExperiences(updated);
+                  setShowAddSessionModal(false);
+                  await saveContent('experiences', updated, `Session "${newSession.title}" added and saved live!`);
+                }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
+              >
+                <Save className="w-3.5 h-3.5" />
+                <span>Save & Add Session</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* New Attraction Creation Popup Modal */}
+      {showAddAttractionModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+        >
+          <div className="relative w-full max-w-xl rounded-3xl bg-gradient-to-br from-[#07261F] to-[#031713] border-2 border-gold-400/50 p-6 sm:p-8 shadow-2xl space-y-5 my-8">
+            <div className="flex items-center justify-between border-b border-gold-500/20 pb-3">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
+                  New Rishikesh Attraction Card
+                </span>
+                <h4 className="font-serif text-xl sm:text-2xl text-ivory-50 font-medium">
+                  Add Attraction
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAddAttractionModal(false)}
+                className="w-8 h-8 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-stone-300 hover:text-white flex items-center justify-center"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Attraction Title *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newAttractionData.title || ''}
+                  placeholder="e.g. Ganga Aarti at Triveni Ghat"
+                  onChange={(e) => setNewAttractionData({ ...newAttractionData, title: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                    Category
+                  </label>
+                  <select
+                    value={newAttractionData.category || 'Adrenaline & Adventure'}
+                    onChange={(e) =>
+                      setNewAttractionData({
+                        ...newAttractionData,
+                        category: e.target.value as any,
+                      })
+                    }
+                    className="w-full px-3 py-2 rounded-xl bg-[#041d17] border border-gold-500/30 text-xs text-ivory-100 focus:outline-none focus:border-gold-400"
+                  >
+                    <option value="Adrenaline & Adventure" className="bg-[#031713] text-ivory-100">Adrenaline & Adventure</option>
+                    <option value="Sacred Heritage" className="bg-[#031713] text-ivory-100">Sacred Heritage</option>
+                    <option value="Nature & Scenic" className="bg-[#031713] text-ivory-100">Nature & Scenic</option>
+                    <option value="Wellness & Peace" className="bg-[#031713] text-ivory-100">Wellness & Peace</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                    Duration
+                  </label>
+                  <input
+                    type="text"
+                    value={newAttractionData.duration || ''}
+                    placeholder="e.g. 2 - 3 Hours"
+                    onChange={(e) => setNewAttractionData({ ...newAttractionData, duration: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Location / Tip
+                </label>
+                <input
+                  type="text"
+                  value={newAttractionData.location_tip || ''}
+                  placeholder="e.g. Triveni Ghat, Rishikesh"
+                  onChange={(e) => setNewAttractionData({ ...newAttractionData, location_tip: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
+
+              {/* Attraction Photo Upload */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Photo Image (Upload or URL)
+                </label>
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
+                  <input
+                    type="text"
+                    value={newAttractionData.image_url || ''}
+                    placeholder="https://... or /images/..."
+                    onChange={(e) => setNewAttractionData({ ...newAttractionData, image_url: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                  <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{uploading === 'new-attr-img' ? 'Uploading...' : 'Upload Device Image'}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          handleUploadImage(file, (url) => setNewAttractionData((prev) => ({ ...prev, image_url: url })), 'new-attr-img');
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+                {newAttractionData.image_url && (
+                  <div className="relative w-28 h-20 rounded-lg overflow-hidden border border-gold-500/30 mt-1">
+                    <img src={newAttractionData.image_url} alt="Preview" className="w-full h-full object-cover" />
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Description
+                </label>
+                <textarea
+                  rows={3}
+                  value={newAttractionData.description || ''}
+                  placeholder="Experience details, background, what seekers do..."
+                  onChange={(e) => setNewAttractionData({ ...newAttractionData, description: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  Highlights (One per line)
+                </label>
+                <textarea
+                  rows={2}
+                  value={(newAttractionData.highlights || []).join('\n')}
+                  placeholder="Certified guides&#10;Evening sunset timings"
+                  onChange={(e) =>
+                    setNewAttractionData({
+                      ...newAttractionData,
+                      highlights: e.target.value.split('\n').filter((l) => l.trim().length > 0),
+                    })
+                  }
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 font-mono"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-gold-500/20">
+              <button
+                type="button"
+                onClick={() => setShowAddAttractionModal(false)}
+                className="px-5 py-2 rounded-full border border-gold-500/30 text-xs text-stone-subtle hover:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!newAttractionData.title}
+                onClick={async () => {
+                  if (!newAttractionData.title) return;
+                  const newAttr: RishikeshAttraction = {
+                    id: `attr-${Date.now()}`,
+                    title: newAttractionData.title.trim(),
+                    category: newAttractionData.category || 'Adrenaline & Adventure',
+                    duration: newAttractionData.duration?.trim() || '2 - 3 Hours',
+                    location_tip: newAttractionData.location_tip?.trim() || 'Rishikesh Valley',
+                    image_url:
+                      newAttractionData.image_url?.trim() ||
+                      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
+                    description: newAttractionData.description?.trim() || '',
+                    highlights:
+                      newAttractionData.highlights && newAttractionData.highlights.length > 0
+                        ? newAttractionData.highlights
+                        : ['Experienced local guides', 'Serene Himalayan setting'],
+                  };
+                  const updated = [...attractions, newAttr];
+                  setAttractions(updated);
+                  setShowAddAttractionModal(false);
+                  await saveContent('attractions', updated, `Attraction "${newAttr.title}" added and saved live!`);
+                }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
+              >
+                <Save className="w-3.5 h-3.5" />
+                <span>Save & Add Attraction</span>
+              </button>
             </div>
           </div>
         </div>

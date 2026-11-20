@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X, User, Phone, Calendar, Users, MessageSquare } from 'lucide-react';
 import { ThemeSelect, ThemeSelectOption } from '@/components/ui/ThemeSelect';
 import { openWhatsApp } from '@/lib/utils';
+import { useCMS } from '@/contexts/CMSContext';
 
 interface WhatsAppInquiryModalProps {
   isOpen: boolean;
@@ -44,6 +45,10 @@ export function WhatsAppInquiryModal({
   onClose,
   defaultProgram = 'The Divine Retreat 2027',
 }: WhatsAppInquiryModalProps) {
+  const { settings } = useCMS();
+  const rawPhone = settings?.whatsapp_number || '+91 8075572018';
+  const cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [selectedProgram, setSelectedProgram] = useState(defaultProgram);
@@ -109,7 +114,7 @@ export function WhatsAppInquiryModal({
       .filter((line) => line !== null)
       .join('\n');
 
-    const whatsappUrl = `https://wa.me/918075572018?text=${encodeURIComponent(text)}`;
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
 
     // Also log enquiry to CRM database in background
     try {

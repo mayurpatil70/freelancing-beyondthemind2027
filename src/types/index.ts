@@ -131,6 +131,13 @@ export interface WeatherClothingGuide {
   recommended_items: string[];
 }
 
+export interface CustomContactLink {
+  id: string;
+  label: string;
+  type: 'phone' | 'email' | 'link';
+  value: string;
+}
+
 export interface SiteSettings {
   hero_title: string;
   hero_subtitle: string;
@@ -170,6 +177,7 @@ export interface SiteSettings {
   twitter_url?: string;
   secondary_phone?: string;
   secondary_email?: string;
+  custom_contacts?: CustomContactLink[];
   hero_notice_card?: {
     enabled: boolean;
     badge?: string;

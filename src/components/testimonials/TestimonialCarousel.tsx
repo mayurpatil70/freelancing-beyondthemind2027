@@ -1,122 +1,224 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useRef } from 'react';
 import { Testimonial } from '@/types';
-import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
-import { ImageLightbox } from '@/components/media/ImageLightbox';
+import { ChevronLeft, ChevronRight, Quote, Sparkles } from 'lucide-react';
 
 interface TestimonialCarouselProps {
   testimonials?: Testimonial[];
 }
 
-const DEFAULT_SLIDES = [
+export interface ClonedTestimonial {
+  id: string;
+  name: string;
+  location: string;
+  badge: string;
+  paragraphs: string[];
+}
+
+// 4 Exact Clone Testimonials from Screenshots 2, 3, 4, 5 in exact sequential order
+export const CLONED_TESTIMONIALS: ClonedTestimonial[] = [
   {
-    src: '/images/posters/btm2026-testimonial.jpg',
-    alt: 'Beyond the Mind Seeker Experience Photo 1',
-    title: 'Seeker Experience Photo 1',
+    id: 'btm-testimonial-1-neethu',
+    name: 'Neethu',
+    location: 'Muscat, Oman',
+    badge: 'Testimonial from BTM 2026',
+    paragraphs: [
+      'Master, I experienced that day as a second birth. I feel deeply grateful for your care, guidance, and the attention you gave me during that moment. I will always hold this experience close to my heart.',
+      'Thank you for being my guide on this spiritual journey and for helping me feel renewed and hopeful. My heart is filled with love, respect, and gratitude for you.',
+      'May I always receive your guidance and continue growing on my spiritual path. I offer you my heartfelt pranams, Master.',
+    ],
   },
   {
-    src: '/images/posters/btm2026-tribe.jpg',
-    alt: 'Beyond the Mind Seeker Experience Photo 2',
-    title: 'Seeker Experience Photo 2',
+    id: 'btm-testimonial-2-binu',
+    name: 'Binu',
+    location: 'Kottayam, Kerala',
+    badge: 'Testimonial from BTM 2026',
+    paragraphs: [
+      'Words are insufficient to express my deepest and infinite gratitude to you.',
+      'I am returning from this journey as a completely transformed person.',
+      'Stepping away from my usual routines and familiar surroundings into this distinct, powerful environment made these days the most valuable moments of my life.',
+      'For three years, I had been waiting for this opportunity.',
+      'This experience helped me overcome my limitations and shortcomings, blessing me with a profound sense of inner peace and composure. I was able to deeply absorb the universal energy and experience every single process at a deeper level.',
+    ],
   },
   {
-    src: '/images/posters/btm-kundalini.jpg',
-    alt: 'Beyond the Mind Seeker Experience Photo 3',
-    title: 'Seeker Experience Photo 3',
+    id: 'btm-testimonial-3-binu',
+    name: 'Binu',
+    location: 'Kottayam, Kerala',
+    badge: 'Testimonial from BTM 2026',
+    paragraphs: [
+      'The group healing, deep meditation, Shivalinga Activation, and Kundalini Sakthi Activation made me truly realize the state of oneness.',
+      'Though I find it hard to put every intricate detail of these processes into words, I am immensely thankful for receiving such a divine opportunity.',
+      'You have become the guiding light for my eyes and the path for my feet in this life.',
+      'No amount of gratitude will ever be enough.',
+    ],
+  },
+  {
+    id: 'btm-testimonial-4-arjun',
+    name: 'Arjun Pradeep',
+    location: 'Bangalore',
+    badge: 'Testimonial from BTM 2026',
+    paragraphs: [
+      'The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.',
+      'We started the first day with Pooja Veppu for ourselves, which was a great way to begin.',
+      'During the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body.',
+      'On the last day’s meditation, even though there were many mandalas, I felt something really special during the Shiva Mandala and the merging process.',
+      'Learning about entity removal and getting to know about our spirit guides was very insightful. The soul liberation process was also a very good and experiential process.',
+      'Overall, it gave me a wonderful sense of calm and connection.',
+      'Thank you Pradeep Sir and a heartfelt thanks to all the who were part of this retreat.',
+    ],
   },
 ];
 
 export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  // Derive exactly 3 sliding photos
-  const slides =
-    testimonials && testimonials.length >= 3
-      ? testimonials.slice(0, 3).map((t, index) => ({
-          src: t.poster_url || DEFAULT_SLIDES[index % DEFAULT_SLIDES.length].src,
-          alt: t.name || DEFAULT_SLIDES[index % DEFAULT_SLIDES.length].alt,
-          title: t.name || DEFAULT_SLIDES[index % DEFAULT_SLIDES.length].title,
-        }))
-      : DEFAULT_SLIDES;
+  // If testimonials are passed from props or db, map them, otherwise default to the exact 4 clone testimonials
+  const cards: ClonedTestimonial[] = React.useMemo(() => {
+    if (testimonials && testimonials.length > 0 && testimonials[0]?.full_testimonial) {
+      return testimonials.map((t, idx) => ({
+        id: t.id || `test-${idx}`,
+        name: t.name,
+        location: t.location,
+        badge: t.edition || 'Testimonial from BTM 2026',
+        paragraphs: t.full_testimonial.split('\n\n').filter(Boolean),
+      }));
+    }
+    return CLONED_TESTIMONIALS;
+  }, [testimonials]);
 
-  const currentSlide = slides[currentIndex] || slides[0];
+  const current = cards[currentIndex] || cards[0];
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % slides.length);
+    setCurrentIndex((prev) => (prev + 1) % cards.length);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
   };
 
-  const lightboxImages = slides.map((s) => ({
-    src: s.src,
-    alt: s.alt,
-    title: s.title,
-    caption: '',
-  }));
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') handlePrev();
+      if (e.key === 'ArrowRight') handleNext();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [cards.length]);
+
+  // Touch Swipe for mobile sliding
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    if (isLeftSwipe) handleNext();
+    if (isRightSwipe) handlePrev();
+  };
 
   return (
-    <div className="relative max-w-4xl mx-auto">
-      {/* Sliding 3 Photos Card */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-[#07261F] to-[#041a15] border border-gold-500/30 p-6 sm:p-10 md:p-12 shadow-2xl overflow-hidden flex flex-col items-center">
-        {/* Subtle gold ambient glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gold-radial opacity-25 pointer-events-none" />
+    <div className="relative max-w-4xl mx-auto px-2 sm:px-4">
+      {/* Sliding Testimonial Card Container */}
+      <div
+        className="relative rounded-3xl bg-gradient-to-br from-[#07261F] via-[#05211b] to-[#031713] border-2 border-gold-500/40 p-6 sm:p-10 md:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(212,175,55,0.15)] overflow-hidden transition-all duration-500"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Subtle decorative gold ambient glow & corner flourish */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-radial opacity-20 pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-gold-radial opacity-15 pointer-events-none" />
 
-        {/* Carousel Showcase Container */}
-        <div className="relative w-full flex items-center justify-center">
-          {/* Previous Arrow */}
-          <button
-            type="button"
-            onClick={handlePrev}
-            className="absolute left-2 sm:left-6 z-20 p-3 sm:p-4 rounded-full bg-emerald-950/90 hover:bg-emerald-900 border border-gold-500/40 text-gold-300 hover:text-white transition-all shadow-xl hover:scale-110 active:scale-95"
-            aria-label="Previous Photo"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
+        {/* Card Header: Edition Badge & Slide Navigation */}
+        <div className="relative z-10 flex items-center justify-between border-b border-gold-500/20 pb-5 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950/90 border border-gold-400/50 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
+            <span className="text-xs sm:text-sm font-serif tracking-widest text-gold-300 font-semibold uppercase">
+              {current.badge}
+            </span>
+          </div>
 
-          {/* Sliding Photo Card */}
-          <div
-            className="group relative w-full max-w-xs sm:max-w-sm md:max-w-md aspect-[2/3] rounded-2xl overflow-hidden border-2 border-gold-400/50 shadow-gold-md cursor-pointer transition-all duration-500 hover:border-gold-300 hover:shadow-2xl"
-            onClick={() => setLightboxOpen(true)}
-          >
-            <Image
-              src={currentSlide.src}
-              alt={currentSlide.alt}
-              fill
-              sizes="(max-width: 640px) 320px, (max-width: 768px) 384px, 448px"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              priority
-            />
-            <div className="absolute inset-0 bg-emerald-950/10 group-hover:bg-transparent transition-colors" />
+          {/* Top Arrows */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="p-2 sm:p-2.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95"
+              aria-label="Previous Testimonial"
+              title="Previous Testimonial"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="p-2 sm:p-2.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95"
+              aria-label="Next Testimonial"
+              title="Next Testimonial"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          </div>
+        </div>
 
-            {/* Hover overlay with inspection button */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
-              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950/95 border border-gold-400 text-gold-300 text-xs uppercase tracking-wider font-semibold shadow-md">
-                <Maximize2 className="w-4 h-4" />
-                <span>View Full Photo</span>
-              </span>
+        {/* Testimonial Quote & Paragraphs (Exact clone content, no image) */}
+        <div className="relative z-10 space-y-6 min-h-[280px] sm:min-h-[260px] flex flex-col justify-between">
+          <div className="space-y-4">
+            {/* Opening Golden Quote Mark */}
+            <div className="text-gold-400/80 font-serif text-5xl sm:text-6xl -mb-4 leading-none select-none" aria-hidden="true">
+              “
+            </div>
+
+            {/* Paragraphs rendered with clean serene typography */}
+            <div className="space-y-4 text-sm sm:text-base md:text-lg text-ivory-100 font-light leading-relaxed sm:leading-loose">
+              {current.paragraphs.map((p, pIdx) => (
+                <p key={pIdx} className="tracking-wide text-[#FAF8F5]/95">
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            {/* Closing Golden Quote Mark */}
+            <div className="text-right text-gold-400/80 font-serif text-5xl sm:text-6xl -mt-2 leading-none select-none" aria-hidden="true">
+              ”
             </div>
           </div>
 
-          {/* Next Arrow */}
-          <button
-            type="button"
-            onClick={handleNext}
-            className="absolute right-2 sm:right-6 z-20 p-3 sm:p-4 rounded-full bg-emerald-950/90 hover:bg-emerald-900 border border-gold-500/40 text-gold-300 hover:text-white transition-all shadow-xl hover:scale-110 active:scale-95"
-            aria-label="Next Photo"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
+          {/* Golden Lotus Divider */}
+          <div className="flex items-center justify-center gap-3 pt-2">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold-400/50" />
+            <span className="text-gold-400 text-sm select-none" aria-hidden="true">🪷</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold-400/50" />
+          </div>
+
+          {/* Author & Location */}
+          <div className="text-center space-y-1 pt-1">
+            <h4 className="font-serif text-2xl sm:text-3xl text-gold-300 font-medium tracking-wide">
+              {current.name}
+            </h4>
+            <p className="text-xs sm:text-sm text-stone-subtle/80 tracking-widest uppercase font-light">
+              {current.location}
+            </p>
+          </div>
         </div>
 
-        {/* Bottom Pagination Dots & Counter */}
-        <div className="mt-8 flex flex-col items-center gap-3">
+        {/* Bottom Sliding Pagination Dots & Slide Counter */}
+        <div className="relative z-10 mt-8 pt-6 border-t border-gold-500/15 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            {slides.map((_, idx) => (
+            {cards.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
@@ -124,29 +226,19 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                 className={`h-2.5 rounded-full transition-all duration-300 ${
                   currentIndex === idx
                     ? 'w-8 bg-gradient-to-r from-gold-400 to-gold-500 shadow-gold-sm'
-                    : 'w-2.5 bg-emerald-900 hover:bg-gold-500/50'
+                    : 'w-2.5 bg-emerald-900/90 hover:bg-gold-500/50'
                 }`}
-                aria-label={`Go to photo ${idx + 1}`}
+                aria-label={`Go to testimonial ${idx + 1}`}
               />
             ))}
           </div>
 
-          <span className="text-xs text-stone-subtle/70 font-mono tracking-wider">
-            Photo {currentIndex + 1} of {slides.length}
-          </span>
+          <div className="text-xs text-stone-subtle/70 font-mono tracking-wider">
+            Testimonial <span className="text-gold-400 font-semibold">{currentIndex + 1}</span> of{' '}
+            <span className="text-gold-400">{cards.length}</span>
+          </div>
         </div>
       </div>
-
-      {/* Lightbox for Fullscreen Inspection */}
-      {lightboxImages.length > 0 && (
-        <ImageLightbox
-          isOpen={lightboxOpen}
-          onClose={() => setLightboxOpen(false)}
-          images={lightboxImages}
-          currentIndex={currentIndex}
-          onNavigate={(idx) => setCurrentIndex(idx)}
-        />
-      )}
     </div>
   );
 }

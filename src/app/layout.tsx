@@ -4,6 +4,7 @@ import './globals.css';
 import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 import { SiteFlight } from '@/components/layout/SiteFlight';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { CMSProvider } from '@/contexts/CMSContext';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -243,11 +244,13 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#031713] text-[#FAF8F5] antialiased selection:bg-[#D4AF37] selection:text-[#031713]">
-        <LanguageProvider>
-          {children}
-          <SiteFlight />
-          <WhatsAppFloat />
-        </LanguageProvider>
+        <CMSProvider>
+          <LanguageProvider>
+            {children}
+            <SiteFlight />
+            <WhatsAppFloat />
+          </LanguageProvider>
+        </CMSProvider>
       </body>
     </html>
   );

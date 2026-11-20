@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { Volume2, VolumeX } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { VERTEX_SHADER, fragmentShader, breathAt, BREATH_CYCLE, BREATH_IN } from './mandalaShader';
 import { shouldPlayIntro } from './intro';
@@ -309,34 +310,56 @@ export function MandalaHero({
   const toggleSound = () => {
     const on = !soundOn;
     setSoundOn(on);
+
+    // Toggle video audio
+    const vid = videoRef.current;
+    if (vid) {
+      if (on) {
+        vid.muted = false;
+        vid.volume = 1;
+        vid.play().catch((err) => console.warn('Video audio play error:', err));
+      } else {
+        vid.muted = true;
+      }
+    }
+
+    // Toggle Web Audio harmonic ambient sound
     let audio = audioRef.current;
     if (on && !audio) {
-      const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const ctx = new Ctx();
-      const master = ctx.createGain();
-      master.gain.value = 0;
-      const lp = ctx.createBiquadFilter();
-      lp.type = 'lowpass';
-      lp.frequency.value = 900;
-      lp.connect(master);
-      master.connect(ctx.destination);
-      // Om drone: 136.1 Hz with fifth, octave and sub-octave
-      for (const [f, g] of [[136.1, 0.5], [204.15, 0.22], [272.2, 0.16], [68.05, 0.35], [136.6, 0.3]]) {
-        const o = ctx.createOscillator();
-        const og = ctx.createGain();
-        o.type = 'sine';
-        o.frequency.value = f;
-        og.gain.value = g;
-        o.connect(og);
-        og.connect(lp);
-        o.start();
+      try {
+        const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        const ctx = new Ctx();
+        const master = ctx.createGain();
+        master.gain.value = 0.4;
+        const lp = ctx.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.value = 900;
+        lp.connect(master);
+        master.connect(ctx.destination);
+        // Om drone: 136.1 Hz with fifth, octave and sub-octave
+        for (const [f, g] of [[136.1, 0.45], [204.15, 0.22], [272.2, 0.16], [68.05, 0.35], [136.6, 0.28]]) {
+          const o = ctx.createOscillator();
+          const og = ctx.createGain();
+          o.type = 'sine';
+          o.frequency.value = f;
+          og.gain.value = g;
+          o.connect(og);
+          og.connect(lp);
+          o.start();
+        }
+        audio = audioRef.current = { ctx, master, on: true };
+      } catch (audioErr) {
+        console.warn('AudioContext init error:', audioErr);
       }
-      audio = audioRef.current = { ctx, master, on: true };
     }
     if (audio) {
       audio.on = on;
       audio.ctx.resume();
-      if (!on) audio.master.gain.setTargetAtTime(0, audio.ctx.currentTime, 0.4);
+      if (!on) {
+        audio.master.gain.setTargetAtTime(0, audio.ctx.currentTime, 0.3);
+      } else {
+        audio.master.gain.setTargetAtTime(0.4, audio.ctx.currentTime, 0.3);
+      }
     }
   };
 
@@ -391,9 +414,28 @@ export function MandalaHero({
         </div>
       </div>
 
-      <button type="button" className={cn(styles.chip, styles.sound, styles.fade)} style={delay(3)} aria-pressed={soundOn} onClick={toggleSound}>
-        <span className={styles.bars}><i /><i /><i /></span>
-        <span className={styles.soundLabel}>Breathe with sound</span>
+      <button
+        type="button"
+        className={cn(styles.chip, styles.sound, styles.fade)}
+        style={delay(3)}
+        aria-pressed={soundOn}
+        onClick={toggleSound}
+        aria-label={soundOn ? 'Mute background sound' : 'Unmute background sound'}
+        title={soundOn ? 'Mute background music' : 'Play video background music'}
+      >
+        {soundOn ? (
+          <Volume2 className="w-3.5 h-3.5 text-gold-300 shrink-0" aria-hidden="true" />
+        ) : (
+          <VolumeX className="w-3.5 h-3.5 text-stone-subtle/80 shrink-0" aria-hidden="true" />
+        )}
+        <span className={styles.bars} aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className={styles.soundLabel}>
+          {soundOn ? 'Mute Sound' : 'Play Sound'}
+        </span>
       </button>
 
     </section>

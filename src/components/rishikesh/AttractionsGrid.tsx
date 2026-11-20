@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { RishikeshAttraction } from '@/types';
 import { MapPin, Clock, CheckCircle2 } from 'lucide-react';
+import { useCMS } from '@/contexts/CMSContext';
 
 interface AttractionsGridProps {
   attractions: RishikeshAttraction[];
@@ -12,10 +13,12 @@ interface AttractionsGridProps {
 }
 
 export function AttractionsGrid({
-  attractions,
+  attractions: initialAttractions,
   title = 'Rishikesh Attractions & Sacred Adventures',
   subtitle = 'Enhance your retreat pilgrimage with iconic Rishikesh experiences — from adrenaline-pumping bungee jumps and river rafting to ancient meditation caves.',
 }: AttractionsGridProps) {
+  const { attractions: cmsAttractions } = useCMS();
+  const attractions = cmsAttractions && cmsAttractions.length > 0 ? cmsAttractions : initialAttractions;
   return (
     <div className="space-y-12">
       <div className="text-center max-w-3xl mx-auto space-y-3">

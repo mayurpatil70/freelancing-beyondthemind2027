@@ -1,9 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Lock } from 'lucide-react';
+import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Lock, Globe, ExternalLink } from 'lucide-react';
+import { useCMS } from '@/contexts/CMSContext';
 
 export function Footer() {
+  const { settings, customContacts } = useCMS();
+  const phone = settings.whatsapp_number || '+91 8075572018';
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const email = settings.email || 'moolabrahman@gmail.com';
   return (
     <footer className="relative bg-[#02100d] border-t border-gold-500/20 text-ivory-200 overflow-hidden">
       {/* Subtle gold glow */}
@@ -144,24 +151,75 @@ export function Footer() {
             <ul className="space-y-3 text-xs">
               <li>
                 <a
-                  href="https://wa.me/918075572018"
+                  href={`https://wa.me/${cleanPhone}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                 >
                   <Phone className="w-4 h-4 text-gold-400 shrink-0" />
-                  <span>+91 8075572018</span>
+                  <span>{phone}</span>
                 </a>
               </li>
+              {settings.secondary_phone && (
+                <li>
+                  <a
+                    href={`tel:${settings.secondary_phone.replace(/[^0-9+]/g, '')}`}
+                    className="flex items-center gap-2 hover:text-gold-300 transition-colors"
+                  >
+                    <Phone className="w-4 h-4 text-gold-400/80 shrink-0" />
+                    <span>{settings.secondary_phone}</span>
+                  </a>
+                </li>
+              )}
               <li>
                 <a
-                  href="mailto:moolabrahman@gmail.com"
+                  href={`mailto:${email}`}
                   className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-gold-400 shrink-0" />
-                  <span className="break-all">moolabrahman@gmail.com</span>
+                  <span className="break-all">{email}</span>
                 </a>
               </li>
+              {settings.secondary_email && (
+                <li>
+                  <a
+                    href={`mailto:${settings.secondary_email}`}
+                    className="flex items-center gap-2 hover:text-gold-300 transition-colors"
+                  >
+                    <Mail className="w-4 h-4 text-gold-400/80 shrink-0" />
+                    <span className="break-all">{settings.secondary_email}</span>
+                  </a>
+                </li>
+              )}
+
+              {/* Dynamic Customizable Contacts & Links */}
+              {customContacts.map((c) => (
+                <li key={c.id}>
+                  <a
+                    href={
+                      c.type === 'phone'
+                        ? `tel:${c.value}`
+                        : c.type === 'email'
+                        ? `mailto:${c.value}`
+                        : c.value
+                    }
+                    target={c.type === 'link' ? '_blank' : undefined}
+                    rel={c.type === 'link' ? 'noopener noreferrer' : undefined}
+                    className="flex items-center gap-2 hover:text-gold-300 transition-colors"
+                  >
+                    {c.type === 'phone' ? (
+                      <Phone className="w-4 h-4 text-gold-400 shrink-0" />
+                    ) : c.type === 'email' ? (
+                      <Mail className="w-4 h-4 text-gold-400 shrink-0" />
+                    ) : (
+                      <ExternalLink className="w-4 h-4 text-gold-400 shrink-0" />
+                    )}
+                    <span className="break-all">
+                      <strong className="font-medium text-gold-300/90">{c.label}:</strong> {c.value}
+                    </span>
+                  </a>
+                </li>
+              ))}
             </ul>
 
             <div className="pt-2">
@@ -169,42 +227,50 @@ export function Footer() {
                 Official Channels
               </span>
               <div className="flex items-center gap-3">
-                <a
-                  href="https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram @thedivineretreat"
-                  className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
-                >
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.facebook.com/profile.php?id=61595374757132"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook Page"
-                  className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
-                >
-                  <Facebook className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.youtube.com/@BeyondTheMindRetreat"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="YouTube Channel"
-                  className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
-                >
-                  <Youtube className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://twitter.com/beyondthemind"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Twitter / X"
-                  className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
-                >
-                  <Twitter className="w-4 h-4" />
-                </a>
+                {settings.instagram_url && (
+                  <a
+                    href={settings.instagram_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram @thedivineretreat"
+                    className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                  >
+                    <Instagram className="w-4 h-4" />
+                  </a>
+                )}
+                {settings.facebook_url && (
+                  <a
+                    href={settings.facebook_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook Page"
+                    className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                  >
+                    <Facebook className="w-4 h-4" />
+                  </a>
+                )}
+                {settings.youtube_url && (
+                  <a
+                    href={settings.youtube_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube Channel"
+                    className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                  >
+                    <Youtube className="w-4 h-4" />
+                  </a>
+                )}
+                {settings.twitter_url && (
+                  <a
+                    href={settings.twitter_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Twitter / X"
+                    className="w-9 h-9 rounded-full bg-emerald-900/60 border border-gold-500/30 flex items-center justify-center text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
+                  >
+                    <Twitter className="w-4 h-4" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

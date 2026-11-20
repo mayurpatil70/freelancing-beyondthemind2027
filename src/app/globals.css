@@ -158,7 +158,7 @@
   transition: opacity 0.9s ease var(--fly-delay, 0ms), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1) var(--fly-delay, 0ms);
 }
 
-/* Floating News Channel Left-to-Right Marquee */
+/* Floating News Channel Marquees */
 @keyframes marquee-ltr {
   0% {
     transform: translateX(-50%);
@@ -176,5 +176,25 @@
 }
 
 .animate-marquee-ltr:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-rtl {
+  display: flex;
+  width: max-content;
+  animation: marquee-rtl 28s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-rtl:hover {
   animation-play-state: paused;
 }
