@@ -37,8 +37,6 @@ export const viewport: Viewport = {
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
     ? process.env.NEXT_PUBLIC_SITE_URL
-    : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
     : 'https://beyondthemind2027.vercel.app';
 
 export const metadata: Metadata = {
@@ -262,6 +260,7 @@ export default function RootLayout({
         <meta name="geo.placename" content="Rishikesh" />
         <meta name="geo.position" content="30.0869;78.2676" />
         <meta name="ICBM" content="30.0869, 78.2676" />
+        <link rel="image_src" href={`${siteUrl}/images/brand/og-cover.jpg`} />
         <meta property="og:image" content={`${siteUrl}/images/brand/og-cover.jpg`} />
         <meta property="og:image:secure_url" content={`${siteUrl}/images/brand/og-cover.jpg`} />
         <meta property="og:image:type" content="image/jpeg" />
@@ -270,6 +269,7 @@ export default function RootLayout({
         <meta property="og:image:alt" content="Beyond the Mind 2027 — The Divine Retreat | Rishikesh, Uttarakhand" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={`${siteUrl}/images/brand/og-cover.jpg`} />
+        <meta name="twitter:image:alt" content="Beyond the Mind 2027 — The Divine Retreat" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
