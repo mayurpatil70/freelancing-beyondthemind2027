@@ -6,12 +6,15 @@ import { GalleryItem } from '@/types';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
 import { Maximize2, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCMS } from '@/contexts/CMSContext';
 
 interface GalleryGridProps {
   items: GalleryItem[];
 }
 
-export function GalleryGrid({ items }: GalleryGridProps) {
+export function GalleryGrid({ items: initialItems }: GalleryGridProps) {
+  const { gallery } = useCMS();
+  const items = gallery && gallery.length > 0 ? gallery : initialItems;
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);

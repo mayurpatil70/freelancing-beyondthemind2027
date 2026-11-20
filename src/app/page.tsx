@@ -8,6 +8,7 @@ import { HeroNoticeCard } from '@/components/hero/HeroNoticeCard';
 import { RetreatAtAGlance } from '@/components/retreat/RetreatAtAGlance';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ExperienceCard } from '@/components/experiences/ExperienceCard';
+import { ExperiencesHomeGrid } from '@/components/experiences/ExperiencesHomeGrid';
 import { ProgrammeTimeline } from '@/components/programme/ProgrammeTimeline';
 import { TestimonialCarousel } from '@/components/testimonials/TestimonialCarousel';
 import {
@@ -159,11 +160,7 @@ export default async function HomePage() {
               subtitle="The exact experiential progression of Beyond the Mind 2027 — from somatic stress release to transcendental stillness."
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {experiences.map((exp) => (
-                <ExperienceCard key={exp.id} experience={exp} />
-              ))}
-            </div>
+            <ExperiencesHomeGrid initialExperiences={experiences} />
 
             <div className="text-center mt-14">
               <Link

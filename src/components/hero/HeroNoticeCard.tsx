@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, X, Radio } from 'lucide-react';
 import { WhatsAppInquiryModal } from '@/components/layout/WhatsAppInquiryModal';
+import { useCMS } from '@/contexts/CMSContext';
 
 interface HeroNoticeCardProps {
   notice?: {
@@ -17,7 +18,9 @@ interface HeroNoticeCardProps {
   };
 }
 
-export function HeroNoticeCard({ notice }: HeroNoticeCardProps) {
+export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
+  const { settings } = useCMS();
+  const notice = settings?.hero_notice_card || initialNotice;
   const [dismissed, setDismissed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

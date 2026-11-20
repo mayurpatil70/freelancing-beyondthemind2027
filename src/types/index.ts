@@ -154,7 +154,9 @@ export interface SiteSettings {
   poster_url: string;
   whatsapp_number: string;
   whatsapp_display: string;
+  primary_phone?: string;
   email: string;
+  primary_email?: string;
   instagram_url: string;
   facebook_url: string;
   guide_name?: string;

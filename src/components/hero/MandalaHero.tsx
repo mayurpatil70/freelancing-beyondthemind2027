@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Volume2, VolumeX } from 'lucide-react';
+import { useCMS } from '@/contexts/CMSContext';
 import { cn } from '@/lib/utils';
 import { VERTEX_SHADER, fragmentShader, breathAt, BREATH_CYCLE, BREATH_IN } from './mandalaShader';
 import { shouldPlayIntro } from './intro';
@@ -48,14 +49,21 @@ function isLowEnd() {
 }
 
 export function MandalaHero({
-  title,
-  subtitle,
-  tagline,
-  dates,
-  location,
+  title: initialTitle,
+  subtitle: initialSubtitle,
+  tagline: initialTagline,
+  dates: initialDates,
+  location: initialLocation,
   startsAt = '2027-10-05T00:00:00+05:30',
   videoUrl,
 }: MandalaHeroProps) {
+  const { settings } = useCMS();
+  const title = settings?.hero_title || initialTitle;
+  const subtitle = settings?.hero_subtitle || initialSubtitle;
+  const tagline = settings?.hero_tagline || initialTagline;
+  const dates = settings?.retreat_dates || initialDates;
+  const location = settings?.retreat_location || initialLocation;
+
   const heroRef = useRef<HTMLElement>(null);
   const glRef = useRef<HTMLCanvasElement>(null);
   const dustRef = useRef<HTMLCanvasElement>(null);
