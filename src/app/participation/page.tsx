@@ -39,7 +39,8 @@ export default function ParticipationPage() {
       inclusions: [
         'Single private room with en-suite bath',
         'Four days of retreat sessions with Pradeep Muthukulam',
-        'Strict vegetarian food during retreat (nourishing sattvic meals)',
+        'Personal Guidance Sessions – Available by Appointment',
+        'Strictly Vegetarian Cuisine Throughout the Retreat',
         'Retreat initiation materials & journal',
         'Direct personal energetic check-ins',
       ],
@@ -53,7 +54,8 @@ export default function ParticipationPage() {
       inclusions: [
         'Twin-sharing room with separate beds & en-suite bath',
         'Four days of retreat sessions with Pradeep Muthukulam',
-        'Strict vegetarian food during retreat (nourishing sattvic meals)',
+        'Personal Guidance Sessions – Available by Appointment',
+        'Strictly Vegetarian Cuisine Throughout the Retreat',
         'Retreat initiation materials & journal',
         'Shared communal kinship & reflection',
       ],
@@ -66,7 +68,8 @@ export default function ParticipationPage() {
         'Ideal for seekers who have arranged their own accommodations in Rishikesh or residents of Uttarakhand attending the daily programme.',
       inclusions: [
         'Full daily access to all retreat sessions & ceremonies',
-        'Midday sattvic lunch and evening retreat dinner (Strict vegetarian food)',
+        'Personal Guidance Sessions – Available by Appointment',
+        'Strictly Vegetarian Cuisine Throughout the Retreat (Midday sattvic lunch & dinner)',
         'Herbal infusions & drinking water',
         'Complete retreat materials & ceremony access',
       ],

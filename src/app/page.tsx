@@ -61,8 +61,6 @@ export default async function HomePage() {
           className="pt-12 sm:pt-16"
           dates={settings.retreat_dates}
           location={settings.retreat_location}
-          meditationDays="Mon–Fri"
-          meditationTime="7:30 PM IST"
         />
 
         {/* ========================================================================= */}

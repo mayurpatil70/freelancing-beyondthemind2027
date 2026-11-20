@@ -83,14 +83,15 @@ export function RegistrationCard({
             </div>
 
             <p className="text-xs text-stone-subtle/80 leading-relaxed font-light">
-              Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, strict vegetarian food, and guided Himalayan ceremonies.
+              Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, Strictly Vegetarian Cuisine Throughout the Retreat, and guided Himalayan ceremonies.
             </p>
 
             <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
               {[
                 'All 7 Retreat Sessions with Pradeep Muthukulam',
+                'Personal Guidance Sessions – Available by Appointment',
+                'Strictly Vegetarian Cuisine Throughout the Retreat',
                 'Pooja Veppu & Shiva Mandala Merging',
-                'Strict Vegetarian Food During Retreat (Fresh Sattvic)',
                 'Private single or twin sharing rooms',
                 'Dedicated Concierge & Airport Assistance',
               ].map((inc, i) => (
