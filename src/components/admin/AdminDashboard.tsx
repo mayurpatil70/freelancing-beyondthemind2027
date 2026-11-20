@@ -1028,7 +1028,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   </label>
                   <input
                     type="text"
-                    value={settings.retreat_languages || 'English (Hindi translation available for participants who require it)'}
+                    value={settings.retreat_languages || 'English and Malayalam. Hindi translation is available upon request.'}
                     onChange={(e) => setSettings({ ...settings, retreat_languages: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />

@@ -22,7 +22,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
           <Languages className="w-4 h-4 text-gold-400 shrink-0" />
           <span className="font-medium tracking-wide">Language Accommodations:</span>
           <span className="text-ivory-100 font-light">
-            Sessions and retreat are conducted and available in English, Hindi, and Malayalam.
+            Sessions and retreat are conducted in English and Malayalam. Hindi translation is available upon request.
           </span>
         </div>
         <span className="text-[11px] uppercase tracking-wider text-gold-400 font-medium shrink-0">

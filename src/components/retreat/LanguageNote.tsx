@@ -11,9 +11,7 @@ export function LanguageNote() {
         <p className="text-sm text-ivory-200/85 leading-relaxed">
           <span className="block text-[10px] tracking-[0.3em] uppercase text-gold-400 mb-0.5">Language Inclusivity</span>
           Retreat and daily meditation sessions are available in{' '}
-          <strong className="font-medium text-ivory-50">English</strong>,{' '}
-          <strong className="font-medium text-ivory-50">Hindi</strong>, and{' '}
-          <strong className="font-medium text-ivory-50">Malayalam</strong>.
+          <strong className="font-medium text-ivory-50">English and Malayalam</strong>. Hindi translation is available upon request.
         </p>
       </div>
     </div>

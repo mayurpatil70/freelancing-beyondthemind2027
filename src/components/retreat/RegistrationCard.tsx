@@ -78,7 +78,7 @@ export function RegistrationCard({
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Languages className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Available in English, Hindi & Malayalam</span>
+                <span>English & Malayalam (Hindi translation upon request)</span>
               </div>
             </div>
 
@@ -139,7 +139,7 @@ export function RegistrationCard({
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Languages className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Available in English, Hindi & Malayalam</span>
+                <span>English & Malayalam (Hindi translation upon request)</span>
               </div>
             </div>
 

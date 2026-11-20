@@ -15,7 +15,7 @@ export function RetreatAtAGlance({ dates, location, className }: Props) {
     { icon: Calendar, label: 'Dates', value: 'Oct 6–9, 2027', note: 'Arrival: Oct 5' },
     { icon: Video, label: 'Mode', value: 'Offline & Online', note: 'Rishikesh & Live Stream' },
     { icon: MapPin, label: 'Location', value: location || 'Rishikesh', note: 'Garhwal Himalayan foothills' },
-    { icon: Languages, label: 'Languages', value: 'English, Hindi & Malayalam', note: 'All sessions & retreats' },
+    { icon: Languages, label: 'Languages', value: 'English & Malayalam', note: 'Hindi translation is available upon request' },
     { icon: Users, label: 'Guided by', value: 'Pradeep Muthukulam', note: 'Curated intimate circle' },
     { icon: Sparkles, label: 'Guidance', value: 'Personal Guidance Sessions', note: 'Available by Appointment' },
     { icon: Utensils, label: 'Cuisine', value: 'Strictly Vegetarian Cuisine', note: 'Throughout the Retreat' },

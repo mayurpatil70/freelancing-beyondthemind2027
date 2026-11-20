@@ -500,20 +500,20 @@ export default async function HomePage() {
               The Divine Retreat - Rishikesh 2027
             </h3>
             <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Arrival on <strong>Tuesday, October 5, 2027</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Sessions and retreat are available in English, Hindi, and Malayalam. Available in both offline (in-person at Rishikesh) and online live streaming modes. Strict vegetarian food during retreat.
+              Arrival on <strong>Tuesday, October 5, 2027</strong>. Intensive retreat sessions run <strong>October 6–9, 2027</strong> in Rishikesh, Uttarakhand. Sessions and retreat are available in English and Malayalam. Hindi translation is available upon request. Available in both offline (in-person at Rishikesh) and online live streaming modes. Strictly Vegetarian Cuisine Throughout the Retreat.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs text-gold-300">
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 Arrival: Oct 5, 2027
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                Strict Vegetarian Food
+                Strictly Vegetarian Cuisine Throughout the Retreat
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 Offline & Online Options
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                Available in English, Hindi & Malayalam
+                English & Malayalam (Hindi translation upon request)
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 Nourishing Sattvic Dining

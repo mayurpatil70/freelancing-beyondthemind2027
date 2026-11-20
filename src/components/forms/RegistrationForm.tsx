@@ -50,7 +50,7 @@ const LANGUAGE_OPTIONS = [
   { value: 'English', label: 'English' },
   { value: 'Hindi', label: 'Hindi' },
   { value: 'Malayalam', label: 'Malayalam' },
-  { value: 'English, Hindi & Malayalam', label: 'English, Hindi & Malayalam' },
+  { value: 'English & Malayalam (Hindi on request)', label: 'English and Malayalam. Hindi translation is available upon request.' },
 ];
 
 export function RegistrationForm({

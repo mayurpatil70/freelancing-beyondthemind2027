@@ -57,7 +57,7 @@ export default async function RegisterPage({
               </span>
               <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 <Languages className="w-3.5 h-3.5 text-gold-400" />
-                <span>Available in English, Hindi & Malayalam</span>
+                <span>English & Malayalam (Hindi translation upon request)</span>
               </span>
             </div>
           </div>

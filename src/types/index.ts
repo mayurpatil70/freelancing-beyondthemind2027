@@ -22,7 +22,7 @@ export interface Registration {
   country: string;
   city: string;
   programme: string;
-  language_preference: 'English' | 'Hindi' | 'Malayalam' | 'English & Hindi' | 'English, Hindi & Malayalam';
+  language_preference: 'English' | 'Hindi' | 'Malayalam' | 'English & Hindi' | 'English, Hindi & Malayalam' | 'English & Malayalam (Hindi on request)';
   dietary_requirements?: string;
   message?: string;
   privacy_consent: boolean;

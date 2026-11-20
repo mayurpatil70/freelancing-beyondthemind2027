@@ -214,7 +214,7 @@ export default function RootLayout({
             name: 'What language will the retreat be conducted in?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'The retreat sessions and daily meditations are available in English, Hindi, and Malayalam to accommodate all seekers.',
+              text: 'The retreat sessions and daily meditations are conducted in English and Malayalam. Hindi translation is available upon request.',
             },
           },
           {
