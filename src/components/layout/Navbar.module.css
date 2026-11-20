@@ -291,6 +291,68 @@
   box-shadow: 0 0 0 1px rgba(245, 229, 164, 0.7), 0 8px 24px -4px rgba(212, 175, 55, 0.75);
 }
 
+.topLeftCluster {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  left: max(24px, env(safe-area-inset-left, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.desktopCornerLogo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.desktopCornerLogo:hover {
+  transform: scale(1.05);
+}
+
+.desktopCornerLogoWrapper {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  position: relative;
+  border: 2.5px solid #D4AF37;
+  box-shadow: 0 0 28px rgba(212, 175, 55, 0.55), 0 8px 24px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  background: #031713;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
+}
+
+@media (min-width: 1280px) {
+  .desktopCornerLogoWrapper {
+    width: 114px;
+    height: 114px;
+  }
+}
+
+.desktopCornerLogoWrapper:hover {
+  box-shadow: 0 0 38px rgba(212, 175, 55, 0.85), 0 10px 28px rgba(0, 0, 0, 0.9);
+}
+
+.desktopCornerLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.scrolledTopLeft .desktopCornerLogoWrapper {
+  width: 68px;
+  height: 68px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.45), 0 6px 16px rgba(0, 0, 0, 0.75);
+}
+
 .cornerLogo {
   width: 50px;
   height: 50px;
@@ -310,7 +372,8 @@
 }
 
 @media (max-width: 880px) {
-  .topRightCluster { display: none; }
+  .topRightCluster,
+  .topLeftCluster { display: none !important; }
   .inner { grid-template-columns: auto 1fr; }
   .left, .right .link, .right .more { display: none; }
   .emblem { order: -1; margin: 0; width: 52px; height: 52px; }

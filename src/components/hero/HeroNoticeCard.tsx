@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, X, Radio } from 'lucide-react';
+import { ArrowRight, X, Radio } from 'lucide-react';
 import { WhatsAppInquiryModal } from '@/components/layout/WhatsAppInquiryModal';
 
 interface HeroNoticeCardProps {
@@ -77,7 +77,7 @@ export function HeroNoticeCard({ notice }: HeroNoticeCardProps) {
                 className="text-xs sm:text-sm font-medium text-ivory-100 whitespace-nowrap flex items-center gap-3"
               >
                 <span>{fullAnnouncement}</span>
-                <Sparkles className="w-3.5 h-3.5 text-gold-400 shrink-0 inline-block" />
+                <span className="text-gold-400/80 font-bold px-2 select-none" aria-hidden="true">•</span>
               </span>
             ))}
           </div>

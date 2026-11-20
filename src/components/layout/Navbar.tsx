@@ -146,6 +146,25 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
 
   return (
     <>
+      {/* Desktop Sticky Left Top Corner Big Prominent Circular Gold Logo */}
+      <div
+        className={cn(styles.topLeftCluster, scrolled && styles.scrolledTopLeft)}
+        aria-label="Beyond the Mind Home"
+      >
+        <Link href="/" className={styles.desktopCornerLogo} aria-label="Beyond the Mind Home">
+          <div className={styles.desktopCornerLogoWrapper}>
+            <Image
+              src="/images/brand/logo.jpg"
+              alt="Beyond the Mind Logo"
+              width={120}
+              height={120}
+              priority
+              className={styles.desktopCornerLogoImg}
+            />
+          </div>
+        </Link>
+      </div>
+
       {/* Desktop Sticky Right Top Corner Action Group: Clean Separate Enquire CTA */}
       <div className={styles.topRightCluster} aria-label="Quick Actions">
         <button
@@ -163,19 +182,6 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
       >
         <nav className={styles.inner} aria-label="Main" onMouseLeave={() => setHovered(null)}>
           <div className={cn(styles.side, styles.left)}>
-            {/* Desktop-only Big Prominent Circular Gold Logo */}
-            <Link href="/" className={styles.desktopLogo} aria-label="Beyond the Mind Home">
-              <div className={styles.desktopLogoWrapper}>
-                <Image
-                  src="/images/brand/logo.jpg"
-                  alt="Beyond the Mind Logo"
-                  width={64}
-                  height={64}
-                  priority
-                  className={styles.desktopLogoImg}
-                />
-              </div>
-            </Link>
             {leftLinks.map(navLink)}
           </div>
 
