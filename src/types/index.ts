@@ -150,6 +150,9 @@ export interface SiteSettings {
   email: string;
   instagram_url: string;
   facebook_url: string;
+  guide_name?: string;
+  guide_headline?: string;
+  guide_bio?: string;
   daily_meditation_headline: string;
   daily_meditation_tagline: string;
   daily_meditation_time: string;

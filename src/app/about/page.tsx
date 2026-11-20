@@ -106,48 +106,53 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Guidance by Pradeep Muthukulam & Moola Brahman */}
+        {/* Guidance by Pradeep Muthukulam */}
         <section className="py-24 sm:py-32 bg-[#031713] text-[#FAF8F5] relative">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <SectionHeading
-              eyebrow="Spiritual Mentorship"
-              title="Guidance by Pradeep Muthukulam"
-              subtitle="Quiet mastery, energetic precision, and compassionate personal stewardship."
+              eyebrow="Spiritual Guide & Founder"
+              title="Pradeep Muthukulam – A Journey Towards Inner Awakening"
+              subtitle="Devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness."
             />
 
             <div className="rounded-3xl bg-[#07261F]/80 border border-gold-500/30 p-8 sm:p-12 shadow-2xl space-y-8">
               <div className="flex flex-col md:flex-row gap-8 items-center">
-                <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border-2 border-gold-400/80 shadow-gold-md shrink-0">
+                <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full overflow-hidden border-2 border-gold-400/80 shadow-gold-md shrink-0">
                   <Image
                     src="/images/brand/pradeep-muthukulam.jpg"
                     alt="Pradeep Muthukulam - Lead Spiritual Guide"
                     fill
-                    sizes="208px"
+                    sizes="224px"
                     className="object-cover"
                   />
                 </div>
 
                 <div className="space-y-4 text-center md:text-left">
                   <span className="text-xs tracking-widest uppercase text-gold-400 font-semibold block">
-                    Lead Spiritual Guide & Founder
+                    Spiritual Guide & Founder
                   </span>
                   <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">Pradeep Muthukulam</h3>
-                  <p className="text-sm text-stone-subtle/85 font-light leading-relaxed">
-                    Under the spiritual canopy of Moola Brahman, Pradeep Muthukulam guides seekers with clarity,
-                    reverence, and an unwavering commitment to safe energetic evolution. With deep attunement
-                    to the Maha Theerthas, subtle Kundalini channels, and the Shiva Mandala, his role is not to
-                    command, but to hold the sacred field wherein each soul remembers its innate divinity.
+                  <h4 className="font-serif text-lg text-gold-300 italic font-normal">
+                    A Journey Towards Inner Awakening
+                  </h4>
+                  <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
+                    Pradeep Muthukulam is a seeker and spiritual guide devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness. His vision is to inspire individuals to journey beyond the boundaries of the mind, reconnect with their true essence and discover the profound peace, wisdom and divinity that reside within.
+                  </p>
+                  <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
+                    Through spiritual insights, meditation and personal guidance, he encourages seekers to embrace a life of mindfulness, awareness, compassion and higher purpose. His philosophy rests on a simple yet profound truth: <em>The Divine is not something to be found outside, but a truth to be awakened within.</em>
+                  </p>
+                  <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
+                    His endeavour is to guide every seeker towards inner transformation, spiritual clarity and the ultimate experience of inner peace.
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-emerald-950/70 border border-gold-500/20 text-xs sm:text-sm text-stone-subtle/90 leading-relaxed font-light space-y-3">
-                <p>
-                  &ldquo;A true retreat is not an escape from life, but an arrival into life. When you awaken the
-                  vastness within, the same world looks luminous.&rdquo;
+              <div className="p-6 rounded-2xl bg-emerald-950/70 border border-gold-500/20 text-xs sm:text-sm text-stone-subtle/90 leading-relaxed font-light space-y-2 text-center md:text-left">
+                <p className="font-serif text-base sm:text-lg text-ivory-100 italic">
+                  &ldquo;The Divine is not something to be found outside, but a truth to be awakened within.&rdquo;
                 </p>
                 <span className="text-[11px] text-gold-400 uppercase tracking-widest block font-medium">
-                  — Guidance Principle, Beyond the Mind
+                  — Pradeep Muthukulam, Beyond the Mind
                 </span>
               </div>
             </div>

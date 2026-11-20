@@ -1894,6 +1894,47 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               </div>
             </div>
 
+            {/* Spiritual Guide & Founder Bio CMS */}
+            <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+              <div className="border-b border-gold-500/20 pb-3">
+                <h4 className="font-serif text-lg text-ivory-50 font-medium">
+                  Spiritual Guide & Founder Profile (Pradeep Muthukulam)
+                </h4>
+                <p className="text-xs text-stone-subtle/80 mt-0.5">
+                  Update the biography, headline, and philosophical vision of Pradeep Muthukulam displayed across the website.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Bio Headline
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.guide_headline || 'Pradeep Muthukulam – A Journey Towards Inner Awakening'}
+                    onChange={(e) => setSettings({ ...settings, guide_headline: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                    Full Biography & Vision
+                  </label>
+                  <textarea
+                    rows={6}
+                    value={
+                      settings.guide_bio ||
+                      'Pradeep Muthukulam is a seeker and spiritual guide devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness. His vision is to inspire individuals to journey beyond the boundaries of the mind, reconnect with their true essence and discover the profound peace, wisdom and divinity that reside within.\n\nThrough spiritual insights, meditation and personal guidance, he encourages seekers to embrace a life of mindfulness, awareness, compassion and higher purpose. His philosophy rests on a simple yet profound truth: The Divine is not something to be found outside, but a truth to be awakened within.\n\nHis endeavour is to guide every seeker towards inner transformation, spiritual clarity and the ultimate experience of inner peace.'
+                    }
+                    onChange={(e) => setSettings({ ...settings, guide_bio: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 font-light leading-relaxed"
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* Homepage Hero Floating Notice / Offer / Discount Card CMS */}
             <div className="p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
               <div className="flex items-center justify-between border-b border-gold-500/20 pb-3">
