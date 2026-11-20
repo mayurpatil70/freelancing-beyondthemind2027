@@ -34,8 +34,15 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
+    ? process.env.NEXT_PUBLIC_SITE_URL
+    : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'https://beyondthemind2027.vercel.app';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://beyondthemindretreat.org'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Beyond the Mind 2027 — The Divine Retreat | Rishikesh, Uttarakhand',
     template: '%s | Beyond the Mind 2027',
@@ -61,7 +68,7 @@ export const metadata: Metadata = {
   creator: 'Beyond the Mind',
   publisher: 'Beyond the Mind',
   alternates: {
-    canonical: 'https://beyondthemindretreat.org',
+    canonical: siteUrl,
   },
   icons: {
     icon: '/images/brand/logo.jpg',
@@ -72,16 +79,32 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'beyond-the-mind-2027',
   },
   openGraph: {
-    title: 'Beyond the Mind 2027 — The Divine Retreat',
-    description: 'A transformative 4-day sanctuary in the sacred land of Rishikesh. October 6–9, 2027.',
-    url: 'https://beyondthemindretreat.org',
-    siteName: 'Beyond the Mind',
+    title: 'Beyond the Mind 2027 — The Divine Retreat | Rishikesh',
+    description:
+      'A transformative 4-day sanctuary in the sacred land of Rishikesh. October 6–9, 2027 (Arrival: Oct 5). Guided by Pradeep Muthukulam.',
+    url: siteUrl,
+    siteName: 'Beyond the Mind 2027',
     images: [
       {
-        url: '/images/brand/logo.jpg',
+        url: '/images/brand/og-cover.jpg',
         width: 1200,
-        height: 1200,
-        alt: 'Beyond the Mind 2027 — The Divine Retreat Logo',
+        height: 630,
+        type: 'image/jpeg',
+        alt: 'Beyond the Mind 2027 — The Divine Retreat Cover Image',
+      },
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        type: 'image/jpeg',
+        alt: 'Beyond the Mind 2027 — The Divine Retreat Banner',
+      },
+      {
+        url: '/images/brand/logo.jpg',
+        width: 1024,
+        height: 1024,
+        type: 'image/jpeg',
+        alt: 'Beyond the Mind Sacred Emblem',
       },
     ],
     locale: 'en_US',
@@ -90,8 +113,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Beyond the Mind 2027 — The Divine Retreat',
-    description: 'A journey into the Infinite within. Rishikesh, October 6–9, 2027.',
-    images: ['/images/brand/logo.jpg'],
+    description:
+      'A journey into the Infinite within. Rishikesh, October 6–9, 2027. Guided by Pradeep Muthukulam.',
+    images: ['/images/brand/og-cover.jpg'],
   },
   robots: {
     index: true,
@@ -238,6 +262,14 @@ export default function RootLayout({
         <meta name="geo.placename" content="Rishikesh" />
         <meta name="geo.position" content="30.0869;78.2676" />
         <meta name="ICBM" content="30.0869, 78.2676" />
+        <meta property="og:image" content={`${siteUrl}/images/brand/og-cover.jpg`} />
+        <meta property="og:image:secure_url" content={`${siteUrl}/images/brand/og-cover.jpg`} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Beyond the Mind 2027 — The Divine Retreat | Rishikesh, Uttarakhand" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`${siteUrl}/images/brand/og-cover.jpg`} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
