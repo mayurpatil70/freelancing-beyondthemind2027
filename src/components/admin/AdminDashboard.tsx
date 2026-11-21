@@ -2779,7 +2779,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     full_desc: newSessionData.full_desc?.trim() || '',
                     image:
                       newSessionData.image?.trim() ||
-                      'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80',
+                      '/images/rishikesh/stillness-ganges.jpg',
                     icon_name: 'CircleDot',
                     order: Number(newSessionData.order) || experiences.length + 1,
                     spiritual_dimension: newSessionData.spiritual_dimension?.trim() || 'Inner Awakening',
