@@ -68,8 +68,9 @@ Create `.env.local` in the project root:
 
 ```env
 # Admin CMS Access Credentials
-ADMIN_PASSWORD="MoolaRetreat@2027#Rishikesh"
-ADMIN_EMAIL="admin@beyondthemindretreat.org"
+ADMIN_USERNAME="pradeep123"
+ADMIN_PASSWORD="pradeep123"
+ADMIN_EMAIL="pradeep123"
 
 # Signs the admin session cookie (any long random string)
 ADMIN_SESSION_SECRET=""
@@ -119,8 +120,8 @@ npm run start
 ## 6. Admin Portal & Participant CRM
 
 - **URL**: Navigate to `/admin`
-- **Default Email**: `admin@beyondthemindretreat.org`
-- **Default Secret Key**: `MoolaRetreat@2027#Rishikesh`
+- **Default Username**: `pradeep123`
+- **Default Secret Key**: `pradeep123`
 
 ### Key Admin Features:
 1. **Metrics Overview**: Live counters for Total Enquiries, New Leads, Payment Verification, Confirmed Guests, and Waitlisted.

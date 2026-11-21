@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { shouldPlayIntro } from '@/components/hero/intro';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -60,7 +59,6 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
   const [introDelay, setIntroDelay] = useState('0s');
   const [topOffset, setTopOffset] = useState(0);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
-  const [logoModalOpen, setLogoModalOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -168,15 +166,25 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
             {leftLinks.map(navLink)}
           </div>
 
-          <button
-            type="button"
-            onClick={() => setLogoModalOpen(true)}
+          <Link
+            href="/#hero"
+            onClick={(e) => {
+              if (pathname === '/') {
+                e.preventDefault();
+                const heroEl = document.getElementById('hero');
+                if (heroEl) {
+                  heroEl.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }
+            }}
             className={styles.emblem}
-            aria-label="Beyond the Mind - Open Sacred Emblem Details"
-            title="Beyond the Mind - Click to view sacred emblem"
+            aria-label="Beyond the Mind - Return to Hero Section"
+            title="Beyond the Mind - Return to Hero Section"
           >
             <Image src="/images/brand/logo.jpg" alt="Beyond the Mind emblem" fill sizes="64px" priority />
-          </button>
+          </Link>
 
           <div className={cn(styles.side, styles.right)}>
             {rightLinks.map(navLink)}
@@ -272,86 +280,6 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
         onClose={() => setIsInquiryModalOpen(false)}
         defaultProgram="The Divine Retreat 2027"
       />
-
-      {/* Center Logo Popup Card Modal */}
-      {logoModalOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300"
-          onClick={() => setLogoModalOpen(false)}
-        >
-          <div
-            className="relative w-full max-w-md rounded-3xl bg-gradient-to-br from-[#07261F] via-[#041d17] to-[#02100d] border-2 border-gold-400/60 p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_35px_rgba(212,175,55,0.25)] text-center space-y-6 overflow-hidden animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Subtle Gold Ambient Glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gold-radial opacity-30 pointer-events-none" />
-
-            {/* Top Right Close 'X' Button */}
-            <button
-              type="button"
-              onClick={() => setLogoModalOpen(false)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-emerald-950/90 border border-gold-500/40 text-gold-300 hover:text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-md"
-              aria-label="Close"
-              title="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Circular Logo Image with Gold Glowing Ring */}
-            <div className="relative mx-auto w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-gold-400/80 shadow-[0_0_35px_rgba(212,175,55,0.4)]">
-              <Image
-                src="/images/brand/logo.jpg"
-                alt="Beyond the Mind Sacred Emblem"
-                fill
-                sizes="144px"
-                className="object-contain"
-                priority
-              />
-            </div>
-
-            {/* Brand Title & Spiritual Taglines */}
-            <div className="space-y-2">
-              <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-normal tracking-wide">
-                Beyond the Mind 2027
-              </h3>
-              <p className="text-xs sm:text-sm tracking-[0.25em] text-gold-400 uppercase font-semibold">
-                The Divine Retreat • Rishikesh
-              </p>
-              <p className="font-serif italic text-sm text-gold-300/90 pt-1">
-                &ldquo;A journey into the Infinite within.&rdquo;
-              </p>
-            </div>
-
-            <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed max-w-sm mx-auto">
-              An experiential spiritual sanctuary guided by Pradeep Muthukulam along the holy waters of the sacred Ganges in the Himalayan foothills of Rishikesh.
-            </p>
-
-            {/* Modal CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <Link
-                href="/about"
-                onClick={() => setLogoModalOpen(false)}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:text-white text-xs uppercase tracking-wider font-semibold transition-all hover:scale-105"
-              >
-                About Retreat
-              </Link>
-              <button
-                type="button"
-                onClick={() => {
-                  setLogoModalOpen(false);
-                  setIsInquiryModalOpen(true);
-                }}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all"
-              >
-                <span>Enquire Now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -37,6 +37,16 @@ export async function GET(req: NextRequest) {
 
   // Handle CSV Export
   if (format === 'csv') {
+    const sanitizeCsvValue = (val: unknown): string => {
+      if (val === null || val === undefined) return '""';
+      let str = String(val);
+      // Prevent CSV formula injection if cell begins with =, +, -, @, tab, or carriage return
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = `'${str}`;
+      }
+      return `"${str.replace(/"/g, '""')}"`;
+    };
+
     const headers = [
       'ID',
       'Full Name',
@@ -55,20 +65,20 @@ export async function GET(req: NextRequest) {
     ];
 
     const rows = records.map((r) => [
-      `"${r.id}"`,
-      `"${r.full_name.replace(/"/g, '""')}"`,
-      `"${r.email}"`,
-      `"${r.country_code}"`,
-      `"${r.phone}"`,
-      `"${r.country.replace(/"/g, '""')}"`,
-      `"${r.city.replace(/"/g, '""')}"`,
-      `"${r.programme.replace(/"/g, '""')}"`,
-      `"${r.language_preference}"`,
-      `"${r.status}"`,
-      `"${r.payment_status}"`,
-      `"${r.created_at}"`,
-      `"${(r.dietary_requirements || '').replace(/"/g, '""')}"`,
-      `"${(r.message || '').replace(/"/g, '""')}"`,
+      sanitizeCsvValue(r.id),
+      sanitizeCsvValue(r.full_name),
+      sanitizeCsvValue(r.email),
+      sanitizeCsvValue(r.country_code),
+      sanitizeCsvValue(r.phone),
+      sanitizeCsvValue(r.country),
+      sanitizeCsvValue(r.city),
+      sanitizeCsvValue(r.programme),
+      sanitizeCsvValue(r.language_preference),
+      sanitizeCsvValue(r.status),
+      sanitizeCsvValue(r.payment_status),
+      sanitizeCsvValue(r.created_at),
+      sanitizeCsvValue(r.dietary_requirements || ''),
+      sanitizeCsvValue(r.message || ''),
     ]);
 
     const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');

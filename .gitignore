@@ -37,3 +37,5 @@ yoga-and-meditation/
 /public/videos/hero/chakras.mp4
 /public/videos/hero/colourful_chakras.mp4
 /public/videos/hero/lotus_chakras.mp4
+
+*.tsbuildinfo

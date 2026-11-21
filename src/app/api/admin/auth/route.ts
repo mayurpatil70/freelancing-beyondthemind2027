@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SESSION_COOKIE_NAME, createSessionToken, readSession } from '@/lib/auth';
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'pradeep123';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || process.env.ADMIN_EMAIL || 'pradeep123';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pradeep123';
 
 export async function POST(req: NextRequest) {
@@ -17,15 +17,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const isValidUser =
-      username.toLowerCase() === ADMIN_USERNAME.toLowerCase() ||
-      username.toLowerCase() === 'pradeep123' ||
-      username.toLowerCase() === 'admin@beyondthemindretreat.org';
+    const expectedUsername = ADMIN_USERNAME.toLowerCase();
+    const expectedEmail = (process.env.ADMIN_EMAIL || '').toLowerCase();
 
-    const isValidPass =
-      password === ADMIN_PASSWORD ||
-      password === 'pradeep123' ||
-      password === 'MoolaRetreat@2027#Rishikesh';
+    const isValidUser =
+      username.toLowerCase() === expectedUsername ||
+      (expectedEmail ? username.toLowerCase() === expectedEmail : false);
+
+    const isValidPass = password === ADMIN_PASSWORD;
 
     if (!isValidUser || !isValidPass) {
       return NextResponse.json(
@@ -56,7 +55,7 @@ export async function POST(req: NextRequest) {
   } catch (err: unknown) {
     const errMsg = err instanceof Error ? err.message : String(err);
     console.error('Admin login error:', errMsg);
-    return NextResponse.json({ success: false, message: 'Authentication error', error: errMsg }, { status: 500 });
+    return NextResponse.json({ success: false, message: 'Internal authentication error. Please try again.' }, { status: 500 });
   }
 }
 

@@ -375,7 +375,7 @@ export function MandalaHero({
   let ci = 0;
 
   return (
-    <section ref={heroRef} className={cn(styles.hero, styles[phase])} data-mode={mode} data-hero aria-label={title}>
+    <section id="hero" ref={heroRef} className={cn(styles.hero, styles[phase])} data-mode={mode} data-hero aria-label={title}>
       <canvas ref={glRef} className={cn(styles.layer, styles.gl)} aria-hidden="true" />
       <video ref={videoRef} className={cn(styles.layer, styles.video)} muted loop playsInline preload="none" aria-hidden="true" />
       <canvas ref={dustRef} className={cn(styles.layer, styles.dust)} aria-hidden="true" />
