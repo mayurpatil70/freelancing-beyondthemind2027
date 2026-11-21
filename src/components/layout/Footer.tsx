@@ -278,25 +278,9 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar matching Screenshot 4 */}
-        <div className="mt-14 pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-subtle/70 gap-4">
-          <p className="flex items-center flex-wrap gap-1">
-            <span>© 2027 Beyond the Mind. All Rights Reserved.</span>
-            <span className="hidden sm:inline">•</span>
-            <span>
-              Made with{' '}
-              <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500 mx-0.5" /> by{' '}
-              <a
-                href="https://linktr.ee/hackerfromhills"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Developer Portfolio & Services — Team Hackerfromhills"
-                className="text-gold-400 hover:text-gold-300 underline underline-offset-4 decoration-gold-400/80 font-medium transition-colors"
-              >
-                Team Hackerfromhills
-              </a>
-            </span>
-          </p>
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-subtle/70 gap-4">
+          <p>© 2027 Beyond the Mind. All Rights Reserved.</p>
 
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-gold-300 transition-colors">
@@ -316,6 +300,24 @@ export function Footer() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Dedicated Developer Advertisement Bar matching Screenshot 3 */}
+      <div className="bg-[#010907] border-t border-gold-500/15 py-3.5 px-4 text-center">
+        <p className="text-xs text-stone-subtle/85 inline-flex items-center justify-center gap-1.5">
+          <span>Made with</span>
+          <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline shrink-0" />
+          <span>by</span>
+          <a
+            href="https://linktr.ee/hackerfromhills"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Team Hackerfromhills — Developer Portfolio & Socials"
+            className="text-gold-400 hover:text-gold-300 font-medium underline underline-offset-4 decoration-gold-400/80 transition-colors hover:scale-105 inline-block"
+          >
+            Team Hackerfromhills
+          </a>
+        </p>
       </div>
     </footer>
   );
