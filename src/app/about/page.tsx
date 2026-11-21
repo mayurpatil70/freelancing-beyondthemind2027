@@ -160,6 +160,7 @@ export default function AboutPage() {
             <div className="text-center pt-8">
               <Link
                 href="/register"
+                prefetch={true}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
               >
                 <span>Reserve Your Place with Pradeep Muthukulam</span>

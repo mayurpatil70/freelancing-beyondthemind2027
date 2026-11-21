@@ -133,6 +133,7 @@ export default async function ExperiencesPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
                 <Link
                   href="/register"
+                  prefetch={true}
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
                 >
                   <span>Reserve Your Sanctuary Place</span>
@@ -140,6 +141,7 @@ export default async function ExperiencesPage() {
                 </Link>
                 <Link
                   href="/daily-meditation"
+                  prefetch={true}
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-emerald-950 text-gold-300 border border-gold-500/30 font-semibold text-xs tracking-widest uppercase hover:bg-emerald-900 transition-all"
                 >
                   <span>Explore Daily Meditation</span>

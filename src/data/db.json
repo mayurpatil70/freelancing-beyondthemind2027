@@ -196,12 +196,12 @@
       "day_name": "Arrival Day",
       "sessions": [
         {
-          "phase": "Morning 10:00 AM",
+          "phase": "Afternoon 5.00 PM",
           "title": "Sanctuary Check-in & Orientation",
-          "description": "Room allotment, settling into peaceful rooms, and introductory briefing with the retreat concierge. Strict vegetarian food during retreat (no welcome drinks)."
+          "description": "Room allotment, settling into peaceful rooms, and introductory briefing with the retreat concierge."
         },
         {
-          "phase": "Afternoon 2:30 PM",
+          "phase": "Evening - 7 PM",
           "title": "Orientation Circle & Ganga Acclimatization",
           "description": "Introductory gathering, setting personal spiritual intentions, and gentle riverside contemplation by Mother Ganga."
         }

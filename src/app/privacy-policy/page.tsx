@@ -112,6 +112,7 @@ export default function PrivacyPolicyPage() {
           <div className="text-center pt-4">
             <Link
               href="/register"
+              prefetch={true}
               className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-300 hover:text-gold-200 font-semibold"
             >
               <span>Return to Enquiry & Registration</span>

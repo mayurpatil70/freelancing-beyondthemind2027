@@ -20,7 +20,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand Identity */}
           <div className="lg:col-span-2 space-y-5">
-            <Link href="/" className="inline-flex items-center gap-3 group">
+            <Link href="/" prefetch={true} className="inline-flex items-center gap-3 group">
               <div className="relative w-14 h-14 rounded-full overflow-hidden border border-gold-400/50 shadow-gold-sm">
                 <Image
                   src="/images/brand/logo.jpg"
@@ -63,32 +63,32 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs tracking-wider uppercase">
               <li>
-                <Link href="/about" className="hover:text-gold-300 transition-colors">
+                <Link href="/about" prefetch={true} className="hover:text-gold-300 transition-colors">
                   About the Retreat
                 </Link>
               </li>
               <li>
-                <Link href="/experiences" className="hover:text-gold-300 transition-colors">
+                <Link href="/experiences" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Six Sacred Experiences
                 </Link>
               </li>
               <li>
-                <Link href="/programme" className="hover:text-gold-300 transition-colors">
+                <Link href="/programme" prefetch={true} className="hover:text-gold-300 transition-colors">
                   4-Day Programme
                 </Link>
               </li>
               <li>
-                <Link href="/rishikesh" className="hover:text-gold-300 transition-colors">
+                <Link href="/rishikesh" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Rishikesh Destination
                 </Link>
               </li>
               <li>
-                <Link href="/daily-meditation" className="hover:text-gold-300 transition-colors">
+                <Link href="/daily-meditation" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Daily Guided Meditation
                 </Link>
               </li>
               <li>
-                <Link href="/participation" className="hover:text-gold-300 transition-colors">
+                <Link href="/participation" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Participation Details
                 </Link>
               </li>
@@ -102,27 +102,27 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs tracking-wider uppercase">
               <li>
-                <Link href="/testimonials" className="hover:text-gold-300 transition-colors">
+                <Link href="/testimonials" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Guest Testimonials
                 </Link>
               </li>
               <li>
-                <Link href="/reach" className="hover:text-gold-300 transition-colors">
+                <Link href="/reach" prefetch={true} className="hover:text-gold-300 transition-colors">
                   How to Reach
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-gold-300 transition-colors">
+                <Link href="/faq" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Frequently Asked
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="hover:text-gold-300 transition-colors">
+                <Link href="/register" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Enquiry & Registration
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-gold-300 transition-colors">
+                <Link href="/contact" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Contact & Concierge
                 </Link>
               </li>
@@ -269,11 +269,11 @@ export function Footer() {
           <p>© 2027 Beyond the Mind. All Rights Reserved.</p>
 
           <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="hover:text-gold-300 transition-colors">
+            <Link href="/privacy-policy" prefetch={true} className="hover:text-gold-300 transition-colors">
               Privacy Policy
             </Link>
             <span className="opacity-30">•</span>
-            <Link href="/contact" className="hover:text-gold-300 transition-colors">
+            <Link href="/contact" prefetch={true} className="hover:text-gold-300 transition-colors">
               Concierge
             </Link>
             <span className="opacity-30">•</span>

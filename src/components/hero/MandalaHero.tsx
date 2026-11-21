@@ -394,8 +394,8 @@ export function MandalaHero({
         <p className={cn(styles.tagline, styles.fade)} style={delay(2.2)}>{tagline}</p>
 
         <div className={cn(styles.actions, styles.fade)} style={delay(2.5)}>
-          <Link href="/register" className={styles.primary}>Begin your journey</Link>
-          <Link href="/about" className={styles.ghost}>Explore the retreat</Link>
+          <Link href="/register" prefetch={true} className={styles.primary}>Begin your journey</Link>
+          <Link href="/about" prefetch={true} className={styles.ghost}>Explore the retreat</Link>
         </div>
 
         <div ref={breathRef} className={cn(styles.breath, styles.fade)} style={delay(3)} aria-hidden="true">

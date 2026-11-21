@@ -102,28 +102,55 @@ const iso = (v: unknown) => (v instanceof Date ? v.toISOString() : String(v));
 // CMS content
 // ----------------------------------------------------------------------------
 
+let memoryContentCache: { data: Partial<ContentMap>; timestamp: number } | null = null;
+const CACHE_TTL_MS = 60 * 1000;
+
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
+  ]);
+}
+
 const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
+  if (memoryContentCache && (Date.now() - memoryContentCache.timestamp < CACHE_TTL_MS)) {
+    return memoryContentCache.data;
+  }
   const sql = getSql();
-  if (!sql) return readLocalDb();
+  const local = readLocalDb();
+  if (!sql) {
+    memoryContentCache = { data: local, timestamp: Date.now() };
+    return local;
+  }
   try {
-    const rows = await sql`SELECT key, data FROM cms_content`;
-    return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
+    const fetchRows = async () => {
+      const rows = await sql`SELECT key, data FROM cms_content`;
+      return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
+    };
+    const data = await withTimeout(fetchRows(), 2500, local);
+    const merged = { ...local, ...data };
+    memoryContentCache = { data: merged, timestamp: Date.now() };
+    return merged;
   } catch (e) {
     console.error('Neon loadContent error, serving defaults:', e);
-    return {};
+    return local;
   }
 });
 
 async function getContent<K extends ContentKey>(key: K): Promise<ContentMap[K]> {
-  const value = (await loadContent())[key];
+  const all = await loadContent();
+  const value = all[key];
+  const localDb = readLocalDb();
   const seed = (contentSnapshot as unknown as Partial<ContentMap>)[key];
+  const fallback = localDb[key] ?? seed ?? defaults[key];
   if (key === 'settings') {
-    return { ...defaults.settings, ...((seed as SiteSettings) || {}), ...((value as SiteSettings) || {}) } as ContentMap[K];
+    return { ...defaults.settings, ...((seed as SiteSettings) || {}), ...((fallback as SiteSettings) || {}), ...((value as SiteSettings) || {}) } as ContentMap[K];
   }
-  return (value ?? seed ?? defaults[key]) as ContentMap[K];
+  return (value ?? fallback) as ContentMap[K];
 }
 
 export async function setContent<K extends ContentKey>(key: K, data: ContentMap[K]): Promise<ContentMap[K]> {
+  memoryContentCache = null;
   const sql = getSql();
   if (sql) {
     await sql`
@@ -131,11 +158,11 @@ export async function setContent<K extends ContentKey>(key: K, data: ContentMap[
       VALUES (${key}, ${JSON.stringify(data)}::jsonb, now())
       ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
     `;
-  } else {
-    const db = readLocalDb();
-    db[key] = data;
-    writeLocalDb(db);
   }
+  // Also keep local DB synced
+  const db = readLocalDb();
+  db[key] = data;
+  writeLocalDb(db);
   return data;
 }
 

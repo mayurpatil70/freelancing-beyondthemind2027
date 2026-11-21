@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { SacredExperience } from '@/types';
 import {
@@ -150,12 +151,13 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                   )}
 
                   <div className="pt-4 flex flex-wrap items-center gap-4">
-                    <a
+                    <Link
                       href={`/register?programme=${encodeURIComponent(exp.title)}`}
+                      prefetch={true}
                       className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase hover:scale-105 transition-all shadow-gold-sm"
                     >
                       <span>Enquire For This Session</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

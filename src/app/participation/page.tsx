@@ -168,6 +168,7 @@ export default function ParticipationPage() {
                   </span>
                   <Link
                     href={`/register?programme=${encodeURIComponent(tier.title)}`}
+                    prefetch={true}
                     className="w-full py-2.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-wider uppercase text-center block hover:scale-102 transition-all shadow-sm"
                   >
                     Enquire For Availability

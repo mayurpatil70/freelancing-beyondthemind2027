@@ -122,6 +122,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
         <div className="text-center pt-4">
           <Link
             href="/programme"
+            prefetch={true}
             className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm hover:shadow-gold-md"
           >
             <span>Explore Complete Four-Day Journey</span>

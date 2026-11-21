@@ -110,6 +110,7 @@ export function ExperienceCard({ experience, featured = false }: ExperienceCardP
             </div>
             <Link
               href={`/experiences#${experience.slug}`}
+              prefetch={true}
               className="inline-flex items-center gap-2 rounded-md bg-[#031713] px-4 py-3 text-[11px] font-bold tracking-[0.16em] uppercase text-gold-300 transition-colors hover:bg-[#07261F] hover:text-gold-200"
             >
               View experience

@@ -11,7 +11,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     color-scheme: dark;
     background-color: #031713;
     color: #FAF8F5;

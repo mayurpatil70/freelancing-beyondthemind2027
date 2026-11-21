@@ -84,6 +84,7 @@ export default async function ProgrammePage() {
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/register"
+                prefetch={true}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
               >
                 <span>Register for Beyond the Mind 2027</span>
@@ -91,6 +92,7 @@ export default async function ProgrammePage() {
               </Link>
               <Link
                 href="/daily-meditation"
+                prefetch={true}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 font-semibold text-xs tracking-widest uppercase hover:bg-emerald-900 transition-all"
               >
                 <span>Explore Daily Guided Meditation</span>

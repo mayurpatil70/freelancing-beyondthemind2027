@@ -184,6 +184,7 @@ export default async function DailyMeditationPage() {
               </div>
               <Link
                 href="/register"
+                prefetch={true}
                 className="px-7 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs tracking-wider uppercase shrink-0 shadow-gold-sm hover:scale-105 transition-all"
               >
                 Learn More About Retreat

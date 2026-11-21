@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Lock, Shield, ArrowRight, AlertCircle, Clock, ShieldAlert } from 'lucide-react';
 
 interface AdminLoginProps {
@@ -242,12 +243,13 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
         </form>
 
         <div className="pt-2 text-center">
-          <a
+          <Link
             href="/"
+            prefetch={true}
             className="text-[11px] uppercase tracking-wider text-stone-subtle/70 hover:text-gold-300 transition-colors"
           >
             ← Return to Sanctuary Home
-          </a>
+          </Link>
         </div>
       </div>
     </div>

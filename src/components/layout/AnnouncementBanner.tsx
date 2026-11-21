@@ -20,6 +20,7 @@ export function AnnouncementBanner({ badge = 'Retreat Update', text, link }: Ann
         {link && (
           <Link
             href={link}
+            prefetch={true}
             className="inline-flex items-center gap-1 text-gold-300 hover:text-gold-200 font-medium underline underline-offset-4 decoration-gold-400/50 hover:decoration-gold-300 transition-colors ml-1"
           >
             <span>Learn More</span>

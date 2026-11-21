@@ -133,6 +133,7 @@ export default async function HomePage() {
                 <div className="pt-4">
                   <Link
                     href="/about"
+                    prefetch={true}
                     className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-gold-300 hover:text-gold-200 transition-colors"
                   >
                     <span>Read The Complete Philosophy</span>
@@ -163,6 +164,7 @@ export default async function HomePage() {
             <div className="text-center mt-14">
               <Link
                 href="/experiences"
+                prefetch={true}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm"
               >
                 <span>Discover All Seven Retreat Sessions & Attractions</span>
@@ -218,6 +220,7 @@ export default async function HomePage() {
                 <div className="pt-2">
                   <Link
                     href="/rishikesh"
+                    prefetch={true}
                     className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 text-gold-300 hover:bg-gold-500 hover:text-emerald-950 transition-all"
                   >
                     <span>Discover Rishikesh Destination</span>
@@ -288,6 +291,7 @@ export default async function HomePage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
                 <Link
                   href="/daily-meditation"
+                  prefetch={true}
                   className="w-full sm:w-auto px-7 py-3 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase hover:scale-[1.03] transition-all text-center shadow-md"
                 >
                   Learn More & View Benefits
@@ -436,12 +440,14 @@ export default async function HomePage() {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/register"
+                prefetch={true}
                 className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 hover:from-gold-400 hover:via-gold-300 hover:to-gold-500 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all"
               >
                 Begin Your Registration
               </Link>
               <Link
                 href="/contact"
+                prefetch={true}
                 className="w-full sm:w-auto px-8 py-4 rounded-full bg-emerald-950/80 text-gold-300 border border-gold-500/30 font-semibold text-xs tracking-widest uppercase hover:bg-emerald-900 transition-all"
               >
                 Speak with Concierge

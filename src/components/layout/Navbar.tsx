@@ -130,6 +130,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
     <Link
       key={l.href}
       href={l.href}
+      prefetch={true}
       className={cn(styles.link, isActive(l.href) && styles.active)}
       aria-current={isActive(l.href) ? 'page' : undefined}
       onMouseEnter={() => setHovered(l.href)}
@@ -165,21 +166,17 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
           </div>
 
           <Link
-            href="/#hero"
+            href="/"
+            prefetch={true}
             onClick={(e) => {
               if (pathname === '/') {
                 e.preventDefault();
-                const heroEl = document.getElementById('hero');
-                if (heroEl) {
-                  heroEl.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }
             }}
             className={styles.emblem}
-            aria-label="Beyond the Mind - Return to Hero Section"
-            title="Beyond the Mind - Return to Hero Section"
+            aria-label="Beyond the Mind - Return to Home"
+            title="Beyond the Mind - Return to Home"
           >
             <Image src="/images/brand/logo.jpg" alt="Beyond the Mind emblem" fill sizes="64px" priority />
           </Link>
@@ -207,7 +204,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
                   <Link
                     key={l.href}
                     href={l.href}
-                    target="_self"
+                    prefetch={true}
                     onClick={() => setMoreOpen(false)}
                     tabIndex={moreOpen ? 0 : -1}
                   >
@@ -248,7 +245,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
               <li key={l.href} style={{ transitionDelay: sheetOpen ? `${0.25 + i * 0.05}s` : '0s' }}>
                 <Link
                   href={l.href}
-                  target="_self"
+                  prefetch={true}
                   onClick={() => setSheetOpen(false)}
                   className={cn(isActive(l.href) && styles.active)}
                   tabIndex={sheetOpen ? 0 : -1}
