@@ -252,7 +252,7 @@ export default async function HomePage() {
                   <div className="space-y-4 pt-8">
                     <div className="relative rounded-2xl overflow-hidden aspect-square border border-gold-500/30 shadow-lg">
                       <Image
-                        src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=800&q=80"
+                        src="/images/rishikesh/ganga-aarti.jpg"
                         alt="Sacred Lamp Aarti"
                         fill
                         className="object-cover"
