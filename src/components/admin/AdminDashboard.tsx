@@ -127,6 +127,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>([]);
   const [loadingMedia, setLoadingMedia] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const [setup, setSetup] = useState<{ database: boolean; storage: boolean; hosted: boolean } | null>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/status')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => json?.success && setSetup(json))
+      .catch(() => {});
+  }, []);
 
   // Fetch registrations
   const fetchRegistrations = useCallback(async () => {
@@ -438,6 +446,17 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {setup?.hosted && (!setup.database || !setup.storage) && (
+          <div className="mb-6 p-4 rounded-2xl bg-red-950/80 border border-red-400/60 text-red-100 text-xs flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-300 shrink-0" />
+            <span>
+              {!setup.storage && 'Image uploads are disabled: the NEON_STORAGE_* variables are missing in Vercel. '}
+              {!setup.database && 'Changes will not be saved permanently: DATABASE_URL is missing in Vercel. '}
+              Add them in Vercel → Settings → Environment Variables, then redeploy.
+            </span>
+          </div>
+        )}
+
         {/* Global Success Notification */}
         {saveSuccessMessage && (
           <div className="mb-6 p-4 rounded-2xl bg-emerald-900/90 border border-gold-400 text-gold-100 text-xs flex items-center gap-3 shadow-lg animate-in fade-in">
