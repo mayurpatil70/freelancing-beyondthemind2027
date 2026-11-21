@@ -35,7 +35,6 @@ function revalidateAllPages() {
     revalidatePath('/daily-meditation');
     revalidatePath('/register');
     revalidatePath('/contact');
-    revalidatePath('/gallery');
   } catch (err) {
     console.warn('Revalidate error:', err);
   }

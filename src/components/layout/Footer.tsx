@@ -107,11 +107,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="hover:text-gold-300 transition-colors">
-                  Visual Gallery
-                </Link>
-              </li>
-              <li>
                 <Link href="/reach" className="hover:text-gold-300 transition-colors">
                   How to Reach
                 </Link>
@@ -129,15 +124,6 @@ export function Footer() {
               <li>
                 <Link href="/contact" className="hover:text-gold-300 transition-colors">
                   Contact & Concierge
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/admin"
-                  className="inline-flex items-center gap-1.5 text-gold-400 hover:text-gold-300 transition-colors font-medium"
-                >
-                  <Lock className="w-3 h-3 text-gold-400" />
-                  <span>Admin Sanctuary (/admin)</span>
                 </Link>
               </li>
             </ul>
@@ -302,22 +288,22 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Dedicated Developer Advertisement Bar matching Screenshot 3 */}
+      {/* Dedicated Developer Bar */}
       <div className="bg-[#010907] border-t border-gold-500/15 py-3.5 px-4 text-center">
-        <p className="text-xs text-stone-subtle/85 inline-flex items-center justify-center gap-1.5">
+        <a
+          href="https://linktr.ee/hackerfromhills"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Team Hackerfromhills"
+          className="text-xs text-stone-subtle/85 hover:text-gold-300 inline-flex items-center justify-center gap-1.5 transition-colors group cursor-pointer"
+        >
           <span>Made with</span>
-          <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline shrink-0" />
+          <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline shrink-0 group-hover:scale-125 transition-transform" />
           <span>by</span>
-          <a
-            href="https://linktr.ee/hackerfromhills"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Team Hackerfromhills — Developer Portfolio & Socials"
-            className="text-gold-400 hover:text-gold-300 font-medium underline underline-offset-4 decoration-gold-400/80 transition-colors hover:scale-105 inline-block"
-          >
+          <span className="text-gold-400 group-hover:text-gold-200 font-medium underline underline-offset-4 decoration-gold-400/80">
             Team Hackerfromhills
-          </a>
-        </p>
+          </span>
+        </a>
       </div>
     </footer>
   );

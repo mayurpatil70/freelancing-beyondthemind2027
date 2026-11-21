@@ -25,7 +25,6 @@ const rightLinks = [
 const moreLinks = [
   { label: 'Participation', href: '/participation', note: 'Rooms, inclusions and what to bring' },
   { label: 'Testimonials', href: '/testimonials', note: 'Reflections from the 2026 circle' },
-  { label: 'Gallery', href: '/gallery', note: 'Moments from past retreats' },
   { label: 'How to Reach', href: '/reach', note: 'Air, rail and road to Rishikesh' },
   { label: 'FAQ', href: '/faq', note: 'Answers before you enquire' },
   { label: 'Contact', href: '/contact', note: 'WhatsApp, phone and email' },
@@ -38,7 +37,6 @@ const sheetLinks = [
   { label: 'Rishikesh', href: '/rishikesh', tag: 'Ganga' },
   { label: 'Daily Meditation', href: '/daily-meditation', tag: '7:30 pm' },
   { label: 'Participation', href: '/participation' },
-  { label: 'Gallery', href: '/gallery' },
   { label: 'How to Reach', href: '/reach' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '/contact' },

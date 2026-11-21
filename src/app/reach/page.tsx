@@ -13,8 +13,7 @@ export const metadata: Metadata = {
     'Travel guide and connectivity for arriving in Rishikesh on October 5, 2027 via Dehradun Airport, Yog Nagari railway, and Delhi highways. Plus October weather & packing guide.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default function ReachPage() {
   const whatsappUrl = formatWhatsAppUrl(

@@ -11,8 +11,7 @@ export const metadata: Metadata = {
     'Contact the Beyond the Mind coordination team via WhatsApp (+91 8075572018), email (moolabrahman@gmail.com), or our concierge enquiry desk.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default function ContactPage() {
   return (

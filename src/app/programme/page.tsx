@@ -14,8 +14,7 @@ export const metadata: Metadata = {
     'Detailed retreat schedule for Beyond the Mind 2027 in Rishikesh. Arrival on Tuesday, October 5, followed by four days of sacred sessions from Stress Buster to Shiva Mandala.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default async function ProgrammePage() {
   const programme = await getProgramme();

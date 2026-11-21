@@ -13,8 +13,7 @@ export const metadata: Metadata = {
     'Reserve your sanctuary place for Beyond the Mind 2027 in Rishikesh (Arrival Oct 5 • Sessions Oct 6–9) or join Daily Guided Meditation on Zoom. Strict vegetarian food during retreat.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default async function RegisterPage({
   searchParams,

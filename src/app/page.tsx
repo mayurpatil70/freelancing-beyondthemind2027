@@ -17,7 +17,6 @@ import {
   getExperiences,
   getProgramme,
   getTestimonials,
-  getGallery,
 } from '@/lib/storage/store';
 import {
   MapPin,
@@ -31,15 +30,13 @@ import {
   Languages,
 } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default async function HomePage() {
   const settings = await getSiteSettings();
   const experiences = await getExperiences();
   const programme = await getProgramme();
   const testimonials = await getTestimonials();
-  const gallery = await getGallery();
 
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
@@ -378,73 +375,6 @@ export default async function HomePage() {
             />
 
             <TestimonialCarousel testimonials={testimonials} />
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 9: ORIGINAL POSTER SHOWCASE */}
-        {/* ========================================================================= */}
-        <section className="py-24 sm:py-32 bg-[#07261F]/40 border-y border-gold-500/20 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading
-              eyebrow="Archival Artwork & Posters"
-              title="Official Visual Invitations"
-              subtitle="The original artwork and announcements designed for Beyond the Mind."
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Poster 1: 2027 Invitation */}
-              <div className="group relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-lg bg-[#07261F]">
-                <div className="relative aspect-[2/3] w-full">
-                  <Image
-                    src="/images/posters/btm2027-retreat-sessions.jpg"
-                    alt="Beyond the Mind 2027 Retreat Sessions Poster"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <span className="font-serif text-base text-gold-300 font-medium block">
-                    BTM 2027 Retreat Sessions
-                  </span>
-                  <span className="text-[11px] text-stone-subtle/70 uppercase tracking-wider">
-                    Arrival Oct 5 • Oct 6–9, 2027
-                  </span>
-                </div>
-              </div>
-
-              {/* Poster 2: 2026 Community Gathering */}
-              <div className="group relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-lg bg-[#07261F]">
-                <div className="relative aspect-[2/3] w-full">
-                  <Image
-                    src="/images/posters/btm2026-gathering.jpg"
-                    alt="Beyond the Mind 2026 Gathering Poster"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <span className="font-serif text-base text-gold-300 font-medium block">
-                    BTM 2026 Community Gathering
-                  </span>
-                  <span className="text-[11px] text-stone-subtle/70 uppercase tracking-wider">
-                    Sacred Fellowship & Kinship
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center mt-10">
-              <Link
-                href="/gallery"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-300 hover:text-gold-200 font-semibold"
-              >
-                <span>View Complete Visual Gallery</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
           </div>
         </section>
 

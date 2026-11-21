@@ -12,7 +12,6 @@ import {
   initialSiteSettings,
   initialExperiences,
   initialAttractions,
-  initialGallery,
 } from '@/lib/data/initialData';
 
 interface CMSContextType {
@@ -28,7 +27,7 @@ const CMSContext = createContext<CMSContextType>({
   settings: initialSiteSettings,
   experiences: initialExperiences,
   attractions: initialAttractions,
-  gallery: initialGallery,
+  gallery: [],
   customContacts: [],
   updateCMSData: () => {},
 });
@@ -56,7 +55,7 @@ export function CMSProvider({
   const [attractions, setAttractions] = useState<RishikeshAttraction[]>(
     initialAttractionsList || initialAttractions
   );
-  const [gallery, setGallery] = useState<GalleryItem[]>(initialGalleryList || initialGallery);
+  const [gallery, setGallery] = useState<GalleryItem[]>(initialGalleryList || []);
 
   // Hydrate from localStorage on client mount if newer/present
   useEffect(() => {

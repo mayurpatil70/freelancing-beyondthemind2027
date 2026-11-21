@@ -26,8 +26,7 @@ export const metadata: Metadata = {
     'Overview of retreat participation options for Beyond the Mind 2027 in Rishikesh, including private room, twin sharing, sattvic dining, and retreat materials.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default function ParticipationPage() {
   const participationTiers = [

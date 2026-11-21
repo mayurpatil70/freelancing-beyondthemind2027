@@ -41,8 +41,7 @@ const iconMap: Record<string, React.ElementType> = {
   CircleDot,
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default async function ExperiencesPage() {
   const experiences = await getExperiences();

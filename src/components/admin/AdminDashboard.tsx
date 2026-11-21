@@ -11,7 +11,6 @@ import {
   SacredExperience,
   RishikeshAttraction,
   WeatherClothingGuide,
-  GalleryItem,
   FAQItem,
   CustomContactLink,
   MediaAsset,
@@ -71,7 +70,6 @@ type AdminTab =
   | 'attractions'
   | 'weather'
   | 'keywords'
-  | 'gallery'
   | 'media'
   | 'settings';
 
@@ -87,7 +85,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [experiences, setExperiences] = useState<SacredExperience[]>([]);
   const [attractions, setAttractions] = useState<RishikeshAttraction[]>([]);
   const [weatherGuide, setWeatherGuide] = useState<WeatherClothingGuide | null>(null);
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [metaKeywords, setMetaKeywords] = useState<Record<string, string>>({});
 
   const [saving, setSaving] = useState(false);
@@ -126,8 +123,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     highlights: [],
   });
 
-  // Gallery File Input ref
-  const galleryFileInputRef = useRef<HTMLInputElement>(null);
   const mediaFileInputRef = useRef<HTMLInputElement>(null);
   const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>([]);
   const [loadingMedia, setLoadingMedia] = useState(false);
@@ -175,7 +170,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         if (data?.experiences) setExperiences(data.experiences);
         if (data?.attractions) setAttractions(data.attractions);
         if (data?.weatherClothing) setWeatherGuide(data.weatherClothing);
-        if (data?.gallery) setGalleryItems(data.gallery);
       }
     } catch (e) {
       console.error('Fetch content error:', e);
@@ -250,17 +244,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     saveContent('experiences', reordered, 'Retreat session sequence updated & saved!');
   };
 
-  // Reorder gallery items and auto-save sequence
-  const moveGalleryItem = (fromIdx: number, toIdx: number) => {
-    if (toIdx < 0 || toIdx >= galleryItems.length) return;
-    const updated = [...galleryItems];
-    const [moved] = updated.splice(fromIdx, 1);
-    updated.splice(toIdx, 0, moved);
-    const reordered = updated.map((item, i) => ({ ...item, order: i + 1 }));
-    setGalleryItems(reordered);
-    saveContent('gallery', reordered, 'Gallery order updated & saved!');
-  };
-
   const fetchMedia = useCallback(async () => {
     setLoadingMedia(true);
     try {
@@ -291,21 +274,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     } else {
       alert('Could not delete the file.');
     }
-  };
-
-  const addMediaToGallery = (asset: MediaAsset) => {
-    const newItem: GalleryItem = {
-      id: `gal-${Date.now()}`,
-      title: asset.original_name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ') || 'New Gallery Item',
-      category: 'Retreat Experience',
-      image_url: asset.url,
-      media_type: asset.kind,
-      caption: '',
-      location: 'Rishikesh, Uttarakhand',
-    };
-    const updated = [newItem, ...galleryItems];
-    setGalleryItems(updated);
-    saveContent('gallery', updated, 'Added to the gallery. Edit its title and caption in Photos & Gallery.');
   };
 
   // Status Change for Registrations
@@ -446,7 +414,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             { id: 'attractions', label: 'Rishikesh Attractions', icon: MapPin },
             { id: 'weather', label: 'Weather & Clothing', icon: Shirt },
             { id: 'keywords', label: 'SEO, GEO & Analytics', icon: Globe },
-            { id: 'gallery', label: 'Photos & Gallery', icon: ImageIcon },
             { id: 'media', label: 'Media Library', icon: Film },
             { id: 'settings', label: 'General Settings', icon: Settings },
           ].map((tab) => {
@@ -1906,251 +1873,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 8: PHOTOS & GALLERY CMS */}
-        {/* ========================================================================= */}
-        {activeTab === 'gallery' && (
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/20">
-              <div>
-                <h3 className="font-serif text-2xl text-ivory-50 font-light">
-                  Photo Gallery & Media Management
-                </h3>
-                <p className="text-xs text-stone-subtle/80 mt-1">
-                  Add, update, or remove photos displayed in the visual gallery.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => galleryFileInputRef.current?.click()}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
-                >
-                  <Upload className="w-3.5 h-3.5" />
-                  <span>{uploading === 'gallery-add' ? `Uploading ${uploadProgress ?? 0}%` : 'Add Photo'}</span>
-                </button>
-                <input
-                  ref={galleryFileInputRef}
-                  type="file"
-                  accept={IMAGE_ACCEPT}
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      handleUploadMedia(
-                        file,
-                        (url, kind) => {
-                          const cleanTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
-                          const newItem: GalleryItem = {
-                            id: `gal-${Date.now()}`,
-                            title: cleanTitle || 'New Gallery Photo',
-                            category: 'Retreat Experience',
-                            image_url: url,
-                            media_type: kind,
-                            caption: '',
-                            location: 'Rishikesh, Uttarakhand',
-                          };
-                          const updated = [newItem, ...galleryItems];
-                          setGalleryItems(updated);
-                          saveContent('gallery', updated, 'New photo added to gallery & saved!');
-                        },
-                        'gallery-add'
-                      );
-                    }
-                  }}
-                />
-
-                <button
-                  type="button"
-                  onClick={() => saveContent('gallery', galleryItems, 'Gallery items updated!')}
-                  disabled={saving}
-                  className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
-                >
-                  <Save className="w-3.5 h-3.5" />
-                  <span>{saving ? 'Saving...' : 'Save Gallery'}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Top Quick Order Sequence Bar for Gallery Cards */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#07261F] to-[#041a15] border border-gold-500/35 space-y-3 shadow-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gold-500/20 pb-3">
-                <div>
-                  <span className="text-xs uppercase tracking-wider text-gold-300 font-semibold flex items-center gap-1.5">
-                    <ArrowUpDown className="w-4 h-4 text-gold-400" />
-                    <span>Top Bar: Arrange Photos & Gallery Card Order Sequence</span>
-                  </span>
-                  <p className="text-[11px] text-stone-subtle/70 font-light mt-0.5">
-                    Rearrange gallery photos sequence. Click ◀ or ▶ to shift positions across the grid.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => saveContent('gallery', galleryItems, 'Gallery sequence saved successfully!')}
-                  disabled={saving}
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold-500/20 hover:bg-gold-500/30 border border-gold-400/40 text-gold-300 text-xs font-semibold uppercase tracking-wider transition-all self-start sm:self-auto"
-                >
-                  <Save className="w-3.5 h-3.5" />
-                  <span>{saving ? 'Saving...' : 'Save Sequence'}</span>
-                </button>
-              </div>
-
-              <div className="flex flex-wrap gap-2 pt-1 max-h-48 overflow-y-auto">
-                {galleryItems.map((item, idx) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 shadow-sm"
-                  >
-                    <span className="w-4 h-4 rounded-full bg-gold-500/30 text-gold-300 flex items-center justify-center font-bold text-[9px]">
-                      {idx + 1}
-                    </span>
-                    <span className="font-serif font-medium text-ivory-100 truncate max-w-[110px] sm:max-w-[150px]">
-                      {item.title}
-                    </span>
-                    <div className="flex items-center gap-0.5 border-l border-gold-500/20 pl-1">
-                      <button
-                        type="button"
-                        disabled={idx === 0}
-                        onClick={() => moveGalleryItem(idx, idx - 1)}
-                        title="Move Earlier"
-                        className="p-0.5 rounded hover:bg-gold-500/20 text-gold-400 disabled:opacity-30 disabled:hover:bg-transparent"
-                      >
-                        <ChevronLeft className="w-3 h-3" />
-                      </button>
-                      <button
-                        type="button"
-                        disabled={idx === galleryItems.length - 1}
-                        onClick={() => moveGalleryItem(idx, idx + 1)}
-                        title="Move Later"
-                        className="p-0.5 rounded hover:bg-gold-500/20 text-gold-400 disabled:opacity-30 disabled:hover:bg-transparent"
-                      >
-                        <ChevronRight className="w-3 h-3" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {galleryItems.map((item, index) => (
-                <div
-                  key={item.id}
-                  className="p-4 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-3"
-                >
-                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/20 bg-black/40">
-                    {item.media_type === 'video' || isVideoUrl(item.image_url) ? (
-                      <video src={item.image_url} controls muted playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
-                    ) : (
-                      <Image src={item.image_url} alt={item.title} fill unoptimized className="object-cover" />
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <input
-                      type="text"
-                      value={item.title}
-                      onChange={(e) => {
-                        const updated = [...galleryItems];
-                        updated[index].title = e.target.value;
-                        setGalleryItems(updated);
-                      }}
-                      placeholder="Title"
-                      className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-xs text-ivory-100 font-medium"
-                    />
-
-                    <div className="flex items-center gap-2">
-                      <label className="inline-flex items-center px-2.5 py-1.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer shrink-0 transition-colors" title="Replace Photo">
-                        <Upload className="w-3.5 h-3.5" />
-                        <span className="ml-1.5 text-[11px]">Replace Photo</span>
-                        <input
-                          type="file"
-                          accept={IMAGE_ACCEPT}
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              handleUploadMedia(
-                                file,
-                                (url, kind) => {
-                                  const updated = [...galleryItems];
-                                  updated[index].image_url = url;
-                                  updated[index].media_type = kind;
-                                  setGalleryItems(updated);
-                                  saveContent('gallery', updated, `Photo for "${item.title}" replaced & saved instantly!`);
-                                },
-                                `gal-item-${item.id}`
-                              );
-                            }
-                          }}
-                        />
-                      </label>
-                      <a
-                        href={item.image_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-2 py-1.5 rounded-lg bg-emerald-950/70 border border-gold-500/20 text-gold-400 hover:text-gold-200 text-[11px] flex items-center gap-1"
-                        title="View Full Resolution"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        <span>View</span>
-                      </a>
-                    </div>
-
-                    <input
-                      type="text"
-                      value={item.caption}
-                      onChange={(e) => {
-                        const updated = [...galleryItems];
-                        updated[index].caption = e.target.value;
-                        setGalleryItems(updated);
-                      }}
-                      placeholder="Caption"
-                      className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-xs text-ivory-100"
-                    />
-
-                    <div className="flex items-center justify-between pt-1">
-                      <span className="text-[10px] text-gold-400 font-semibold">{item.category}</span>
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          disabled={index === 0}
-                          onClick={() => moveGalleryItem(index, index - 1)}
-                          className="p-1 rounded bg-emerald-900/60 hover:bg-emerald-800 border border-gold-500/30 text-gold-400 disabled:opacity-30"
-                          title="Move Earlier"
-                        >
-                          <ChevronLeft className="w-3 h-3" />
-                        </button>
-                        <button
-                          type="button"
-                          disabled={index === galleryItems.length - 1}
-                          onClick={() => moveGalleryItem(index, index + 1)}
-                          className="p-1 rounded bg-emerald-900/60 hover:bg-emerald-800 border border-gold-500/30 text-gold-400 disabled:opacity-30"
-                          title="Move Later"
-                        >
-                          <ChevronRight className="w-3 h-3" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (confirm(`Delete "${item.title}"?`)) {
-                              setGalleryItems(galleryItems.filter((g) => g.id !== item.id));
-                            }
-                          }}
-                          className="text-red-400 hover:text-red-300 text-xs ml-1"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ========================================================================= */}
         {/* MEDIA LIBRARY */}
         {/* ========================================================================= */}
         {activeTab === 'media' && (
@@ -2159,7 +1881,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <div>
                 <h3 className="font-serif text-2xl text-ivory-50 font-light">Media Library</h3>
                 <p className="text-xs text-stone-subtle/80 mt-1">
-                  Every image uploaded from the CMS. Add any of them to the gallery. JPG, PNG, WEBP, GIF or AVIF, up to 15 MB.
+                  Every image uploaded from the CMS. JPG, PNG, WEBP, GIF or AVIF, up to 15 MB.
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -2223,14 +1945,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 text-[11px]">
-                      <button
-                        type="button"
-                        onClick={() => addMediaToGallery(asset)}
-                        disabled={saving || galleryItems.some((g) => g.image_url === asset.url)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950 border border-gold-500/25 text-gold-300 hover:text-white disabled:opacity-40"
-                      >
-                        <Plus className="w-3 h-3" /> Gallery
-                      </button>
+                      
                       <button
                         type="button"
                         onClick={() => handleDeleteMedia(asset)}

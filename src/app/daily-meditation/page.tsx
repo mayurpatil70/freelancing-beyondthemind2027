@@ -28,8 +28,7 @@ export const metadata: Metadata = {
     "Join our live Monday to Friday 7:30 PM online guided meditation on Zoom. Cultivate awareness, explore inner silence, and pause, observe, and transcend.",
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default async function DailyMeditationPage() {
   const settings = await getSiteSettings();
