@@ -2163,7 +2163,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     type="text"
                     value={settings.twitter_url || ''}
                     onChange={(e) => setSettings({ ...settings, twitter_url: e.target.value })}
-                    placeholder="https://twitter.com/beyondthemind"
+                    placeholder="https://x.com/beyondthemind27"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>

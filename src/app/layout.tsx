@@ -113,6 +113,8 @@ export const metadata: Metadata = {
     title: 'Beyond the Mind 2027 — The Divine Retreat',
     description:
       'A journey into the Infinite within. Rishikesh, October 6–9, 2027. Guided by Pradeep Muthukulam.',
+    site: '@beyondthemind27',
+    creator: '@beyondthemind27',
     images: ['/images/brand/og-cover.jpg'],
   },
   robots: {
@@ -158,6 +160,8 @@ export default function RootLayout({
         sameAs: [
           'https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm',
           'https://www.facebook.com/profile.php?id=61595374757132',
+          'https://www.youtube.com/@BeyondTheMindRetreat',
+          'https://x.com/beyondthemind27?s=11',
         ],
       },
       {
