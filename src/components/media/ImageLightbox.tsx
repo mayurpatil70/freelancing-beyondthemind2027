@@ -106,10 +106,10 @@ export function ImageLightbox({
 
       {/* Image and Caption Container */}
       <div
-        className="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center"
+        className="relative max-w-5xl max-h-[92vh] flex flex-col items-center justify-center p-2"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative w-full max-h-[75vh] h-[75vh] max-w-[85vw] flex items-center justify-center">
+        <div className="relative w-full max-h-[75vh] h-[75vh] max-w-[85vw] flex items-center justify-center rounded-2xl sm:rounded-3xl overflow-hidden border border-gold-500/40 bg-[#07261F]/70 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(212,175,55,0.2)] p-2 sm:p-4">
           {current.isVideo ? (
             <video
               key={current.src}
@@ -117,23 +117,25 @@ export function ImageLightbox({
               controls
               autoPlay
               playsInline
-              className="max-w-full max-h-full rounded-lg"
+              className="max-w-full max-h-full rounded-xl sm:rounded-2xl"
             />
           ) : (
-            <Image
-              src={current.src}
-              alt={current.alt || 'Beyond the Mind Visual'}
-              fill
-              sizes="90vw"
-              className="object-contain"
-              priority
-            />
+            <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden flex items-center justify-center">
+              <Image
+                src={current.src}
+                alt={current.alt || 'Beyond the Mind Visual'}
+                fill
+                sizes="90vw"
+                className="object-contain rounded-xl sm:rounded-2xl"
+                priority
+              />
+            </div>
           )}
         </div>
 
         {/* Caption bar */}
         {(current.title || current.caption) && (
-          <div className="mt-4 px-6 py-3 rounded-xl bg-emerald-950/90 border border-gold-500/20 text-center max-w-2xl">
+          <div className="mt-4 px-6 py-3 rounded-2xl bg-emerald-950/95 border border-gold-500/30 text-center max-w-2xl shadow-xl backdrop-blur-md">
             {current.title && (
               <h4 className="font-serif text-lg text-gold-300 font-medium">{current.title}</h4>
             )}

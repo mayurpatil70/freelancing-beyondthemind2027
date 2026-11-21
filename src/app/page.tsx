@@ -9,6 +9,7 @@ import { RetreatAtAGlance } from '@/components/retreat/RetreatAtAGlance';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ExperienceCard } from '@/components/experiences/ExperienceCard';
 import { ExperiencesHomeGrid } from '@/components/experiences/ExperiencesHomeGrid';
+import { RishikeshPhotoGrid } from '@/components/rishikesh/RishikeshPhotoGrid';
 import { ProgrammeTimeline } from '@/components/programme/ProgrammeTimeline';
 import { TestimonialCarousel } from '@/components/testimonials/TestimonialCarousel';
 import {
@@ -229,45 +230,7 @@ export default async function HomePage() {
               </div>
 
               <div className="lg:col-span-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <div className="relative rounded-2xl overflow-hidden aspect-[3/4] border border-gold-500/30 shadow-lg">
-                      <Image
-                        src="/images/rishikesh/himalayan-sunrise.jpg"
-                        alt="Himalayan Foothills Dawn"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="relative rounded-2xl overflow-hidden aspect-square border border-gold-500/30 shadow-lg">
-                      <Image
-                        src="/images/rishikesh/meditation-ganges.jpg"
-                        alt="Meditation along Ganga"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 pt-8">
-                    <div className="relative rounded-2xl overflow-hidden aspect-square border border-gold-500/30 shadow-lg">
-                      <Image
-                        src="/images/rishikesh/ganga-aarti.jpg"
-                        alt="Sacred Lamp Aarti"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="relative rounded-2xl overflow-hidden aspect-[3/4] border border-gold-500/30 shadow-lg">
-                      <Image
-                        src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80"
-                        alt="Lakshman Jhula Rishikesh"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <RishikeshPhotoGrid />
               </div>
             </div>
           </div>
