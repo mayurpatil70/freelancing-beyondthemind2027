@@ -27,7 +27,7 @@ export function ContactDetailsSection() {
   const instagram = settings?.instagram_url || 'https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm';
   const facebook = settings?.facebook_url || 'https://www.facebook.com/profile.php?id=61595374757132';
   const youtube = settings?.youtube_url || 'https://www.youtube.com/@BeyondTheMindRetreat';
-  const twitter = settings?.twitter_url || 'https://twitter.com/beyondthemind';
+  const twitter = settings?.twitter_url || 'https://x.com/beyondthemind27?s=11';
 
   const quickInquiries = [
     {
@@ -235,8 +235,10 @@ export function ContactDetailsSection() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 hover:text-gold-300 hover:border-gold-400 transition-all hover:scale-105"
                   >
-                    <Twitter className="w-4 h-4 text-gold-400" />
-                    <span>Twitter / X</span>
+                    <svg className="w-3.5 h-3.5 fill-gold-400" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                    <span>X (Twitter)</span>
                   </a>
                 )}
               </div>
