@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   if (!isStorageConfigured) return fail('Storage is not configured');
 
   const { key, name } = await req.json();
-  if (typeof key !== 'string' || !/^(images|videos)\//.test(key)) return fail('Invalid key');
+  if (typeof key !== 'string' || !key.startsWith('images/')) return fail('Invalid key');
 
   const head = await headObject(MEDIA_BUCKET, key);
   if (!head) return fail('Uploaded file was not found in storage', 404);
