@@ -14,7 +14,10 @@ import {
   GalleryItem,
   FAQItem,
   CustomContactLink,
+  MediaAsset,
 } from '@/types';
+import { MEDIA_ACCEPT, isVideoUrl } from '@/lib/media/rules';
+import { uploadMediaFile } from '@/lib/media/upload-client';
 import { broadcastCMSUpdate } from '@/contexts/CMSContext';
 import {
   Users,
@@ -47,6 +50,8 @@ import {
   ShieldCheck,
   Activity,
   Terminal,
+  Film,
+  Copy,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -63,6 +68,7 @@ type AdminTab =
   | 'weather'
   | 'keywords'
   | 'gallery'
+  | 'media'
   | 'settings';
 
 export function AdminDashboard({ onLogout }: AdminDashboardProps) {
@@ -118,6 +124,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
   // Gallery File Input ref
   const galleryFileInputRef = useRef<HTMLInputElement>(null);
+  const mediaFileInputRef = useRef<HTMLInputElement>(null);
+  const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>([]);
+  const [loadingMedia, setLoadingMedia] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
   // Fetch registrations
   const fetchRegistrations = useCallback(async () => {
@@ -196,28 +206,72 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     }
   };
 
-  const handleUploadImage = async (file: File, onDone: (url: string) => void, uploadId: string) => {
+  const handleUploadMedia = async (
+    file: File,
+    onDone: (url: string, kind: 'image' | 'video') => void,
+    uploadId: string
+  ) => {
     setUploading(uploadId);
-    const formData = new FormData();
-    formData.append('file', file);
+    setUploadProgress(0);
     try {
-      const res = await fetch('/api/admin/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const json = await res.json();
-      if (res.ok && json.success) {
-        onDone(json.url);
-        showSaveSuccess('Photo uploaded successfully! Remember to click save.');
-      } else {
-        alert(json.message || 'Upload failed');
-      }
+      const result = await uploadMediaFile(file, setUploadProgress);
+      onDone(result.url, result.kind);
+      if (result.asset) setMediaAssets((prev) => [result.asset!, ...prev.filter((m) => m.id !== result.asset!.id)]);
+      showSaveSuccess(`${result.kind === 'video' ? 'Video' : 'Photo'} uploaded successfully! Remember to click save.`);
     } catch (err) {
       console.error('Upload error:', err);
-      alert('Upload failed. Please check your network connection.');
+      alert(err instanceof Error ? err.message : 'Upload failed. Please check your network connection.');
     } finally {
       setUploading(null);
+      setUploadProgress(null);
     }
+  };
+
+  const fetchMedia = useCallback(async () => {
+    setLoadingMedia(true);
+    try {
+      const res = await fetch('/api/admin/media');
+      const json = await res.json();
+      if (res.ok && json.success) setMediaAssets(json.data);
+    } catch (e) {
+      console.error('Media fetch error:', e);
+    } finally {
+      setLoadingMedia(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === 'media') fetchMedia();
+  }, [activeTab, fetchMedia]);
+
+  const handleDeleteMedia = async (asset: MediaAsset) => {
+    if (!confirm(`Delete "${asset.original_name}" from storage? Pages still using this link will show a broken image.`)) return;
+    const res = await fetch('/api/admin/media', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: asset.id }),
+    });
+    if (res.ok) {
+      setMediaAssets((prev) => prev.filter((m) => m.id !== asset.id));
+      showSaveSuccess('File deleted from storage.');
+    } else {
+      alert('Could not delete the file.');
+    }
+  };
+
+  const addMediaToGallery = (asset: MediaAsset) => {
+    const newItem: GalleryItem = {
+      id: `gal-${Date.now()}`,
+      title: asset.original_name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ') || 'New Gallery Item',
+      category: 'Retreat Experience',
+      image_url: asset.url,
+      media_type: asset.kind,
+      caption: '',
+      location: 'Rishikesh, Uttarakhand',
+    };
+    const updated = [newItem, ...galleryItems];
+    setGalleryItems(updated);
+    saveContent('gallery', updated, 'Added to the gallery. Edit its title and caption in Photos & Gallery.');
   };
 
   // Status Change for Registrations
@@ -359,6 +413,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             { id: 'weather', label: 'Weather & Clothing', icon: Shirt },
             { id: 'keywords', label: 'SEO, GEO & Analytics', icon: Globe },
             { id: 'gallery', label: 'Photos & Gallery', icon: ImageIcon },
+            { id: 'media', label: 'Media Library', icon: Film },
             { id: 'settings', label: 'General Settings', icon: Settings },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -736,7 +791,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         />
                         <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
                           <Upload className="w-3.5 h-3.5" />
-                          <span>{uploading === `exp-${exp.id}` ? 'Uploading...' : 'Upload Device Image'}</span>
+                          <span>{uploading === `exp-${exp.id}` ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Device Image'}</span>
                           <input
                             type="file"
                             accept="image/*"
@@ -745,7 +800,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                handleUploadImage(
+                                handleUploadMedia(
                                   file,
                                   (url) => {
                                     const updated = [...experiences];
@@ -1258,7 +1313,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         />
                         <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
                           <Upload className="w-3.5 h-3.5" />
-                          <span>{uploading === `attr-${attr.id}` ? 'Uploading...' : 'Upload Image'}</span>
+                          <span>{uploading === `attr-${attr.id}` ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
                           <input
                             type="file"
                             accept="image/*"
@@ -1267,7 +1322,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                handleUploadImage(
+                                handleUploadMedia(
                                   file,
                                   (url) => {
                                     const updated = [...attractions];
@@ -1767,25 +1822,26 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
                 >
                   <Upload className="w-3.5 h-3.5" />
-                  <span>{uploading === 'gallery-add' ? 'Uploading...' : 'Add Photo (From Device)'}</span>
+                  <span>{uploading === 'gallery-add' ? `Uploading ${uploadProgress ?? 0}%` : 'Add Photo or Video'}</span>
                 </button>
                 <input
                   ref={galleryFileInputRef}
                   type="file"
-                  accept="image/*"
+                  accept={MEDIA_ACCEPT}
                   className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
-                      handleUploadImage(
+                      handleUploadMedia(
                         file,
-                        (url) => {
+                        (url, kind) => {
                           const cleanTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
                           const newItem: GalleryItem = {
                             id: `gal-${Date.now()}`,
                             title: cleanTitle || 'New Gallery Photo',
                             category: 'Retreat Experience',
                             image_url: url,
+                            media_type: kind,
                             caption: '',
                             location: 'Rishikesh, Uttarakhand',
                           };
@@ -1816,7 +1872,11 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   className="p-4 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-3"
                 >
                   <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/20 bg-black/40">
-                    <Image src={item.image_url} alt={item.title} fill className="object-cover" />
+                    {item.media_type === 'video' || isVideoUrl(item.image_url) ? (
+                      <video src={item.image_url} controls muted playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                      <Image src={item.image_url} alt={item.title} fill className="object-cover" />
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -1839,25 +1899,27 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         onChange={(e) => {
                           const updated = [...galleryItems];
                           updated[index].image_url = e.target.value;
+                          updated[index].media_type = isVideoUrl(e.target.value) ? 'video' : 'image';
                           setGalleryItems(updated);
                         }}
-                        placeholder="Image URL"
+                        placeholder="Image or video URL"
                         className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-[11px] text-stone-subtle/80"
                       />
-                      <label className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer shrink-0 transition-colors" title="Upload Replacement Photo">
+                      <label className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer shrink-0 transition-colors" title="Upload Replacement Photo or Video">
                         <Upload className="w-3.5 h-3.5" />
                         <input
                           type="file"
-                          accept="image/*"
+                          accept={MEDIA_ACCEPT}
                           className="hidden"
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              handleUploadImage(
+                              handleUploadMedia(
                                 file,
-                                (url) => {
+                                (url, kind) => {
                                   const updated = [...galleryItems];
                                   updated[index].image_url = url;
+                                  updated[index].media_type = kind;
                                   setGalleryItems(updated);
                                 },
                                 `gal-item-${item.id}`
@@ -1898,6 +1960,114 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* MEDIA LIBRARY */}
+        {/* ========================================================================= */}
+        {activeTab === 'media' && (
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/20">
+              <div>
+                <h3 className="font-serif text-2xl text-ivory-50 font-light">Media Library</h3>
+                <p className="text-xs text-stone-subtle/80 mt-1">
+                  Every image and video uploaded from the CMS. Copy a link to use it anywhere, or add it to the gallery.
+                  Images up to 15 MB, videos up to 250 MB (MP4, WEBM, MOV).
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={fetchMedia}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-emerald-950 border border-gold-500/30 text-gold-300 hover:bg-emerald-900 text-xs"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${loadingMedia ? 'animate-spin' : ''}`} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => mediaFileInputRef.current?.click()}
+                  disabled={uploading !== null}
+                  className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>{uploading?.startsWith('media-') ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Images / Videos'}</span>
+                </button>
+                <input
+                  ref={mediaFileInputRef}
+                  type="file"
+                  multiple
+                  accept={MEDIA_ACCEPT}
+                  className="hidden"
+                  onChange={async (e) => {
+                    const files = Array.from(e.target.files || []);
+                    e.target.value = '';
+                    for (let i = 0; i < files.length; i++) {
+                      await handleUploadMedia(files[i], () => {}, `media-${i}`);
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            {mediaAssets.length === 0 ? (
+              <div className="p-10 rounded-2xl border border-dashed border-gold-500/30 text-center text-xs text-stone-subtle/80">
+                {loadingMedia ? 'Loading media...' : 'No uploads yet. Upload an image or video to get started.'}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {mediaAssets.map((asset) => (
+                  <div key={asset.id} className="p-3 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-2.5">
+                    <div className="relative aspect-video rounded-xl overflow-hidden border border-gold-500/20 bg-black/40">
+                      {asset.kind === 'video' ? (
+                        <video src={asset.url} controls muted playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
+                      ) : (
+                        <img src={asset.url} alt={asset.original_name} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                      )}
+                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/70 text-[9px] uppercase tracking-wider text-gold-300">
+                        {asset.kind}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-xs text-ivory-100 font-medium truncate" title={asset.original_name}>
+                        {asset.original_name}
+                      </p>
+                      <p className="text-[10px] text-stone-subtle/70">
+                        {(asset.size_bytes / 1024 / 1024).toFixed(1)} MB • {formatDate(asset.created_at)}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 text-[11px]">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(asset.url);
+                          showSaveSuccess('Link copied. Paste it into any image or video field.');
+                        }}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950 border border-gold-500/25 text-gold-300 hover:text-white"
+                      >
+                        <Copy className="w-3 h-3" /> Copy link
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => addMediaToGallery(asset)}
+                        disabled={saving || galleryItems.some((g) => g.image_url === asset.url)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950 border border-gold-500/25 text-gold-300 hover:text-white disabled:opacity-40"
+                      >
+                        <Plus className="w-3 h-3" /> Gallery
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteMedia(asset)}
+                        className="ml-auto text-red-400 hover:text-red-300"
+                        title="Delete"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -2452,7 +2622,18 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               ✕
             </button>
             <div className="relative w-full aspect-[3/4]">
-              <Image src={receiptModalUrl} alt="Payment Receipt" fill className="object-contain" />
+              {/\.pdf(\?|$)/i.test(decodeURIComponent(receiptModalUrl)) ? (
+                <a
+                  href={receiptModalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute inset-0 flex items-center justify-center text-gold-300 underline text-sm"
+                >
+                  Open PDF receipt
+                </a>
+              ) : (
+                <Image src={receiptModalUrl} alt="Payment Receipt" fill unoptimized className="object-contain" />
+              )}
             </div>
           </div>
         </div>
@@ -2553,7 +2734,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   />
                   <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
                     <Upload className="w-3.5 h-3.5" />
-                    <span>{uploading === 'new-session-img' ? 'Uploading...' : 'Upload Device Image'}</span>
+                    <span>{uploading === 'new-session-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Device Image'}</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -2561,7 +2742,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          handleUploadImage(file, (url) => setNewSessionData((prev) => ({ ...prev, image: url })), 'new-session-img');
+                          handleUploadMedia(file, (url) => setNewSessionData((prev) => ({ ...prev, image: url })), 'new-session-img');
                         }
                       }}
                     />
@@ -2770,7 +2951,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   />
                   <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
                     <Upload className="w-3.5 h-3.5" />
-                    <span>{uploading === 'new-attr-img' ? 'Uploading...' : 'Upload Device Image'}</span>
+                    <span>{uploading === 'new-attr-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Device Image'}</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -2778,7 +2959,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          handleUploadImage(file, (url) => setNewAttractionData((prev) => ({ ...prev, image_url: url })), 'new-attr-img');
+                          handleUploadMedia(file, (url) => setNewAttractionData((prev) => ({ ...prev, image_url: url })), 'new-attr-img');
                         }
                       }}
                     />

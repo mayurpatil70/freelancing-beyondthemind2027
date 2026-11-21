@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { updateRegistrationStatus } from '@/lib/storage/store';
+import { PRIVATE_BUCKET, isStorageConfigured, putObject } from '@/lib/media/storage';
+
+const EXT: Record<string, string> = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/webp': '.webp',
+  'application/pdf': '.pdf',
+};
+
+// Kept under Vercel's 4.5 MB request body limit.
+const MAX_BYTES = 4 * 1024 * 1024;
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,46 +23,33 @@ export async function POST(req: NextRequest) {
     if (!file) {
       return NextResponse.json({ success: false, message: 'No file uploaded.' }, { status: 400 });
     }
-
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-    if (!allowedMimeTypes.includes(file.type)) {
+    if (!EXT[file.type]) {
       return NextResponse.json(
         { success: false, message: 'Invalid file format. Only JPG, PNG, WEBP and PDF are accepted.' },
         { status: 400 }
       );
     }
-
-    const maxSize = 5 * 1024 * 1024; // 5 MB
-    if (file.size > maxSize) {
-      return NextResponse.json(
-        { success: false, message: 'File size exceeds maximum 5MB limit.' },
-        { status: 400 }
-      );
+    if (file.size > MAX_BYTES) {
+      return NextResponse.json({ success: false, message: 'File size exceeds maximum 4MB limit.' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const filename = `proof-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${EXT[file.type]}`;
+    let fileUrl: string;
 
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
+    if (isStorageConfigured) {
+      const key = `payment-proofs/${filename}`;
+      await putObject(PRIVATE_BUCKET, key, buffer, file.type);
+      fileUrl = `/api/admin/proof?key=${encodeURIComponent(key)}`;
+    } else {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
       fs.mkdirSync(uploadsDir, { recursive: true });
+      fs.writeFileSync(path.join(uploadsDir, filename), buffer);
+      fileUrl = `/uploads/${filename}`;
     }
-
-    const allowedExts = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
-    const rawExt = path.extname(file.name).toLowerCase();
-    const safeExt = allowedExts.includes(rawExt)
-      ? rawExt
-      : file.type === 'application/pdf'
-      ? '.pdf'
-      : '.jpg';
-    const filename = `proof-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${safeExt}`;
-    const destination = path.join(uploadsDir, filename);
-
-    fs.writeFileSync(destination, buffer);
-    const fileUrl = `/uploads/${filename}`;
 
     if (registrationId) {
-      await updateRegistrationStatus(registrationId, 'Payment Verification', 'Pending Verification');
+      await updateRegistrationStatus(registrationId, 'Payment Verification', 'Pending Verification', fileUrl);
     }
 
     return NextResponse.json({
@@ -61,10 +59,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     console.error('Upload proof error:', err);
-    return NextResponse.json(
-      { success: false, message: 'Failed to process file upload.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Failed to process file upload.' }, { status: 500 });
   }
 }
-

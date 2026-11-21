@@ -55,8 +55,9 @@ Every route is fully implemented, responsive, and SEO-optimized:
 - **Validation**: Zod schema validation on client and server
 - **Forms**: React Hook Form with `@hookform/resolvers/zod`
 - **Database & Storage**: Dual-layer architecture:
-  - Direct integration with **Supabase PostgreSQL & Storage** via environment variables
-  - Local resilient JSON persistence (`src/data/db.json`) for zero-config offline or development execution
+  - **Neon Postgres** (`@neondatabase/serverless`) for CMS content, registrations and admin notes
+  - **Neon Object Storage** (S3-compatible) for CMS images/videos (`btm-media`, public read) and payment receipts (`btm-private`)
+  - Local JSON persistence (`src/data/db.json`) and `public/uploads` when the Neon variables are not set
 - **SEO & Social**: Dynamic Metadata, Open Graph, Twitter Cards, `robots.ts`, `sitemap.ts`, and Schema.org `Event` JSON-LD structured data.
 
 ---
@@ -70,10 +71,19 @@ Create `.env.local` in the project root:
 ADMIN_PASSWORD="MoolaRetreat@2027#Rishikesh"
 ADMIN_EMAIL="admin@beyondthemindretreat.org"
 
-# Supabase (Optional - Local resilient JSON fallback is enabled)
-NEXT_PUBLIC_SUPABASE_URL=""
-NEXT_PUBLIC_SUPABASE_ANON_KEY=""
-SUPABASE_SERVICE_ROLE_KEY=""
+# Signs the admin session cookie (any long random string)
+ADMIN_SESSION_SECRET=""
+
+# Neon Postgres (pooled connection string)
+DATABASE_URL=""
+
+# Neon Object Storage (branch endpoint + storage:read/write credential)
+NEON_STORAGE_ENDPOINT=""
+NEON_STORAGE_REGION="ap-southeast-1"
+NEON_STORAGE_ACCESS_KEY_ID=""
+NEON_STORAGE_SECRET_ACCESS_KEY=""
+NEON_MEDIA_BUCKET="btm-media"
+NEON_PRIVATE_BUCKET="btm-private"
 
 # Public Domain
 NEXT_PUBLIC_SITE_URL="https://beyondthemindretreat.org"
@@ -155,16 +165,17 @@ The client provided a master video editing link:
 
 ---
 
-## 8. Database Migrations (Supabase PostgreSQL)
+## 8. Database & Media Storage (Neon)
 
-The complete SQL schema and Row Level Security (RLS) policies are provided in:
-`supabase/migrations/01_init.sql`
+The schema lives in `db/schema.sql` (tables: `cms_content`, `registrations`, `admin_notes`, `media_assets`).
 
-To apply to your Supabase project:
-1. Open your Supabase Dashboard → **SQL Editor**.
-2. Paste the contents of `supabase/migrations/01_init.sql`.
-3. Execute the script to create all 10 tables, indexes, and RLS policies.
-4. Copy your Supabase Project URL, Anon Key, and Service Role Key into `.env.local`.
+```bash
+npm run db:setup
+```
+
+This applies the schema, seeds any missing CMS content from `src/data/db.json`, and sets CORS on the media bucket. It is safe to re-run.
+
+Admin uploads go straight from the browser to Neon Object Storage through a short-lived presigned URL, so large videos never pass through the Vercel function (4.5 MB body limit). Images can be up to 15 MB and videos up to 250 MB. Every upload is listed in the admin **Media Library** tab.
 
 ---
 

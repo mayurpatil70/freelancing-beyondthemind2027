@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isAdminRequest } from '@/lib/auth';
 import {
   getRegistrations,
   updateRegistrationStatus,
@@ -6,19 +7,8 @@ import {
 } from '@/lib/storage/store';
 import { RegistrationStatus, PaymentVerificationStatus } from '@/types';
 
-function checkAuth(req: NextRequest): boolean {
-  const session = req.cookies.get('btm_admin_session');
-  if (!session?.value) return false;
-  try {
-    const data = JSON.parse(Buffer.from(session.value, 'base64').toString('utf-8'));
-    return Boolean(data.authenticated);
-  } catch {
-    return false;
-  }
-}
-
 export async function GET(req: NextRequest) {
-  if (!checkAuth(req)) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
   }
 
@@ -96,7 +86,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  if (!checkAuth(req)) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
   }
 
@@ -124,7 +114,7 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!checkAuth(req)) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
   }
 

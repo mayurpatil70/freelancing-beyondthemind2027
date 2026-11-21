@@ -4,9 +4,12 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { GalleryItem } from '@/types';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
-import { Maximize2, MapPin } from 'lucide-react';
+import { Maximize2, MapPin, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCMS } from '@/contexts/CMSContext';
+import { isVideoUrl } from '@/lib/media/rules';
+
+const isVideoItem = (item: GalleryItem) => item.media_type === 'video' || isVideoUrl(item.image_url);
 
 interface GalleryGridProps {
   items: GalleryItem[];
@@ -41,6 +44,7 @@ export function GalleryGrid({ items: initialItems }: GalleryGridProps) {
 
   const lightboxImages = filteredItems.map((item) => ({
     src: item.image_url,
+    isVideo: isVideoItem(item),
     alt: item.title,
     title: item.title,
     caption: item.caption,
@@ -77,20 +81,33 @@ export function GalleryGrid({ items: initialItems }: GalleryGridProps) {
             className="group relative rounded-2xl overflow-hidden bg-[#07261F]/60 border border-gold-500/25 hover:border-gold-400/60 shadow-lg cursor-pointer transition-all duration-500 flex flex-col justify-between"
           >
             <div className="relative aspect-[4/3] sm:aspect-square w-full overflow-hidden">
-              <Image
-                src={item.image_url}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
+              {isVideoItem(item) ? (
+                <video
+                  src={`${item.image_url}#t=0.1`}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+                  onMouseLeave={(e) => e.currentTarget.pause()}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              ) : (
+                <Image
+                  src={item.image_url}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#07261F] via-[#07261F]/20 to-transparent" />
 
               {/* Hover overlay with button */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-950/90 border border-gold-400 text-gold-300 text-xs uppercase tracking-wider font-medium">
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  <span>View High-Res</span>
+                  {isVideoItem(item) ? <Play className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                  <span>{isVideoItem(item) ? 'Play Video' : 'View High-Res'}</span>
                 </span>
               </div>
 

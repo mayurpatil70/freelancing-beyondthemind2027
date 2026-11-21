@@ -1,95 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { isAdminRequest } from '@/lib/auth';
+import { buildObjectKey, validateMedia } from '@/lib/media/rules';
+import {
+  MEDIA_BUCKET,
+  ensureMediaCors,
+  isStorageConfigured,
+  presignUpload,
+  publicObjectUrl,
+} from '@/lib/media/storage';
+import { addMedia } from '@/lib/storage/store';
 
-function checkAuth(req: NextRequest): boolean {
-  const session = req.cookies.get('btm_admin_session');
-  if (!session?.value) return false;
-  try {
-    const data = JSON.parse(Buffer.from(session.value, 'base64').toString('utf-8'));
-    return Boolean(data.authenticated);
-  } catch {
-    return false;
-  }
-}
+const fail = (message: string, status = 400) => NextResponse.json({ success: false, message }, { status });
 
+// JSON body: presign a direct browser upload to Neon storage. Multipart body: local fallback without storage.
 export async function POST(req: NextRequest) {
-  if (!checkAuth(req)) {
-    return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
-  }
+  if (!isAdminRequest(req)) return fail('Unauthorized', 401);
 
   try {
-    const formData = await req.formData();
-    const file = formData.get('file') as File | null;
+    if ((req.headers.get('content-type') || '').includes('application/json')) {
+      if (!isStorageConfigured) return NextResponse.json({ success: true, mode: 'form' });
 
-    if (!file) {
-      return NextResponse.json({ success: false, message: 'No file provided' }, { status: 400 });
+      const { name, type, size } = await req.json();
+      const check = validateMedia(String(type), Number(size));
+      if ('error' in check) return fail(check.error);
+
+      await ensureMediaCors();
+      const key = buildObjectKey(`${check.kind}s`, String(name || 'file'), type);
+      const uploadUrl = await presignUpload(MEDIA_BUCKET, key, type);
+      return NextResponse.json({
+        success: true,
+        mode: 'direct',
+        key,
+        kind: check.kind,
+        uploadUrl,
+        url: publicObjectUrl(key),
+        headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=31536000, immutable' },
+      });
     }
 
-    const allowedMimeTypes = [
-      'image/jpeg',
-      'image/png',
-      'image/webp',
-      'image/gif',
-      'image/svg+xml',
-      'image/avif',
-    ];
+    const file = (await req.formData()).get('file') as File | null;
+    if (!file) return fail('No file provided');
+    const check = validateMedia(file.type, file.size);
+    if ('error' in check) return fail(check.error);
+    if (isStorageConfigured) return fail('Upload directly to storage using a presigned URL.');
 
-    if (!allowedMimeTypes.includes(file.type)) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid file type. Only JPG, PNG, WEBP, GIF, AVIF and SVG are allowed.' },
-        { status: 400 }
-      );
-    }
-
-    // Max 10 MB
-    if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json(
-        { success: false, message: 'File exceeds maximum 10MB limit.' },
-        { status: 400 }
-      );
-    }
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const extMap: Record<string, string> = {
-      'image/jpeg': '.jpg',
-      'image/png': '.png',
-      'image/webp': '.webp',
-      'image/gif': '.gif',
-      'image/svg+xml': '.svg',
-      'image/avif': '.avif',
-    };
-    const ext = extMap[file.type] || path.extname(file.name) || '.jpg';
-    const cleanBase = path.basename(file.name, ext).replace(/[^a-zA-Z0-9_-]/g, '-').toLowerCase();
-    const filename = `${cleanBase || 'photo'}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}${ext}`;
-
-    // Attempt writing to public/uploads
+    const key = buildObjectKey(`${check.kind}s`, file.name, file.type);
+    const filename = key.replace(/\//g, '-');
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    let fileUrl = '';
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    fs.writeFileSync(path.join(uploadsDir, filename), Buffer.from(await file.arrayBuffer()));
 
-    try {
-      if (!fs.existsSync(uploadsDir)) {
-        fs.mkdirSync(uploadsDir, { recursive: true });
-      }
-      const destination = path.join(uploadsDir, filename);
-      fs.writeFileSync(destination, buffer);
-      fileUrl = `/uploads/${filename}`;
-    } catch (writeErr) {
-      // Fallback for read-only serverless platforms (e.g. Vercel)
-      console.warn('Filesystem read-only, falling back to base64 data URI:', writeErr);
-      fileUrl = `data:${file.type};base64,${buffer.toString('base64')}`;
-    }
-
-    return NextResponse.json({
-      success: true,
-      url: fileUrl,
-      message: 'Photo uploaded successfully!',
+    const asset = await addMedia({
+      key: filename,
+      url: `/uploads/${filename}`,
+      kind: check.kind,
+      mime_type: file.type,
+      size_bytes: file.size,
+      original_name: file.name,
     });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error('Upload error:', message);
-    return NextResponse.json({ success: false, message: 'Upload failed', error: message }, { status: 500 });
+    return NextResponse.json({ success: true, mode: 'form', url: asset.url, kind: asset.kind, asset });
+  } catch (err) {
+    console.error('Upload error:', err);
+    return fail('Upload failed', 500);
   }
 }
