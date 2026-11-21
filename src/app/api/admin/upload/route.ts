@@ -12,11 +12,16 @@ import {
 } from '@/lib/media/storage';
 import { addMedia } from '@/lib/storage/store';
 
+const STORAGE_MISSING =
+  'Image storage is not set up on this deployment. Add the NEON_STORAGE_* environment variables in Vercel and redeploy.';
+
 const fail = (message: string, status = 400) => NextResponse.json({ success: false, message }, { status });
 
 // JSON body: presign a direct browser upload to Neon storage. Multipart body: local fallback without storage.
 export async function POST(req: NextRequest) {
   if (!isAdminRequest(req)) return fail('Unauthorized', 401);
+
+  if (!isStorageConfigured && process.env.VERCEL) return fail(STORAGE_MISSING, 503);
 
   try {
     if ((req.headers.get('content-type') || '').includes('application/json')) {
