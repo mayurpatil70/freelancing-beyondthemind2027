@@ -1,6 +1,7 @@
 import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
+import { readEnv } from '@/lib/env';
 
-const url = process.env.DATABASE_URL || '';
+const url = readEnv('DATABASE_URL');
 
 export const isDatabaseConfigured = Boolean(url);
 

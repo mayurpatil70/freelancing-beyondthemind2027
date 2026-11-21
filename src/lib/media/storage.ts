@@ -7,13 +7,14 @@ import {
   HeadObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { readEnv } from '@/lib/env';
 
-const endpoint = (process.env.NEON_STORAGE_ENDPOINT || '').replace(/\/+$/, '');
-const accessKeyId = process.env.NEON_STORAGE_ACCESS_KEY_ID || '';
-const secretAccessKey = process.env.NEON_STORAGE_SECRET_ACCESS_KEY || '';
+const endpoint = readEnv('NEON_STORAGE_ENDPOINT').replace(/\/+$/, '');
+const accessKeyId = readEnv('NEON_STORAGE_ACCESS_KEY_ID');
+const secretAccessKey = readEnv('NEON_STORAGE_SECRET_ACCESS_KEY');
 
-export const MEDIA_BUCKET = process.env.NEON_MEDIA_BUCKET || 'btm-media';
-export const PRIVATE_BUCKET = process.env.NEON_PRIVATE_BUCKET || 'btm-private';
+export const MEDIA_BUCKET = readEnv('NEON_MEDIA_BUCKET', 'btm-media');
+export const PRIVATE_BUCKET = readEnv('NEON_PRIVATE_BUCKET', 'btm-private');
 
 export const isStorageConfigured = Boolean(endpoint && accessKeyId && secretAccessKey);
 
@@ -22,7 +23,7 @@ let client: S3Client | null = null;
 function s3() {
   if (!client) {
     client = new S3Client({
-      region: process.env.NEON_STORAGE_REGION || 'ap-southeast-1',
+      region: readEnv('NEON_STORAGE_REGION', 'ap-southeast-1'),
       endpoint,
       credentials: { accessKeyId, secretAccessKey },
       forcePathStyle: true,

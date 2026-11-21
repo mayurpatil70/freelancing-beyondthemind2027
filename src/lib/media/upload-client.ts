@@ -27,7 +27,7 @@ function send(
 
 async function readJson(res: Response) {
   const json = await res.json().catch(() => ({}));
-  if (!res.ok || json.success === false) throw new Error(json.message || 'Upload failed');
+  if (!res.ok || json.success === false) throw new Error(json.message || `Upload failed (HTTP ${res.status})`);
   return json;
 }
 
@@ -47,9 +47,13 @@ export async function uploadMediaFile(file: File, onProgress?: (pct: number) => 
     const form = new FormData();
     form.append('file', file);
     const res = await send('POST', '/api/admin/upload', form, {}, onProgress);
-    const json = JSON.parse(res.text || '{}');
-    if (res.status >= 300 || !json.success) throw new Error(json.message || 'Upload failed');
-    return { url: json.url, kind: json.kind, asset: json.asset };
+    if (res.status === 413) throw new Error('This image is too large to upload here. Try a smaller file.');
+    let json: { success?: boolean; message?: string; url?: string; kind?: MediaKind; asset?: MediaAsset } = {};
+    try {
+      json = JSON.parse(res.text || '{}');
+    } catch {}
+    if (res.status >= 300 || !json.success || !json.url) throw new Error(json.message || `Upload failed (HTTP ${res.status})`);
+    return { url: json.url, kind: json.kind || 'image', asset: json.asset };
   }
 
   const put = await send('PUT', presign.uploadUrl, file, presign.headers, onProgress);

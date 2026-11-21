@@ -56,7 +56,7 @@ Every route is fully implemented, responsive, and SEO-optimized:
 - **Forms**: React Hook Form with `@hookform/resolvers/zod`
 - **Database & Storage**: Dual-layer architecture:
   - **Neon Postgres** (`@neondatabase/serverless`) for CMS content, registrations and admin notes
-  - **Neon Object Storage** (S3-compatible) for CMS images/videos (`btm-media`, public read) and payment receipts (`btm-private`)
+  - **Neon Object Storage** (S3-compatible) for CMS images (`btm-media`, public read) and payment receipts (`btm-private`)
   - Local JSON persistence (`src/data/db.json`) and `public/uploads` when the Neon variables are not set
 - **SEO & Social**: Dynamic Metadata, Open Graph, Twitter Cards, `robots.ts`, `sitemap.ts`, and Schema.org `Event` JSON-LD structured data.
 
@@ -176,7 +176,7 @@ npm run db:setup
 
 This applies the schema, seeds any missing CMS content from `src/data/db.json`, and sets CORS on the media bucket. It is safe to re-run.
 
-Admin uploads go straight from the browser to Neon Object Storage through a short-lived presigned URL, so large videos never pass through the Vercel function (4.5 MB body limit). Images can be up to 15 MB and videos up to 250 MB. Every upload is listed in the admin **Media Library** tab.
+Admin uploads go straight from the browser to Neon Object Storage through a short-lived presigned URL, so files never pass through the Vercel function (4.5 MB body limit). Only images are accepted (JPG, PNG, WEBP, GIF, AVIF, up to 15 MB); image fields have no URL input, only upload. Every upload is listed in the admin **Media Library** tab.
 
 ---
 

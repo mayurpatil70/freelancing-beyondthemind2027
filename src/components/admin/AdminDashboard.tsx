@@ -16,7 +16,7 @@ import {
   CustomContactLink,
   MediaAsset,
 } from '@/types';
-import { MEDIA_ACCEPT, isVideoUrl } from '@/lib/media/rules';
+import { IMAGE_ACCEPT, isVideoUrl } from '@/lib/media/rules';
 import { uploadMediaFile } from '@/lib/media/upload-client';
 import { broadcastCMSUpdate } from '@/contexts/CMSContext';
 import {
@@ -51,7 +51,6 @@ import {
   Activity,
   Terminal,
   Film,
-  Copy,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -128,6 +127,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>([]);
   const [loadingMedia, setLoadingMedia] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const [setup, setSetup] = useState<{ database: boolean; storage: boolean; hosted: boolean } | null>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/status')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => json?.success && setSetup(json))
+      .catch(() => {});
+  }, []);
 
   // Fetch registrations
   const fetchRegistrations = useCallback(async () => {
@@ -439,6 +446,17 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {setup?.hosted && (!setup.database || !setup.storage) && (
+          <div className="mb-6 p-4 rounded-2xl bg-red-950/80 border border-red-400/60 text-red-100 text-xs flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-300 shrink-0" />
+            <span>
+              {!setup.storage && 'Image uploads are disabled: the NEON_STORAGE_* variables are missing in Vercel. '}
+              {!setup.database && 'Changes will not be saved permanently: DATABASE_URL is missing in Vercel. '}
+              Add them in Vercel → Settings → Environment Variables, then redeploy.
+            </span>
+          </div>
+        )}
+
         {/* Global Success Notification */}
         {saveSuccessMessage && (
           <div className="mb-6 p-4 rounded-2xl bg-emerald-900/90 border border-gold-400 text-gold-100 text-xs flex items-center gap-3 shadow-lg animate-in fade-in">
@@ -765,36 +783,20 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       />
                     </div>
 
-                    {/* Photo / Image URL & Device Media Upload */}
+                    {/* Session Photo Upload */}
                     <div className="sm:col-span-12 space-y-2">
                       <div className="flex items-center justify-between">
                         <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
-                          Session Photo (Upload from Device or Enter URL)
+                          Session Photo
                         </label>
-                        {exp.image && (
-                          <a href={exp.image} target="_blank" rel="noopener noreferrer" className="text-gold-300 underline text-[11px]">
-                            Preview Image
-                          </a>
-                        )}
                       </div>
                       <div className="flex flex-col sm:flex-row gap-2 items-center">
-                        <input
-                          type="text"
-                          value={exp.image}
-                          onChange={(e) => {
-                            const updated = [...experiences];
-                            updated[index].image = e.target.value;
-                            setExperiences(updated);
-                          }}
-                          placeholder="https://... or /images/..."
-                          className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                        />
                         <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
                           <Upload className="w-3.5 h-3.5" />
-                          <span>{uploading === `exp-${exp.id}` ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Device Image'}</span>
+                          <span>{uploading === `exp-${exp.id}` ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
                           <input
                             type="file"
-                            accept="image/*"
+                            accept={IMAGE_ACCEPT}
                             className="hidden"
                             disabled={uploading !== null}
                             onChange={(e) => {
@@ -1291,32 +1293,16 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
                         <label className="text-[10px] uppercase text-gold-400 block font-semibold">
-                          Photo Image (Upload or URL)
+                          Photo Image
                         </label>
-                        {attr.image_url && (
-                          <a href={attr.image_url} target="_blank" rel="noopener noreferrer" className="text-gold-300 underline text-[10px]">
-                            Preview
-                          </a>
-                        )}
                       </div>
                       <div className="flex flex-col sm:flex-row gap-2 items-center">
-                        <input
-                          type="text"
-                          value={attr.image_url}
-                          onChange={(e) => {
-                            const updated = [...attractions];
-                            updated[index].image_url = e.target.value;
-                            setAttractions(updated);
-                          }}
-                          placeholder="https://... or /images/..."
-                          className="w-full px-3 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                        />
                         <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
                           <Upload className="w-3.5 h-3.5" />
                           <span>{uploading === `attr-${attr.id}` ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
                           <input
                             type="file"
-                            accept="image/*"
+                            accept={IMAGE_ACCEPT}
                             className="hidden"
                             disabled={uploading !== null}
                             onChange={(e) => {
@@ -1822,12 +1808,12 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
                 >
                   <Upload className="w-3.5 h-3.5" />
-                  <span>{uploading === 'gallery-add' ? `Uploading ${uploadProgress ?? 0}%` : 'Add Photo or Video'}</span>
+                  <span>{uploading === 'gallery-add' ? `Uploading ${uploadProgress ?? 0}%` : 'Add Photo'}</span>
                 </button>
                 <input
                   ref={galleryFileInputRef}
                   type="file"
-                  accept={MEDIA_ACCEPT}
+                  accept={IMAGE_ACCEPT}
                   className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
@@ -1893,23 +1879,12 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     />
 
                     <div className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={item.image_url}
-                        onChange={(e) => {
-                          const updated = [...galleryItems];
-                          updated[index].image_url = e.target.value;
-                          updated[index].media_type = isVideoUrl(e.target.value) ? 'video' : 'image';
-                          setGalleryItems(updated);
-                        }}
-                        placeholder="Image or video URL"
-                        className="w-full px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-gold-500/20 text-[11px] text-stone-subtle/80"
-                      />
-                      <label className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer shrink-0 transition-colors" title="Upload Replacement Photo or Video">
+                      <label className="inline-flex items-center px-2.5 py-1.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer shrink-0 transition-colors" title="Replace Photo">
                         <Upload className="w-3.5 h-3.5" />
+                        <span className="ml-1.5 text-[11px]">Replace Photo</span>
                         <input
                           type="file"
-                          accept={MEDIA_ACCEPT}
+                          accept={IMAGE_ACCEPT}
                           className="hidden"
                           onChange={(e) => {
                             const file = e.target.files?.[0];
@@ -1972,8 +1947,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <div>
                 <h3 className="font-serif text-2xl text-ivory-50 font-light">Media Library</h3>
                 <p className="text-xs text-stone-subtle/80 mt-1">
-                  Every image and video uploaded from the CMS. Copy a link to use it anywhere, or add it to the gallery.
-                  Images up to 15 MB, videos up to 250 MB (MP4, WEBM, MOV).
+                  Every image uploaded from the CMS. Add any of them to the gallery. JPG, PNG, WEBP, GIF or AVIF, up to 15 MB.
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -1991,13 +1965,13 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
                 >
                   <Upload className="w-3.5 h-3.5" />
-                  <span>{uploading?.startsWith('media-') ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Images / Videos'}</span>
+                  <span>{uploading?.startsWith('media-') ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Images'}</span>
                 </button>
                 <input
                   ref={mediaFileInputRef}
                   type="file"
                   multiple
-                  accept={MEDIA_ACCEPT}
+                  accept={IMAGE_ACCEPT}
                   className="hidden"
                   onChange={async (e) => {
                     const files = Array.from(e.target.files || []);
@@ -2037,16 +2011,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 text-[11px]">
-                      <button
-                        type="button"
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(asset.url);
-                          showSaveSuccess('Link copied. Paste it into any image or video field.');
-                        }}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950 border border-gold-500/25 text-gold-300 hover:text-white"
-                      >
-                        <Copy className="w-3 h-3" /> Copy link
-                      </button>
                       <button
                         type="button"
                         onClick={() => addMediaToGallery(asset)}
@@ -2722,22 +2686,15 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               {/* Session Photo Upload */}
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase text-gold-400 font-semibold block">
-                  Session Photo (Upload from Device or Enter URL)
+                  Session Photo
                 </label>
                 <div className="flex flex-col sm:flex-row gap-2 items-center">
-                  <input
-                    type="text"
-                    value={newSessionData.image || ''}
-                    placeholder="https://... or /images/..."
-                    onChange={(e) => setNewSessionData({ ...newSessionData, image: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                  />
                   <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
                     <Upload className="w-3.5 h-3.5" />
-                    <span>{uploading === 'new-session-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Device Image'}</span>
+                    <span>{uploading === 'new-session-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept={IMAGE_ACCEPT}
                       className="hidden"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
@@ -2939,22 +2896,15 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               {/* Attraction Photo Upload */}
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase text-gold-400 font-semibold block">
-                  Photo Image (Upload or URL)
+                  Photo Image
                 </label>
                 <div className="flex flex-col sm:flex-row gap-2 items-center">
-                  <input
-                    type="text"
-                    value={newAttractionData.image_url || ''}
-                    placeholder="https://... or /images/..."
-                    onChange={(e) => setNewAttractionData({ ...newAttractionData, image_url: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
-                  />
                   <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
                     <Upload className="w-3.5 h-3.5" />
-                    <span>{uploading === 'new-attr-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Device Image'}</span>
+                    <span>{uploading === 'new-attr-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept={IMAGE_ACCEPT}
                       className="hidden"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
