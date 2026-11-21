@@ -54,11 +54,19 @@
   font-family: var(--font-cormorant), Georgia, serif;
   font-weight: 300;
   font-style: normal;
-  line-height: 0.92;
-  font-size: clamp(48px, 9.2vw, 136px);
+  line-height: 0.95;
+  font-size: clamp(38px, 9.2vw, 136px);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-wrap: balance;
+}
+.phrase {
+  display: inline-block;
+  white-space: nowrap;
+}
+.word {
+  display: inline-block;
+  white-space: nowrap;
 }
 .ch { display: inline-block; white-space: pre; font-style: normal; }
 .accent { font-style: normal; color: #F5E5A4; }
@@ -137,6 +145,11 @@
 .ready .ch { opacity: 1; filter: none; transform: none; transition: opacity 1.2s ease var(--d, 0s), filter 1.4s ease var(--d, 0s), transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s); }
 
 @media (max-width: 560px) {
+  .title {
+    font-size: clamp(34px, 8.2vw, 44px);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+  }
   .sub { letter-spacing: 0.32em; gap: 12px; }
   .pill { font-size: 10px; letter-spacing: 0.16em; padding: 7px 14px; }
   .actions { width: 100%; max-width: 340px; }

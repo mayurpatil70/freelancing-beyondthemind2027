@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Lock, Shield, ArrowRight, AlertCircle, Clock } from 'lucide-react';
+import { Lock, Shield, ArrowRight, AlertCircle, Clock, ShieldAlert } from 'lucide-react';
 
 interface AdminLoginProps {
   onSuccess: () => void;
@@ -15,6 +15,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
   const [error, setError] = useState<string | null>(null);
   const [lockoutSeconds, setLockoutSeconds] = useState<number>(0);
   const [attemptsNotice, setAttemptsNotice] = useState<string | null>(null);
+  const [singleSessionNotice, setSingleSessionNotice] = useState<string | null>(null);
   const [deviceId, setDeviceId] = useState<string>('');
 
   // Initialize or fetch persistent device ID
@@ -59,6 +60,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
     setLoading(true);
     setError(null);
     setAttemptsNotice(null);
+    setSingleSessionNotice(null);
 
     try {
       const res = await fetch('/api/admin/auth', {
@@ -71,6 +73,15 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
       });
 
       const json = await res.json().catch(() => ({}));
+
+      if (res.status === 403 || json.singleSessionBlocked) {
+        setSingleSessionNotice(
+          json.message ||
+            'An administrative session is currently active on another device or IP. Only 1 login is permitted at a time. Please log out from that device first.'
+        );
+        setPassword('');
+        return;
+      }
 
       if (res.status === 429) {
         const retry = Number(json.retryAfter) || 900;
@@ -128,6 +139,18 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
             </p>
           </div>
         </div>
+
+        {singleSessionNotice && (
+          <div className="p-4 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-200 text-xs space-y-1.5 shadow-lg">
+            <div className="flex items-center gap-2 font-semibold text-rose-300">
+              <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+              <span>Active Multi-Device Login Blocked</span>
+            </div>
+            <p className="text-rose-100/90 leading-relaxed">
+              {singleSessionNotice}
+            </p>
+          </div>
+        )}
 
         {isLocked && (
           <div className="p-4 rounded-xl bg-amber-950/80 border border-amber-500/50 text-amber-200 text-xs space-y-1">

@@ -71,7 +71,7 @@ const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
 const TMP_DB_PATH = path.join(os.tmpdir(), 'btm-db.json');
 let memoryDb: LocalDb | null = null;
 
-function readLocalDb(): LocalDb {
+export function readLocalDb(): LocalDb {
   if (memoryDb) return memoryDb;
   const files = [DB_PATH, TMP_DB_PATH]
     .filter((f) => fs.existsSync(f))
@@ -86,7 +86,7 @@ function readLocalDb(): LocalDb {
   return memoryDb;
 }
 
-function writeLocalDb(db: LocalDb) {
+export function writeLocalDb(db: LocalDb) {
   memoryDb = db;
   const json = JSON.stringify(db, null, 2);
   for (const file of [DB_PATH, TMP_DB_PATH]) {

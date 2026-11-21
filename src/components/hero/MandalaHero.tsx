@@ -31,10 +31,48 @@ function heroVideos() {
   return { landscape: v('landscape'), portrait: v('portrait') };
 }
 
-function splitTitle(raw: string) {
+interface TitleWord {
+  word: string;
+  accent: boolean;
+}
+
+interface TitlePhrase {
+  words: TitleWord[];
+}
+
+function splitTitlePhrases(raw: string): { fullTitle: string; phrases: TitlePhrase[] } {
   const clean = raw.replace(/\s+\d{4}\s*$/, '').trim();
   const upper = clean.toUpperCase();
-  return upper.split(/\s+/).map((w) => (w === 'THE' ? { word: 'THE', accent: true } : { word: w, accent: false }));
+  const words: TitleWord[] = upper.split(/\s+/).map((w) => ({
+    word: w,
+    accent: w === 'THE',
+  }));
+
+  // Semantically group "THE" with its noun so that "THE" is never orphaned or split:
+  // e.g. "BEYOND THE MIND" -> Phrase 1: ["BEYOND"], Phrase 2: ["THE", "MIND"]
+  if (words.length === 3 && words[1].word === 'THE') {
+    return {
+      fullTitle: upper,
+      phrases: [
+        { words: [words[0]] },
+        { words: [words[1], words[2]] },
+      ],
+    };
+  }
+
+  const phrases: TitlePhrase[] = [];
+  let i = 0;
+  while (i < words.length) {
+    if (['THE', 'A', 'AN', 'OF', 'IN', 'TO'].includes(words[i].word) && i + 1 < words.length) {
+      phrases.push({ words: [words[i], words[i + 1]] });
+      i += 2;
+    } else {
+      phrases.push({ words: [words[i]] });
+      i += 1;
+    }
+  }
+
+  return { fullTitle: upper, phrases };
 }
 
 function isSlowNetwork() {
@@ -76,7 +114,7 @@ export function MandalaHero({
   const [animateIntro, setAnimateIntro] = useState(true);
   const [days, setDays] = useState<number | null>(null);
 
-  const words = useMemo(() => splitTitle(title), [title]);
+  const { fullTitle, phrases } = useMemo(() => splitTitlePhrases(title), [title]);
 
   const switchMode = (m: Mode) => {
     modeRef.current = m;
@@ -330,17 +368,24 @@ export function MandalaHero({
           )}
         </div>
 
-        <h1 className={styles.title} aria-label={words.map((w) => w.word).join(' ')}>
-          {words.map((w, wi) => (
-            <React.Fragment key={wi}>
-              <span className={w.accent ? styles.accent : undefined} aria-hidden="true">
-                {Array.from(w.word).map((c) => (
-                  <span key={ci} className={styles.ch} style={delay(0.9 + ci++ * 0.07)}>
-                    {c}
-                  </span>
+        <h1 className={styles.title} aria-label={fullTitle}>
+          {phrases.map((phrase, pi) => (
+            <React.Fragment key={pi}>
+              <span className={styles.phrase}>
+                {phrase.words.map((w, wi) => (
+                  <React.Fragment key={wi}>
+                    <span className={cn(styles.word, w.accent && styles.accent)} aria-hidden="true">
+                      {Array.from(w.word).map((c) => (
+                        <span key={ci} className={styles.ch} style={delay(0.9 + ci++ * 0.07)}>
+                          {c}
+                        </span>
+                      ))}
+                    </span>
+                    {wi < phrase.words.length - 1 && ' '}
+                  </React.Fragment>
                 ))}
               </span>
-              {wi < words.length - 1 && ' '}
+              {pi < phrases.length - 1 && ' '}
             </React.Fragment>
           ))}
         </h1>

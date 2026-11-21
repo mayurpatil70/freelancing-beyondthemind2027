@@ -7,8 +7,14 @@ import {
   checkLoginRateLimit,
   recordFailedLogin,
   recordSuccessfulLogin,
-  getSecurityThreatSummary,
 } from '@/lib/security/rateLimit';
+import {
+  checkSingleSessionLogin,
+  registerActiveSession,
+  clearActiveSession,
+  getActiveSession,
+  touchActiveSession,
+} from '@/lib/security/singleSession';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || process.env.ADMIN_EMAIL || 'pradeep123';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pradeep123';
@@ -44,6 +50,21 @@ export async function POST(req: NextRequest) {
           'Retry-After': String(rateLimitStatus.retryAfterSeconds),
         },
       }
+    );
+  }
+
+  // 2. Strict Single Active Session Enforcement (Only 1 device/IP logged in at a time)
+  const singleSessionStatus = await checkSingleSessionLogin(ip, deviceHash);
+  if (!singleSessionStatus.allowed) {
+    return NextResponse.json(
+      {
+        success: false,
+        singleSessionBlocked: true,
+        message:
+          singleSessionStatus.reason ||
+          'An administrative session is currently active on another device or IP address. To prevent unauthorized multi-device access, please log out from the other device first.',
+      },
+      { status: 403 }
     );
   }
 
@@ -125,6 +146,9 @@ export async function POST(req: NextRequest) {
 
     const sessionToken = createSessionToken(username);
 
+    // Register active session to lock other devices out until this device logs out
+    await registerActiveSession(sessionToken, ip, deviceHash, req.headers.get('user-agent') || 'admin-agent');
+
     const response = NextResponse.json({
       success: true,
       message: 'Authenticated successfully',
@@ -150,14 +174,24 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const session = readSession(req.cookies.get(SESSION_COOKIE_NAME)?.value);
-  if (!session) {
+  const token = req.cookies.get(SESSION_COOKIE_NAME)?.value;
+  const session = readSession(token);
+  if (!session || !token) {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
+
+  // Verify that this token matches the registered single active session
+  const activeSession = await getActiveSession();
+  if (!activeSession || activeSession.token !== token) {
+    return NextResponse.json({ authenticated: false, reason: 'Logged out or replaced by another active session' }, { status: 401 });
+  }
+
+  await touchActiveSession(token);
   return NextResponse.json({ authenticated: true, user: session.user });
 }
 
 export async function DELETE() {
+  await clearActiveSession();
   const response = NextResponse.json({ success: true, message: 'Logged out successfully' });
   response.cookies.delete(SESSION_COOKIE_NAME);
   return response;

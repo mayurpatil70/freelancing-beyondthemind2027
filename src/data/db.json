@@ -1,202 +1,199 @@
 {
   "settings": {
+    "email": "moolabrahman@gmail.com",
+    "guide_bio": "Pradeep Muthukulam is a seeker and spiritual guide devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness. His vision is to inspire individuals to journey beyond the boundaries of the mind, reconnect with their true essence and discover the profound peace, wisdom and divinity that reside within.\n\nThrough spiritual insights, meditation and personal guidance, he encourages seekers to embrace a life of mindfulness, awareness, compassion and higher purpose. His philosophy rests on a simple yet profound truth: The Divine is not something to be found outside, but a truth to be awakened within.\n\nHis endeavour is to guide every seeker towards inner transformation, spiritual clarity and the ultimate experience of inner peace.",
+    "video_url": "",
+    "guide_name": "Pradeep Muthukulam",
     "hero_title": "BEYOND THE MIND 2027",
-    "hero_subtitle": "THE DIVINE RETREAT",
-    "hero_tagline": "A journey into the Infinite within.",
+    "poster_url": "/images/posters/btm2027-retreat-sessions.jpg",
+    "twitter_url": "https://twitter.com/beyondthemind",
+    "youtube_url": "https://www.youtube.com/@BeyondTheMindRetreat",
     "arrival_date": "October 5, 2027",
     "arrival_time": "October 5, 2027",
-    "retreat_dates": "October 6–9, 2027",
-    "retreat_days": "Wednesday – Saturday (4 Days) • Arrival: Oct 5",
-    "retreat_location": "Rishikesh",
-    "retreat_state": "Uttarakhand, India",
-    "retreat_modes": "Offline (In-Person Rishikesh) & Online Live",
-    "retreat_languages": "English and Malayalam. Hindi translation is available upon request.",
-    "video_url": "",
-    "poster_url": "/images/posters/btm2027-retreat-sessions.jpg",
-    "whatsapp_number": "+91 8075572018",
-    "whatsapp_display": "+91 8075572018",
-    "email": "moolabrahman@gmail.com",
-    "instagram_url": "https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm",
     "facebook_url": "https://www.facebook.com/profile.php?id=61595374757132",
-    "guide_name": "Pradeep Muthukulam",
-    "guide_headline": "Pradeep Muthukulam – A Journey Towards Inner Awakening",
-    "guide_bio": "Pradeep Muthukulam is a seeker and spiritual guide devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness. His vision is to inspire individuals to journey beyond the boundaries of the mind, reconnect with their true essence and discover the profound peace, wisdom and divinity that reside within.\n\nThrough spiritual insights, meditation and personal guidance, he encourages seekers to embrace a life of mindfulness, awareness, compassion and higher purpose. His philosophy rests on a simple yet profound truth: The Divine is not something to be found outside, but a truth to be awakened within.\n\nHis endeavour is to guide every seeker towards inner transformation, spiritual clarity and the ultimate experience of inner peace.",
-    "daily_meditation_headline": "Daily Meditation - A Journey Within",
-    "daily_meditation_tagline": "Pause. Observe. Transcend.",
-    "daily_meditation_time": "7:30 PM IST",
-    "daily_meditation_days": "Monday to Friday",
-    "daily_meditation_platform": "Zoom (Live Interactive Guided Meditation)",
-    "daily_meditation_fee": "Paid sessions (Details shared on enquiry)",
-    "daily_meditation_description": "Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within. Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves. Whether you are beginning your meditation journey or have an established practice, these sessions offer an opportunity to pause, observe and reconnect with your inner being. Pause. Observe. Transcend.",
-    "registration_google_form_url": "https://docs.google.com/forms/d/1HPHKNuIo1eNX7yKxNypG6dQi0XlhRJTV2iTlMUvHEpA/edit?pli=1&pli=1&edit_requested=true",
-    "registration_google_form_enabled": true,
-    "payment_proof_upload_enabled": true,
-    "google_search_console_token": "google-site-verification=beyond-the-mind-2027",
-    "google_analytics_id": "G-BTM2027RETREAT",
+    "hero_tagline": "A journey into the Infinite within.",
+    "retreat_days": "Wednesday – Saturday (4 Days) • Arrival: Oct 5",
+    "hero_subtitle": "THE DIVINE RETREAT",
+    "instagram_url": "https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm",
     "meta_keywords": {
       "home": "Beyond the Mind 2027, Divine Retreat Rishikesh, Daily Guided Meditation, Pradeep Muthukulam, Kundalini Awakening, Rishikesh Yoga Retreat, Moola Brahman, Spiritual Retreat 2027, Strict vegetarian food during retreat",
-      "sessions": "Stress Buster Session, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, Guided Meditation, Rishikesh",
       "daily": "Daily Guided Meditation Zoom, Online meditation 7:30 PM, Monday to Friday meditation, mindfulness, Inner Stillness, Pause Observe Transcend",
-      "rishikesh": "Rishikesh spiritual retreat, Rishikesh bungee jumping, river rafting Rishikesh, Ganga Aarti, Beatles Ashram, Vashistha cave, Uttarakhand tourism",
-      "register": "Beyond the Mind registration, Rishikesh retreat enrollment, daily meditation enquiry, online retreat"
+      "register": "Beyond the Mind registration, Rishikesh retreat enrollment, daily meditation enquiry, online retreat",
+      "sessions": "Stress Buster Session, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, Guided Meditation, Rishikesh",
+      "rishikesh": "Rishikesh spiritual retreat, Rishikesh bungee jumping, river rafting Rishikesh, Ganga Aarti, Beatles Ashram, Vashistha cave, Uttarakhand tourism"
     },
-    "announcement_banner": {
-      "enabled": true,
-      "badge": "Official Announcement",
-      "text": "Arrival on October 5 • The Divine Retreat Rishikesh runs October 6–9, 2027.",
-      "link": "/register"
-    },
-    "youtube_url": "https://www.youtube.com/@BeyondTheMindRetreat",
-    "twitter_url": "https://x.com/beyondthemind27?s=11",
-    "secondary_phone": "+91 8075572018",
+    "retreat_dates": "October 6–9, 2027",
+    "retreat_modes": "Offline (In-Person Rishikesh) & Online Live",
+    "retreat_state": "Uttarakhand, India",
+    "guide_headline": "Pradeep Muthukulam – A Journey Towards Inner Awakening",
     "secondary_email": "support@beyondthemindretreat.org",
+    "secondary_phone": "+91 8075572018",
+    "whatsapp_number": "+91 8075572018",
     "hero_notice_card": {
-      "enabled": true,
       "badge": "Next Gathering Notice",
       "title": "Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028",
-      "description": "Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028",
-      "discount_text": "Exclusive Sanctuary Inclusions",
+      "enabled": true,
+      "cta_link": "/register",
       "cta_text": "Enquire for Retreat",
-      "cta_link": "/register"
-    }
+      "description": "Beyond the Mind 2028 – The Divine Retreat Dwaraka, Gujarat | 25–28 September 2028",
+      "discount_text": "Exclusive Sanctuary Inclusions"
+    },
+    "retreat_location": "Rishikesh",
+    "whatsapp_display": "+91 8075572018",
+    "retreat_languages": "English and Malayalam. Hindi translation is available upon request.",
+    "announcement_banner": {
+      "link": "/register",
+      "text": "Arrival on October 5 • The Divine Retreat Rishikesh runs October 6–9, 2027.",
+      "badge": "Official Announcement",
+      "enabled": true
+    },
+    "google_analytics_id": "G-BTM2027RETREAT",
+    "daily_meditation_fee": "Paid sessions (Details shared on enquiry)",
+    "daily_meditation_days": "Monday to Friday",
+    "daily_meditation_time": "7:30 PM IST",
+    "daily_meditation_tagline": "Pause. Observe. Transcend.",
+    "daily_meditation_headline": "Daily Meditation - A Journey Within",
+    "daily_meditation_platform": "Zoom (Live Interactive Guided Meditation)",
+    "google_search_console_token": "google-site-verification=beyond-the-mind-2027",
+    "daily_meditation_description": "Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within. Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves. Whether you are beginning your meditation journey or have an established practice, these sessions offer an opportunity to pause, observe and reconnect with your inner being. Pause. Observe. Transcend.",
+    "payment_proof_upload_enabled": true,
+    "registration_google_form_url": "https://docs.google.com/forms/d/1HPHKNuIo1eNX7yKxNypG6dQi0XlhRJTV2iTlMUvHEpA/edit?pli=1&pli=1&edit_requested=true",
+    "registration_google_form_enabled": true
   },
   "experiences": [
     {
       "id": "exp-1",
       "slug": "stress-buster-session",
-      "title": "STRESS BUSTER SESSION",
-      "subtitle": "Nervous System Calm & Inner Lightness",
-      "short_desc": "Release accumulated stress, calm the nervous system and experience deep relaxation and inner lightness.",
-      "full_desc": "Modern living traps excessive tension in the physical tissues and autonomic nervous system. Through guided somatic unwinding, conscious Himalayan breathwork, and deep stillness by the holy waters of Ganga, dissolve chronic tension and return to an effortless baseline of natural peace.",
-      "image": "/images/rishikesh/stillness-ganges.jpg",
-      "icon_name": "Feather",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/stress-buster-1-mwqrhrt1iusc.png",
       "order": 1,
-      "spiritual_dimension": "Deep Relaxation & Somatic Calm",
+      "title": "STRESS BUSTER SESSION",
+      "keywords": "Stress Buster, Nervous System Reset, Somatic Release, Himalayan Breathwork, Deep Relaxation Rishikesh, Emotional Unwinding, Beyond the Mind",
+      "subtitle": "Melt away inner tension and awaken profound peace.",
+      "full_desc": "The Stress Buster Session is designed to help release accumulated tension, quiet mental restlessness and encourage deep relaxation. Through guided practices,\nparticipants are invited to let go of stress, restore inner calm and reconnect with a sense of balance and well-being.",
+      "icon_name": "Feather",
       "highlights": [
-        "Dissolve accumulated tension in the nervous system",
-        "Restore autonomic balance with diaphragmatic Himalayan breathing",
-        "Cultivate the ground for emotional receptivity and quietude"
+        "Gentle guided practices to release stress, tension and emotional burdens.",
+        "Calming practices to quiet the mind and restore inner balance.",
+        "Cultivating inner stillness, emotional clarity and holistic well-being."
       ],
-      "keywords": "Stress Buster, Nervous System Reset, Somatic Release, Himalayan Breathwork, Deep Relaxation Rishikesh, Emotional Unwinding, Beyond the Mind"
+      "short_desc": "Experience profound relaxation and rediscover the serenity within.",
+      "spiritual_dimension": "Deep Relaxation & Inner Harmony"
     },
     {
       "id": "exp-2",
       "slug": "soul-retrieval",
-      "title": "SOUL RETRIEVAL",
-      "subtitle": "Wholeness & Essence Reclamation",
-      "short_desc": "Reclaim lost parts of your soul, restore wholeness and reconnect with your true essence.",
-      "full_desc": "During challenging life events, heartbreak, or moments of shock, vital fragments of our energetic life-force can feel separated or fragmented. Under the reverent personal guidance of Pradeep Muthukulam, gently journey into personal timeline awareness to gather and integrate lost vitality back into the heart sanctuary.",
-      "image": "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?auto=format&fit=crop&w=1200&q=80",
-      "icon_name": "Compass",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/soul-retrieval-card-mwqrxd1rr5c9.webp",
       "order": 2,
-      "spiritual_dimension": "Essence Restoration & Wholeness",
+      "title": "SOUL RETRIEVAL",
+      "keywords": "Soul Retrieval, Pradeep Muthukulam, Essence Reclamation, Vitality Integration, Trauma Healing, Spiritual Wholeness Rishikesh",
+      "subtitle": "Discover the hidden depths of your inner being.",
+      "full_desc": "Soul Retrieval is a profound spiritual healing practice that seeks to reconnect and reintegrate parts of one's\nvital essence that may have become fragmented or withdrawn following trauma, grief or intense emotional\nexperiences.",
+      "icon_name": "Compass",
       "highlights": [
-        "Identify moments of historical energetic fragmentation",
-        "Reclaim vital life-force, self-trust, and inner sovereignty",
-        "Anchor returned soul fragments into lasting grounded awareness"
+        "Guided spiritual processes help reconnect with lost aspects of the self.",
+        "Restore inner harmony and a sense of wholeness.",
+        "Reawaken your connection with your true essence."
       ],
-      "keywords": "Soul Retrieval, Pradeep Muthukulam, Essence Reclamation, Vitality Integration, Trauma Healing, Spiritual Wholeness Rishikesh"
+      "short_desc": "Embrace renewed self-awareness, inner integration and a profound sense of completeness.",
+      "spiritual_dimension": "Explore the profound dimensions of your consciousness."
     },
     {
       "id": "exp-3",
       "slug": "kundalini-awakening",
-      "title": "KUNDALINI AWAKENING",
-      "subtitle": "Prana Shakti Elevation & Inner Potential",
-      "short_desc": "Activate your dormant energy, awaken higher consciousness and experience your inner potential.",
-      "full_desc": "A carefully guarded, grounded spiritual initiation. Guided with profound precision by Pradeep Muthukulam, experience the gentle stirring of Prana Shakti. Learn subtle energetic alignment, channel purification (Nadi Shuddhi), and the balanced integration of elevated consciousness.",
-      "image": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
-      "icon_name": "Flame",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/kudalini-mwqscb7qcgpm.png",
       "order": 3,
-      "spiritual_dimension": "Prana Shakti Elevation",
+      "title": "KUNDALINI AWAKENING",
+      "keywords": "Kundalini Awakening, Prana Shakti Elevation, Sushumna Nadi Purification, Nadi Shuddhi Rishikesh, Pradeep Muthukulam Meditation, Spiritual Energy",
+      "subtitle": "Discover the deeper realms of consciousness.",
+      "full_desc": "Kundalini Awakening is a profound spiritual process that awakens the dormant life force at the base of the spine, opening the path to expanded awareness and higher consciousness.",
+      "icon_name": "Flame",
       "highlights": [
         "Sacred awakening of the central spinal corridor (Sushumna Nadi)",
-        "Harmonization of Ida and Pingala subtle currents",
-        "Safe, structured integration without overwhelm or energetic friction"
+        "The Master's mystical energy work facilitates inner exploration.",
+        "Experience expanded consciousness and profound spiritual transformation."
       ],
-      "keywords": "Kundalini Awakening, Prana Shakti Elevation, Sushumna Nadi Purification, Nadi Shuddhi Rishikesh, Pradeep Muthukulam Meditation, Spiritual Energy"
+      "short_desc": "Awaken the dormant energy within, expand your consciousness and unfold the limitless potential of your inner being.",
+      "spiritual_dimension": "Ignite your inner force and transcend limitations."
     },
     {
       "id": "exp-4",
       "slug": "soul-liberation",
-      "title": "SOUL LIBERATION",
-      "subtitle": "Dissolving Old Patterns & True Self Freedom",
-      "short_desc": "Release limitations, dissolve old patterns and experience the freedom of your true self.",
-      "full_desc": "A transformative ceremonial journey into pristine liberty. Through the sacred Shiva Mandala merging process and entity purification insights, dissolve long-held karmic burdens, untangle psychic knots, and rest effortlessly in the boundless freedom of your unconditioned True Self.",
-      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-      "icon_name": "Sun",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/soul-liberation-2-mwqso03aa7ii.webp",
       "order": 4,
-      "spiritual_dimension": "Karmic Untangling & Liberation",
+      "title": "SOUL LIBERATION",
+      "keywords": "Soul Liberation, Karmic Untangling, Shiva Mandala Merging, Entity Purification, Spiritual Freedom, Pradeep Muthukulam Retreat",
+      "subtitle": "Transcend the limitations of the past.",
+      "full_desc": "Soul Liberation is the spiritual journey towards freedom from the cycle of rebirths. By overcoming attachment, one moves towards inner\npurification, self-realisation and ultimate liberation of the soul",
+      "icon_name": "Sun",
       "highlights": [
-        "Ceremonial merging within the sacred Shiva Mandala",
-        "Release unconscious emotional imprints and karmic weight",
-        "Experience the pristine spaciousness of your unbound essence"
+        "Release what no longer serves your growth.",
+        "Liberate yourself from inner constraints.",
+        "Reconnect with the purity and freedom of your being."
       ],
-      "keywords": "Soul Liberation, Karmic Untangling, Shiva Mandala Merging, Entity Purification, Spiritual Freedom, Pradeep Muthukulam Retreat"
+      "short_desc": "Open yourself to profound inner transformation. Reawaken the limitless essence of who you truly are.",
+      "spiritual_dimension": "Move beyond the shadows of the past"
     },
     {
       "id": "exp-5",
       "slug": "merkaba-activation",
-      "title": "MERKABA ACTIVATION",
-      "subtitle": "Light-Body Geometry & Dimensional Expansion",
-      "short_desc": "Activate your energy field, align with higher dimensions and expand your consciousness.",
-      "full_desc": "Experience the awakening of the sacred Merkaba — the rotating field of light, spirit, and body. Cleanse and strengthen your auric envelope, harmonize sacred geometric vortexes, and align your consciousness with higher spiritual dimensions and universal frequencies.",
-      "image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80",
-      "icon_name": "Flower2",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/spiritual-merkaba-meditation-in-a-temple-mwqsq0qm08x1.webp",
       "order": 5,
-      "spiritual_dimension": "Bio-Field & Dimensional Expansion",
+      "title": "MERKABA ACTIVATION",
+      "keywords": "Merkaba Activation, Light Body Sacred Geometry, Bio-Field Expansion, Auric Harmonization, Dimensional Consciousness, Rishikesh Retreat",
+      "subtitle": "Journey beyond ordinary perception into expanded awareness.",
+      "full_desc": "Merkaba Activation is a spiritual and meditative practice focused on awakening the Merkaba, a geometric energy field.The master uses his mystical power to activate this energy field, deepen spiritual awareness and encourage alignment with higher consciousness.",
+      "icon_name": "Flower2",
       "highlights": [
-        "Activation of the subtle sacred Theerthas and light-body geometry",
-        "Harmonization of electromagnetic and multidimensional bio-fields",
-        "Expanded perceptual clarity and heightened vibrational presence"
+        "Experience the awakening of your Merkaba energy field.",
+        "Explore deeper states of awareness and spiritual expansion.",
+        "Embrace a heightened sense of harmony and universal connection."
       ],
-      "keywords": "Merkaba Activation, Light Body Sacred Geometry, Bio-Field Expansion, Auric Harmonization, Dimensional Consciousness, Rishikesh Retreat"
+      "short_desc": "Activate your energy field, align with higher dimensions and expand your consciousness.",
+      "spiritual_dimension": "Activate your Merkaba and elevate your consciousness."
     },
     {
       "id": "exp-6",
       "slug": "inner-child-healing",
-      "title": "INNER CHILD HEALING",
-      "subtitle": "Emotional Freedom & Self-Love",
-      "short_desc": "Heal past wounds, nurture your inner child and reconnect with joy, self-love and emotional freedom.",
-      "full_desc": "Journey tenderly into your inner landscape. In this unconditionally compassionate sanctuary, meet the wounded or neglected facets of your younger self. Offer the safety, validation, and divine love your inner child longed for, mending fractured roots of trust and unlocking authentic joy.",
-      "image": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=80",
-      "icon_name": "Heart",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/golden-inner-child-healing-mwqsr85j4ner.webp",
       "order": 6,
-      "spiritual_dimension": "Emotional Reconciliation & Joy",
+      "title": "INNER CHILD HEALING",
+      "keywords": "Inner Child Healing, Emotional Freedom, Self Love Meditation, Heart Sanctuary, Past Wound Healing, Pradeep Muthukulam, Emotional Joy",
+      "subtitle": "Reconnect with the innocence of your younger self.",
+      "full_desc": "Inner Child Healing is a journey of reconnecting with the younger, vulnerable self and gently addressing unresolved emotional wounds from childhood. Through\nguided visualisation, self-reflection and compassionate reparenting, the practice encourages emotional release,\nself-acceptance and a renewed sense of inner safety, love and wholeness.",
+      "icon_name": "Heart",
       "highlights": [
-        "Heal unconscious developmental fears and relational wounds",
-        "Re-establish innate warmth, playfulness, and heartfelt innocence",
-        "Anchor an unshakable sanctuary of self-compassion within"
+        "Gently release the emotional imprints of the past.",
+        "Bring compassion to unresolved emotions.",
+        "Nurture a deeper sense of love, trust and acceptance."
       ],
-      "keywords": "Inner Child Healing, Emotional Freedom, Self Love Meditation, Heart Sanctuary, Past Wound Healing, Pradeep Muthukulam, Emotional Joy"
+      "short_desc": "Heal past wounds, nurture your inner child and reconnect with joy, self-love and emotional freedom.",
+      "spiritual_dimension": "Gently embrace and heal emotional wounds of the past."
     },
     {
       "id": "exp-7",
       "slug": "guided-meditation",
-      "title": "GUIDED MEDITATION",
-      "subtitle": "Transcendental Stillness & Divine Connection",
-      "short_desc": "Experience deep stillness, clarity and inner connection through powerful guided meditations.",
-      "full_desc": "The sacred synthesis of all retreat practices. Enter deep transcendental stillness through powerful guided meditations guided by Pradeep Muthukulam. Move past mental turbulence, align with universal consciousness, and anchor lasting clarity, serenity, and spiritual groundedness.",
-      "image": "/images/rishikesh/himalayan-sunrise.jpg",
-      "icon_name": "CircleDot",
+      "image": "https://br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech/btm-media/images/2026/11/serene-meditation-circle-with-spiritual-teacher-mwqss56px7gp.webp",
       "order": 7,
-      "spiritual_dimension": "Transcendental Stillness & Divine Connection",
+      "title": "GUIDED MEDITATION",
+      "keywords": "Guided Meditation Rishikesh, Transcendental Stillness, Divine Connection, Pradeep Muthukulam, Moola Brahman, Daily Meditation Zoom",
+      "subtitle": "Transcendental Stillness & Divine Connection",
+      "full_desc": "The sacred synthesis of all retreat practices. Enter deep transcendental stillness through powerful guided meditations guided by Pradeep Muthukulam. Move past mental turbulence, align with universal consciousness, and anchor lasting clarity, serenity, and spiritual groundedness.",
+      "icon_name": "CircleDot",
       "highlights": [
         "Direct experiential stillness beyond the thinking mind",
         "Alignment with the pristine vibrational field of Rishikesh",
         "Integration tools to sustain peace in daily worldly responsibilities"
       ],
-      "keywords": "Guided Meditation Rishikesh, Transcendental Stillness, Divine Connection, Pradeep Muthukulam, Moola Brahman, Daily Meditation Zoom"
+      "short_desc": "Experience deep stillness, clarity and inner connection through powerful guided meditations.",
+      "spiritual_dimension": "Transcendental Stillness & Divine Connection"
     }
   ],
   "programme": [
     {
-      "day_number": 0,
       "date": "2027-10-05",
-      "formatted_date": "Tuesday, October 5, 2027",
-      "day_name": "Arrival Day",
       "theme": "Sanctuary Arrival, Welcome & Acclimatization",
-      "subtitle": "Crossing the Threshold into Himalayan Stillness (Arrival Day)",
       "summary": "Participants arrive in Rishikesh on October 5. Check-in to peaceful accommodations, attend the retreat orientation circle, and acclimatize by the sacred Ganges. Strict vegetarian food during retreat.",
+      "day_name": "Arrival Day",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
@@ -208,16 +205,16 @@
           "title": "Orientation Circle & Ganga Acclimatization",
           "description": "Introductory gathering, setting personal spiritual intentions, and gentle riverside contemplation by Mother Ganga."
         }
-      ]
+      ],
+      "subtitle": "Crossing the Threshold into Himalayan Stillness (Arrival Day)",
+      "day_number": 0,
+      "formatted_date": "Tuesday, October 5, 2027"
     },
     {
-      "day_number": 1,
       "date": "2027-10-06",
-      "formatted_date": "Wednesday, October 6, 2027",
-      "day_name": "Day 1",
       "theme": "Stress Buster & Soul Retrieval Ceremony",
-      "subtitle": "",
       "summary": "The retreat begins with the intensive Stress Buster Session to release accumulated physical and mental tension.",
+      "day_name": "Day 1",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
@@ -229,16 +226,16 @@
           "title": "Soul Retrieval Ceremony",
           "description": "Gathering dissociated life force and restoring unbroken sovereignty in the heart space."
         }
-      ]
+      ],
+      "subtitle": "",
+      "day_number": 1,
+      "formatted_date": "Wednesday, October 6, 2027"
     },
     {
-      "day_number": 2,
       "date": "2027-10-07",
-      "formatted_date": "Thursday, October 7, 2027",
-      "day_name": "Day 2",
       "theme": "Kundalini Awakening & Shiva Mandala Merging",
-      "subtitle": "Spinal Corridor Activation & Sacred Mandala Union",
       "summary": "Deepening into energetic awakening with guided Kundalini activation and spinal channel alignment, culminating in the sacred Soul Liberation and Shiva Mandala merging process.",
+      "day_name": "Day 2",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
@@ -250,16 +247,16 @@
           "title": "Soul Liberation & Shiva Mandala Merging",
           "description": "The signature meditation immersion of transcendental stillness and supreme soul union."
         }
-      ]
+      ],
+      "subtitle": "Spinal Corridor Activation & Sacred Mandala Union",
+      "day_number": 2,
+      "formatted_date": "Thursday, October 7, 2027"
     },
     {
-      "day_number": 3,
       "date": "2027-10-08",
-      "formatted_date": "Friday, October 8, 2027",
-      "day_name": "Day 3",
       "theme": "Merkaba Activation & Inner Child Healing",
-      "subtitle": "Light-Body Geometry & Compassionate Reconciliation",
       "summary": "A profound day of multidimensional bio-field expansion through Merkaba Activation and gentle emotional healing of the inner child timeline.",
+      "day_name": "Day 3",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
@@ -271,16 +268,16 @@
           "title": "Inner Child Healing & Dialogue",
           "description": "Healing historical emotional wounds with unconditional self-love and reclaiming natural joy."
         }
-      ]
+      ],
+      "subtitle": "Light-Body Geometry & Compassionate Reconciliation",
+      "day_number": 3,
+      "formatted_date": "Friday, October 8, 2027"
     },
     {
-      "day_number": 4,
       "date": "2027-10-09",
-      "formatted_date": "Saturday, October 9, 2027",
-      "day_name": "Day 4",
       "theme": "Pinnacle Guided Meditation",
-      "subtitle": "",
       "summary": "Concluding the retreat with deep stillness, inner connection, and guided meditation to anchor the transformative journey into daily life.",
+      "day_name": "Day 4",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
@@ -292,253 +289,256 @@
           "title": "Pinnacle Guided Meditation",
           "description": "Deep stillness and inner connection anchoring the transformative journey."
         }
-      ]
+      ],
+      "subtitle": "",
+      "day_number": 4,
+      "formatted_date": "Saturday, October 9, 2027"
     }
   ],
   "testimonials": [
     {
       "id": "test-1-neethu",
       "name": "Neethu",
-      "location": "Muscat, Oman",
       "edition": "Testimonial from BTM 2026",
+      "location": "Muscat, Oman",
+      "is_featured": true,
       "highlight_quote": "Master, I experienced that day as a second birth. I feel deeply grateful for your care, guidance, and the attention you gave me during that moment.",
-      "full_testimonial": "Master, I experienced that day as a second birth. I feel deeply grateful for your care, guidance, and the attention you gave me during that moment. I will always hold this experience close to my heart.\n\nThank you for being my guide on this spiritual journey and for helping me feel renewed and hopeful. My heart is filled with love, respect, and gratitude for you.\n\nMay I always receive your guidance and continue growing on my spiritual path. I offer you my heartfelt pranams, Master.",
-      "is_featured": true
+      "full_testimonial": "Master, I experienced that day as a second birth. I feel deeply grateful for your care, guidance, and the attention you gave me during that moment. I will always hold this experience close to my heart.\n\nThank you for being my guide on this spiritual journey and for helping me feel renewed and hopeful. My heart is filled with love, respect, and gratitude for you.\n\nMay I always receive your guidance and continue growing on my spiritual path. I offer you my heartfelt pranams, Master."
     },
     {
       "id": "test-2-binu-1",
       "name": "Binu",
-      "location": "Kottayam, Kerala",
       "edition": "Testimonial from BTM 2026",
+      "location": "Kottayam, Kerala",
+      "is_featured": true,
       "highlight_quote": "Words are insufficient to express my deepest and infinite gratitude to you. I am returning from this journey as a completely transformed person.",
-      "full_testimonial": "Words are insufficient to express my deepest and infinite gratitude to you.\n\nI am returning from this journey as a completely transformed person.\n\nStepping away from my usual routines and familiar surroundings into this distinct, powerful environment made these days the most valuable moments of my life.\n\nFor three years, I had been waiting for this opportunity.\n\nThis experience helped me overcome my limitations and shortcomings, blessing me with a profound sense of inner peace and composure. I was able to deeply absorb the universal energy and experience every single process at a deeper level.",
-      "is_featured": true
+      "full_testimonial": "Words are insufficient to express my deepest and infinite gratitude to you.\n\nI am returning from this journey as a completely transformed person.\n\nStepping away from my usual routines and familiar surroundings into this distinct, powerful environment made these days the most valuable moments of my life.\n\nFor three years, I had been waiting for this opportunity.\n\nThis experience helped me overcome my limitations and shortcomings, blessing me with a profound sense of inner peace and composure. I was able to deeply absorb the universal energy and experience every single process at a deeper level."
     },
     {
       "id": "test-3-binu-2",
       "name": "Binu",
-      "location": "Kottayam, Kerala",
       "edition": "Testimonial from BTM 2026",
+      "location": "Kottayam, Kerala",
+      "is_featured": true,
       "highlight_quote": "The group healing, deep meditation, Shivalinga Activation, and Kundalini Sakthi Activation made me truly realize the state of oneness.",
-      "full_testimonial": "The group healing, deep meditation, Shivalinga Activation, and Kundalini Sakthi Activation made me truly realize the state of oneness.\n\nThough I find it hard to put every intricate detail of these processes into words, I am immensely thankful for receiving such a divine opportunity.\n\nYou have become the guiding light for my eyes and the path for my feet in this life.\n\nNo amount of gratitude will ever be enough.",
-      "is_featured": true
+      "full_testimonial": "The group healing, deep meditation, Shivalinga Activation, and Kundalini Sakthi Activation made me truly realize the state of oneness.\n\nThough I find it hard to put every intricate detail of these processes into words, I am immensely thankful for receiving such a divine opportunity.\n\nYou have become the guiding light for my eyes and the path for my feet in this life.\n\nNo amount of gratitude will ever be enough."
     },
     {
       "id": "test-4-arjun",
       "name": "Arjun Pradeep",
-      "location": "Bangalore",
       "edition": "Testimonial from BTM 2026",
+      "location": "Bangalore",
+      "is_featured": true,
       "highlight_quote": "The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.",
-      "full_testimonial": "The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.\n\nWe started the first day with Pooja Veppu for ourselves, which was a great way to begin.\n\nDuring the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body.\n\nOn the last day's meditation, even though there were many mandalas, I felt something really special during the Shiva Mandala and the merging process.\n\nLearning about entity removal and getting to know about our spirit guides was very insightful. The soul liberation process was also a very good and experiential process.\n\nOverall, it gave me a wonderful sense of calm and connection.\n\nThank you Pradeep Sir and a heartfelt thanks to all the who were part of this retreat.",
-      "is_featured": true
+      "full_testimonial": "The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.\n\nWe started the first day with Pooja Veppu for ourselves, which was a great way to begin.\n\nDuring the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body.\n\nOn the last day's meditation, even though there were many mandalas, I felt something really special during the Shiva Mandala and the merging process.\n\nLearning about entity removal and getting to know about our spirit guides was very insightful. The soul liberation process was also a very good and experiential process.\n\nOverall, it gave me a wonderful sense of calm and connection.\n\nThank you Pradeep Sir and a heartfelt thanks to all the who were part of this retreat."
     }
   ],
   "gallery": [
     {
       "id": "gal-0",
       "title": "Retreat Sessions Overview Poster",
-      "category": "Retreat Experience",
-      "image_url": "/images/posters/btm2027-retreat-sessions.jpg",
       "caption": "Official Beyond the Mind 2027 7 Retreat Sessions curriculum poster.",
-      "location": "Rishikesh, Uttarakhand"
+      "category": "Retreat Experience",
+      "location": "Rishikesh, Uttarakhand",
+      "image_url": "/images/posters/btm2027-retreat-sessions.jpg"
     },
     {
       "id": "gal-1",
       "title": "Meditation along the Sacred Ganges",
-      "category": "Rishikesh",
-      "image_url": "/images/rishikesh/meditation-ganges.jpg",
       "caption": "A seeker seated in deep contemplation by the morning waters of Rishikesh, where mountain air meets timeless current.",
-      "location": "Rishikesh Ghats, Uttarakhand"
+      "category": "Rishikesh",
+      "location": "Rishikesh Ghats, Uttarakhand",
+      "image_url": "/images/rishikesh/meditation-ganges.jpg"
     },
     {
       "id": "gal-2",
       "title": "Beyond the Mind 2027 Emblem",
-      "category": "Retreat Experience",
-      "image_url": "/images/retreat-logo.jpg",
       "caption": "Official Beyond the Mind 2027 Divine Retreat Emblem and Golden Mandorla.",
-      "location": "Rishikesh, Uttarakhand"
+      "category": "Retreat Experience",
+      "location": "Rishikesh, Uttarakhand",
+      "image_url": "/images/retreat-logo.jpg"
     },
     {
       "id": "gal-3",
       "title": "BTM 2026 Gathering & Kinship",
-      "category": "Participants",
-      "image_url": "/images/posters/btm2026-gathering.jpg",
       "caption": "Warm smiles, shared stories, and deep family warmth among participants at the close of a retreat day.",
-      "location": "BTM Community"
+      "category": "Participants",
+      "location": "BTM Community",
+      "image_url": "/images/posters/btm2026-gathering.jpg"
     },
     {
       "id": "gal-5",
       "title": "Sunrise over the Himalayan Foothills",
-      "category": "Nature & Mountains",
-      "image_url": "/images/rishikesh/himalayan-sunrise.jpg",
       "caption": "Golden dawn breaking across the mist-clad ridges surrounding Rishikesh.",
-      "location": "Garhwal Himalayas"
+      "category": "Nature & Mountains",
+      "location": "Garhwal Himalayas",
+      "image_url": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80"
     },
     {
       "id": "gal-6",
       "title": "Silent Pranic Concentration",
-      "category": "Meditation",
-      "image_url": "/images/rishikesh/stillness-ganges.jpg",
       "caption": "Morning seated meditation aligning breath with the mountain stillness.",
-      "location": "Meditation Hall"
+      "category": "Meditation",
+      "location": "Meditation Hall",
+      "image_url": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80"
     },
     {
       "id": "gal-7",
       "title": "Sacred Riverbank Aarti Glow",
-      "category": "Sacred Moments",
-      "image_url": "/images/rishikesh/ganga-aarti.jpg",
       "caption": "Evening brass lamps reflecting upon the sacred waters of Mother Ganga.",
-      "location": "Parmarth Niketan Ghat, Rishikesh"
+      "category": "Sacred Moments",
+      "location": "Parmarth Niketan Ghat, Rishikesh",
+      "image_url": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80"
     }
   ],
   "faqs": [
     {
       "id": "faq-1",
+      "answer": "Participants should arrive on Tuesday, October 5, 2027  for sanctuary check-in, room settlement, orientation, and gentle acclimatization by the Ganges. The intensive retreat sessions run across four full days from Wednesday, October 6 to Saturday, October 9, 2027.",
       "category": "General & Dates",
-      "question": "When should I arrive for Beyond the Mind 2027 in Rishikesh?",
-      "answer": "Participants should arrive on Tuesday, October 5, 2027  for sanctuary check-in, room settlement, orientation, and gentle acclimatization by the Ganges. The intensive retreat sessions run across four full days from Wednesday, October 6 to Saturday, October 9, 2027."
+      "question": "When should I arrive for Beyond the Mind 2027 in Rishikesh?"
     },
     {
       "id": "faq-2",
+      "answer": "The retreat sessions and daily meditations are conducted in English and Malayalam. Hindi translation is available upon request. This ensures all seekers experience complete clarity, immersion, and spiritual depth throughout every session.",
       "category": "Retreat Experience",
-      "question": "What language will the retreat sessions be conducted in?",
-      "answer": "The retreat sessions and daily meditations are conducted in English and Malayalam. Hindi translation is available upon request. This ensures all seekers experience complete clarity, immersion, and spiritual depth throughout every session."
+      "question": "What language will the retreat sessions be conducted in?"
     },
     {
       "id": "faq-3",
+      "answer": "The Divine Retreat is available in both offline (in-person at our Rishikesh sanctuary) and online live streaming formats. Whether joining us physically on the banks of Ganga or tuning in from home, participants receive direct guided instructions and energy attunements.",
       "category": "Retreat Experience",
-      "question": "What are the modes of participation available for the retreat?",
-      "answer": "The Divine Retreat is available in both offline (in-person at our Rishikesh sanctuary) and online live streaming formats. Whether joining us physically on the banks of Ganga or tuning in from home, participants receive direct guided instructions and energy attunements."
+      "question": "What are the modes of participation available for the retreat?"
     },
     {
       "id": "faq-4",
+      "answer": "Daily Guided Meditation is an ongoing regular activity of Beyond the Mind. Held online via Zoom Monday to Friday at 7:30 PM IST, these paid sessions offer an opportunity to pause, observe, and transcend daily mental noise. You can enquire anytime via our WhatsApp concierge or online form.",
       "category": "Daily Guided Meditation",
-      "question": "What is Daily Guided Meditation and how do I join?",
-      "answer": "Daily Guided Meditation is an ongoing regular activity of Beyond the Mind. Held online via Zoom Monday to Friday at 7:30 PM IST, these paid sessions offer an opportunity to pause, observe, and transcend daily mental noise. You can enquire anytime via our WhatsApp concierge or online form."
+      "question": "What is Daily Guided Meditation and how do I join?"
     },
     {
       "id": "faq-5",
+      "answer": "October in Rishikesh offers idyllic post-monsoon autumn weather. Daytime temperatures are pleasantly warm (28°C–30°C / 82°F–86°F) under clear blue skies, while nights and early mornings cool down to a crisp 15°C–18°C (59°F–64°F). Needed clothes in night in low temperature: Night temperatures drop significantly by the Ganges riverbanks. Please pack warm woolen shawls, sweaters, cardigans, or light jackets for evening Ganga Aarti and dawn meditations, alongside loose, modest cotton/linen clothing for daytime sessions and slip-on sandals.",
       "category": "Location & Travel",
-      "question": "What will the weather be like in Rishikesh in October, and what clothes are required?",
-      "answer": "October in Rishikesh offers idyllic post-monsoon autumn weather. Daytime temperatures are pleasantly warm (28°C–30°C / 82°F–86°F) under clear blue skies, while nights and early mornings cool down to a crisp 15°C–18°C (59°F–64°F). Needed clothes in night in low temperature: Night temperatures drop significantly by the Ganges riverbanks. Please pack warm woolen shawls, sweaters, cardigans, or light jackets for evening Ganga Aarti and dawn meditations, alongside loose, modest cotton/linen clothing for daytime sessions and slip-on sandals."
+      "question": "What will the weather be like in Rishikesh in October, and what clothes are required?"
     },
     {
       "id": "faq-6",
+      "answer": "Yes! Rishikesh offers iconic adventures including India's highest 83m Bungee Jumping (Jumpin Heights at Mohan Chatti), white water river rafting on Ganga rapids, visiting the Beatles Ashram (Chaurasi Kutia), meditation at Vashistha Cave, trekking to Neer Garh waterfalls, and the timeless evening Ganga Aarti at Triveni Ghat.",
       "category": "Location & Travel",
-      "question": "Can I explore Rishikesh attractions like Bungee Jumping and River Rafting?",
-      "answer": "Yes! Rishikesh offers iconic adventures including India's highest 83m Bungee Jumping (Jumpin Heights at Mohan Chatti), white water river rafting on Ganga rapids, visiting the Beatles Ashram (Chaurasi Kutia), meditation at Vashistha Cave, trekking to Neer Garh waterfalls, and the timeless evening Ganga Aarti at Triveni Ghat."
+      "question": "Can I explore Rishikesh attractions like Bungee Jumping and River Rafting?"
     },
     {
       "id": "faq-7",
+      "answer": "You can submit your registration through our demo registration card on the website or connect directly with our coordinators on WhatsApp. Once your registration is received, our team personally confirms availability and shares payment options.",
       "category": "Registration & Payment",
-      "question": "How do I register for the retreat?",
-      "answer": "You can submit your registration through our demo registration card on the website or connect directly with our coordinators on WhatsApp. Once your registration is received, our team personally confirms availability and shares payment options."
+      "question": "How do I register for the retreat?"
     },
     {
       "id": "faq-8",
+      "answer": "We offer private single occupancy, twin sharing, and non-residential options. Strict vegetarian food during retreat is prepared fresh daily to support energetic clarity and meditative depth. We do not provide welcome drinks or any non-vegetarian meals.",
       "category": "Accommodations & Meals",
-      "question": "What are the accommodation and meal arrangements?",
-      "answer": "We offer private single occupancy, twin sharing, and non-residential options. Strict vegetarian food during retreat is prepared fresh daily to support energetic clarity and meditative depth. We do not provide welcome drinks or any non-vegetarian meals."
+      "question": "What are the accommodation and meal arrangements?"
     },
     {
       "id": "faq-9",
+      "answer": "The retreat and daily meditation are guided by Pradeep Muthukulam under the spiritual vision of Beyond the Mind and Moola Brahman, emphasizing authentic experiential stillness without dogmatic constraints.",
       "category": "Retreat Experience",
-      "question": "Who is guiding the retreat and meditation sessions?",
-      "answer": "The retreat and daily meditation are guided by Pradeep Muthukulam under the spiritual vision of Beyond the Mind and Moola Brahman, emphasizing authentic experiential stillness without dogmatic constraints."
+      "question": "Who is guiding the retreat and meditation sessions?"
     }
   ],
   "attractions": [
     {
       "id": "attr-1",
-      "title": "India's Highest Bungee Jumping (83m)",
+      "title": "India's Highest Bungee Jumping (85m)",
       "category": "Adrenaline & Adventure",
-      "description": "Located at Mohan Chatti, experience India's first and highest fixed-platform bungee jumping with international jump masters from New Zealand. Leap into the misty river valley for an exhilarating surge of courage.",
+      "duration": "Half Day",
+      "image_url": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80",
       "highlights": [
         "83-meter jump platform",
         "Trained by New Zealand safety experts",
         "Includes Extreme Flying Fox & Giant Swing options"
       ],
-      "image_url": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80",
-      "location_tip": "Mohan Chatti (approx. 15 km from Rishikesh)",
-      "duration": "Half Day"
+      "description": "Located at Mohan Chatti, experience India's first and highest fixed-platform bungee jumping with international jump masters from New Zealand. Leap into the misty river valley for an exhilarating surge of courage.",
+      "location_tip": "Mohan Chatti (approx. 15 km from Rishikesh)"
     },
     {
       "id": "attr-2",
       "title": "White Water River Rafting on Ganga",
       "category": "Adrenaline & Adventure",
-      "description": "Navigate world-renowned Grade III and IV rapids (such as The Wall, Roller Coaster, Three Blind Mice, and Golf Course) amidst breathtaking Himalayan river canyon landscapes.",
+      "duration": "3 - 5 Hours",
+      "image_url": "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=1200&q=80",
       "highlights": [
         "Options from Marine Drive (24km) or Shivpuri (16km)",
         "Certified river guides & safety gear",
         "Cliff jumping and body surfing included"
       ],
-      "image_url": "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=1200&q=80",
-      "location_tip": "Shivpuri to Rishikesh Ghats",
-      "duration": "3 - 5 Hours"
+      "description": "Navigate world-renowned Grade III and IV rapids (such as The Wall, Roller Coaster, Three Blind Mice, and Golf Course) amidst breathtaking Himalayan river canyon landscapes.",
+      "location_tip": "Shivpuri to Rishikesh Ghats"
     },
     {
       "id": "attr-3",
       "title": "Sacred Evening Ganga Aarti at Triveni Ghat",
       "category": "Sacred Heritage",
-      "description": "Witness the mesmerizing ritual of thousands of oil lamps, conch shells blowing, and Sanskrit hymns echoing across the holy river as priests perform the evening Vedic offering.",
+      "duration": "1.5 Hours at Sunset",
+      "image_url": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
       "highlights": [
         "Floating diya offerings on the river",
         "Ancient Vedic chanting and brass lamp choreography",
         "Parmarth Niketan & Triveni Ghat ceremonies"
       ],
-      "image_url": "/images/rishikesh/ganga-aarti.jpg",
-      "location_tip": "Triveni Ghat / Parmarth Niketan",
-      "duration": "1.5 Hours at Sunset"
+      "description": "Witness the mesmerizing ritual of thousands of oil lamps, conch shells blowing, and Sanskrit hymns echoing across the holy river as priests perform the evening Vedic offering.",
+      "location_tip": "Triveni Ghat / Parmarth Niketan"
     },
     {
       "id": "attr-4",
       "title": "The Beatles Ashram (Chaurasi Kutia)",
       "category": "Sacred Heritage",
-      "description": "The historic Maharishi Mahesh Yogi ashram where The Beatles stayed in 1968 to study Transcendental Meditation. Features 84 meditation stone igloos, murals, and vibrant jungle tranquility.",
+      "duration": "2 - 3 Hours",
+      "image_url": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
       "highlights": [
         "84 meditation stone meditation caves",
         "Beatles cathedral graffiti & photo gallery",
         "Scenic forest overlook inside Rajaji Tiger Reserve boundary"
       ],
-      "image_url": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
-      "location_tip": "Swarg Ashram area",
-      "duration": "2 - 3 Hours"
+      "description": "The historic Maharishi Mahesh Yogi ashram where The Beatles stayed in 1968 to study Transcendental Meditation. Features 84 meditation stone igloos, murals, and vibrant jungle tranquility.",
+      "location_tip": "Swarg Ashram area"
     },
     {
       "id": "attr-5",
       "title": "Vashistha Gufa (Ancient Silent Meditation Cave)",
       "category": "Wellness & Peace",
-      "description": "An ancient natural cave directly on the banks of Ganga where Sage Vashistha meditated. The deep silence inside is legendary for spontaneous meditative absorption and inner quiet.",
+      "duration": "2 - 3 Hours",
+      "image_url": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
       "highlights": [
         "Natural rock cave with deep silent vibrations",
         "Shivling consecrated within the cave",
         "Private white sand riverbank right outside the cave"
       ],
-      "image_url": "/images/rishikesh/stillness-ganges.jpg",
-      "location_tip": "Badrinath Road (25 km upstream of Rishikesh)",
-      "duration": "2 - 3 Hours"
+      "description": "An ancient natural cave directly on the banks of Ganga where Sage Vashistha meditated. The deep silence inside is legendary for spontaneous meditative absorption and inner quiet.",
+      "location_tip": "Badrinath Road (25 km upstream of Rishikesh)"
     },
     {
       "id": "attr-6",
       "title": "Neer Garh & Patna Waterfalls Trek",
       "category": "Nature & Scenic",
-      "description": "A refreshing hike through dense Himalayan forest canopy leading to tiered jade-green natural plunge pools and cascading mountain waterfalls.",
+      "duration": "2 - 4 Hours",
+      "image_url": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80",
       "highlights": [
         "Natural limestone spring water pools",
         "Gentle hike through Garhwal flora and fauna",
         "Rustic tea stalls along mountain trails"
       ],
-      "image_url": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80",
-      "location_tip": "Neer Garh (approx. 5 km from Lakshman Jhula)",
-      "duration": "2 - 4 Hours"
+      "description": "A refreshing hike through dense Himalayan forest canopy leading to tiered jade-green natural plunge pools and cascading mountain waterfalls.",
+      "location_tip": "Neer Garh (approx. 5 km from Lakshman Jhula)"
     }
   ],
   "weatherClothing": {
-    "season": "Autumn / Post-Monsoon",
     "month": "October",
+    "season": "Autumn / Post-Monsoon",
+    "summary": "October is widely celebrated as the finest month to visit Rishikesh. The monsoon has passed, leaving crystalline Himalayan skies, crystal emerald river currents, and clean mountain air. Days are sunny and comfortably warm, while early mornings and evenings bring a crisp, refreshing mountain breeze.",
     "day_temp": "28°C – 30°C (82°F – 86°F)",
     "night_temp": "15°C – 18°C (59°F – 64°F)",
-    "summary": "October is widely celebrated as the finest month to visit Rishikesh. The monsoon has passed, leaving crystalline Himalayan skies, crystal emerald river currents, and clean mountain air. Days are sunny and comfortably warm, while early mornings and evenings bring a crisp, refreshing mountain breeze.",
     "clothing_tips": [
       "Meditation Attire: Loose, breathable cotton or linen clothing allowing easy floor sitting, cross-legged postures, and diaphragmatic breathing.",
       "Needed Clothes in Night in Low Temperature: Warm woolen shawl, cardigan, sweater, or light jacket is essential for cool 15°C–18°C night temperatures by the river and dawn riverside meditations.",

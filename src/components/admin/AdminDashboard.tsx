@@ -51,6 +51,11 @@ import {
   Activity,
   Terminal,
   Film,
+  ChevronUp,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ArrowUpDown,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -232,6 +237,28 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       setUploading(null);
       setUploadProgress(null);
     }
+  };
+
+  // Reorder retreat sessions and auto-save sequence
+  const moveExperience = (fromIdx: number, toIdx: number) => {
+    if (toIdx < 0 || toIdx >= experiences.length) return;
+    const updated = [...experiences];
+    const [moved] = updated.splice(fromIdx, 1);
+    updated.splice(toIdx, 0, moved);
+    const reordered = updated.map((item, i) => ({ ...item, order: i + 1 }));
+    setExperiences(reordered);
+    saveContent('experiences', reordered, 'Retreat session sequence updated & saved!');
+  };
+
+  // Reorder gallery items and auto-save sequence
+  const moveGalleryItem = (fromIdx: number, toIdx: number) => {
+    if (toIdx < 0 || toIdx >= galleryItems.length) return;
+    const updated = [...galleryItems];
+    const [moved] = updated.splice(fromIdx, 1);
+    updated.splice(toIdx, 0, moved);
+    const reordered = updated.map((item, i) => ({ ...item, order: i + 1 }));
+    setGalleryItems(reordered);
+    saveContent('gallery', reordered, 'Gallery order updated & saved!');
   };
 
   const fetchMedia = useCallback(async () => {
@@ -682,6 +709,66 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               </div>
             </div>
 
+            {/* Top Quick Order Sequence Bar */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#07261F] to-[#041a15] border border-gold-500/35 space-y-3 shadow-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gold-500/20 pb-3">
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-gold-300 font-semibold flex items-center gap-1.5">
+                    <ArrowUpDown className="w-4 h-4 text-gold-400" />
+                    <span>Top Bar: Arrange Retreat Sessions Card Order Sequence</span>
+                  </span>
+                  <p className="text-[11px] text-stone-subtle/70 font-light mt-0.5">
+                    Click ◀ or ▶ to reorder cards instantly. Position 1 appears first on the website.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => saveContent('experiences', experiences, 'Session card sequence saved successfully!')}
+                  disabled={saving}
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold-500/20 hover:bg-gold-500/30 border border-gold-400/40 text-gold-300 text-xs font-semibold uppercase tracking-wider transition-all self-start sm:self-auto"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{saving ? 'Saving...' : 'Save Sequence'}</span>
+                </button>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-1">
+                {experiences.map((exp, idx) => (
+                  <div
+                    key={exp.id}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 shadow-sm"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-gold-500/30 text-gold-300 flex items-center justify-center font-bold text-[10px]">
+                      {idx + 1}
+                    </span>
+                    <span className="font-serif font-medium text-ivory-100 truncate max-w-[130px] sm:max-w-[180px]">
+                      {exp.title}
+                    </span>
+                    <div className="flex items-center gap-0.5 border-l border-gold-500/20 pl-1.5">
+                      <button
+                        type="button"
+                        disabled={idx === 0}
+                        onClick={() => moveExperience(idx, idx - 1)}
+                        title="Move Earlier in sequence"
+                        className="p-1 rounded hover:bg-gold-500/20 text-gold-400 disabled:opacity-30 disabled:hover:bg-transparent"
+                      >
+                        <ChevronLeft className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        disabled={idx === experiences.length - 1}
+                        onClick={() => moveExperience(idx, idx + 1)}
+                        title="Move Later in sequence"
+                        className="p-1 rounded hover:bg-gold-500/20 text-gold-400 disabled:opacity-30 disabled:hover:bg-transparent"
+                      >
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Sessions Cards Edit List */}
             <div className="space-y-6">
               {experiences.map((exp, index) => (
@@ -699,7 +786,29 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       </h4>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        disabled={index === 0}
+                        onClick={() => moveExperience(index, index - 1)}
+                        className="px-2 py-1 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 disabled:opacity-30 text-xs flex items-center gap-1 transition-colors"
+                        title="Move Card Up"
+                      >
+                        <ChevronUp className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline text-[10px]">Up</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={index === experiences.length - 1}
+                        onClick={() => moveExperience(index, index + 1)}
+                        className="px-2 py-1 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 disabled:opacity-30 text-xs flex items-center gap-1 transition-colors"
+                        title="Move Card Down"
+                      >
+                        <ChevronDown className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline text-[10px]">Down</span>
+                      </button>
+
                       <button
                         type="button"
                         onClick={() => {
@@ -707,7 +816,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                             setExperiences(experiences.filter((e) => e.id !== exp.id));
                           }
                         }}
-                        className="p-2 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-500/30 text-red-300 transition-colors"
+                        className="p-1.5 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-500/30 text-red-300 transition-colors ml-1"
                         title="Delete Session"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -808,6 +917,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                                     const updated = [...experiences];
                                     updated[index].image = url;
                                     setExperiences(updated);
+                                    saveContent('experiences', updated, `Photo for "${exp.title}" uploaded & saved instantly!`);
                                   },
                                   `exp-${exp.id}`
                                 );
@@ -817,8 +927,17 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         </label>
                       </div>
                       {exp.image && (
-                        <div className="relative w-28 h-20 rounded-lg overflow-hidden border border-gold-500/25 mt-1">
+                        <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/35 mt-2 bg-black/40 group/prev">
                           <img src={exp.image} alt={exp.title} className="w-full h-full object-cover" />
+                          <a
+                            href={exp.image}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute bottom-2 right-2 px-2.5 py-1 rounded-md bg-black/75 border border-gold-400/40 text-[10px] text-gold-300 font-semibold tracking-wider uppercase hover:bg-black transition-colors flex items-center gap-1 shadow-md"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            <span>Open Full Photo</span>
+                          </a>
                         </div>
                       )}
                     </div>
@@ -1831,7 +1950,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                             caption: '',
                             location: 'Rishikesh, Uttarakhand',
                           };
-                          setGalleryItems([newItem, ...galleryItems]);
+                          const updated = [newItem, ...galleryItems];
+                          setGalleryItems(updated);
+                          saveContent('gallery', updated, 'New photo added to gallery & saved!');
                         },
                         'gallery-add'
                       );
@@ -1851,6 +1972,66 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               </div>
             </div>
 
+            {/* Top Quick Order Sequence Bar for Gallery Cards */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#07261F] to-[#041a15] border border-gold-500/35 space-y-3 shadow-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gold-500/20 pb-3">
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-gold-300 font-semibold flex items-center gap-1.5">
+                    <ArrowUpDown className="w-4 h-4 text-gold-400" />
+                    <span>Top Bar: Arrange Photos & Gallery Card Order Sequence</span>
+                  </span>
+                  <p className="text-[11px] text-stone-subtle/70 font-light mt-0.5">
+                    Rearrange gallery photos sequence. Click ◀ or ▶ to shift positions across the grid.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => saveContent('gallery', galleryItems, 'Gallery sequence saved successfully!')}
+                  disabled={saving}
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold-500/20 hover:bg-gold-500/30 border border-gold-400/40 text-gold-300 text-xs font-semibold uppercase tracking-wider transition-all self-start sm:self-auto"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{saving ? 'Saving...' : 'Save Sequence'}</span>
+                </button>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-1 max-h-48 overflow-y-auto">
+                {galleryItems.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/30 text-xs text-ivory-100 shadow-sm"
+                  >
+                    <span className="w-4 h-4 rounded-full bg-gold-500/30 text-gold-300 flex items-center justify-center font-bold text-[9px]">
+                      {idx + 1}
+                    </span>
+                    <span className="font-serif font-medium text-ivory-100 truncate max-w-[110px] sm:max-w-[150px]">
+                      {item.title}
+                    </span>
+                    <div className="flex items-center gap-0.5 border-l border-gold-500/20 pl-1">
+                      <button
+                        type="button"
+                        disabled={idx === 0}
+                        onClick={() => moveGalleryItem(idx, idx - 1)}
+                        title="Move Earlier"
+                        className="p-0.5 rounded hover:bg-gold-500/20 text-gold-400 disabled:opacity-30 disabled:hover:bg-transparent"
+                      >
+                        <ChevronLeft className="w-3 h-3" />
+                      </button>
+                      <button
+                        type="button"
+                        disabled={idx === galleryItems.length - 1}
+                        onClick={() => moveGalleryItem(idx, idx + 1)}
+                        title="Move Later"
+                        className="p-0.5 rounded hover:bg-gold-500/20 text-gold-400 disabled:opacity-30 disabled:hover:bg-transparent"
+                      >
+                        <ChevronRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {galleryItems.map((item, index) => (
                 <div
@@ -1861,7 +2042,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     {item.media_type === 'video' || isVideoUrl(item.image_url) ? (
                       <video src={item.image_url} controls muted playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
-                      <Image src={item.image_url} alt={item.title} fill className="object-cover" />
+                      <Image src={item.image_url} alt={item.title} fill unoptimized className="object-cover" />
                     )}
                   </div>
 
@@ -1896,6 +2077,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                                   updated[index].image_url = url;
                                   updated[index].media_type = kind;
                                   setGalleryItems(updated);
+                                  saveContent('gallery', updated, `Photo for "${item.title}" replaced & saved instantly!`);
                                 },
                                 `gal-item-${item.id}`
                               );
@@ -1903,6 +2085,16 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                           }}
                         />
                       </label>
+                      <a
+                        href={item.image_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-1.5 rounded-lg bg-emerald-950/70 border border-gold-500/20 text-gold-400 hover:text-gold-200 text-[11px] flex items-center gap-1"
+                        title="View Full Resolution"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        <span>View</span>
+                      </a>
                     </div>
 
                     <input
@@ -1919,17 +2111,37 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
                     <div className="flex items-center justify-between pt-1">
                       <span className="text-[10px] text-gold-400 font-semibold">{item.category}</span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (confirm(`Delete "${item.title}"?`)) {
-                            setGalleryItems(galleryItems.filter((g) => g.id !== item.id));
-                          }
-                        }}
-                        className="text-red-400 hover:text-red-300 text-xs"
-                      >
-                        Delete
-                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          disabled={index === 0}
+                          onClick={() => moveGalleryItem(index, index - 1)}
+                          className="p-1 rounded bg-emerald-900/60 hover:bg-emerald-800 border border-gold-500/30 text-gold-400 disabled:opacity-30"
+                          title="Move Earlier"
+                        >
+                          <ChevronLeft className="w-3 h-3" />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={index === galleryItems.length - 1}
+                          onClick={() => moveGalleryItem(index, index + 1)}
+                          className="p-1 rounded bg-emerald-900/60 hover:bg-emerald-800 border border-gold-500/30 text-gold-400 disabled:opacity-30"
+                          title="Move Later"
+                        >
+                          <ChevronRight className="w-3 h-3" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (confirm(`Delete "${item.title}"?`)) {
+                              setGalleryItems(galleryItems.filter((g) => g.id !== item.id));
+                            }
+                          }}
+                          className="text-red-400 hover:text-red-300 text-xs ml-1"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

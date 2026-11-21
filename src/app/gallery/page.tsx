@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     'Immerse in the visual moments, official posters, Himalayan landscapes, and community gatherings of Beyond the Mind.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function GalleryPage() {
   const galleryItems = await getGallery();
 

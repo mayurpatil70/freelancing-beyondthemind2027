@@ -71,6 +71,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.aws.neon.tech',
       },
+      {
+        protocol: 'https',
+        hostname: '**.neon.tech',
+      },
+      {
+        protocol: 'https',
+        hostname: 'br-lingering-dust-azmgvnbb.storage.c-3.ap-southeast-1.aws.neon.tech',
+      },
     ],
   },
   async headers() {
