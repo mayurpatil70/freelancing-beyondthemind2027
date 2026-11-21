@@ -52,7 +52,12 @@ export async function DELETE(req: NextRequest) {
 
   try {
     if (asset.url.startsWith('/uploads/')) {
-      fs.rmSync(path.join(process.cwd(), 'public', asset.url), { force: true });
+      const safeDir = path.resolve(process.cwd(), 'public', 'uploads');
+      const normalizedPath = path.resolve(process.cwd(), 'public', asset.url.replace(/^\/+/, ''));
+      // Prevent directory traversal attacks
+      if (normalizedPath.startsWith(safeDir) && fs.existsSync(normalizedPath)) {
+        fs.rmSync(normalizedPath, { force: true });
+      }
     } else if (isStorageConfigured) {
       await deleteObject(MEDIA_BUCKET, asset.key);
     }

@@ -33,8 +33,8 @@ function heroVideos() {
 
 function splitTitle(raw: string) {
   const clean = raw.replace(/\s+\d{4}\s*$/, '').trim();
-  const text = clean === clean.toUpperCase() ? clean.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()) : clean;
-  return text.split(/\s+/).map((w) => (w.toLowerCase() === 'the' ? { word: 'the', accent: true } : { word: w, accent: false }));
+  const upper = clean.toUpperCase();
+  return upper.split(/\s+/).map((w) => (w === 'THE' ? { word: 'THE', accent: true } : { word: w, accent: false }));
 }
 
 function isSlowNetwork() {

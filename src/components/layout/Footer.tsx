@@ -280,17 +280,22 @@ export function Footer() {
 
         {/* Bottom bar matching Screenshot 4 */}
         <div className="mt-14 pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-subtle/70 gap-4">
-          <p>
-            © 2027 Beyond the Mind. All Rights Reserved. Built with <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500 mx-0.5" /> by{' '}
-            <a
-              href="https://linktr.ee/hackerfromhills"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold-400 hover:text-gold-300 underline underline-offset-4 decoration-gold-400/80 font-medium transition-colors"
-            >
-              Team Hackerfromhills
-            </a>
-            .
+          <p className="flex items-center flex-wrap gap-1">
+            <span>© 2027 Beyond the Mind. All Rights Reserved.</span>
+            <span className="hidden sm:inline">•</span>
+            <span>
+              Made with{' '}
+              <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500 mx-0.5" /> by{' '}
+              <a
+                href="https://linktr.ee/hackerfromhills"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Developer Portfolio & Services — Team Hackerfromhills"
+                className="text-gold-400 hover:text-gold-300 underline underline-offset-4 decoration-gold-400/80 font-medium transition-colors"
+              >
+                Team Hackerfromhills
+              </a>
+            </span>
           </p>
 
           <div className="flex items-center gap-6">

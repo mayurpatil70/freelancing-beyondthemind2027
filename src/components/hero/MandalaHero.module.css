@@ -56,7 +56,8 @@
   font-style: normal;
   line-height: 0.92;
   font-size: clamp(48px, 9.2vw, 136px);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   text-wrap: balance;
 }
 .ch { display: inline-block; white-space: pre; font-style: normal; }

@@ -28,6 +28,12 @@
     selection-color: #031713;
   }
 
+  /* Ensure serif numbers render with lining numerals aligned on baseline */
+  .font-serif {
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: "lnum" 1;
+  }
+
   ::selection {
     background: #D4AF37;
     color: #031713;

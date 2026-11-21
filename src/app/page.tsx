@@ -286,24 +286,24 @@ export default async function HomePage() {
 
             <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-br from-[#07261F] to-[#041a15] border border-gold-600/30 p-8 sm:p-12 shadow-xl space-y-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center border-b border-gold-500/20 pb-8">
-                <div className="space-y-1">
+                <div className="space-y-1 flex flex-col items-center">
                   <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Mode</span>
-                  <span className="font-serif text-xl font-medium text-ivory-50 block">Online</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 h-8 flex items-center justify-center">Online</span>
                   <span className="text-[11px] text-gold-300/80 block">Live from anywhere</span>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 flex flex-col items-center">
                   <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Timings</span>
-                  <span className="font-serif text-xl font-medium text-ivory-50 block">7:30 PM IST</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 h-8 flex items-center justify-center lining-nums tabular-nums [font-feature-settings:'lnum'_1]">7:30 PM IST</span>
                   <span className="text-[11px] text-gold-300/80 block">Monday to Friday</span>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 flex flex-col items-center">
                   <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Session Fee</span>
-                  <span className="font-serif text-xl font-medium text-ivory-50 block">Paid Sessions</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 h-8 flex items-center justify-center">Paid Sessions</span>
                   <span className="text-[11px] text-gold-300/80 block">Details on enquiry</span>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 flex flex-col items-center">
                   <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">Platform</span>
-                  <span className="font-serif text-xl font-medium text-ivory-50 block">Zoom</span>
+                  <span className="font-serif text-xl font-medium text-ivory-50 h-8 flex items-center justify-center">Zoom</span>
                   <span className="text-[11px] text-gold-300/80 block">Link sent after joining</span>
                 </div>
               </div>

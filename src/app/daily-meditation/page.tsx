@@ -72,24 +72,24 @@ export default async function DailyMeditationPage() {
         <section className="py-12 -mt-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-gradient-to-br from-[#07261F] to-[#041a15] border border-gold-400/40 p-8 sm:p-12 shadow-2xl space-y-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center border-b border-gold-500/20 pb-8">
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">1. Mode</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium block">Online</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center">Online</span>
                 <span className="text-[11px] text-gold-300/80 block">Live from anywhere</span>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">2. Timings</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium block">7:30 PM</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center lining-nums tabular-nums [font-feature-settings:'lnum'_1]">7:30 PM</span>
                 <span className="text-[11px] text-gold-300/80 block">Monday to Friday</span>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">3. Session Fee</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium block">Paid sessions</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center">Paid sessions</span>
                 <span className="text-[11px] text-gold-300/80 block">Shared on enquiry</span>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">4. Platform</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium block">Zoom</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center">Zoom</span>
                 <span className="text-[11px] text-gold-300/80 block">Access link sent on joining</span>
               </div>
             </div>
