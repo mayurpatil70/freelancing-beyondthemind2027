@@ -34,10 +34,19 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
-    ? process.env.NEXT_PUBLIC_SITE_URL
-    : 'https://beyondthemind2027.vercel.app';
+const siteUrl = (() => {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (envUrl && !envUrl.includes('localhost') && !envUrl.includes('beyondthemindretreat.org')) {
+    return envUrl.replace(/\/$/, '');
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return 'https://beyondthemind2027.vercel.app';
+})();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -84,21 +93,24 @@ export const metadata: Metadata = {
     siteName: 'Beyond the Mind 2027',
     images: [
       {
-        url: '/images/brand/og-cover.jpg',
+        url: `${siteUrl}/images/brand/og-cover.jpg`,
+        secureUrl: `${siteUrl}/images/brand/og-cover.jpg`,
         width: 1200,
         height: 630,
         type: 'image/jpeg',
         alt: 'Beyond the Mind 2027 — The Divine Retreat Cover Image',
       },
       {
-        url: '/og-image.jpg',
+        url: `${siteUrl}/og-image.jpg`,
+        secureUrl: `${siteUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         type: 'image/jpeg',
         alt: 'Beyond the Mind 2027 — The Divine Retreat Banner',
       },
       {
-        url: '/images/brand/logo.jpg',
+        url: `${siteUrl}/images/brand/logo.jpg`,
+        secureUrl: `${siteUrl}/images/brand/logo.jpg`,
         width: 1024,
         height: 1024,
         type: 'image/jpeg',
@@ -115,7 +127,7 @@ export const metadata: Metadata = {
       'A journey into the Infinite within. Rishikesh, October 6–9, 2027. Guided by Pradeep Muthukulam.',
     site: '@beyondthemind27',
     creator: '@beyondthemind27',
-    images: ['/images/brand/og-cover.jpg'],
+    images: [`${siteUrl}/images/brand/og-cover.jpg`],
   },
   robots: {
     index: true,
@@ -141,20 +153,20 @@ export default function RootLayout({
     '@graph': [
       {
         '@type': 'WebSite',
-        '@id': 'https://beyondthemindretreat.org/#website',
-        url: 'https://beyondthemindretreat.org',
+        '@id': `${siteUrl}/#website`,
+        url: siteUrl,
         name: 'Beyond the Mind',
         description: 'The Divine Retreat & Daily Guided Meditation — A Journey Into the Infinite Within.',
         publisher: {
-          '@id': 'https://beyondthemindretreat.org/#organization',
+          '@id': `${siteUrl}/#organization`,
         },
       },
       {
         '@type': 'Organization',
-        '@id': 'https://beyondthemindretreat.org/#organization',
+        '@id': `${siteUrl}/#organization`,
         name: 'Beyond the Mind',
-        url: 'https://beyondthemindretreat.org',
-        logo: 'https://beyondthemindretreat.org/images/brand/logo.jpg',
+        url: siteUrl,
+        logo: `${siteUrl}/images/brand/logo.jpg`,
         telephone: '+918075572018',
         email: 'moolabrahman@gmail.com',
         sameAs: [
@@ -166,7 +178,7 @@ export default function RootLayout({
       },
       {
         '@type': 'Event',
-        '@id': 'https://beyondthemindretreat.org/#retreat2027',
+        '@id': `${siteUrl}/#retreat2027`,
         name: 'Beyond the Mind 2027 — The Divine Retreat',
         description:
           'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Muthukulam. Arrival: October 5, 2027. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 7 sacred sessions.',
@@ -189,20 +201,20 @@ export default function RootLayout({
             addressCountry: 'India',
           },
         },
-        image: ['https://beyondthemindretreat.org/images/brand/logo.jpg'],
+        image: [`${siteUrl}/images/brand/logo.jpg`],
         organizer: {
-          '@id': 'https://beyondthemindretreat.org/#organization',
+          '@id': `${siteUrl}/#organization`,
         },
         performer: {
           '@type': 'Person',
           name: 'Pradeep Muthukulam',
           jobTitle: 'Lead Spiritual Guide',
-          image: 'https://beyondthemindretreat.org/images/brand/pradeep-muthukulam.jpg',
+          image: `${siteUrl}/images/brand/pradeep-muthukulam.jpg`,
         },
       },
       {
         '@type': 'EducationalEvent',
-        '@id': 'https://beyondthemindretreat.org/#dailymeditation',
+        '@id': `${siteUrl}/#dailymeditation`,
         name: 'Daily Guided Meditation — A Journey Within',
         description:
           'Ongoing weekday guided meditation sessions by Beyond the Mind. Online via Zoom from Monday to Friday at 7:30 PM IST. Paid sessions focusing on cultivating awareness, exploring inner silence, and transcending mental chatter.',
@@ -214,7 +226,7 @@ export default function RootLayout({
           startTime: '19:30:00+05:30',
         },
         organizer: {
-          '@id': 'https://beyondthemindretreat.org/#organization',
+          '@id': `${siteUrl}/#organization`,
         },
       },
       {
