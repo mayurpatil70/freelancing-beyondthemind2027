@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { timingSafeEqual } from 'crypto';
 import { SESSION_COOKIE_NAME, createSessionToken, readSession } from '@/lib/auth';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || process.env.ADMIN_EMAIL || 'pradeep123';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pradeep123';
+
+function safeCompare(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,7 +32,7 @@ export async function POST(req: NextRequest) {
       username.toLowerCase() === expectedUsername ||
       (expectedEmail ? username.toLowerCase() === expectedEmail : false);
 
-    const isValidPass = password === ADMIN_PASSWORD;
+    const isValidPass = safeCompare(password, ADMIN_PASSWORD);
 
     if (!isValidUser || !isValidPass) {
       return NextResponse.json(

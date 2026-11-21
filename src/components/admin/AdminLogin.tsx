@@ -33,6 +33,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
 
       onSuccess();
     } catch (err: unknown) {
+      setPassword('');
       if (err instanceof Error) {
         setError(err.message);
       } else {
