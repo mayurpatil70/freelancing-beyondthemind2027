@@ -69,7 +69,9 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
                 <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light mt-1">
                   {day.theme}
                 </h3>
-                <p className="text-sm text-gold-200/90 font-light italic mt-1">{day.subtitle}</p>
+                {day.subtitle ? (
+                  <p className="text-sm text-gold-200/90 font-light italic mt-1">{day.subtitle}</p>
+                ) : null}
               </div>
 
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/30 text-xs text-gold-300 font-medium shrink-0">
@@ -89,7 +91,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
                 <span>Day Flow & Focus Areas</span>
               </h4>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className={cn('grid grid-cols-1 gap-4', day.sessions.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3')}>
                 {day.sessions.map((session, idx) => (
                   <div
                     key={idx}

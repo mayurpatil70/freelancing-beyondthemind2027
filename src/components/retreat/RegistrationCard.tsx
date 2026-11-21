@@ -8,8 +8,6 @@ import {
   MapPin,
   Languages,
   CheckCircle2,
-  ExternalLink,
-  MessageCircle,
   ShieldCheck,
   Video,
   Sun,
@@ -32,10 +30,6 @@ export function RegistrationCard({
 }: RegistrationCardProps) {
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [modalProgram, setModalProgram] = useState(defaultProgramme);
-
-  const effectiveGoogleFormUrl =
-    googleFormUrl ||
-    'https://docs.google.com/forms/d/1HPHKNuIo1eNX7yKxNypG6dQi0XlhRJTV2iTlMUvHEpA/edit?pli=1&pli=1&edit_requested=true';
 
   const openWhatsApp = (prog: string) => {
     setModalProgram(prog);
@@ -83,7 +77,7 @@ export function RegistrationCard({
             </div>
 
             <p className="text-xs text-stone-subtle/80 leading-relaxed font-light">
-              Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, Strictly Vegetarian Cuisine Throughout the Retreat, and guided Himalayan ceremonies.
+              Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, Strictly Vegetarian Cuisine Throughout the Retreat.
             </p>
 
             <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
@@ -91,7 +85,6 @@ export function RegistrationCard({
                 'All 7 Retreat Sessions with Pradeep Muthukulam',
                 'Personal Guidance Sessions – Available by Appointment',
                 'Strictly Vegetarian Cuisine Throughout the Retreat',
-                'Pooja Veppu & Shiva Mandala Merging',
                 'Private single or twin sharing rooms',
                 'Dedicated Concierge & Airport Assistance',
               ].map((inc, i) => (
@@ -125,7 +118,7 @@ export function RegistrationCard({
             </span>
 
             <h3 className="font-serif text-2xl text-ivory-50 font-medium">
-              The Divine Retreat (Online)
+              The Divine Retreat
             </h3>
 
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
@@ -209,7 +202,6 @@ export function RegistrationCard({
             <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
               {[
                 'Live weekday guided sessions at 7:30 PM',
-                'Nervous system recalibration & de-stress',
                 'Breathwork & subtle channel purification',
                 'Ongoing spiritual community kinship',
               ].map((inc, i) => (
@@ -230,7 +222,7 @@ export function RegistrationCard({
               Enquire for Daily Zoom Pass
             </button>
             <p className="text-[10px] text-center text-stone-subtle/70">
-              Monthly & quarterly access passes available
+              monthly passes available
             </p>
           </div>
         </div>
@@ -294,79 +286,6 @@ export function RegistrationCard({
               Night and dawn temperatures in Rishikesh drop to 15°C–18°C with crisp Himalayan river winds. Warm woolens, shawls, cardigans, or light jackets are strictly needed for evening riverside Ganga Aarti and dawn meditations, along with easy slip-on sandals.
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 3. OFFICIAL GOOGLE FORM REGISTRATION SECTION */}
-      {/* ========================================================================= */}
-      <div className="rounded-3xl bg-[#07261F]/90 border border-gold-500/30 p-6 sm:p-10 md:p-12 shadow-2xl space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-400/30 text-[10px] tracking-widest uppercase text-gold-300 font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
-            Official Sanctuary Registration
-          </span>
-
-          <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-tight">
-            Register via Official Google Form
-          </h2>
-
-          <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed">
-            All retreat enquiries and sanctuary place reservations for Beyond the Mind 2027 in Rishikesh and Daily Guided Meditation are processed securely through our official Google Form. Click below to submit your details directly.
-          </p>
-
-          {/* Action Buttons: Google Form & WhatsApp */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href={effectiveGoogleFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 hover:from-gold-400 hover:via-gold-300 hover:to-gold-500 text-emerald-950 font-bold text-xs uppercase tracking-widest shadow-gold-md hover:scale-105 transition-all text-center"
-            >
-              <span>Open Official Google Form</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
-
-            <button
-              type="button"
-              onClick={() => openWhatsApp(defaultProgramme)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-gold-500/50 hover:border-gold-400 text-gold-300 hover:text-white hover:bg-gold-500/15 font-semibold text-xs tracking-widest uppercase transition-all"
-            >
-              <MessageCircle className="w-4 h-4 text-gold-400" />
-              <span>Enquire via WhatsApp</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Embedded Google Form View */}
-        <div className="mt-8 rounded-2xl overflow-hidden border border-gold-500/30 bg-white shadow-2xl">
-          <iframe
-            src={effectiveGoogleFormUrl}
-            width="100%"
-            height="850"
-            frameBorder="0"
-            marginHeight={0}
-            marginWidth={0}
-            title="Official Beyond the Mind Google Registration Form"
-            className="w-full"
-          >
-            Loading Google Form...
-          </iframe>
-        </div>
-
-        <div className="text-center pt-2">
-          <p className="text-xs text-stone-subtle/70">
-            If the form does not display above, please{' '}
-            <a
-              href={effectiveGoogleFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold-300 underline font-medium hover:text-gold-200"
-            >
-              click here to open the Google Form directly
-            </a>
-            .
-          </p>
         </div>
       </div>
 
