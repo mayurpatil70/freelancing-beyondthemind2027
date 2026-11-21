@@ -47,7 +47,7 @@
       "link": "/register"
     },
     "youtube_url": "https://www.youtube.com/@BeyondTheMindRetreat",
-    "twitter_url": "https://twitter.com/beyondthemind",
+    "twitter_url": "https://x.com/beyondthemind27?s=11",
     "secondary_phone": "+91 8075572018",
     "secondary_email": "support@beyondthemindretreat.org",
     "hero_notice_card": {
@@ -386,7 +386,7 @@
       "id": "gal-7",
       "title": "Sacred Riverbank Aarti Glow",
       "category": "Sacred Moments",
-      "image_url": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
+      "image_url": "/images/rishikesh/ganga-aarti.jpg",
       "caption": "Evening brass lamps reflecting upon the sacred waters of Mother Ganga.",
       "location": "Parmarth Niketan Ghat, Rishikesh"
     }
@@ -486,7 +486,7 @@
         "Ancient Vedic chanting and brass lamp choreography",
         "Parmarth Niketan & Triveni Ghat ceremonies"
       ],
-      "image_url": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
+      "image_url": "/images/rishikesh/ganga-aarti.jpg",
       "location_tip": "Triveni Ghat / Parmarth Niketan",
       "duration": "1.5 Hours at Sunset"
     },
