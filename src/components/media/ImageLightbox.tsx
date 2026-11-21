@@ -6,6 +6,7 @@ import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 
 interface LightboxImage {
   src: string;
+  isVideo?: boolean;
   alt: string;
   title?: string;
   caption?: string;
@@ -109,14 +110,25 @@ export function ImageLightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full max-h-[75vh] h-[75vh] max-w-[85vw] flex items-center justify-center">
-          <Image
-            src={current.src}
-            alt={current.alt || 'Beyond the Mind Visual'}
-            fill
-            sizes="90vw"
-            className="object-contain"
-            priority
-          />
+          {current.isVideo ? (
+            <video
+              key={current.src}
+              src={current.src}
+              controls
+              autoPlay
+              playsInline
+              className="max-w-full max-h-full rounded-lg"
+            />
+          ) : (
+            <Image
+              src={current.src}
+              alt={current.alt || 'Beyond the Mind Visual'}
+              fill
+              sizes="90vw"
+              className="object-contain"
+              priority
+            />
+          )}
         </div>
 
         {/* Caption bar */}

@@ -7,7 +7,7 @@ const ContentSecurityPolicy = `
   font-src 'self' data: https://fonts.gstatic.com;
   img-src 'self' data: blob: https: https://images.unsplash.com https://images.pexels.com;
   media-src 'self' https: data: blob:;
-  connect-src 'self' https://wa.me https://api.whatsapp.com https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com;
+  connect-src 'self' https://wa.me https://api.whatsapp.com https://*.aws.neon.tech https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com;
   frame-src 'self' https://www.google.com https://maps.google.com https://docs.google.com;
   frame-ancestors 'none';
   form-action 'self' https://wa.me https://api.whatsapp.com;
@@ -69,7 +69,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**.supabase.co',
+        hostname: '**.aws.neon.tech',
       },
     ],
   },

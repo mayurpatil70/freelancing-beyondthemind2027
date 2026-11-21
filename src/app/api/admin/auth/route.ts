@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { SESSION_COOKIE_NAME, createSessionToken, readSession } from '@/lib/auth';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'pradeep123';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pradeep123';
-const SESSION_COOKIE_NAME = 'btm_admin_session';
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,14 +34,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Generate signed token session
-    const sessionToken = Buffer.from(
-      JSON.stringify({
-        authenticated: true,
-        user: username || 'pradeep123',
-        issuedAt: Date.now(),
-      })
-    ).toString('base64');
+    const sessionToken = createSessionToken(username);
 
     const response = NextResponse.json({
       success: true,
@@ -68,21 +61,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const sessionCookie = req.cookies.get(SESSION_COOKIE_NAME);
-  if (!sessionCookie?.value) {
+  const session = readSession(req.cookies.get(SESSION_COOKIE_NAME)?.value);
+  if (!session) {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
-
-  try {
-    const payload = JSON.parse(Buffer.from(sessionCookie.value, 'base64').toString('utf-8'));
-    if (payload.authenticated) {
-      return NextResponse.json({ authenticated: true, user: payload.user });
-    }
-  } catch {
-    // Malformed session
-  }
-
-  return NextResponse.json({ authenticated: false }, { status: 401 });
+  return NextResponse.json({ authenticated: true, user: session.user });
 }
 
 export async function DELETE() {

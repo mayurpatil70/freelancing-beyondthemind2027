@@ -93,6 +93,7 @@ export interface GalleryItem {
     | 'Rishikesh'
     | 'Sacred Moments';
   image_url: string;
+  media_type?: 'image' | 'video';
   caption: string;
   location?: string;
 }
@@ -197,3 +198,14 @@ export interface SiteSettings {
   };
 }
 
+
+export interface MediaAsset {
+  id: string;
+  key: string;
+  url: string;
+  kind: 'image' | 'video';
+  mime_type: string;
+  size_bytes: number;
+  original_name: string;
+  created_at: string;
+}

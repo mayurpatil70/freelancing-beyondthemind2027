@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import { cache } from 'react';
 import {
   Registration,
   RegistrationStatus,
@@ -13,6 +14,7 @@ import {
   SiteSettings,
   RishikeshAttraction,
   WeatherClothingGuide,
+  MediaAsset,
 } from '@/types';
 import {
   initialSiteSettings,
@@ -24,261 +26,178 @@ import {
   initialAttractions,
   initialWeatherClothing,
 } from '@/lib/data/initialData';
-import { getAdminSupabase, isServerSupabaseConfigured } from '@/lib/supabase/server';
+import { getSql } from '@/lib/db/neon';
+import contentSnapshot from '@/data/db.json';
 
-interface LocalDatabase {
+export interface ContentMap {
   settings: SiteSettings;
   experiences: SacredExperience[];
   programme: ProgrammeDay[];
   testimonials: Testimonial[];
   gallery: GalleryItem[];
   faqs: FAQItem[];
-  attractions?: RishikeshAttraction[];
-  weatherClothing?: WeatherClothingGuide;
-  registrations: Registration[];
+  attractions: RishikeshAttraction[];
+  weatherClothing: WeatherClothingGuide;
 }
+
+export type ContentKey = keyof ContentMap;
+
+export const CONTENT_KEYS: ContentKey[] = [
+  'settings',
+  'experiences',
+  'programme',
+  'testimonials',
+  'gallery',
+  'faqs',
+  'attractions',
+  'weatherClothing',
+];
+
+const defaults: ContentMap = {
+  settings: initialSiteSettings,
+  experiences: initialExperiences,
+  programme: initialProgramme,
+  testimonials: initialTestimonials,
+  gallery: initialGallery,
+  faqs: initialFAQs,
+  attractions: initialAttractions,
+  weatherClothing: initialWeatherClothing,
+};
+
+// Local JSON fallback, used only when DATABASE_URL is not set. Its build-time snapshot also fills keys missing in Neon.
+type LocalDb = Partial<ContentMap> & { registrations?: Registration[]; media?: MediaAsset[] };
 
 const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
 const TMP_DB_PATH = path.join(os.tmpdir(), 'btm-db.json');
-let memoryDb: LocalDatabase | null = null;
+let memoryDb: LocalDb | null = null;
 
-function ensureLocalDb(): LocalDatabase {
-  if (memoryDb) {
-    return memoryDb;
-  }
-
-  let raw: string | null = null;
-
-  // Check TMP_DB_PATH first if it exists and has newer runtime admin updates
-  try {
-    if (fs.existsSync(TMP_DB_PATH)) {
-      if (fs.existsSync(DB_PATH)) {
-        const tmpTime = fs.statSync(TMP_DB_PATH).mtimeMs;
-        const dbTime = fs.statSync(DB_PATH).mtimeMs;
-        if (tmpTime >= dbTime) {
-          raw = fs.readFileSync(TMP_DB_PATH, 'utf-8');
-        }
-      } else {
-        raw = fs.readFileSync(TMP_DB_PATH, 'utf-8');
-      }
-    }
-  } catch {
-    raw = null;
-  }
-
-  if (!raw) {
+function readLocalDb(): LocalDb {
+  if (memoryDb) return memoryDb;
+  const files = [DB_PATH, TMP_DB_PATH]
+    .filter((f) => fs.existsSync(f))
+    .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
+  for (const file of files) {
     try {
-      if (fs.existsSync(DB_PATH)) {
-        raw = fs.readFileSync(DB_PATH, 'utf-8');
-      }
-    } catch {
-      raw = null;
-    }
+      memoryDb = JSON.parse(fs.readFileSync(file, 'utf-8')) as LocalDb;
+      return memoryDb;
+    } catch {}
   }
-
-  if (!raw) {
-    try {
-      if (fs.existsSync(TMP_DB_PATH)) {
-        raw = fs.readFileSync(TMP_DB_PATH, 'utf-8');
-      }
-    } catch {
-      raw = null;
-    }
-  }
-
-  if (raw) {
-    try {
-      const parsed = JSON.parse(raw) as LocalDatabase;
-      if (!parsed.attractions || parsed.attractions.length === 0) parsed.attractions = initialAttractions;
-      if (!parsed.weatherClothing) parsed.weatherClothing = initialWeatherClothing;
-      if (!parsed.experiences || parsed.experiences.length === 0) parsed.experiences = initialExperiences;
-      if (!parsed.programme || parsed.programme.length === 0) parsed.programme = initialProgramme;
-      if (!parsed.settings) parsed.settings = initialSiteSettings;
-      else parsed.settings = { ...initialSiteSettings, ...parsed.settings };
-      memoryDb = parsed;
-      return parsed;
-    } catch {
-      // Fall through to initial
-    }
-  }
-
-  const initialDb: LocalDatabase = {
-    settings: initialSiteSettings,
-    experiences: initialExperiences,
-    programme: initialProgramme,
-    testimonials: initialTestimonials,
-    gallery: initialGallery,
-    faqs: initialFAQs,
-    attractions: initialAttractions,
-    weatherClothing: initialWeatherClothing,
-    registrations: [
-      {
-        id: 'BTM27-1001',
-        full_name: 'Dr. Evelyn Vance',
-        email: 'evelyn.vance@wellnessarchive.org',
-        country_code: '+1',
-        phone: '4155552671',
-        country: 'United States',
-        city: 'San Francisco',
-        programme: '4-Day Divine Retreat Rishikesh',
-        language_preference: 'English',
-        dietary_requirements: 'Strict vegetarian, gluten-free',
-        message: 'Seeking deep inner stillness and guidance on Kundalini energetic integration.',
-        privacy_consent: true,
-        status: 'Confirmed',
-        payment_status: 'Verified',
-        created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
-        updated_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-        admin_notes: [
-          {
-            id: 'note-1',
-            text: 'Verified bank transfer. Single room reserved by the quiet garden wing.',
-            author: 'Admin Concierge',
-            created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-          },
-        ],
-      },
-      {
-        id: 'BTM27-1002',
-        full_name: 'Rajesh Nair',
-        email: 'rajesh.nair@keralaheritage.in',
-        country_code: '+91',
-        phone: '9847012345',
-        country: 'India',
-        city: 'Kochi',
-        programme: '4-Day Divine Retreat Rishikesh',
-        language_preference: 'English & Hindi',
-        dietary_requirements: 'Strict vegetarian',
-        message: 'Attended BTM 2026 Kanyakumari. Keen to experience the sacred Ganga energy and Shiva Mandala.',
-        privacy_consent: true,
-        status: 'Payment Verification',
-        payment_status: 'Pending Verification',
-        payment_proof_url: '/images/posters/btm2026-testimonial.jpg',
-        created_at: new Date(Date.now() - 86400000).toISOString(),
-        updated_at: new Date(Date.now() - 86400000).toISOString(),
-        admin_notes: [
-          {
-            id: 'note-2',
-            text: 'Uploaded transaction receipt. Awaiting bank clearance check.',
-            author: 'Admin Concierge',
-            created_at: new Date(Date.now() - 86400000).toISOString(),
-          },
-        ],
-      },
-    ],
-  };
-
-  writeLocalDb(initialDb);
-  memoryDb = initialDb;
-  return initialDb;
+  memoryDb = {};
+  return memoryDb;
 }
 
-function writeLocalDb(data: LocalDatabase) {
-  memoryDb = data;
-  try {
-    const dir = path.dirname(DB_PATH);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (err) {
-    console.warn('Could not write to DB_PATH, attempting fallback to TMP_DB_PATH:', err);
-  }
-
-  // Always write to TMP_DB_PATH so serverless functions retain latest admin changes
-  try {
-    fs.writeFileSync(TMP_DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (tmpErr) {
-    console.warn('Could not write to TMP_DB_PATH:', tmpErr);
+function writeLocalDb(db: LocalDb) {
+  memoryDb = db;
+  const json = JSON.stringify(db, null, 2);
+  for (const file of [DB_PATH, TMP_DB_PATH]) {
+    try {
+      fs.writeFileSync(file, json, 'utf-8');
+    } catch {}
   }
 }
 
-// ============================================================================
-// DATA ACCESS FUNCTIONS
-// ============================================================================
+const iso = (v: unknown) => (v instanceof Date ? v.toISOString() : String(v));
 
-export async function getSiteSettings(): Promise<SiteSettings> {
-  const supabase = getAdminSupabase();
-  if (supabase) {
-    try {
-      const { data, error } = await supabase.from('site_settings').select('data').eq('id', 1).single();
-      if (!error && data?.data) {
-        return { ...initialSiteSettings, ...data.data };
-      }
-    } catch (e) {
-      console.warn('Supabase getSiteSettings error, falling back to local storage:', e);
-    }
+// ----------------------------------------------------------------------------
+// CMS content
+// ----------------------------------------------------------------------------
+
+const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
+  const sql = getSql();
+  if (!sql) return readLocalDb();
+  try {
+    const rows = await sql`SELECT key, data FROM cms_content`;
+    return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
+  } catch (e) {
+    console.error('Neon loadContent error, serving defaults:', e);
+    return {};
   }
-  const db = ensureLocalDb();
-  return db.settings || initialSiteSettings;
+});
+
+async function getContent<K extends ContentKey>(key: K): Promise<ContentMap[K]> {
+  const value = (await loadContent())[key];
+  const seed = (contentSnapshot as unknown as Partial<ContentMap>)[key];
+  if (key === 'settings') {
+    return { ...defaults.settings, ...((seed as SiteSettings) || {}), ...((value as SiteSettings) || {}) } as ContentMap[K];
+  }
+  return (value ?? seed ?? defaults[key]) as ContentMap[K];
 }
+
+export async function setContent<K extends ContentKey>(key: K, data: ContentMap[K]): Promise<ContentMap[K]> {
+  const sql = getSql();
+  if (sql) {
+    await sql`
+      INSERT INTO cms_content (key, data, updated_at)
+      VALUES (${key}, ${JSON.stringify(data)}::jsonb, now())
+      ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
+    `;
+  } else {
+    const db = readLocalDb();
+    db[key] = data;
+    writeLocalDb(db);
+  }
+  return data;
+}
+
+export const getSiteSettings = () => getContent('settings');
+export const getExperiences = () => getContent('experiences');
+export const getProgramme = () => getContent('programme');
+export const getTestimonials = () => getContent('testimonials');
+export const getGallery = () => getContent('gallery');
+export const getFAQs = () => getContent('faqs');
+export const getAttractions = () => getContent('attractions');
+export const getWeatherClothing = () => getContent('weatherClothing');
 
 export async function updateSiteSettings(updates: Partial<SiteSettings>): Promise<SiteSettings> {
   const current = await getSiteSettings();
-  const merged: SiteSettings = { ...current, ...updates };
-
-  const supabase = getAdminSupabase();
-  if (supabase) {
-    try {
-      await supabase.from('site_settings').upsert({ id: 1, data: merged, updated_at: new Date().toISOString() });
-    } catch (e) {
-      console.warn('Supabase updateSiteSettings error:', e);
-    }
-  }
-
-  const db = ensureLocalDb();
-  db.settings = merged;
-  writeLocalDb(db);
-  return merged;
+  return setContent('settings', { ...current, ...updates });
 }
 
-export async function getExperiences(): Promise<SacredExperience[]> {
-  const db = ensureLocalDb();
-  return db.experiences || initialExperiences;
-}
-
-export async function getProgramme(): Promise<ProgrammeDay[]> {
-  const db = ensureLocalDb();
-  return db.programme || initialProgramme;
-}
-
-export async function getTestimonials(): Promise<Testimonial[]> {
-  const db = ensureLocalDb();
-  return db.testimonials || initialTestimonials;
-}
-
-export async function getGallery(): Promise<GalleryItem[]> {
-  const db = ensureLocalDb();
-  return db.gallery || initialGallery;
-}
-
-export async function getFAQs(): Promise<FAQItem[]> {
-  const db = ensureLocalDb();
-  return db.faqs || initialFAQs;
-}
+export const updateExperiencesData = (data: SacredExperience[]) => setContent('experiences', data);
+export const updateProgrammeData = (data: ProgrammeDay[]) => setContent('programme', data);
+export const updateFAQsData = (data: FAQItem[]) => setContent('faqs', data);
+export const updateAttractionsData = (data: RishikeshAttraction[]) => setContent('attractions', data);
+export const updateWeatherClothingData = (data: WeatherClothingGuide) => setContent('weatherClothing', data);
+export const updateGalleryData = (data: GalleryItem[]) => setContent('gallery', data);
+export const updateTestimonialsData = (data: Testimonial[]) => setContent('testimonials', data);
 
 // ----------------------------------------------------------------------------
 // Registrations
 // ----------------------------------------------------------------------------
 
-export async function getRegistrations(): Promise<Registration[]> {
-  const supabase = getAdminSupabase();
-  if (supabase) {
-    try {
-      const { data, error } = await supabase
-        .from('registrations')
-        .select('*, admin_notes(*)')
-        .order('created_at', { ascending: false });
-      if (!error && data) {
-        return data as Registration[];
-      }
-    } catch (e) {
-      console.warn('Supabase getRegistrations error, using local fallback:', e);
-    }
-  }
+function rowToRegistration(row: Record<string, unknown>): Registration {
+  return {
+    ...(row as unknown as Registration),
+    dietary_requirements: (row.dietary_requirements as string) || undefined,
+    message: (row.message as string) || undefined,
+    payment_proof_url: (row.payment_proof_url as string) || undefined,
+    created_at: iso(row.created_at),
+    updated_at: iso(row.updated_at),
+    admin_notes: ((row.admin_notes as Registration['admin_notes']) || []).map((n) => ({
+      ...n,
+      created_at: iso(n.created_at),
+    })),
+  };
+}
 
-  const db = ensureLocalDb();
-  return db.registrations.sort(
+export async function getRegistrations(): Promise<Registration[]> {
+  const sql = getSql();
+  if (sql) {
+    const rows = await sql`
+      SELECT r.*,
+        COALESCE(
+          json_agg(json_build_object('id', n.id, 'text', n.text, 'author', n.author, 'created_at', n.created_at)
+            ORDER BY n.created_at) FILTER (WHERE n.id IS NOT NULL),
+          '[]'
+        ) AS admin_notes
+      FROM registrations r
+      LEFT JOIN admin_notes n ON n.registration_id = r.id
+      GROUP BY r.id
+      ORDER BY r.created_at DESC
+    `;
+    return rows.map(rowToRegistration);
+  }
+  return [...(readLocalDb().registrations || [])].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }
@@ -288,12 +207,10 @@ export async function saveRegistration(
     id?: string;
   }
 ): Promise<Registration> {
-  const id = regData.id || `BTM27-${Math.floor(1000 + Math.random() * 9000)}`;
   const now = new Date().toISOString();
-
-  const newReg: Registration = {
+  const reg: Registration = {
     ...regData,
-    id,
+    id: regData.id || `BTM27-${Math.floor(1000 + Math.random() * 9000)}`,
     status: 'New',
     payment_status: regData.payment_proof_url ? 'Pending Verification' : 'None',
     created_at: now,
@@ -301,85 +218,60 @@ export async function saveRegistration(
     admin_notes: [],
   };
 
-  const supabase = getAdminSupabase();
-  if (supabase) {
-    try {
-      await supabase.from('registrations').insert([
-        {
-          id: newReg.id,
-          full_name: newReg.full_name,
-          email: newReg.email,
-          country_code: newReg.country_code,
-          phone: newReg.phone,
-          country: newReg.country,
-          city: newReg.city,
-          programme: newReg.programme,
-          language_preference: newReg.language_preference,
-          dietary_requirements: newReg.dietary_requirements || null,
-          message: newReg.message || null,
-          privacy_consent: newReg.privacy_consent,
-          status: newReg.status,
-          payment_proof_url: newReg.payment_proof_url || null,
-          payment_status: newReg.payment_status,
-          created_at: now,
-          updated_at: now,
-        },
-      ]);
-    } catch (e) {
-      console.warn('Supabase saveRegistration error, continuing with local store:', e);
-    }
+  const sql = getSql();
+  if (sql) {
+    await sql`
+      INSERT INTO registrations (
+        id, full_name, email, country_code, phone, country, city, programme, language_preference,
+        dietary_requirements, message, privacy_consent, status, payment_proof_url, payment_status, created_at, updated_at
+      ) VALUES (
+        ${reg.id}, ${reg.full_name}, ${reg.email}, ${reg.country_code}, ${reg.phone}, ${reg.country}, ${reg.city},
+        ${reg.programme}, ${reg.language_preference}, ${reg.dietary_requirements || null}, ${reg.message || null},
+        ${reg.privacy_consent}, ${reg.status}, ${reg.payment_proof_url || null}, ${reg.payment_status}, ${now}, ${now}
+      )
+    `;
+    return reg;
   }
 
-  const db = ensureLocalDb();
-  db.registrations.unshift(newReg);
+  const db = readLocalDb();
+  db.registrations = [reg, ...(db.registrations || [])];
   writeLocalDb(db);
-
-  return newReg;
+  return reg;
 }
 
 export async function updateRegistrationStatus(
   id: string,
   status: RegistrationStatus,
-  paymentStatus?: PaymentVerificationStatus
+  paymentStatus?: PaymentVerificationStatus,
+  paymentProofUrl?: string
 ): Promise<Registration | null> {
-  const db = ensureLocalDb();
-  const index = db.registrations.findIndex((r) => r.id === id);
-  if (index === -1) return null;
-
-  db.registrations[index].status = status;
-  if (paymentStatus) {
-    db.registrations[index].payment_status = paymentStatus;
+  const sql = getSql();
+  if (sql) {
+    const rows = await sql`
+      UPDATE registrations SET
+        status = ${status},
+        payment_status = COALESCE(${paymentStatus ?? null}, payment_status),
+        payment_proof_url = COALESCE(${paymentProofUrl ?? null}, payment_proof_url),
+        updated_at = now()
+      WHERE id = ${id}
+      RETURNING id
+    `;
+    if (rows.length === 0) return null;
+    return (await getRegistrations()).find((r) => r.id === id) || null;
   }
-  db.registrations[index].updated_at = new Date().toISOString();
 
+  const db = readLocalDb();
+  const reg = db.registrations?.find((r) => r.id === id);
+  if (!reg) return null;
+  reg.status = status;
+  if (paymentStatus) reg.payment_status = paymentStatus;
+  if (paymentProofUrl) reg.payment_proof_url = paymentProofUrl;
+  reg.updated_at = new Date().toISOString();
   writeLocalDb(db);
-
-  const supabase = getAdminSupabase();
-  if (supabase) {
-    try {
-      const updatePayload: Record<string, unknown> = {
-        status,
-        updated_at: new Date().toISOString(),
-      };
-      if (paymentStatus) updatePayload.payment_status = paymentStatus;
-      await supabase.from('registrations').update(updatePayload).eq('id', id);
-    } catch (e) {
-      console.warn('Supabase updateRegistrationStatus error:', e);
-    }
-  }
-
-  return db.registrations[index];
+  return reg;
 }
 
-export async function addAdminNote(
-  registrationId: string,
-  noteText: string,
-  author: string = 'Admin Concierge'
-) {
-  const db = ensureLocalDb();
-  const index = db.registrations.findIndex((r) => r.id === registrationId);
-  if (index === -1) return null;
-
+export async function addAdminNote(registrationId: string, noteText: string, author: string = 'Admin Concierge') {
   const note = {
     id: `note-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
     text: noteText,
@@ -387,79 +279,83 @@ export async function addAdminNote(
     created_at: new Date().toISOString(),
   };
 
-  if (!db.registrations[index].admin_notes) {
-    db.registrations[index].admin_notes = [];
+  const sql = getSql();
+  if (sql) {
+    const rows = await sql`
+      INSERT INTO admin_notes (id, registration_id, text, author, created_at)
+      SELECT ${note.id}, id, ${note.text}, ${note.author}, ${note.created_at}::timestamptz
+      FROM registrations WHERE id = ${registrationId}
+      RETURNING id
+    `;
+    return rows.length ? note : null;
   }
-  db.registrations[index].admin_notes!.push(note);
+
+  const db = readLocalDb();
+  const reg = db.registrations?.find((r) => r.id === registrationId);
+  if (!reg) return null;
+  reg.admin_notes = [...(reg.admin_notes || []), note];
   writeLocalDb(db);
-
-  const supabase = getAdminSupabase();
-  if (supabase) {
-    try {
-      await supabase.from('admin_notes').insert([
-        {
-          registration_id: registrationId,
-          note_text: noteText,
-          author,
-        },
-      ]);
-    } catch (e) {
-      console.warn('Supabase addAdminNote error:', e);
-    }
-  }
-
   return note;
 }
 
-export async function updateExperiencesData(experiences: SacredExperience[]) {
-  const db = ensureLocalDb();
-  db.experiences = experiences;
+// ----------------------------------------------------------------------------
+// Media library
+// ----------------------------------------------------------------------------
+
+function rowToMedia(row: Record<string, unknown>): MediaAsset {
+  return {
+    id: String(row.id),
+    key: String(row.key),
+    url: String(row.url),
+    kind: row.kind as MediaAsset['kind'],
+    mime_type: String(row.mime_type),
+    size_bytes: Number(row.size_bytes),
+    original_name: String(row.original_name),
+    created_at: iso(row.created_at),
+  };
+}
+
+export async function listMedia(): Promise<MediaAsset[]> {
+  const sql = getSql();
+  if (sql) {
+    const rows = await sql`SELECT * FROM media_assets ORDER BY created_at DESC LIMIT 500`;
+    return rows.map(rowToMedia);
+  }
+  return readLocalDb().media || [];
+}
+
+export async function addMedia(asset: Omit<MediaAsset, 'id' | 'created_at'>): Promise<MediaAsset> {
+  const record: MediaAsset = {
+    ...asset,
+    id: `med-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
+    created_at: new Date().toISOString(),
+  };
+  const sql = getSql();
+  if (sql) {
+    const rows = await sql`
+      INSERT INTO media_assets (id, key, url, kind, mime_type, size_bytes, original_name, created_at)
+      VALUES (${record.id}, ${record.key}, ${record.url}, ${record.kind}, ${record.mime_type},
+        ${record.size_bytes}, ${record.original_name}, ${record.created_at})
+      ON CONFLICT (key) DO UPDATE SET url = EXCLUDED.url
+      RETURNING *
+    `;
+    return rowToMedia(rows[0]);
+  }
+  const db = readLocalDb();
+  db.media = [record, ...(db.media || [])];
   writeLocalDb(db);
-  return db.experiences;
+  return record;
 }
 
-export async function updateProgrammeData(programme: ProgrammeDay[]) {
-  const db = ensureLocalDb();
-  db.programme = programme;
+export async function removeMedia(id: string): Promise<MediaAsset | null> {
+  const sql = getSql();
+  if (sql) {
+    const rows = await sql`DELETE FROM media_assets WHERE id = ${id} RETURNING *`;
+    return rows.length ? rowToMedia(rows[0]) : null;
+  }
+  const db = readLocalDb();
+  const found = db.media?.find((m) => m.id === id) || null;
+  db.media = (db.media || []).filter((m) => m.id !== id);
   writeLocalDb(db);
-  return db.programme;
+  return found;
 }
-
-export async function updateFAQsData(faqs: FAQItem[]) {
-  const db = ensureLocalDb();
-  db.faqs = faqs;
-  writeLocalDb(db);
-  return db.faqs;
-}
-
-export async function getAttractions(): Promise<RishikeshAttraction[]> {
-  const db = ensureLocalDb();
-  return db.attractions || initialAttractions;
-}
-
-export async function updateAttractionsData(attractions: RishikeshAttraction[]) {
-  const db = ensureLocalDb();
-  db.attractions = attractions;
-  writeLocalDb(db);
-  return db.attractions;
-}
-
-export async function getWeatherClothing(): Promise<WeatherClothingGuide> {
-  const db = ensureLocalDb();
-  return db.weatherClothing || initialWeatherClothing;
-}
-
-export async function updateWeatherClothingData(data: WeatherClothingGuide) {
-  const db = ensureLocalDb();
-  db.weatherClothing = data;
-  writeLocalDb(db);
-  return db.weatherClothing;
-}
-
-export async function updateGalleryData(gallery: GalleryItem[]) {
-  const db = ensureLocalDb();
-  db.gallery = gallery;
-  writeLocalDb(db);
-  return db.gallery;
-}
-

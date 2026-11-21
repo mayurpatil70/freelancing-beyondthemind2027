@@ -403,7 +403,7 @@ export function RegistrationForm({
             </div>
             <p className="text-[11px] text-stone-subtle/80 leading-relaxed font-light">
               If you have already received official transfer instructions from our team and completed a UPI or bank transfer,
-              you may attach the receipt screenshot here. (Max 5MB • JPG, PNG, PDF)
+              you may attach the receipt screenshot here. (Max 4MB • JPG, PNG, PDF)
             </p>
             <input
               type="file"

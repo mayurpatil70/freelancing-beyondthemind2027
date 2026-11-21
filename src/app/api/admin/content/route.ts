@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isAdminRequest } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import {
   getSiteSettings,
@@ -15,6 +16,8 @@ import {
   updateWeatherClothingData,
   getGallery,
   updateGalleryData,
+  getTestimonials,
+  updateTestimonialsData,
 } from '@/lib/storage/store';
 
 function revalidateAllPages() {
@@ -32,19 +35,9 @@ function revalidateAllPages() {
     revalidatePath('/daily-meditation');
     revalidatePath('/register');
     revalidatePath('/contact');
+    revalidatePath('/gallery');
   } catch (err) {
     console.warn('Revalidate error:', err);
-  }
-}
-
-function checkAuth(req: NextRequest): boolean {
-  const session = req.cookies.get('btm_admin_session');
-  if (!session?.value) return false;
-  try {
-    const data = JSON.parse(Buffer.from(session.value, 'base64').toString('utf-8'));
-    return Boolean(data.authenticated);
-  } catch {
-    return false;
   }
 }
 
@@ -56,6 +49,7 @@ export async function GET() {
   const attractions = await getAttractions();
   const weatherClothing = await getWeatherClothing();
   const gallery = await getGallery();
+  const testimonials = await getTestimonials();
 
   return NextResponse.json({
     success: true,
@@ -67,12 +61,13 @@ export async function GET() {
       attractions,
       weatherClothing,
       gallery,
+      testimonials,
     },
   });
 }
 
 export async function POST(req: NextRequest) {
-  if (!checkAuth(req)) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
   }
 
@@ -118,6 +113,12 @@ export async function POST(req: NextRequest) {
 
     if (type === 'gallery') {
       const updated = await updateGalleryData(payload);
+      revalidateAllPages();
+      return NextResponse.json({ success: true, data: updated });
+    }
+
+    if (type === 'testimonials') {
+      const updated = await updateTestimonialsData(payload);
       revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }
