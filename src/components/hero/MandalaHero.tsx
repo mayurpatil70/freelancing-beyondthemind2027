@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Volume2, VolumeX } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
 import { cn } from '@/lib/utils';
 import { VERTEX_SHADER, fragmentShader, breathAt, BREATH_CYCLE, BREATH_IN } from './mandalaShader';
@@ -71,13 +70,11 @@ export function MandalaHero({
   const copyRef = useRef<HTMLDivElement>(null);
   const breathRef = useRef<HTMLDivElement>(null);
   const modeRef = useRef<Mode>('live');
-  const audioRef = useRef<{ ctx: AudioContext; master: GainNode; on: boolean } | null>(null);
 
   const [mode, setMode] = useState<Mode>('live');
   const [phase, setPhase] = useState<'intro' | 'ready'>('intro');
   const [animateIntro, setAnimateIntro] = useState(true);
   const [days, setDays] = useState<number | null>(null);
-  const [soundOn, setSoundOn] = useState(false);
 
   const words = useMemo(() => splitTitle(title), [title]);
 
@@ -280,8 +277,6 @@ export function MandalaHero({
         breathRef.current.classList.toggle(styles.exhale, ph === 'out');
         lastPhase = ph;
       }
-      const audio = audioRef.current;
-      if (audio?.on) audio.master.gain.setTargetAtTime(0.025 + b * 0.045, audio.ctx.currentTime, 0.3);
 
       if (!live) {
         vid.style.transform = `scale(${1 + scrollP * 1.6})`;
@@ -309,67 +304,9 @@ export function MandalaHero({
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointer);
       window.removeEventListener('scroll', onScroll);
-      audioRef.current?.ctx.close();
-      audioRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const toggleSound = () => {
-    const on = !soundOn;
-    setSoundOn(on);
-
-    // Toggle video audio
-    const vid = videoRef.current;
-    if (vid) {
-      if (on) {
-        vid.muted = false;
-        vid.volume = 1;
-        vid.play().catch((err) => console.warn('Video audio play error:', err));
-      } else {
-        vid.muted = true;
-      }
-    }
-
-    // Toggle Web Audio harmonic ambient sound
-    let audio = audioRef.current;
-    if (on && !audio) {
-      try {
-        const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        const ctx = new Ctx();
-        const master = ctx.createGain();
-        master.gain.value = 0.4;
-        const lp = ctx.createBiquadFilter();
-        lp.type = 'lowpass';
-        lp.frequency.value = 900;
-        lp.connect(master);
-        master.connect(ctx.destination);
-        // Om drone: 136.1 Hz with fifth, octave and sub-octave
-        for (const [f, g] of [[136.1, 0.45], [204.15, 0.22], [272.2, 0.16], [68.05, 0.35], [136.6, 0.28]]) {
-          const o = ctx.createOscillator();
-          const og = ctx.createGain();
-          o.type = 'sine';
-          o.frequency.value = f;
-          og.gain.value = g;
-          o.connect(og);
-          og.connect(lp);
-          o.start();
-        }
-        audio = audioRef.current = { ctx, master, on: true };
-      } catch (audioErr) {
-        console.warn('AudioContext init error:', audioErr);
-      }
-    }
-    if (audio) {
-      audio.on = on;
-      audio.ctx.resume();
-      if (!on) {
-        audio.master.gain.setTargetAtTime(0, audio.ctx.currentTime, 0.3);
-      } else {
-        audio.master.gain.setTargetAtTime(0.4, audio.ctx.currentTime, 0.3);
-      }
-    }
-  };
 
   const delay = (s: number) => ({ '--d': animateIntro ? `${s}s` : '0s' }) as React.CSSProperties;
   let ci = 0;
@@ -421,30 +358,6 @@ export function MandalaHero({
           <span className={styles.out}>Breathe out</span>
         </div>
       </div>
-
-      <button
-        type="button"
-        className={cn(styles.chip, styles.sound, styles.fade)}
-        style={delay(3)}
-        aria-pressed={soundOn}
-        onClick={toggleSound}
-        aria-label={soundOn ? 'Mute background sound' : 'Unmute background sound'}
-        title={soundOn ? 'Mute background music' : 'Play video background music'}
-      >
-        {soundOn ? (
-          <Volume2 className="w-3.5 h-3.5 text-gold-300 shrink-0" aria-hidden="true" />
-        ) : (
-          <VolumeX className="w-3.5 h-3.5 text-stone-subtle/80 shrink-0" aria-hidden="true" />
-        )}
-        <span className={styles.bars} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
-        <span className={styles.soundLabel}>
-          {soundOn ? 'Mute Sound' : 'Play Sound'}
-        </span>
-      </button>
 
     </section>
   );

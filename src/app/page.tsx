@@ -233,7 +233,7 @@ export default async function HomePage() {
                   <div className="space-y-4">
                     <div className="relative rounded-2xl overflow-hidden aspect-[3/4] border border-gold-500/30 shadow-lg">
                       <Image
-                        src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
+                        src="/images/rishikesh/himalayan-sunrise.jpg"
                         alt="Himalayan Foothills Dawn"
                         fill
                         className="object-cover"

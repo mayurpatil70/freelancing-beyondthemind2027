@@ -69,7 +69,7 @@ export default function AboutPage() {
 
               <div className="relative rounded-3xl overflow-hidden aspect-[4/5] border border-gold-600/30 shadow-xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1000&q=80"
+                  src="/images/rishikesh/stillness-ganges.jpg"
                   alt="Stillness by the mountains"
                   fill
                   className="object-cover"

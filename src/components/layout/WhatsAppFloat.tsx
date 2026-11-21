@@ -20,7 +20,7 @@ export function WhatsAppFloat() {
         type="button"
         onClick={() => setIsModalOpen(true)}
         aria-label="Instant Himalayan & Retreat Inquiry on WhatsApp"
-        className="group fixed z-40 right-4 sm:right-6 bottom-[calc(env(safe-area-inset-bottom,0px)+16px)] sm:bottom-6 flex items-center gap-3 rounded-full pl-1.5 pr-1.5 sm:pr-5 py-1.5 bg-[#031713]/90 backdrop-blur-md border border-gold-400/60 shadow-[0_10px_40px_-10px_rgba(212,175,55,0.55)] hover:border-gold-300 hover:scale-[1.03] transition-all cursor-pointer"
+        className="group fixed z-40 right-4 sm:right-6 bottom-3 sm:bottom-5 flex items-center gap-3 rounded-full pl-1.5 pr-1.5 sm:pr-5 py-1.5 bg-[#031713]/90 backdrop-blur-md border border-gold-400/60 shadow-[0_10px_40px_-10px_rgba(212,175,55,0.55)] hover:border-gold-300 hover:scale-[1.03] transition-all cursor-pointer"
       >
         <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-gold-200 via-gold-400 to-gold-600 text-emerald-950">
           <span className="absolute inset-0 rounded-full border border-gold-300/70 animate-ping [animation-duration:2.6s]" aria-hidden="true" />

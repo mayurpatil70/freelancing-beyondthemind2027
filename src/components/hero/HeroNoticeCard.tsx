@@ -53,7 +53,7 @@ export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
       {/* Floating News Channel Ticker Bar - Scrolling smoothly from right to left */}
       <aside
         aria-label="Breaking Announcement Marquee"
-        className="fixed bottom-3 sm:bottom-5 left-2 sm:left-6 right-16 sm:right-6 z-40 max-w-6xl mx-auto rounded-full bg-[#031713]/95 backdrop-blur-xl border border-gold-500/40 shadow-[0_12px_40px_rgba(0,0,0,0.85),0_0_25px_rgba(212,175,55,0.25)] flex items-center p-1.5 sm:p-2 overflow-hidden gap-2 sm:gap-3 animate-in slide-in-from-bottom-5 duration-500"
+        className="fixed bottom-3 sm:bottom-5 left-2 sm:left-6 right-[72px] sm:right-[260px] md:right-[265px] z-40 max-w-6xl mx-auto rounded-full bg-[#031713]/95 backdrop-blur-xl border border-gold-500/40 shadow-[0_12px_40px_rgba(0,0,0,0.85),0_0_25px_rgba(212,175,55,0.25)] flex items-center p-1.5 sm:p-2 overflow-hidden gap-2 sm:gap-3 animate-in slide-in-from-bottom-5 duration-500"
       >
         {/* Left Live Badge (News Channel Live Indicator - Desktop only to maximize space on mobile) */}
         <div className="hidden sm:flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-extrabold text-[10px] sm:text-xs uppercase tracking-wider shrink-0 shadow-md">
@@ -86,13 +86,13 @@ export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
           </div>
         </div>
 
-        {/* Right Action CTA (Desktop only) & Dismiss Button (Always visible) */}
+        {/* Right Action CTA & Dismiss Button (Always visible and cleanly separated) */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 pr-1">
           {isWhatsAppOrModal ? (
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-transform whitespace-nowrap"
+              className="hidden md:inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-transform whitespace-nowrap"
             >
               <span>{notice?.cta_text || 'Enquire for Retreat'}</span>
               <ArrowRight className="w-3 h-3" />
@@ -100,7 +100,7 @@ export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
           ) : (
             <Link
               href={notice?.cta_link || '/register'}
-              className="hidden sm:inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-transform whitespace-nowrap"
+              className="hidden md:inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-transform whitespace-nowrap"
             >
               <span>{notice?.cta_text || 'Enquire for Retreat'}</span>
               <ArrowRight className="w-3 h-3" />
@@ -109,8 +109,11 @@ export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
 
           <button
             type="button"
-            onClick={() => setDismissed(true)}
-            className="w-6 h-6 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-stone-subtle hover:text-white flex items-center justify-center transition-colors shrink-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              setDismissed(true);
+            }}
+            className="w-7 h-7 rounded-full bg-emerald-950/90 hover:bg-gold-500/20 border border-gold-500/40 text-gold-300 hover:text-ivory-50 flex items-center justify-center transition-all shrink-0 hover:scale-110 shadow-sm"
             aria-label="Dismiss Announcement"
             title="Dismiss Announcement"
           >

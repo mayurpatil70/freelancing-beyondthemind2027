@@ -36,13 +36,13 @@ export function RetreatAtAGlance({ dates: propDates, location: propLocation, cla
           <span className="text-[10px] tracking-[0.4em] uppercase text-gold-400 font-semibold">Retreat at a glance</span>
           <span className="h-px w-10 bg-gradient-to-l from-transparent to-gold-500/60" />
         </div>
-        <dl className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-px p-6 pt-4">
+        <dl className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-px p-6 pt-4">
           {items.map(({ icon: Icon, label, value, note }, idx) => (
             <div
               key={label}
               className={cn(
                 'flex flex-col items-center text-center gap-1.5 px-2.5 py-4 min-w-0 transition-all hover:bg-gold-500/5 rounded-2xl',
-                idx === items.length - 1 ? 'col-span-2 sm:col-span-1' : ''
+                idx === items.length - 1 ? 'col-span-2 sm:col-span-1 lg:col-span-1' : ''
               )}
             >
               <Icon className="w-4 h-4 text-gold-400 shrink-0" aria-hidden="true" />
