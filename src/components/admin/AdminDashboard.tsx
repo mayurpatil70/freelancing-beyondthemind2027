@@ -1515,7 +1515,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       type="button"
                       onClick={() => {
                         if (confirm(`Remove "${attr.title}"?`)) {
-                          setAttractions(attractions.filter((a) => a.id !== attr.id));
+                          const updated = attractions.filter((a) => a.id !== attr.id);
+                          setAttractions(updated);
+                          saveContent('attractions', updated, `Attraction "${attr.title}" removed!`);
                         }
                       }}
                       className="p-1.5 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-500/30 text-red-300"
@@ -1587,14 +1589,25 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       />
                     </div>
 
-                    <div className="space-y-1.5">
+                    <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <label className="text-[10px] uppercase text-gold-400 block font-semibold">
-                          Photo Image
+                        <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+                          Attraction Photo
                         </label>
                       </div>
                       <div className="flex flex-col sm:flex-row gap-2 items-center">
-                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
+                        <input
+                          type="text"
+                          placeholder="Photo Image URL (https://... or upload image)"
+                          value={attr.image_url || ''}
+                          onChange={(e) => {
+                            const updated = [...attractions];
+                            updated[index].image_url = e.target.value;
+                            setAttractions(updated);
+                          }}
+                          className="flex-1 w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 placeholder:text-stone-subtle/50"
+                        />
+                        <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
                           <Upload className="w-3.5 h-3.5" />
                           <span>{uploading === `attr-${attr.id}` ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
                           <input
@@ -1611,6 +1624,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                                     const updated = [...attractions];
                                     updated[index].image_url = url;
                                     setAttractions(updated);
+                                    saveContent('attractions', updated, `Photo for "${attr.title}" uploaded & saved instantly!`);
                                   },
                                   `attr-${attr.id}`
                                 );
@@ -1620,8 +1634,18 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         </label>
                       </div>
                       {attr.image_url && (
-                        <div className="relative w-24 h-16 rounded-lg overflow-hidden border border-gold-500/25 mt-1">
-                          <img src={attr.image_url} alt={attr.title} className="w-full h-full object-cover" />
+                        <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/35 mt-2 bg-black/60 group/prev">
+                          <img src={attr.image_url} alt="" className="absolute inset-0 w-full h-full object-cover blur-md opacity-35" />
+                          <img src={attr.image_url} alt={attr.title} className="relative z-10 w-full h-full object-contain" />
+                          <a
+                            href={attr.image_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute bottom-2 right-2 z-20 px-2.5 py-1 rounded-md bg-black/75 border border-gold-400/40 text-[10px] text-gold-300 font-semibold tracking-wider uppercase hover:bg-black transition-colors flex items-center gap-1 shadow-md"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            <span>Open Full Photo</span>
+                          </a>
                         </div>
                       )}
                     </div>
@@ -3051,6 +3075,13 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   Photo Image
                 </label>
                 <div className="flex flex-col sm:flex-row gap-2 items-center">
+                  <input
+                    type="text"
+                    placeholder="Photo Image URL (https://... or upload image)"
+                    value={newAttractionData.image_url || ''}
+                    onChange={(e) => setNewAttractionData((prev) => ({ ...prev, image_url: e.target.value }))}
+                    className="flex-1 w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 placeholder:text-stone-subtle/50"
+                  />
                   <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap">
                     <Upload className="w-3.5 h-3.5" />
                     <span>{uploading === 'new-attr-img' ? `Uploading ${uploadProgress ?? 0}%` : 'Upload Image'}</span>
@@ -3068,8 +3099,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   </label>
                 </div>
                 {newAttractionData.image_url && (
-                  <div className="relative w-28 h-20 rounded-lg overflow-hidden border border-gold-500/30 mt-1">
-                    <img src={newAttractionData.image_url} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/30 mt-2 bg-black/60">
+                    <img src={newAttractionData.image_url} alt="" className="absolute inset-0 w-full h-full object-cover blur-md opacity-35" />
+                    <img src={newAttractionData.image_url} alt="Preview" className="relative z-10 w-full h-full object-contain" />
                   </div>
                 )}
               </div>
