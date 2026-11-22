@@ -143,6 +143,7 @@ export function ImageLightbox({
                 src={current.src}
                 alt={current.alt || 'Beyond the Mind Visual'}
                 fill
+                unoptimized
                 sizes="(max-width: 1024px) 90vw, 800px"
                 className="object-contain rounded-xl sm:rounded-2xl"
                 priority
