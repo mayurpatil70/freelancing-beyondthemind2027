@@ -176,6 +176,8 @@ npm run db:setup
 
 This applies the schema, seeds any missing CMS content from `src/data/db.json`, and sets CORS on the media bucket. It is safe to re-run.
 
+**Where site content lives.** When `DATABASE_URL` is set, the `cms_content` table in Neon is the only source of truth for site content (settings, sessions, programme, FAQs, testimonials, gallery, attractions, weather guide). Admin saves write there and revalidate the pages. `src/data/db.json` is only a seed: it fills a key that Neon does not have yet and is never written to in production. Editing `db.json` in git does **not** change the live site once that key exists in Neon; change it in the admin panel instead. Without `DATABASE_URL` (local dev), `db.json` is read and written directly.
+
 Admin uploads go straight from the browser to Neon Object Storage through a short-lived presigned URL, so files never pass through the Vercel function (4.5 MB body limit). Only images are accepted (JPG, PNG, WEBP, GIF, AVIF, up to 15 MB); image fields have no URL input, only upload. Every upload is listed in the admin **Media Library** tab.
 
 ---
