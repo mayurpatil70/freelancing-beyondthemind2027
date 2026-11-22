@@ -31,7 +31,6 @@ export default function ParticipationPage() {
         'Single private room with en-suite bath',
         'Four days of retreat sessions with Pradeep Muthukulam',
         'Personal Guidance Sessions – Available by Appointment',
-        'Strictly Vegetarian Cuisine Throughout the Retreat',
       ],
       statusNote: 'Enquiry-based availability • Limited single rooms',
     },
@@ -44,7 +43,6 @@ export default function ParticipationPage() {
         'Twin-sharing room with separate beds & en-suite bath',
         'Four days of retreat sessions with Pradeep Muthukulam',
         'Personal Guidance Sessions – Available by Appointment',
-        'Strictly Vegetarian Cuisine Throughout the Retreat',
       ],
       statusNote: 'Enquiry-based availability • Popular option',
     },
@@ -56,7 +54,6 @@ export default function ParticipationPage() {
       inclusions: [
         'Full daily access to all retreat sessions & ceremonies',
         'Personal Guidance Sessions – Available by Appointment',
-        'Strictly Vegetarian Cuisine Throughout the Retreat',
       ],
       statusNote: 'Enquiry-based availability • Subject to venue capacity',
     },

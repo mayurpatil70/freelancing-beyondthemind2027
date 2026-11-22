@@ -51,6 +51,7 @@ export function MeditationEnquiryForm() {
     try {
       fetch('/api/register', {
         method: 'POST',
+        keepalive: true,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           full_name: form.name,

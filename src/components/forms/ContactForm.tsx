@@ -54,6 +54,7 @@ export function ContactForm() {
     try {
       fetch('/api/register', {
         method: 'POST',
+        keepalive: true,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           full_name: data.name,
@@ -68,7 +69,7 @@ export function ContactForm() {
       console.error('Contact form error:', err);
     }
 
-    // Direct redirect to WhatsApp with automatic mailto fallback
+    // Direct redirect to WhatsApp
     openWhatsApp(
       whatsappUrl,
       `Retreat Enquiry: ${chosenProgram} - ${data.name}`,

@@ -149,7 +149,9 @@ export function Footer() {
               {settings.secondary_phone && (
                 <li>
                   <a
-                    href={`tel:${settings.secondary_phone.replace(/[^0-9+]/g, '')}`}
+                    href={`https://wa.me/${settings.secondary_phone.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                   >
                     <Phone className="w-4 h-4 text-gold-400/80 shrink-0" />
@@ -184,13 +186,13 @@ export function Footer() {
                   <a
                     href={
                       c.type === 'phone'
-                        ? `tel:${c.value}`
+                        ? `https://wa.me/${c.value.replace(/[^0-9]/g, '')}`
                         : c.type === 'email'
                         ? `mailto:${c.value}`
                         : c.value
                     }
-                    target={c.type === 'link' ? '_blank' : undefined}
-                    rel={c.type === 'link' ? 'noopener noreferrer' : undefined}
+                    target={c.type === 'email' ? undefined : '_blank'}
+                    rel={c.type === 'email' ? undefined : 'noopener noreferrer'}
                     className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                   >
                     {c.type === 'phone' ? (

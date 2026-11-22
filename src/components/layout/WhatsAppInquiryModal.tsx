@@ -126,6 +126,7 @@ export function WhatsAppInquiryModal({
     try {
       fetch('/api/register', {
         method: 'POST',
+        keepalive: true,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           full_name: fullName || 'Seeker',

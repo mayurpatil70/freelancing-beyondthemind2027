@@ -109,7 +109,7 @@ export function ContactDetailsSection() {
                     <Phone className="w-5 h-5 text-gold-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
-                        Alternate Phone
+                        Alternate Phone & WhatsApp
                       </span>
                       <span className="text-ivory-100 font-medium">{secondaryPhone}</span>
                     </div>
@@ -181,7 +181,7 @@ export function ContactDetailsSection() {
                     const isPhone = c.type === 'phone';
                     const isMail = c.type === 'email';
                     const href = isPhone
-                      ? `tel:${c.value.replace(/[^0-9+]/g, '')}`
+                      ? `https://wa.me/${c.value.replace(/[^0-9]/g, '')}`
                       : isMail
                       ? `mailto:${c.value}`
                       : c.value;
@@ -191,8 +191,8 @@ export function ContactDetailsSection() {
                       <li key={c.id}>
                         <a
                           href={href}
-                          target={c.type === 'link' ? '_blank' : undefined}
-                          rel={c.type === 'link' ? 'noopener noreferrer' : undefined}
+                          target={c.type === 'email' ? undefined : '_blank'}
+                          rel={c.type === 'email' ? undefined : 'noopener noreferrer'}
                           className="group flex items-start gap-3.5 p-3.5 rounded-2xl bg-emerald-950/60 border border-gold-500/15 hover:border-gold-400/40 transition-colors"
                         >
                           <Icon className="w-5 h-5 text-gold-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />

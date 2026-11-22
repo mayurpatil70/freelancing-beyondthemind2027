@@ -15,28 +15,28 @@ export interface RishikeshPhoto {
 
 const RISHIKESH_PHOTOS: RishikeshPhoto[] = [
   {
-    src: '/images/rishikesh/himalayan-sunrise.jpg',
+    src: '/images/rishikesh/ganga-himalaya-sunrise-landscape.jpg',
     alt: 'Himalayan Foothills Dawn',
     title: 'Himalayan Foothills Dawn',
-    caption: 'Crisp mountain air and tranquil morning stillness across the sacred Garhwal foothills.',
+    caption: 'Golden sunrise over Mother Ganga, the snow-capped Himalayas and the temples of Rishikesh.',
     location: 'Rishikesh, Uttarakhand, India',
   },
   {
-    src: '/images/rishikesh/ganga-aarti.jpg',
+    src: '/images/rishikesh/ganga-aarti-landscape.jpg',
     alt: 'Sacred Lamp Aarti',
     title: 'Sacred Ganga Aarti',
     caption: 'Evening lamp offering and sacred Vedic chants along the sacred ghats of Mother Ganga.',
     location: 'Parmarth Niketan, Rishikesh',
   },
   {
-    src: '/images/rishikesh/meditation-ganges.jpg',
+    src: '/images/rishikesh/river-meditation-landscape.jpg',
     alt: 'Meditation along Ganga',
     title: 'Meditation Along Ganga',
     caption: 'Deep contemplative stillness and inner absorption amidst the pure currents of the Ganges.',
     location: 'Ganga Ghats, Rishikesh',
   },
   {
-    src: '/images/rishikesh/himalayan-snow.jpg',
+    src: '/images/rishikesh/himalayan-snow-trek-landscape.jpg',
     alt: 'Garhwal Himalayan Snow Trail',
     title: 'Garhwal Himalayan Snow Trail',
     caption: 'Majestic snowy mountain ridges where the sacred Garhwal peaks meet timeless stillness.',
@@ -54,7 +54,7 @@ export function RishikeshPhotoGrid() {
           <div
             key={photo.src}
             onClick={() => setActiveLightboxIndex(idx)}
-            className="group relative aspect-[4/5] w-full rounded-2xl overflow-hidden border border-gold-500/30 bg-[#07261F]/40 shadow-lg cursor-pointer transition-all duration-300 hover:border-gold-400/80 hover:shadow-[0_0_30px_rgba(212,175,55,0.25)] hover:-translate-y-1"
+            className="group relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-gold-500/30 bg-[#07261F]/40 shadow-lg cursor-pointer transition-all duration-300 hover:border-gold-400/80 hover:shadow-[0_0_30px_rgba(212,175,55,0.25)] hover:-translate-y-1"
             title={`Click to view ${photo.title} in high resolution`}
           >
             <Image

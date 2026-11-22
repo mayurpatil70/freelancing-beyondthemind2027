@@ -34,23 +34,30 @@ export function formatWhatsAppUrl(number: string, message: string): string {
   return `https://wa.me/${cleaned}?text=${encodeURIComponent(message)}`;
 }
 
+// Opens a wa.me link in WhatsApp. It never falls back to email: both retreat numbers are on WhatsApp, and the
+// old "popup returned null → open mail" check misfired every time because window.open with `noopener`
+// always returns null, so phones opened WhatsApp and the mail app together.
+// The subject/body arguments are kept so existing callers still compile.
 export function openWhatsApp(
   url: string,
-  emailSubject: string = 'Retreat Enquiry - Beyond the Mind 2027',
-  emailBody: string = 'Namaste Beyond the Mind Team,\n\nI would like to enquire about Beyond the Mind 2027.'
+  _emailSubject?: string,
+  _emailBody?: string
 ) {
   if (typeof window === 'undefined') return;
-  const mailtoUrl = `mailto:moolabrahman@gmail.com?subject=${encodeURIComponent(
-    emailSubject
-  )}&body=${encodeURIComponent(emailBody)}`;
-
-  try {
-    const win = window.open(url, '_blank', 'noopener,noreferrer');
-    if (!win || win.closed || typeof win.closed === 'undefined') {
-      window.location.href = mailtoUrl;
-    }
-  } catch {
-    window.location.href = mailtoUrl;
+  const isMobile =
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isMobile) {
+    // Same-tab navigation hands wa.me straight to the WhatsApp app.
+    window.location.href = url;
+    return;
+  }
+  const win = window.open(url, '_blank');
+  if (win) {
+    win.opener = null;
+  } else {
+    // Popup blocked: go there in this tab instead.
+    window.location.href = url;
   }
 }
 
