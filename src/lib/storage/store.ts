@@ -122,7 +122,12 @@ function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T
 // One-time edits to content that already lives in Neon. Neon wins over db.json, so changing db.json alone
 // never reaches the live site. Each patch is merged into its key once, then recorded in cms_patches so a
 // later admin edit of the same field is never overwritten. Add new patches to the end; never edit old ones.
-const CONTENT_PATCHES: { id: string; key: ContentKey; merge: Record<string, unknown> }[] = [
+// `merge` shallow-merges into an object key; `replace` overwrites the whole key once.
+type ContentPatch =
+  | { id: string; key: ContentKey; merge: Record<string, unknown> }
+  | { id: string; key: ContentKey; replace: unknown };
+
+const CONTENT_PATCHES: ContentPatch[] = [
   {
     id: '2026-11-22-contact-and-social-links',
     key: 'settings',
@@ -133,6 +138,12 @@ const CONTENT_PATCHES: { id: string; key: ContentKey; merge: Record<string, unkn
       youtube_url: 'https://www.youtube.com/@bodymindintellect',
     },
   },
+  // Until this change, programme, FAQs and testimonials were always rendered from db.json and Neon's copies
+  // were overwritten from it on every read, so admins could not have edited them. Now that Neon wins, copy
+  // the current db.json version over once so the switch shows exactly what the site showed before.
+  { id: '2026-11-22-neon-takes-over-programme', key: 'programme', replace: seed.programme },
+  { id: '2026-11-22-neon-takes-over-faqs', key: 'faqs', replace: seed.faqs },
+  { id: '2026-11-22-neon-takes-over-testimonials', key: 'testimonials', replace: seed.testimonials },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
@@ -144,6 +155,17 @@ function applyContentPatches(sql: Sql): Promise<void> {
       await sql`CREATE TABLE IF NOT EXISTS cms_patches (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`;
       for (const patch of CONTENT_PATCHES) {
         // One statement, so the patch is recorded only if the update runs too.
+        if ('replace' in patch) {
+          if (patch.replace === undefined) continue;
+          await sql`
+            WITH claimed AS (
+              INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
+            )
+            UPDATE cms_content SET data = ${JSON.stringify(patch.replace)}::jsonb, updated_at = now()
+            WHERE key = ${patch.key} AND EXISTS (SELECT 1 FROM claimed)
+          `;
+          continue;
+        }
         await sql`
           WITH claimed AS (
             INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
