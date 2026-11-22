@@ -56,23 +56,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
       {/* Active Day Detail Card */}
       {days
         .filter((d) => d.day_number === activeDay)
-        .map((rawDay) => {
-          const isDay4 = rawDay.day_name === 'Day 4' || rawDay.day_number === 4;
-          const cleanTheme = rawDay.theme?.replace(/pinnacle\s*/gi, '').trim() || (isDay4 ? 'Guided Meditation' : rawDay.theme);
-          const cleanSummary = isDay4
-            ? "Quiet your mind, awaken your inner awareness, and reconnect with the stillness within.\nExperience profound relaxation and inner harmony through guided meditation.\nDiscover the peace, clarity and infinite potential that reside within you."
-            : rawDay.summary?.replace(/pinnacle\s*/gi, '').trim();
-          const cleanSessions = rawDay.sessions.map((session, sIdx) => ({
-            ...session,
-            title: session.title?.replace(/pinnacle\s*/gi, '').trim() || (isDay4 ? 'Guided Meditation' : session.title),
-            description: isDay4
-              ? (sIdx === 0
-                  ? "Quiet your mind, awaken your inner awareness, and reconnect with the stillness within."
-                  : "Experience profound relaxation and inner harmony through guided meditation. Discover the peace, clarity and infinite potential that reside within you.")
-              : session.description?.replace(/pinnacle\s*/gi, '').trim(),
-          }));
-          const day = { ...rawDay, theme: cleanTheme, summary: cleanSummary, sessions: cleanSessions };
-
+        .map((day) => {
           return (
             <div
               key={day.day_number}

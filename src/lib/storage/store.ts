@@ -64,8 +64,14 @@ const defaults: ContentMap = {
   weatherClothing: initialWeatherClothing,
 };
 
-// Local JSON fallback, used only when DATABASE_URL is not set. Its build-time snapshot also fills keys missing in Neon.
+// Content model:
+//   - Neon (cms_content) is the single source of truth whenever DATABASE_URL is set.
+//   - src/data/db.json is only a seed: `npm run db:setup` copies it into Neon for keys that are missing,
+//     and it fills in a key that Neon does not have yet. It never overrides a row that exists in Neon.
+//   - Without DATABASE_URL (local dev), the JSON file itself is read and written.
 type LocalDb = Partial<ContentMap> & { registrations?: Registration[]; media?: MediaAsset[] };
+
+const seed = contentSnapshot as unknown as Partial<ContentMap>;
 
 const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
 const TMP_DB_PATH = path.join(os.tmpdir(), 'btm-db.json');
@@ -116,7 +122,12 @@ function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T
 // One-time edits to content that already lives in Neon. Neon wins over db.json, so changing db.json alone
 // never reaches the live site. Each patch is merged into its key once, then recorded in cms_patches so a
 // later admin edit of the same field is never overwritten. Add new patches to the end; never edit old ones.
-const CONTENT_PATCHES: { id: string; key: ContentKey; merge: Record<string, unknown> }[] = [
+// `merge` shallow-merges into an object key; `replace` overwrites the whole key once.
+type ContentPatch =
+  | { id: string; key: ContentKey; merge: Record<string, unknown> }
+  | { id: string; key: ContentKey; replace: unknown };
+
+const CONTENT_PATCHES: ContentPatch[] = [
   {
     id: '2026-11-22-contact-and-social-links',
     key: 'settings',
@@ -127,17 +138,37 @@ const CONTENT_PATCHES: { id: string; key: ContentKey; merge: Record<string, unkn
       youtube_url: 'https://www.youtube.com/@bodymindintellect',
     },
   },
+  // Until this change, programme, FAQs and testimonials were always rendered from db.json and Neon's copies
+  // were overwritten from it on every read, so admins could not have edited them. Now that Neon wins, copy
+  // the current db.json version over once so the switch shows exactly what the site showed before.
+  { id: '2026-11-22-neon-takes-over-programme-v2', key: 'programme', replace: seed.programme },
+  { id: '2026-11-22-neon-takes-over-faqs-v2', key: 'faqs', replace: seed.faqs },
+  { id: '2026-11-22-neon-takes-over-testimonials-v2', key: 'testimonials', replace: seed.testimonials },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
 let patchesApplied: Promise<void> | null = null;
 
 function applyContentPatches(sql: Sql): Promise<void> {
+  // Preview deployments can share the production database. Only production (or local dev) applies patches,
+  // so a preview build cannot claim a patch while the old production code is still live.
+  if (process.env.VERCEL_ENV === 'preview') return Promise.resolve();
   if (!patchesApplied) {
     patchesApplied = (async () => {
       await sql`CREATE TABLE IF NOT EXISTS cms_patches (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`;
       for (const patch of CONTENT_PATCHES) {
         // One statement, so the patch is recorded only if the update runs too.
+        if ('replace' in patch) {
+          if (patch.replace === undefined) continue;
+          await sql`
+            WITH claimed AS (
+              INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
+            )
+            UPDATE cms_content SET data = ${JSON.stringify(patch.replace)}::jsonb, updated_at = now()
+            WHERE key = ${patch.key} AND EXISTS (SELECT 1 FROM claimed)
+          `;
+          continue;
+        }
         await sql`
           WITH claimed AS (
             INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
@@ -154,47 +185,48 @@ function applyContentPatches(sql: Sql): Promise<void> {
   return patchesApplied;
 }
 
+const isBuildPhase = () => process.env.NEXT_PHASE === 'phase-production-build';
+
+function rejectAfter<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<T>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`Neon query timed out after ${ms}ms`)), ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
 // No cross-request memory cache: on Vercel each instance would keep serving its own stale copy after an
 // admin save, and revalidated pages could be rebuilt from it. React cache() dedupes within one render.
 const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
   const sql = getSql();
-  const local = readLocalDb();
-  if (!sql) return local;
+  if (!sql) return readLocalDb();
   try {
     await withTimeout(applyContentPatches(sql), 8000, undefined);
-    const fetchRows = async () => {
-      const rows = await sql`SELECT key, data FROM cms_content`;
-      return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
-    };
-    const data = await withTimeout(fetchRows(), 8000, local);
-    return { ...local, ...data };
+    const rows = await rejectAfter(sql`SELECT key, data FROM cms_content`, 8000);
+    return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
   } catch (e) {
-    console.error('Neon loadContent error, serving local content:', e);
-    return local;
+    // During `next build` fall back to the seed so a database hiccup does not fail the deploy.
+    // At runtime rethrow, so ISR keeps serving the last good page instead of caching seed content
+    // over the admin's edits.
+    if (isBuildPhase()) {
+      console.error('Neon loadContent failed during build, rendering from db.json seed:', e);
+      return {};
+    }
+    throw e;
   }
 });
 
 async function getContent<K extends ContentKey>(key: K): Promise<ContentMap[K]> {
-  const all = await loadContent();
-  const value = all[key];
-  const localDb = readLocalDb();
-  const seed = (contentSnapshot as unknown as Partial<ContentMap>)[key];
-  const fallback = localDb[key] ?? seed ?? defaults[key];
-
-  // Guaranteed authoritative local source of truth for code-driven collections
-  if (key === 'programme') {
-    return (localDb.programme || seed || defaults.programme) as ContentMap[K];
-  }
-  if (key === 'faqs') {
-    return (localDb.faqs || seed || defaults.faqs) as ContentMap[K];
-  }
-  if (key === 'testimonials') {
-    return (localDb.testimonials || seed || defaults.testimonials) as ContentMap[K];
-  }
+  const stored = (await loadContent())[key];
   if (key === 'settings') {
-    return { ...defaults.settings, ...((seed as SiteSettings) || {}), ...((fallback as SiteSettings) || {}), ...((value as SiteSettings) || {}) } as ContentMap[K];
+    // Shallow merge so settings fields added in code later still have a value.
+    return {
+      ...defaults.settings,
+      ...((seed.settings as SiteSettings) || {}),
+      ...((stored as SiteSettings) || {}),
+    } as ContentMap[K];
   }
-  return (value ?? fallback) as ContentMap[K];
+  return (stored ?? seed[key] ?? defaults[key]) as ContentMap[K];
 }
 
 export async function setContent<K extends ContentKey>(key: K, data: ContentMap[K]): Promise<ContentMap[K]> {
@@ -205,8 +237,8 @@ export async function setContent<K extends ContentKey>(key: K, data: ContentMap[
       VALUES (${key}, ${JSON.stringify(data)}::jsonb, now())
       ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
     `;
+    return data;
   }
-  // Also keep local DB synced
   const db = readLocalDb();
   db[key] = data;
   writeLocalDb(db);
