@@ -41,7 +41,7 @@ export default async function FAQPage() {
               Frequently Asked Questions
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Everything you need to know about our upcoming October 2027
               retreat in Rishikesh and our regular online daily meditation
               sessions.

@@ -183,7 +183,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
             </div>
 
             {/* Paragraphs rendered with clean serene typography */}
-            <div className="space-y-4 text-sm sm:text-base md:text-lg text-ivory-100 font-light leading-relaxed sm:leading-loose">
+            <div className="space-y-4 text-sm sm:text-base text-ivory-100 font-light leading-relaxed sm:leading-loose">
               {current.paragraphs.map((p, pIdx) => (
                 <p key={pIdx} className="tracking-wide text-[#FAF8F5]/95">
                   {p}

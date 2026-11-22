@@ -43,7 +43,7 @@ export default async function RishikeshPage() {
               Rishikesh, Uttarakhand
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Where the majestic Garhwal Himalayas meet the crystalline flow of the holy Ganges.
               A sanctuary sanctified by centuries of silent meditation.
             </p>

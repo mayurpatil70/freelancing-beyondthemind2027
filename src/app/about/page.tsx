@@ -42,7 +42,7 @@ export default async function AboutPage() {
               A Living Sanctuary for Inner Awakening
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Beyond the Mind was born from a singular spiritual calling: to provide a pure, grounded, and
               transformative crucible where modern seekers can reconnect with the Infinite within.
             </p>
@@ -60,7 +60,7 @@ export default async function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="space-y-5 text-sm sm:text-base text-ivory-200/80 leading-relaxed font-light">
-                <p className="text-base sm:text-lg text-ivory-50 font-normal leading-relaxed">
+                <p>
                   The mind is an extraordinary instrument for navigating the external world, yet it was never
                   designed to be our ultimate master.
                 </p>
@@ -166,7 +166,7 @@ export default async function AboutPage() {
               </div>
 
               <div className="p-6 rounded-2xl bg-emerald-950/70 border border-gold-500/20 text-xs sm:text-sm text-stone-subtle/90 leading-relaxed font-light space-y-2 text-center md:text-left">
-                <p className="text-sm sm:text-base text-ivory-100 font-normal">
+                <p className="text-sm sm:text-base text-ivory-100 font-light">
                   &ldquo;The Divine is not something to be found outside, but a truth to be awakened within.&rdquo;
                 </p>
                 <span className="text-[11px] text-gold-400 uppercase tracking-widest block font-medium">

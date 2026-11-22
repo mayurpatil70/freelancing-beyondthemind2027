@@ -92,7 +92,7 @@ export default async function ExperiencesPage() {
               Seven Sacred Sessions
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               A comprehensive energetic progression designed to release stress, awaken dormant prana,
               restore wholeness, and merge with transcendental stillness beside holy Mother Ganga.
             </p>

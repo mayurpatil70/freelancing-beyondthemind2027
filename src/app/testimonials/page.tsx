@@ -36,7 +36,7 @@ export default async function TestimonialsPage() {
               Seeker Testimonials
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Original words and reflections from seekers who experienced the transformative field of Beyond the Mind.
             </p>
           </div>

@@ -38,7 +38,7 @@ export default function ReachPage() {
               Journeying to Rishikesh
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Practical travel connectivity for domestic and international seekers arriving for Beyond the Mind 2027 on <strong>Tuesday, October 5, 2027</strong>.
             </p>
 

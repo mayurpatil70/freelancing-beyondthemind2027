@@ -76,7 +76,7 @@ export default function ParticipationPage() {
               Participation & Accommodations
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Thoughtfully curated participation options to support peaceful contemplation, sacred rest, and
               wholesome nourishment. Available both offline in Rishikesh (Arrival Oct 5) and online via live stream.
             </p>

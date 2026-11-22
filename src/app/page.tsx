@@ -106,7 +106,7 @@ export default async function HomePage() {
 
               {/* Editorial Prose (RIGHT SIDE on Desktop) */}
               <div className="lg:col-span-7 order-1 lg:order-2 space-y-6 text-sm sm:text-base leading-relaxed text-ivory-200/90 font-light">
-                <p className="text-base sm:text-lg text-ivory-50 font-normal leading-relaxed">
+                <p>
                   Modern life draws us into a constant cycle of thinking, anticipating and reacting, keeping us immersed in the activity of the mind. In the sacred foothills of Rishikesh, where the holy Ganges flows from the majestic Himalayas, Beyond the Mind offers a space to pause, turn inward and reconnect with the deeper dimensions of your being.
                 </p>
 
@@ -279,7 +279,7 @@ export default async function HomePage() {
               </div>
 
               <div className="space-y-4 text-sm sm:text-base text-ivory-200/90 leading-relaxed font-light">
-                <p className="text-base sm:text-lg text-ivory-50 font-normal">
+                <p>
                   &ldquo;Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within.&rdquo;
                 </p>
                 <p>
@@ -363,7 +363,7 @@ export default async function HomePage() {
               </div>
 
               <div className="p-6 rounded-2xl bg-emerald-950/70 border border-gold-500/20 text-xs sm:text-sm text-stone-subtle/90 leading-relaxed font-light space-y-2 text-center md:text-left">
-                <p className="text-sm sm:text-base text-ivory-100 font-normal">
+                <p className="text-sm sm:text-base text-ivory-100 font-light">
                   &ldquo;The Divine is not something to be found outside, but a truth to be awakened within.&rdquo;
                 </p>
                 <span className="text-[11px] text-gold-400 uppercase tracking-widest block font-medium">

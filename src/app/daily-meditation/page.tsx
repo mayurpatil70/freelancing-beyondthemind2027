@@ -76,7 +76,7 @@ export default async function DailyMeditationPage() {
               {headline}
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
               Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within.
             </p>
 
@@ -118,13 +118,13 @@ export default async function DailyMeditationPage() {
             <div className="space-y-5 text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
               {descriptionParagraphs.length > 0 ? (
                 descriptionParagraphs.map((p, i) => (
-                  <p key={i} className={i === 0 ? 'text-base sm:text-lg text-ivory-100 font-normal leading-relaxed' : undefined}>
+                  <p key={i} className={undefined}>
                     {p}
                   </p>
                 ))
               ) : (
               <>
-              <p className="text-base sm:text-lg text-ivory-100 font-normal leading-relaxed">
+              <p>
                 Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves.
               </p>
               <p>
