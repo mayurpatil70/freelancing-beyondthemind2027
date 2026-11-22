@@ -73,6 +73,13 @@ export default async function AboutPage() {
                   In this space, healing is not an aggressive struggle to &lsquo;fix&rsquo; oneself; it is the natural
                   unfurling of wholeness when tension is safely surrendered.
                 </p>
+                <p>
+                  Through meditation, deep awareness and transformative inner practices, we begin to move beyond the
+                  limitations of conditioned thought and rediscover the stillness that has always existed within us. As
+                  the layers of emotional conditioning gradually dissolve, a deeper connection with our true essence
+                  emerges. Beyond the Mind is an invitation to experience life from a space of inner freedom, expanded
+                  consciousness and profound peace.
+                </p>
               </div>
 
               <div className="relative rounded-3xl overflow-hidden aspect-[4/5] border border-gold-600/30 shadow-xl">
