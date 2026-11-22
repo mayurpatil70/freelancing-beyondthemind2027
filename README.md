@@ -67,12 +67,14 @@ Every route is fully implemented, responsive, and SEO-optimized:
 Create `.env.local` in the project root:
 
 ```env
-# Admin CMS Access Credentials
-ADMIN_USERNAME="pradeep123"
-ADMIN_PASSWORD="pradeep123"
-ADMIN_EMAIL="pradeep123"
+# Admin CMS access (all required, there are no built-in defaults).
+# ADMIN_EMAIL is optional and lets the admin also sign in with an email address.
+ADMIN_USERNAME=""
+ADMIN_PASSWORD=""
+ADMIN_EMAIL=""
 
-# Signs the admin session cookie (any long random string)
+# Signs the admin session cookie. Required. Use a long random value:
+#   openssl rand -hex 32
 ADMIN_SESSION_SECRET=""
 
 # Neon Postgres (pooled connection string)
@@ -120,8 +122,8 @@ npm run start
 ## 6. Admin Portal & Participant CRM
 
 - **URL**: Navigate to `/admin`
-- **Default Username**: `pradeep123`
-- **Default Secret Key**: `pradeep123`
+- **Credentials**: the values of `ADMIN_USERNAME` (or `ADMIN_EMAIL`) and `ADMIN_PASSWORD`. There are no default credentials. If `ADMIN_USERNAME`/`ADMIN_EMAIL`, `ADMIN_PASSWORD` or `ADMIN_SESSION_SECRET` is missing, the login endpoint returns HTTP 503 and names the missing variables.
+- **Login rate limiting**: 5 failed attempts per IP or device within 15 minutes triggers a 15 minute lockout. Counters are stored in Neon (`admin_login_attempts`, `admin_security_events`) so they hold across serverless instances; without `DATABASE_URL` they are kept in memory.
 
 ### Key Admin Features:
 1. **Metrics Overview**: Live counters for Total Enquiries, New Leads, Payment Verification, Confirmed Guests, and Waitlisted.

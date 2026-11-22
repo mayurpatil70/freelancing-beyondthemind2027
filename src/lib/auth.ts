@@ -1,18 +1,19 @@
 import { createHmac, timingSafeEqual, randomBytes } from 'crypto';
 import type { NextRequest } from 'next/server';
+import { readEnv } from '@/lib/env';
 
 export const SESSION_COOKIE_NAME = 'btm_admin_session';
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
-// Ephemeral runtime fallback secret in case ADMIN_SESSION_SECRET is omitted in environment
-const runtimeSecretFallback = randomBytes(32).toString('hex');
-
-function secret(): string {
-  return process.env.ADMIN_SESSION_SECRET || runtimeSecretFallback;
+// No fallback: without ADMIN_SESSION_SECRET no session can be created or accepted.
+function secret(): string | null {
+  return readEnv('ADMIN_SESSION_SECRET') || null;
 }
 
 function sign(payload: string): string {
-  return createHmac('sha256', secret()).update(payload).digest('base64url');
+  const key = secret();
+  if (!key) throw new Error('ADMIN_SESSION_SECRET is not set');
+  return createHmac('sha256', key).update(payload).digest('base64url');
 }
 
 export function createSessionToken(user: string): string {
@@ -33,6 +34,7 @@ export function readSession(token?: string): { user: string } | null {
 
   const [payload, signature] = parts;
   if (!payload || !signature) return null;
+  if (!secret()) return null;
 
   try {
     const expected = Buffer.from(sign(payload));

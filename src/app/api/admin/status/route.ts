@@ -11,6 +11,6 @@ export async function GET(req: NextRequest) {
     database: isDatabaseConfigured,
     storage: isStorageConfigured,
     hosted: Boolean(process.env.VERCEL),
-    security: getSecurityThreatSummary(),
+    security: await getSecurityThreatSummary(),
   });
 }

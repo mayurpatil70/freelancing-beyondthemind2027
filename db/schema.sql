@@ -45,3 +45,22 @@ CREATE TABLE IF NOT EXISTS media_assets (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS media_assets_created_at_idx ON media_assets (created_at DESC);
+
+-- Admin login rate limiting (shared across serverless instances)
+CREATE TABLE IF NOT EXISTS admin_login_attempts (
+  key TEXT PRIMARY KEY,
+  count INTEGER NOT NULL DEFAULT 0,
+  first_attempt TIMESTAMPTZ NOT NULL DEFAULT now(),
+  last_attempt TIMESTAMPTZ NOT NULL DEFAULT now(),
+  locked_until TIMESTAMPTZ
+);
+
+CREATE TABLE IF NOT EXISTS admin_security_events (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  ip TEXT NOT NULL,
+  device_hash TEXT NOT NULL,
+  details TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS admin_security_events_created_at_idx ON admin_security_events (created_at DESC);

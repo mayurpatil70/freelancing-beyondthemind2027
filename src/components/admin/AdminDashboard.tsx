@@ -57,7 +57,6 @@ import {
   ArrowUpDown,
   Tag,
   Hash,
-  GitBranch,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -91,7 +90,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [metaKeywords, setMetaKeywords] = useState<Record<string, string>>({});
 
   const [saving, setSaving] = useState(false);
-  const [pushingGithub, setPushingGithub] = useState(false);
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
 
   // Note Modal state
@@ -214,34 +212,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       alert('Error connecting to server.');
     } finally {
       setSaving(false);
-    }
-  };
-
-  const handlePushToGitHub = async (cardTitle?: string) => {
-    setPushingGithub(true);
-    try {
-      // First save all experiences to CMS store
-      await saveContent('experiences', experiences, 'Session cards saved to live CMS.');
-      const res = await fetch('/api/admin/github-push', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: cardTitle
-            ? `feat(cms): update SEO keywords for session "${cardTitle}"`
-            : 'feat(cms): update session cards & SEO keywords via admin',
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && data.success) {
-        showSaveSuccess(data.message || 'Pushed card updates to GitHub successfully!');
-      } else {
-        alert(data.message || 'Unable to complete push to GitHub.');
-      }
-    } catch (e) {
-      console.error('GitHub push error:', e);
-      alert('Network error communicating with GitHub push endpoint.');
-    } finally {
-      setPushingGithub(false);
     }
   };
 
@@ -707,17 +677,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   <Save className="w-3.5 h-3.5" />
                   <span>{saving ? 'Saving...' : 'Save Sessions'}</span>
                 </button>
-
-                <button
-                  type="button"
-                  onClick={() => handlePushToGitHub()}
-                  disabled={pushingGithub || saving}
-                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-900 border border-gold-400/40 text-gold-300 hover:bg-emerald-800 text-xs font-semibold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
-                  title="Save and push all card updates directly to GitHub"
-                >
-                  <GitBranch className="w-3.5 h-3.5 text-gold-400" />
-                  <span>{pushingGithub ? 'Pushing to GitHub...' : 'Push to GitHub'}</span>
-                </button>
               </div>
             </div>
 
@@ -1049,17 +1008,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                           >
                             <Save className="w-3 h-3" />
                             <span>Save Keywords</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => handlePushToGitHub(exp.title)}
-                            disabled={pushingGithub}
-                            className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-emerald-900/90 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 text-[10px] font-semibold uppercase tracking-wider transition-colors disabled:opacity-50"
-                            title="Push updated keywords for this card to GitHub"
-                          >
-                            <GitBranch className="w-3 h-3 text-gold-400" />
-                            <span>{pushingGithub ? 'Pushing...' : 'Push to GitHub'}</span>
                           </button>
                         </div>
                       </div>
