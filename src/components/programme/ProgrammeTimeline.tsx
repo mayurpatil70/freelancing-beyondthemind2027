@@ -80,7 +80,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-stone-subtle/90 leading-relaxed font-light">
+            <p className="text-sm sm:text-base text-stone-subtle/90 leading-relaxed font-light whitespace-pre-line">
               {day.summary}
             </p>
 
