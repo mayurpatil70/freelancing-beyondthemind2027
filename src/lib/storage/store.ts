@@ -128,6 +128,42 @@ const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
       return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
     };
     const data = await withTimeout(fetchRows(), 8000, local);
+
+    // Code-authored collections (programme, faqs, testimonials) are maintained directly in git / db.json.
+    // Purge any stale database snapshot so it never overrides clean code updates, and sync clean data to Neon.
+    if (local.programme && local.programme.length > 0) {
+      delete data.programme;
+      if (sql) {
+        sql`
+          INSERT INTO cms_content (key, data, updated_at)
+          VALUES ('programme', ${JSON.stringify(local.programme)}::jsonb, now())
+          ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
+        `.catch(() => {});
+      }
+    }
+
+    if (local.faqs && local.faqs.length > 0) {
+      delete data.faqs;
+      if (sql) {
+        sql`
+          INSERT INTO cms_content (key, data, updated_at)
+          VALUES ('faqs', ${JSON.stringify(local.faqs)}::jsonb, now())
+          ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
+        `.catch(() => {});
+      }
+    }
+
+    if (local.testimonials && local.testimonials.length > 0) {
+      delete data.testimonials;
+      if (sql) {
+        sql`
+          INSERT INTO cms_content (key, data, updated_at)
+          VALUES ('testimonials', ${JSON.stringify(local.testimonials)}::jsonb, now())
+          ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
+        `.catch(() => {});
+      }
+    }
+
     const merged = { ...local, ...data };
     memoryContentCache = { data: merged, timestamp: Date.now() };
     return merged;
@@ -143,6 +179,17 @@ async function getContent<K extends ContentKey>(key: K): Promise<ContentMap[K]> 
   const localDb = readLocalDb();
   const seed = (contentSnapshot as unknown as Partial<ContentMap>)[key];
   const fallback = localDb[key] ?? seed ?? defaults[key];
+
+  // Guaranteed authoritative local source of truth for code-driven collections
+  if (key === 'programme') {
+    return (localDb.programme || seed || defaults.programme) as ContentMap[K];
+  }
+  if (key === 'faqs') {
+    return (localDb.faqs || seed || defaults.faqs) as ContentMap[K];
+  }
+  if (key === 'testimonials') {
+    return (localDb.testimonials || seed || defaults.testimonials) as ContentMap[K];
+  }
   if (key === 'settings') {
     return { ...defaults.settings, ...((seed as SiteSettings) || {}), ...((fallback as SiteSettings) || {}), ...((value as SiteSettings) || {}) } as ContentMap[K];
   }

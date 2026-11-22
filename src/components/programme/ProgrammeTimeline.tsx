@@ -56,11 +56,28 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
       {/* Active Day Detail Card */}
       {days
         .filter((d) => d.day_number === activeDay)
-        .map((day) => (
-          <div
-            key={day.day_number}
-            className="p-6 sm:p-10 rounded-2xl bg-[#07261F]/70 border border-gold-500/25 shadow-xl animate-in fade-in duration-300 space-y-6"
-          >
+        .map((rawDay) => {
+          const isDay4 = rawDay.day_name === 'Day 4' || rawDay.day_number === 4;
+          const cleanTheme = rawDay.theme?.replace(/pinnacle\s*/gi, '').trim() || (isDay4 ? 'Guided Meditation' : rawDay.theme);
+          const cleanSummary = isDay4
+            ? "Quiet your mind, awaken your inner awareness, and reconnect with the stillness within.\nExperience profound relaxation and inner harmony through guided meditation.\nDiscover the peace, clarity and infinite potential that reside within you."
+            : rawDay.summary?.replace(/pinnacle\s*/gi, '').trim();
+          const cleanSessions = rawDay.sessions.map((session, sIdx) => ({
+            ...session,
+            title: session.title?.replace(/pinnacle\s*/gi, '').trim() || (isDay4 ? 'Guided Meditation' : session.title),
+            description: isDay4
+              ? (sIdx === 0
+                  ? "Quiet your mind, awaken your inner awareness, and reconnect with the stillness within."
+                  : "Experience profound relaxation and inner harmony through guided meditation. Discover the peace, clarity and infinite potential that reside within you.")
+              : session.description?.replace(/pinnacle\s*/gi, '').trim(),
+          }));
+          const day = { ...rawDay, theme: cleanTheme, summary: cleanSummary, sessions: cleanSessions };
+
+          return (
+            <div
+              key={day.day_number}
+              className="p-6 sm:p-10 rounded-2xl bg-[#07261F]/70 border border-gold-500/25 shadow-xl animate-in fade-in duration-300 space-y-6"
+            >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gold-500/15">
               <div>
                 <span className="text-xs uppercase tracking-[0.25em] text-gold-400 block font-medium">
@@ -115,7 +132,8 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
               Note: Exact hour-by-hour sequence is attuned organically by Pradeep Muthukulam based on group energetic receptivity and atmospheric rhythms.
             </p>
           </div>
-        ))}
+        );
+      })}
 
       {/* Programme CTA */}
       {showCta && (
