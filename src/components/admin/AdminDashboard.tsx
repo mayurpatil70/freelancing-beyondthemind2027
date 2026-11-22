@@ -940,8 +940,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       </div>
                       {exp.image && (
                         <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/35 mt-2 bg-black/60 group/prev">
-                          <img src={exp.image} alt="" className="absolute inset-0 w-full h-full object-cover blur-md opacity-35" />
-                          <img src={exp.image} alt={exp.title} className="relative z-10 w-full h-full object-contain" />
+                          <img src={exp.image} alt={exp.title} className="w-full h-full object-cover" />
                           <a
                             href={exp.image}
                             target="_blank"
