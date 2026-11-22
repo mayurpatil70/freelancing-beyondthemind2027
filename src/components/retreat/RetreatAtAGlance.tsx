@@ -17,12 +17,16 @@ export function RetreatAtAGlance({ dates: propDates, location: propLocation, cla
   const { settings } = useCMS();
   const dates = settings?.retreat_dates || propDates || 'Oct 6–9, 2027';
   const location = settings?.retreat_location || propLocation || 'Rishikesh';
+  const arrival = settings?.arrival_date || 'Oct 5';
+  // "English and Malayalam. Hindi translation is available upon request." -> value + note
+  const [langValue, ...langRest] = (settings?.retreat_languages || 'English & Malayalam. Hindi translation is available upon request').split(/\.\s+/);
+  const langNote = langRest.join('. ').replace(/\.$/, '');
 
   const items = [
-    { icon: Calendar, label: 'Dates', value: dates, note: 'Arrival: Oct 5' },
+    { icon: Calendar, label: 'Dates', value: dates, note: `Arrival: ${arrival}` },
     { icon: Video, label: 'Mode', value: 'Offline & Online', note: 'Rishikesh & Live Stream' },
     { icon: MapPin, label: 'Location', value: location, note: 'Garhwal Himalayan foothills' },
-    { icon: Languages, label: 'Languages', value: 'English & Malayalam', note: 'Hindi translation is available upon request' },
+    { icon: Languages, label: 'Languages', value: langValue.replace(/\.$/, ''), note: langNote },
     { icon: Users, label: 'Guided by', value: 'Pradeep Muthukulam', note: 'Curated intimate circle' },
     { icon: Sparkles, label: 'Guidance', value: 'Personal Guidance Sessions', note: 'Available by Appointment' },
     { icon: Utensils, label: 'Cuisine', value: 'Strictly Vegetarian Cuisine', note: 'Throughout the Retreat' },

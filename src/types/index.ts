@@ -106,7 +106,7 @@ export interface FAQItem {
     | 'General & Dates'
     | 'Retreat Experience'
     | 'Location & Travel'
-    | 'Accommodations & Meals'
+    | 'Accommodations'
     | 'Daily Guided Meditation'
     | 'Registration & Payment';
 }

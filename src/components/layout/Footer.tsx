@@ -46,7 +46,7 @@ export function Footer() {
             <div className="flex flex-wrap items-center gap-3 text-xs text-gold-400/90 font-light pt-1">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-gold-400 shrink-0" />
-                Arrival: Oct 5, 2027 • Sessions: Oct 6–9
+                Arrival: {settings.arrival_date || 'Oct 5, 2027'} • Sessions: {settings.retreat_dates || 'Oct 6–9'}
               </span>
               <span className="text-gold-500/40 hidden sm:inline">•</span>
               <span className="flex items-center gap-1.5">
@@ -69,7 +69,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/experiences" prefetch={true} className="hover:text-gold-300 transition-colors">
-                  Six Sacred Experiences
+                  Seven Sacred Experiences
                 </Link>
               </li>
               <li>

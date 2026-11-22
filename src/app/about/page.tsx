@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { getSiteSettings } from '@/lib/storage/store';
 import { Heart, Compass, ShieldCheck, ArrowRight, Sun, Award, Calendar } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -15,7 +16,15 @@ export const metadata: Metadata = {
 
 export const revalidate = 300;
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSiteSettings();
+  const guideName = settings.guide_name || 'Pradeep Muthukulam';
+  const guideHeadline = settings.guide_headline || `${guideName} – A Journey Towards Inner Awakening`;
+  const headlineTail = guideHeadline.split(/\s[–-]\s/).slice(1).join(' – ');
+  const bioParagraphs = (settings.guide_bio || '')
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
       <Navbar />
@@ -110,7 +119,7 @@ export default function AboutPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <SectionHeading
               eyebrow="Spiritual Guide & Founder"
-              title="Pradeep Muthukulam – A Journey Towards Inner Awakening"
+              title={guideHeadline}
               subtitle="Devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness."
             />
 
@@ -130,10 +139,18 @@ export default function AboutPage() {
                   <span className="text-xs tracking-widest uppercase text-gold-400 font-semibold block">
                     Spiritual Guide & Founder
                   </span>
-                  <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">Pradeep Muthukulam</h3>
-                  <h4 className="font-serif text-lg text-gold-300 italic font-normal">
-                    A Journey Towards Inner Awakening
-                  </h4>
+                  <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">{guideName}</h3>
+                  {headlineTail && (
+                    <h4 className="font-serif text-lg text-gold-300 italic font-normal">{headlineTail}</h4>
+                  )}
+                  {bioParagraphs.length > 0 ? (
+                    bioParagraphs.map((p, i) => (
+                      <p key={i} className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
+                        {p}
+                      </p>
+                    ))
+                  ) : (
+                  <>
                   <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
                     Pradeep Muthukulam is a seeker and spiritual guide devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness. His vision is to inspire individuals to journey beyond the boundaries of the mind, reconnect with their true essence and discover the profound peace, wisdom and divinity that reside within.
                   </p>
@@ -143,6 +160,8 @@ export default function AboutPage() {
                   <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
                     His endeavour is to guide every seeker towards inner transformation, spiritual clarity and the ultimate experience of inner peace.
                   </p>
+                  </>
+                  )}
                 </div>
               </div>
 

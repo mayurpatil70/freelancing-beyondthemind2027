@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { withCmsKeywords } from '@/lib/seo/keywords';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
@@ -9,11 +10,15 @@ import { getAttractions, getWeatherClothing } from '@/lib/storage/store';
 import { MapPin, Sun, Compass, Waves, Mountain, ArrowRight, Calendar, Shirt, CheckCircle2 } from 'lucide-react';
 import { AttractionsGrid } from '@/components/rishikesh/AttractionsGrid';
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: 'Rishikesh Sanctuary, Attractions & Weather Guide | Beyond the Mind 2027',
   description:
     'Discover Rishikesh, Uttarakhand — holy Ganges, top attractions including bungee jumping and river rafting, October weather, and packing guidance for Beyond the Mind 2027.',
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return withCmsKeywords(baseMetadata, 'rishikesh');
+}
 
 export const revalidate = 300;
 

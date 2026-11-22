@@ -6,8 +6,8 @@
     "guide_name": "Pradeep Muthukulam",
     "hero_title": "BEYOND THE MIND 2027",
     "poster_url": "/images/posters/btm2027-retreat-sessions.jpg",
-    "twitter_url": "https://twitter.com/beyondthemind",
-    "youtube_url": "https://www.youtube.com/@BeyondTheMindRetreat",
+    "twitter_url": "https://x.com/beyondthemind27?s=11",
+    "youtube_url": "https://www.youtube.com/@bodymindintellect",
     "arrival_date": "October 5, 2027",
     "arrival_time": "October 5, 2027",
     "facebook_url": "https://www.facebook.com/profile.php?id=61595374757132",
@@ -26,8 +26,8 @@
     "retreat_modes": "Offline (In-Person Rishikesh) & Online Live",
     "retreat_state": "Uttarakhand, India",
     "guide_headline": "Pradeep Muthukulam – A Journey Towards Inner Awakening",
-    "secondary_email": "support@beyondthemindretreat.org",
-    "secondary_phone": "+91 8075572018",
+    "secondary_email": "pradeepmuthukulam@gmail.com",
+    "secondary_phone": "+91 9349472018",
     "whatsapp_number": "+91 8075572018",
     "hero_notice_card": {
       "badge": "Next Gathering Notice",
@@ -437,7 +437,7 @@
     {
       "id": "faq-8",
       "answer": "We offer private single occupancy, twin sharing, and non-residential options.",
-      "category": "Accommodations & Meals",
+      "category": "Accommodations",
       "question": "What are the accommodation arrangements?"
     },
     {
