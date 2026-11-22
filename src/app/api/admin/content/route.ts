@@ -40,6 +40,9 @@ function revalidateAllPages() {
   }
 }
 
+// Always read live content; never serve a build-time snapshot to the admin panel.
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const settings = await getSiteSettings();
   const experiences = await getExperiences();
@@ -125,6 +128,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, message: 'Invalid content type' }, { status: 400 });
   } catch (err) {
     console.error('CMS update error:', err);
-    return NextResponse.json({ success: false, message: 'Content update error' }, { status: 500 });
+    const reason = err instanceof Error ? err.message : String(err);
+    return NextResponse.json(
+      { success: false, message: `Could not save to the database: ${reason.slice(0, 200)}` },
+      { status: 500 }
+    );
   }
 }

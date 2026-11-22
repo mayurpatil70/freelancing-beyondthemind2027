@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import { withCmsKeywords } from '@/lib/seo/keywords';
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
@@ -22,20 +23,40 @@ import {
 } from "lucide-react";
 import { formatWhatsAppUrl } from "@/lib/utils";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Daily Meditation - A Journey Within | Beyond the Mind",
   description:
     "Join our live Monday to Friday 7:30 PM online guided meditation on Zoom. Cultivate awareness, explore inner silence, and pause, observe, and transcend.",
 };
 
+export function generateMetadata(): Promise<Metadata> {
+  return withCmsKeywords(baseMetadata, 'daily');
+}
+
 export const revalidate = 300;
 
 export default async function DailyMeditationPage() {
   const settings = await getSiteSettings();
+  // "Paid sessions (Details shared on enquiry)" -> ["Paid sessions", "Details shared on enquiry"]
+  const splitParen = (v: string | undefined, fallbackMain: string, fallbackSub: string) => {
+    const m = (v || '').trim().match(/^(.*?)\s*\((.*)\)\s*$/);
+    if (m) return [m[1], m[2]];
+    return [v?.trim() || fallbackMain, v?.trim() ? '' : fallbackSub];
+  };
+  const headline = settings.daily_meditation_headline || 'Daily Meditation - A Journey Within';
+  const tagline = settings.daily_meditation_tagline || 'Pause. Observe. Transcend.';
+  const time = settings.daily_meditation_time || '7:30 PM';
+  const days = settings.daily_meditation_days || 'Monday to Friday';
+  const [feeMain, feeSub] = splitParen(settings.daily_meditation_fee, 'Paid sessions', 'Shared on enquiry');
+  const [platformMain, platformSub] = splitParen(settings.daily_meditation_platform, 'Zoom', 'Access link sent on joining');
+  const descriptionParagraphs = (settings.daily_meditation_description || '')
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
 
   const whatsappInquiryUrl = formatWhatsAppUrl(
     settings.whatsapp_number,
-    `Namaste Beyond the Mind Team,\n\nI am interested in joining the Daily Guided Meditation sessions held Monday to Friday at 7:30 PM on Zoom. Kindly share participation details, session fee, and how to begin.`
+    `Namaste Beyond the Mind Team,\n\nI am interested in joining the Daily Guided Meditation sessions held ${days} at ${time} on ${platformMain}. Kindly share participation details, session fee, and how to begin.`
   );
 
   return (
@@ -52,7 +73,7 @@ export default async function DailyMeditationPage() {
             </span>
 
             <h1 className="font-serif text-4xl sm:text-6xl text-ivory-50 font-light leading-tight">
-              Daily Meditation - A Journey Within
+              {headline}
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
@@ -61,7 +82,7 @@ export default async function DailyMeditationPage() {
 
             <div className="pt-2">
               <span className="inline-block px-6 py-2 rounded-full bg-gold-500/10 border border-gold-400/40 text-gold-300 font-serif tracking-[0.25em] text-sm uppercase">
-                Pause. Observe. Transcend.
+                {tagline}
               </span>
             </div>
           </div>
@@ -78,29 +99,39 @@ export default async function DailyMeditationPage() {
               </div>
               <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">2. Timings</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center lining-nums tabular-nums [font-feature-settings:'lnum'_1]">7:30 PM</span>
-                <span className="text-[11px] text-gold-300/80 block">Monday to Friday</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium min-h-9 flex items-center justify-center lining-nums tabular-nums [font-feature-settings:'lnum'_1]">{time}</span>
+                <span className="text-[11px] text-gold-300/80 block">{days}</span>
               </div>
               <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">3. Session Fee</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center">Paid sessions</span>
-                <span className="text-[11px] text-gold-300/80 block">Shared on enquiry</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium min-h-9 flex items-center justify-center">{feeMain}</span>
+                {feeSub && <span className="text-[11px] text-gold-300/80 block">{feeSub}</span>}
               </div>
               <div className="space-y-1 flex flex-col items-center">
                 <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">4. Platform</span>
-                <span className="font-serif text-2xl text-ivory-50 font-medium h-9 flex items-center justify-center">Zoom</span>
-                <span className="text-[11px] text-gold-300/80 block">Access link sent on joining</span>
+                <span className="font-serif text-2xl text-ivory-50 font-medium min-h-9 flex items-center justify-center">{platformMain}</span>
+                {platformSub && <span className="text-[11px] text-gold-300/80 block">{platformSub}</span>}
               </div>
             </div>
 
             {/* Editorial Philosophy Text */}
             <div className="space-y-5 text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
+              {descriptionParagraphs.length > 0 ? (
+                descriptionParagraphs.map((p, i) => (
+                  <p key={i} className={i === 0 ? 'text-base sm:text-lg text-ivory-100 font-serif leading-snug' : undefined}>
+                    {p}
+                  </p>
+                ))
+              ) : (
+              <>
               <p className="text-base sm:text-lg text-ivory-100 font-serif leading-snug">
                 Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves.
               </p>
               <p>
                 Whether you are beginning your meditation journey or have an established practice, these sessions offer an opportunity to pause, observe and reconnect with your inner being.
               </p>
+              </>
+              )}
               <p>
                 Apart from organising our flagship Divine Retreat in Rishikesh, we conduct these daily guided meditation sessions as a regular activity of Beyond the Mind, anchoring an ongoing spiritual journey that supports you in daily life.
               </p>

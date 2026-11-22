@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { withCmsKeywords } from '@/lib/seo/keywords';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { RegistrationCard } from '@/components/retreat/RegistrationCard';
@@ -7,11 +8,15 @@ import { getSiteSettings } from '@/lib/storage/store';
 import { ShieldCheck, Lock, CheckCircle2, Calendar, Languages, Video } from 'lucide-react';
 import { LanguageNote } from '@/components/retreat/LanguageNote';
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: 'Enquiry & Registration | The Divine Retreat & Daily Meditation | Beyond the Mind',
   description:
     'Reserve your sanctuary place for Beyond the Mind 2027 in Rishikesh (Arrival Oct 5 • Sessions Oct 6–9) or join Daily Guided Meditation on Zoom. Strict vegetarian food during retreat.',
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return withCmsKeywords(baseMetadata, 'register');
+}
 
 export const revalidate = 300;
 

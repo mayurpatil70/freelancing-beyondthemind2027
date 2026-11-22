@@ -20,14 +20,14 @@ import { ContactForm } from '@/components/forms/ContactForm';
 export function ContactDetailsSection() {
   const { settings, customContacts } = useCMS();
 
-  const phone = settings?.primary_phone || settings?.whatsapp_display || settings?.whatsapp_number || '+91 8075572018';
+  const phone = settings?.whatsapp_number || settings?.primary_phone || settings?.whatsapp_display || '+91 8075572018';
   const secondaryPhone = settings?.secondary_phone;
-  const email = settings?.primary_email || settings?.email || 'moolabrahman@gmail.com';
+  const email = settings?.email || settings?.primary_email || 'moolabrahman@gmail.com';
   const secondaryEmail = settings?.secondary_email;
 
   const instagram = settings?.instagram_url || 'https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm';
   const facebook = settings?.facebook_url || 'https://www.facebook.com/profile.php?id=61595374757132';
-  const youtube = settings?.youtube_url || 'https://www.youtube.com/@BeyondTheMindRetreat';
+  const youtube = settings?.youtube_url || 'https://www.youtube.com/@bodymindintellect';
   const twitter = settings?.twitter_url || 'https://x.com/beyondthemind27?s=11';
 
   const quickInquiries = [

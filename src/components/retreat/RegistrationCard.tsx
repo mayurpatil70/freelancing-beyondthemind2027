@@ -14,6 +14,7 @@ import {
   Shirt,
 } from 'lucide-react';
 import { WhatsAppInquiryModal } from '@/components/layout/WhatsAppInquiryModal';
+import { useCMS } from '@/contexts/CMSContext';
 
 interface RegistrationCardProps {
   allowPaymentProof?: boolean;
@@ -28,6 +29,13 @@ export function RegistrationCard({
   googleFormUrl = '',
   googleFormEnabled = false,
 }: RegistrationCardProps) {
+  const { settings } = useCMS();
+  const languages = settings.retreat_languages || 'English & Malayalam (Hindi translation upon request)';
+  const shortText = (v: string | undefined, fallback: string) => (v || '').split(' (')[0].trim() || fallback;
+  const meditationDays = settings.daily_meditation_days || 'Monday to Friday';
+  const meditationTime = settings.daily_meditation_time || '7:30 PM IST';
+  const meditationPlatform = shortText(settings.daily_meditation_platform, 'Zoom');
+  const meditationFee = shortText(settings.daily_meditation_fee, 'Paid Sessions');
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [modalProgram, setModalProgram] = useState(defaultProgramme);
 
@@ -60,7 +68,7 @@ export function RegistrationCard({
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
               <div className="flex items-center gap-2 text-gold-300 font-medium">
                 <Calendar className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Arrival: October 5, 2027</span>
+                <span>Arrival: {settings.arrival_date || 'October 5, 2027'}</span>
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Clock className="w-4 h-4 text-gold-400 shrink-0" />
@@ -72,7 +80,7 @@ export function RegistrationCard({
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Languages className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>English & Malayalam (Hindi translation upon request)</span>
+                <span>{languages}</span>
               </div>
             </div>
 
@@ -128,11 +136,11 @@ export function RegistrationCard({
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Calendar className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>October 6–9, 2027</span>
+                <span>{settings.retreat_dates || 'October 6–9, 2027'}</span>
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Languages className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>English & Malayalam (Hindi translation upon request)</span>
+                <span>{languages}</span>
               </div>
             </div>
 
@@ -144,8 +152,6 @@ export function RegistrationCard({
               {[
                 'Full live stream access to all 7 sessions',
                 'Live interactive Q&A segments',
-                'Digital Retreat Guidebook & Mantras',
-                'Session recordings for integration',
               ].map((inc, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
@@ -183,15 +189,15 @@ export function RegistrationCard({
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
               <div className="flex items-center gap-2 text-gold-300 font-medium">
                 <Clock className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Monday to Friday at 7:30 PM IST</span>
+                <span>{meditationDays} at {meditationTime}</span>
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <Video className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Platform: Zoom</span>
+                <span>Platform: {meditationPlatform}</span>
               </div>
               <div className="flex items-center gap-2 text-ivory-100">
                 <ShieldCheck className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>Session Fee: Paid Sessions</span>
+                <span>Session Fee: {meditationFee}</span>
               </div>
             </div>
 

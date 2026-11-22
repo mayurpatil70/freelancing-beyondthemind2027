@@ -102,73 +102,74 @@ const iso = (v: unknown) => (v instanceof Date ? v.toISOString() : String(v));
 // CMS content
 // ----------------------------------------------------------------------------
 
-let memoryContentCache: { data: Partial<ContentMap>; timestamp: number } | null = null;
-const CACHE_TTL_MS = 60 * 1000;
-
 function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
-  ]);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<T>((resolve) => {
+    timer = setTimeout(() => {
+      console.warn(`Neon call took over ${ms}ms, serving local content`);
+      resolve(fallback);
+    }, ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
-const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
-  if (memoryContentCache && (Date.now() - memoryContentCache.timestamp < CACHE_TTL_MS)) {
-    return memoryContentCache.data;
+// One-time edits to content that already lives in Neon. Neon wins over db.json, so changing db.json alone
+// never reaches the live site. Each patch is merged into its key once, then recorded in cms_patches so a
+// later admin edit of the same field is never overwritten. Add new patches to the end; never edit old ones.
+const CONTENT_PATCHES: { id: string; key: ContentKey; merge: Record<string, unknown> }[] = [
+  {
+    id: '2026-11-22-contact-and-social-links',
+    key: 'settings',
+    merge: {
+      secondary_phone: '+91 9349472018',
+      secondary_email: 'pradeepmuthukulam@gmail.com',
+      twitter_url: 'https://x.com/beyondthemind27?s=11',
+      youtube_url: 'https://www.youtube.com/@bodymindintellect',
+    },
+  },
+];
+
+type Sql = NonNullable<ReturnType<typeof getSql>>;
+let patchesApplied: Promise<void> | null = null;
+
+function applyContentPatches(sql: Sql): Promise<void> {
+  if (!patchesApplied) {
+    patchesApplied = (async () => {
+      await sql`CREATE TABLE IF NOT EXISTS cms_patches (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`;
+      for (const patch of CONTENT_PATCHES) {
+        // One statement, so the patch is recorded only if the update runs too.
+        await sql`
+          WITH claimed AS (
+            INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
+          )
+          UPDATE cms_content SET data = data || ${JSON.stringify(patch.merge)}::jsonb, updated_at = now()
+          WHERE key = ${patch.key} AND jsonb_typeof(data) = 'object' AND EXISTS (SELECT 1 FROM claimed)
+        `;
+      }
+    })().catch((e) => {
+      patchesApplied = null; // retry on the next request
+      console.error('Applying CMS content patches failed:', e);
+    });
   }
+  return patchesApplied;
+}
+
+// No cross-request memory cache: on Vercel each instance would keep serving its own stale copy after an
+// admin save, and revalidated pages could be rebuilt from it. React cache() dedupes within one render.
+const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
   const sql = getSql();
   const local = readLocalDb();
-  if (!sql) {
-    memoryContentCache = { data: local, timestamp: Date.now() };
-    return local;
-  }
+  if (!sql) return local;
   try {
+    await withTimeout(applyContentPatches(sql), 8000, undefined);
     const fetchRows = async () => {
       const rows = await sql`SELECT key, data FROM cms_content`;
       return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
     };
     const data = await withTimeout(fetchRows(), 8000, local);
-
-    // Code-authored collections (programme, faqs, testimonials) are maintained directly in git / db.json.
-    // Purge any stale database snapshot so it never overrides clean code updates, and sync clean data to Neon.
-    if (local.programme && local.programme.length > 0) {
-      delete data.programme;
-      if (sql) {
-        sql`
-          INSERT INTO cms_content (key, data, updated_at)
-          VALUES ('programme', ${JSON.stringify(local.programme)}::jsonb, now())
-          ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
-        `.catch(() => {});
-      }
-    }
-
-    if (local.faqs && local.faqs.length > 0) {
-      delete data.faqs;
-      if (sql) {
-        sql`
-          INSERT INTO cms_content (key, data, updated_at)
-          VALUES ('faqs', ${JSON.stringify(local.faqs)}::jsonb, now())
-          ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
-        `.catch(() => {});
-      }
-    }
-
-    if (local.testimonials && local.testimonials.length > 0) {
-      delete data.testimonials;
-      if (sql) {
-        sql`
-          INSERT INTO cms_content (key, data, updated_at)
-          VALUES ('testimonials', ${JSON.stringify(local.testimonials)}::jsonb, now())
-          ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
-        `.catch(() => {});
-      }
-    }
-
-    const merged = { ...local, ...data };
-    memoryContentCache = { data: merged, timestamp: Date.now() };
-    return merged;
+    return { ...local, ...data };
   } catch (e) {
-    console.error('Neon loadContent error, serving defaults:', e);
+    console.error('Neon loadContent error, serving local content:', e);
     return local;
   }
 });
@@ -197,7 +198,6 @@ async function getContent<K extends ContentKey>(key: K): Promise<ContentMap[K]> 
 }
 
 export async function setContent<K extends ContentKey>(key: K, data: ContentMap[K]): Promise<ContentMap[K]> {
-  memoryContentCache = null;
   const sql = getSql();
   if (sql) {
     await sql`

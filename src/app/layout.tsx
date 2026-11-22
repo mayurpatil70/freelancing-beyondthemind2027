@@ -5,6 +5,8 @@ import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 import { SiteFlight } from '@/components/layout/SiteFlight';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { CMSProvider } from '@/contexts/CMSContext';
+import { getSiteSettings, getExperiences, getAttractions, getGallery } from '@/lib/storage/store';
+import type { SiteSettings } from '@/types';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -46,7 +48,7 @@ const siteUrl = (() => {
   return 'https://beyondthemind2027.vercel.app';
 })();
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: 'Beyond the Mind 2027 — The Divine Retreat | Rishikesh, Uttarakhand',
@@ -140,11 +142,36 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+// The admin SEO tab's Search Console token; the env var still wins when set.
+function searchConsoleCode(settings: SiteSettings): string | undefined {
+  const raw = (settings.google_search_console_token || '').trim();
+  const match = raw.match(/content=["']([^"']+)["']/) || raw.match(/google-site-verification[=:]\s*(\S+)/);
+  return (match ? match[1] : raw) || undefined;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const google = process.env.NEXT_PUBLIC_GSC_VERIFICATION || searchConsoleCode(settings) || 'beyond-the-mind-2027';
+  return { ...baseMetadata, verification: { ...baseMetadata.verification, google } };
+}
+
+// Re-render with fresh CMS content at most every 5 minutes; admin saves revalidate immediately.
+export const revalidate = 300;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Live CMS content for client components (footer, contact, hero notice, cards).
+  // Without this, CMSProvider only ever had the build-time db.json defaults, so admin saves never showed.
+  const [cmsSettings, cmsExperiences, cmsAttractions, cmsGallery] = await Promise.all([
+    getSiteSettings(),
+    getExperiences(),
+    getAttractions(),
+    getGallery(),
+  ]);
+
   // Enhanced GEO & AEO Knowledge Graph Schemas for AI Agents (ChatGPT, Perplexity, Gemini, Google Search)
   const structuredData = {
     '@context': 'https://schema.org',
@@ -170,7 +197,7 @@ export default function RootLayout({
         sameAs: [
           'https://www.instagram.com/thedivineretreat?exln=Y3RrM2FxcngxOWtm',
           'https://www.facebook.com/profile.php?id=61595374757132',
-          'https://www.youtube.com/@BeyondTheMindRetreat',
+          'https://www.youtube.com/@bodymindintellect',
           'https://x.com/beyondthemind27?s=11',
         ],
       },
@@ -290,7 +317,12 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#031713] text-[#FAF8F5] antialiased selection:bg-[#D4AF37] selection:text-[#031713]">
-        <CMSProvider>
+        <CMSProvider
+          initialSettings={cmsSettings}
+          initialExperiencesList={cmsExperiences}
+          initialAttractionsList={cmsAttractions}
+          initialGalleryList={cmsGallery}
+        >
           <LanguageProvider>
             {children}
             <SiteFlight />

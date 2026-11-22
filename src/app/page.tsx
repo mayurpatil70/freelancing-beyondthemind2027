@@ -1,4 +1,6 @@
 import React from 'react';
+import type { Metadata } from 'next';
+import { withCmsKeywords } from '@/lib/seo/keywords';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar } from '@/components/layout/Navbar';
@@ -31,6 +33,11 @@ import {
 } from 'lucide-react';
 
 export const revalidate = 300;
+
+// Home keywords come from the admin SEO tab; without any, the root layout's keywords apply.
+export function generateMetadata(): Promise<Metadata> {
+  return withCmsKeywords({}, 'home');
+}
 
 export default async function HomePage() {
   const settings = await getSiteSettings();
