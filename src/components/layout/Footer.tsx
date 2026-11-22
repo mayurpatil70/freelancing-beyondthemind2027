@@ -268,19 +268,22 @@ export function Footer() {
         <div className="mt-10 pt-6 border-t border-emerald-900/60 flex flex-col md:flex-row items-center justify-between text-xs text-stone-subtle/70 gap-4">
           <p>© 2027 Beyond the Mind. All Rights Reserved.</p>
 
-          <div className="flex items-center gap-1.5 text-xs text-stone-subtle/85">
+          <a
+            href="https://linktr.ee/hackerfromhills"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Team Hackerfromhills"
+            className="inline-flex items-center gap-1.5 text-xs text-stone-subtle/85 hover:text-gold-300 transition-colors group py-1"
+          >
             <span>Made with</span>
-            <span className="text-rose-500 font-sans text-sm inline-block leading-none">♡</span>
+            <span className="text-rose-500 inline-block group-hover:scale-125 transition-transform text-sm leading-none" role="img" aria-label="love">
+              ❤️
+            </span>
             <span>by</span>
-            <a
-              href="https://linktr.ee/hackerfromhills"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold-400 hover:text-gold-200 font-medium underline underline-offset-4 decoration-gold-400/80 transition-colors"
-            >
+            <span className="text-gold-400 group-hover:text-gold-200 font-medium underline underline-offset-4 decoration-gold-400/80">
               Team Hackerfromhills
-            </a>
-          </div>
+            </span>
+          </a>
 
           <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/privacy-policy" prefetch={true} className="hover:text-gold-300 transition-colors">
@@ -303,16 +306,18 @@ export function Footer() {
       </div>
 
       {/* Dedicated Developer Bar */}
-      <div className="bg-[#010907] border-t border-gold-500/15 py-3 px-4 text-center">
+      <div className="bg-[#010907] border-t border-gold-500/20 py-3.5 px-4 text-center relative z-10">
         <a
           href="https://linktr.ee/hackerfromhills"
           target="_blank"
           rel="noopener noreferrer"
           title="Team Hackerfromhills"
-          className="text-xs text-stone-subtle/85 hover:text-gold-300 inline-flex items-center justify-center gap-1.5 transition-colors group cursor-pointer"
+          className="text-xs text-stone-subtle/90 hover:text-gold-300 inline-flex items-center justify-center gap-1.5 transition-colors group cursor-pointer"
         >
           <span>Made with</span>
-          <span className="text-rose-500 text-sm leading-none inline-block group-hover:scale-125 transition-transform">♡</span>
+          <span className="text-rose-500 text-sm leading-none inline-block group-hover:scale-125 transition-transform" role="img" aria-label="love">
+            ❤️
+          </span>
           <span>by</span>
           <span className="text-gold-400 group-hover:text-gold-200 font-medium underline underline-offset-4 decoration-gold-400/80">
             Team Hackerfromhills
