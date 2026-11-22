@@ -16,8 +16,11 @@ interface GalleryGridProps {
 }
 
 export function GalleryGrid({ items: initialItems }: GalleryGridProps) {
-  const { gallery } = useCMS();
-  const items = gallery && gallery.length > 0 ? gallery : initialItems;
+  const { gallery, liveUpdated } = useCMS();
+  const hasLiveUpdate = liveUpdated?.gallery;
+  const items = hasLiveUpdate && gallery && gallery.length > 0
+    ? gallery
+    : (initialItems && initialItems.length > 0 ? initialItems : gallery);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);

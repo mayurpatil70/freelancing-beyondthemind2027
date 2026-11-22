@@ -33,8 +33,11 @@ interface ExperiencesDetailListProps {
 }
 
 export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailListProps) {
-  const { experiences } = useCMS();
-  const list = experiences && experiences.length > 0 ? experiences : initialExperiences;
+  const { experiences, liveUpdated } = useCMS();
+  const hasLiveUpdate = liveUpdated?.experiences;
+  const list = hasLiveUpdate && experiences && experiences.length > 0
+    ? experiences
+    : (initialExperiences && initialExperiences.length > 0 ? initialExperiences : experiences);
   const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null);
 
   const lightboxImages = list.map((exp) => ({
@@ -76,7 +79,7 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                       fill
                       unoptimized
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
+                      className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#07261F] via-transparent to-transparent opacity-80 group-hover/img:opacity-60 transition-opacity" />
                     

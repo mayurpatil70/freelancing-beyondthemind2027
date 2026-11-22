@@ -127,7 +127,7 @@ const loadContent = cache(async (): Promise<Partial<ContentMap>> => {
       const rows = await sql`SELECT key, data FROM cms_content`;
       return Object.fromEntries(rows.map((r) => [r.key, r.data])) as Partial<ContentMap>;
     };
-    const data = await withTimeout(fetchRows(), 2500, local);
+    const data = await withTimeout(fetchRows(), 8000, local);
     const merged = { ...local, ...data };
     memoryContentCache = { data: merged, timestamp: Date.now() };
     return merged;

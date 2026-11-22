@@ -20,6 +20,7 @@ interface CMSContextType {
   attractions: RishikeshAttraction[];
   gallery: GalleryItem[];
   customContacts: CustomContactLink[];
+  liveUpdated: Record<string, boolean>;
   updateCMSData: (type: string, data: unknown) => void;
 }
 
@@ -29,10 +30,11 @@ const CMSContext = createContext<CMSContextType>({
   attractions: initialAttractions,
   gallery: [],
   customContacts: [],
+  liveUpdated: {},
   updateCMSData: () => {},
 });
 
-const STORAGE_KEY = 'btm_cms_client_store_v1';
+const STORAGE_KEY = 'btm_cms_client_store_v2';
 const CHANNEL_NAME = 'btm_cms_sync_channel';
 
 export function CMSProvider({
@@ -56,17 +58,39 @@ export function CMSProvider({
     initialAttractionsList || initialAttractions
   );
   const [gallery, setGallery] = useState<GalleryItem[]>(initialGalleryList || []);
+  const [liveUpdated, setLiveUpdated] = useState<Record<string, boolean>>({});
 
-  // Hydrate from localStorage on client mount if newer/present
+  // Purge any stale legacy localStorage on mount
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('btm_cms_client_store_v1');
+      }
+    } catch {}
+  }, []);
+
+  // Hydrate from localStorage on client mount if newer/present (only when an active local edit exists)
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (parsed.settings) setSettings((prev) => ({ ...prev, ...parsed.settings }));
-        if (parsed.experiences && Array.isArray(parsed.experiences)) setExperiences(parsed.experiences);
-        if (parsed.attractions && Array.isArray(parsed.attractions)) setAttractions(parsed.attractions);
-        if (parsed.gallery && Array.isArray(parsed.gallery)) setGallery(parsed.gallery);
+        if (parsed.settings) {
+          setSettings((prev) => ({ ...prev, ...parsed.settings }));
+          setLiveUpdated((prev) => ({ ...prev, settings: true }));
+        }
+        if (parsed.experiences && Array.isArray(parsed.experiences)) {
+          setExperiences(parsed.experiences);
+          setLiveUpdated((prev) => ({ ...prev, experiences: true }));
+        }
+        if (parsed.attractions && Array.isArray(parsed.attractions)) {
+          setAttractions(parsed.attractions);
+          setLiveUpdated((prev) => ({ ...prev, attractions: true }));
+        }
+        if (parsed.gallery && Array.isArray(parsed.gallery)) {
+          setGallery(parsed.gallery);
+          setLiveUpdated((prev) => ({ ...prev, gallery: true }));
+        }
       }
     } catch (e) {
       console.warn('CMS localStorage hydration error:', e);
@@ -84,12 +108,16 @@ export function CMSProvider({
         const { type, data } = event.data || {};
         if (type === 'settings' && data) {
           setSettings((prev) => ({ ...prev, ...data }));
+          setLiveUpdated((prev) => ({ ...prev, settings: true }));
         } else if (type === 'experiences' && Array.isArray(data)) {
           setExperiences(data);
+          setLiveUpdated((prev) => ({ ...prev, experiences: true }));
         } else if (type === 'attractions' && Array.isArray(data)) {
           setAttractions(data);
+          setLiveUpdated((prev) => ({ ...prev, attractions: true }));
         } else if (type === 'gallery' && Array.isArray(data)) {
           setGallery(data);
+          setLiveUpdated((prev) => ({ ...prev, gallery: true }));
         }
       };
     } catch {
@@ -100,10 +128,22 @@ export function CMSProvider({
       if (e.key === STORAGE_KEY && e.newValue) {
         try {
           const parsed = JSON.parse(e.newValue);
-          if (parsed.settings) setSettings((prev) => ({ ...prev, ...parsed.settings }));
-          if (parsed.experiences) setExperiences(parsed.experiences);
-          if (parsed.attractions) setAttractions(parsed.attractions);
-          if (parsed.gallery) setGallery(parsed.gallery);
+          if (parsed.settings) {
+            setSettings((prev) => ({ ...prev, ...parsed.settings }));
+            setLiveUpdated((prev) => ({ ...prev, settings: true }));
+          }
+          if (parsed.experiences) {
+            setExperiences(parsed.experiences);
+            setLiveUpdated((prev) => ({ ...prev, experiences: true }));
+          }
+          if (parsed.attractions) {
+            setAttractions(parsed.attractions);
+            setLiveUpdated((prev) => ({ ...prev, attractions: true }));
+          }
+          if (parsed.gallery) {
+            setGallery(parsed.gallery);
+            setLiveUpdated((prev) => ({ ...prev, gallery: true }));
+          }
         } catch {
           // ignore
         }
@@ -127,15 +167,19 @@ export function CMSProvider({
           saveToStorage({ settings: updated });
           return updated;
         });
+        setLiveUpdated((prev) => ({ ...prev, settings: true }));
       } else if (type === 'experiences' && Array.isArray(data)) {
         setExperiences(data as SacredExperience[]);
         saveToStorage({ experiences: data });
+        setLiveUpdated((prev) => ({ ...prev, experiences: true }));
       } else if (type === 'attractions' && Array.isArray(data)) {
         setAttractions(data as RishikeshAttraction[]);
         saveToStorage({ attractions: data });
+        setLiveUpdated((prev) => ({ ...prev, attractions: true }));
       } else if (type === 'gallery' && Array.isArray(data)) {
         setGallery(data as GalleryItem[]);
         saveToStorage({ gallery: data });
+        setLiveUpdated((prev) => ({ ...prev, gallery: true }));
       }
 
       // Broadcast to other open tabs
@@ -172,6 +216,7 @@ export function CMSProvider({
         attractions,
         gallery,
         customContacts,
+        liveUpdated,
         updateCMSData,
       }}
     >

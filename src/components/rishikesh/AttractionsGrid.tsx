@@ -17,8 +17,11 @@ export function AttractionsGrid({
   title = 'Rishikesh Attractions & Sacred Adventures',
   subtitle = 'Enhance your retreat pilgrimage with iconic Rishikesh experiences — from adrenaline-pumping bungee jumps and river rafting to ancient meditation caves.',
 }: AttractionsGridProps) {
-  const { attractions: cmsAttractions } = useCMS();
-  const attractions = cmsAttractions && cmsAttractions.length > 0 ? cmsAttractions : initialAttractions;
+  const { attractions: cmsAttractions, liveUpdated } = useCMS();
+  const hasLiveUpdate = liveUpdated?.attractions;
+  const attractions = hasLiveUpdate && cmsAttractions && cmsAttractions.length > 0
+    ? cmsAttractions
+    : (initialAttractions && initialAttractions.length > 0 ? initialAttractions : cmsAttractions);
   return (
     <div className="space-y-12">
       <div className="text-center max-w-3xl mx-auto space-y-3">

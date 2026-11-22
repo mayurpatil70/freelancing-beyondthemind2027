@@ -67,12 +67,12 @@ export function ExperienceCard({ experience, featured = false }: ExperienceCardP
             fill
             unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
+            className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/25 opacity-70 group-hover/img:opacity-50 transition-opacity" />
 
           {/* Spiritual Dimension Tag */}
-          <span className="absolute top-4 left-4 max-w-[70%] truncate rounded-md border border-gold-400/70 bg-[#031713]/85 px-3 py-1.5 text-[10px] font-semibold tracking-[0.18em] uppercase text-gold-300 backdrop-blur-sm pointer-events-none">
+          <span className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 max-w-[calc(100%-3.75rem)] rounded-md border border-gold-400/70 bg-[#031713]/90 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-[10px] font-semibold tracking-wider sm:tracking-[0.14em] uppercase text-gold-300 backdrop-blur-md pointer-events-none leading-snug break-words">
             {experience.spiritual_dimension}
           </span>
 
