@@ -141,15 +141,18 @@ const CONTENT_PATCHES: ContentPatch[] = [
   // Until this change, programme, FAQs and testimonials were always rendered from db.json and Neon's copies
   // were overwritten from it on every read, so admins could not have edited them. Now that Neon wins, copy
   // the current db.json version over once so the switch shows exactly what the site showed before.
-  { id: '2026-11-22-neon-takes-over-programme', key: 'programme', replace: seed.programme },
-  { id: '2026-11-22-neon-takes-over-faqs', key: 'faqs', replace: seed.faqs },
-  { id: '2026-11-22-neon-takes-over-testimonials', key: 'testimonials', replace: seed.testimonials },
+  { id: '2026-11-22-neon-takes-over-programme-v2', key: 'programme', replace: seed.programme },
+  { id: '2026-11-22-neon-takes-over-faqs-v2', key: 'faqs', replace: seed.faqs },
+  { id: '2026-11-22-neon-takes-over-testimonials-v2', key: 'testimonials', replace: seed.testimonials },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
 let patchesApplied: Promise<void> | null = null;
 
 function applyContentPatches(sql: Sql): Promise<void> {
+  // Preview deployments can share the production database. Only production (or local dev) applies patches,
+  // so a preview build cannot claim a patch while the old production code is still live.
+  if (process.env.VERCEL_ENV === 'preview') return Promise.resolve();
   if (!patchesApplied) {
     patchesApplied = (async () => {
       await sql`CREATE TABLE IF NOT EXISTS cms_patches (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`;
