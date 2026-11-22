@@ -17,7 +17,7 @@ export function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gold-radial opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8">
           {/* Brand Identity */}
           <div className="lg:col-span-2 space-y-5">
             <Link href="/" prefetch={true} className="inline-flex items-center gap-3 group">
@@ -130,11 +130,11 @@ export function Footer() {
           </div>
 
           {/* Official Contact & Socials */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:col-span-2">
             <h4 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
               Retreat Concierge
             </h4>
-            <ul className="space-y-3 text-xs">
+            <ul className="space-y-3 text-sm">
               <li>
                 <a
                   href={`https://wa.me/${cleanPhone}`}
@@ -165,7 +165,7 @@ export function Footer() {
                   className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-gold-400 shrink-0" />
-                  <span className="whitespace-nowrap text-[11px] sm:text-xs lg:text-[length:clamp(9px,0.82vw,12px)]">{email}</span>
+                  <span className="whitespace-nowrap">{email}</span>
                 </a>
               </li>
               {settings.secondary_email && (
@@ -175,7 +175,7 @@ export function Footer() {
                     className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                   >
                     <Mail className="w-4 h-4 text-gold-400/80 shrink-0" />
-                    <span className="whitespace-nowrap text-[11px] sm:text-xs lg:text-[length:clamp(9px,0.82vw,12px)]">{settings.secondary_email}</span>
+                    <span className="whitespace-nowrap">{settings.secondary_email}</span>
                   </a>
                 </li>
               )}
@@ -202,7 +202,7 @@ export function Footer() {
                     ) : (
                       <ExternalLink className="w-4 h-4 text-gold-400 shrink-0" />
                     )}
-                    <span className={c.type === 'email' ? 'whitespace-nowrap text-[11px] sm:text-xs lg:text-[length:clamp(9px,0.82vw,12px)]' : 'break-words min-w-0'}>
+                    <span className={c.type === 'email' ? 'whitespace-nowrap' : 'break-words min-w-0'}>
                       <strong className="font-medium text-gold-300/90">{c.label}:</strong> {c.value}
                     </span>
                   </a>

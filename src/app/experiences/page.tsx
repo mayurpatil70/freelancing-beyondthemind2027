@@ -123,7 +123,7 @@ export default async function ExperiencesPage() {
               <strong className="text-gold-300 font-medium">
                 Sacred Ethics & Guidance:
               </strong>{" "}
-              These sessions are offered as experiential contemplative and energetic practices for inner stillness, self-awareness, and spiritual growth. Guided under the reverence of Pradeep Muthukulam and Beyond the Mind.
+              These sessions are offered as experiential contemplative and energetic practices for inner stillness, self-awareness, and spiritual growth. Guided under the reverence of Pradeep Muthukulam.
             </p>
           </div>
         </div>

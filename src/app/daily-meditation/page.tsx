@@ -118,13 +118,13 @@ export default async function DailyMeditationPage() {
             <div className="space-y-5 text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
               {descriptionParagraphs.length > 0 ? (
                 descriptionParagraphs.map((p, i) => (
-                  <p key={i} className={i === 0 ? 'text-base sm:text-lg text-ivory-100 font-serif leading-snug' : undefined}>
+                  <p key={i} className={i === 0 ? 'text-base sm:text-lg text-ivory-100 font-normal leading-relaxed' : undefined}>
                     {p}
                   </p>
                 ))
               ) : (
               <>
-              <p className="text-base sm:text-lg text-ivory-100 font-serif leading-snug">
+              <p className="text-base sm:text-lg text-ivory-100 font-normal leading-relaxed">
                 Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves.
               </p>
               <p>
