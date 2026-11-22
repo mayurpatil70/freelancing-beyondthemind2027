@@ -270,14 +270,14 @@ export function WhatsAppInquiryModal({
           <div className="p-3 rounded-xl bg-[#041512] border border-gold-500/25 flex items-start gap-2.5 text-xs text-stone-subtle/85 font-light">
             <Globe className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              <strong className="text-gold-300 font-medium">Outside India or WhatsApp not working?</strong> You can also connect directly via email at{' '}
+              <strong className="text-gold-300 font-medium">Outside India or unable to reach us on WhatsApp?</strong> Connect with us via email at{' '}
               <a
                 href="mailto:moolabrahman@gmail.com?subject=Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027"
                 className="text-gold-300 underline font-medium hover:text-white"
               >
                 moolabrahman@gmail.com
               </a>{' '}
-              or via social media.
+              or through our social media platforms.
             </p>
           </div>
 

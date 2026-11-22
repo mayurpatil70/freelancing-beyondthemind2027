@@ -219,14 +219,14 @@ export function ContactForm() {
           Your enquiry details are safely registered and forwarded directly to WhatsApp (+91 80755 72018).
         </p>
         <p className="text-[11px] text-gold-300/90 leading-relaxed font-light">
-          <strong className="text-gold-300 font-medium">Outside India / WhatsApp not working?</strong> For seekers outside India or if WhatsApp is not working, connect with us directly via email at{' '}
+          <strong className="text-gold-300 font-medium">Outside India or unable to reach us on WhatsApp?</strong> Connect with us via email at{' '}
           <a
             href="mailto:moolabrahman@gmail.com?subject=Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027"
             className="text-gold-300 underline font-medium hover:text-white"
           >
             moolabrahman@gmail.com
           </a>{' '}
-          or through our social media.
+          or through our social media platforms.
         </p>
       </div>
 

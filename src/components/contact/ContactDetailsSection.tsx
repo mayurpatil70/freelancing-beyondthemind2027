@@ -119,21 +119,23 @@ export function ContactDetailsSection() {
 
               {/* International & Outside India Customers Guidance */}
               <li>
-                <div className="p-4 rounded-2xl bg-[#041d17] border border-gold-400/35 space-y-2 shadow-inner">
-                  <div className="flex items-center gap-2 text-gold-300 font-semibold text-xs tracking-wider uppercase">
-                    <Globe className="w-4 h-4 text-gold-400 shrink-0" />
-                    <span>International Seekers (Outside India)</span>
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[#041d17] border border-gold-400/35">
+                  <Globe className="w-5 h-5 text-gold-400 shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <span className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
+                      Outside India or unable to reach us on WhatsApp?
+                    </span>
+                    <p className="text-xs text-stone-subtle/90 font-light leading-relaxed">
+                      Connect with us via email at{' '}
+                      <a
+                        href={`mailto:${email}?subject=International%20Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027`}
+                        className="text-gold-300 underline font-medium hover:text-white"
+                      >
+                        {email}
+                      </a>{' '}
+                      or through our social media platforms.
+                    </p>
                   </div>
-                  <p className="text-xs text-stone-subtle/90 font-light leading-relaxed">
-                    We gladly welcome seekers from outside India! If WhatsApp is not working or unavailable in your country, you can connect with us directly through email at{' '}
-                    <a
-                      href={`mailto:${email}?subject=International%20Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027`}
-                      className="text-gold-300 underline font-medium hover:text-white"
-                    >
-                      {email}
-                    </a>{' '}
-                    or message our team across our official social media channels.
-                  </p>
                 </div>
               </li>
 
