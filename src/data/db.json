@@ -192,7 +192,7 @@
     {
       "date": "2027-10-05",
       "theme": "Sanctuary Arrival, Welcome & Acclimatization",
-      "summary": "Participants arrive in Rishikesh on October 5. Check-in to peaceful accommodations, attend the retreat orientation circle, and acclimatize by the sacred Ganges. Strict vegetarian food during retreat.",
+      "summary": "Participants arrive in Rishikesh on October 5. Check-in to peaceful accommodations, attend the retreat orientation circle, and acclimatize by the sacred Ganges.",
       "day_name": "Arrival Day",
       "sessions": [
         {
@@ -212,7 +212,7 @@
     },
     {
       "date": "2027-10-06",
-      "theme": "Stress Buster & Soul Retrieval Ceremony",
+      "theme": "Stress Buster & Soul Retrieval Session",
       "summary": "The retreat begins with the intensive Stress Buster Session to release accumulated physical and mental tension.",
       "day_name": "Day 1",
       "sessions": [
@@ -223,7 +223,7 @@
         },
         {
           "phase": "Afternoon 2:30 PM",
-          "title": "Soul Retrieval Ceremony",
+          "title": "Soul Retrieval Session",
           "description": "Gathering dissociated life force and restoring unbroken sovereignty in the heart space."
         }
       ],
@@ -233,22 +233,22 @@
     },
     {
       "date": "2027-10-07",
-      "theme": "Kundalini Awakening & Shiva Mandala Merging",
-      "summary": "Deepening into energetic awakening with guided Kundalini activation and spinal channel alignment, culminating in the sacred Soul Liberation and Shiva Mandala merging process.",
+      "theme": "Kundalini Awakening & Soul Liberation Sessions",
+      "summary": "Deepening into energetic awakening with guided Kundalini activation and spinal channel alignment, culminating in the sacred Soul Liberation sessions.",
       "day_name": "Day 2",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
-          "title": "Kundalini Awakening Initiation",
+          "title": "Kundalini Awakening Session",
           "description": "Direct energetic work guided by Pradeep Muthukulam, awakening the dormant spinal corridor safely."
         },
         {
           "phase": "Afternoon 2:30 PM",
-          "title": "Soul Liberation & Shiva Mandala Merging",
+          "title": "Soul Liberation Sessions",
           "description": "The signature meditation immersion of transcendental stillness and supreme soul union."
         }
       ],
-      "subtitle": "Spinal Corridor Activation & Sacred Mandala Union",
+      "subtitle": "Spinal Corridor Activation & Sacred Soul Realization",
       "day_number": 2,
       "formatted_date": "Thursday, October 7, 2027"
     },
@@ -275,18 +275,18 @@
     },
     {
       "date": "2027-10-09",
-      "theme": "Pinnacle Guided Meditation",
+      "theme": "Guided Meditation",
       "summary": "Concluding the retreat with deep stillness, inner connection, and guided meditation to anchor the transformative journey into daily life.",
       "day_name": "Day 4",
       "sessions": [
         {
           "phase": "Morning 10:00 AM",
-          "title": "Pinnacle Guided Meditation",
+          "title": "Guided Meditation",
           "description": "Deep stillness and inner connection anchoring the transformative journey."
         },
         {
           "phase": "Afternoon 2:30 PM",
-          "title": "Pinnacle Guided Meditation",
+          "title": "Guided Meditation",
           "description": "Deep stillness and inner connection anchoring the transformative journey."
         }
       ],
@@ -436,9 +436,9 @@
     },
     {
       "id": "faq-8",
-      "answer": "We offer private single occupancy, twin sharing, and non-residential options. Strict vegetarian food during retreat is prepared fresh daily to support energetic clarity and meditative depth. We do not provide welcome drinks or any non-vegetarian meals.",
+      "answer": "We offer private single occupancy, twin sharing, and non-residential options.",
       "category": "Accommodations & Meals",
-      "question": "What are the accommodation and meal arrangements?"
+      "question": "What are the accommodation arrangements?"
     },
     {
       "id": "faq-9",

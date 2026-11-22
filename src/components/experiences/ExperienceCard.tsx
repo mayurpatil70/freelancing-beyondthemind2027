@@ -58,31 +58,43 @@ export function ExperienceCard({ experience, featured = false }: ExperienceCardP
         {/* Full-width photo container with interactive click-to-view preview */}
         <div
           onClick={() => setLightboxOpen(true)}
-          className="relative w-full aspect-[16/10] overflow-hidden cursor-pointer group/img"
+          className="relative w-full aspect-[16/10] overflow-hidden cursor-pointer group/img bg-[#02100d]"
           title="Click to view full photo in high resolution"
         >
+          {/* Ambient blurred backdrop so whole photo fits seamlessly without empty letterboxing */}
+          <Image
+            src={experience.image}
+            alt=""
+            fill
+            unoptimized
+            aria-hidden="true"
+            className="object-cover w-full h-full blur-md opacity-40 scale-110 pointer-events-none"
+          />
+
+          {/* Whole photo fully visible without any cropping */}
           <Image
             src={experience.image}
             alt={experience.title}
             fill
             unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
+            className="object-contain w-full h-full relative z-[1] transition-transform duration-700 ease-out group-hover/img:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/25 opacity-70 group-hover/img:opacity-50 transition-opacity" />
+          <div className="absolute inset-0 z-[2] bg-gradient-to-b from-black/45 via-transparent to-black/35 opacity-70 group-hover/img:opacity-40 transition-opacity pointer-events-none" />
 
-          {/* Spiritual Dimension Tag */}
-          <span className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 max-w-[calc(100%-3.75rem)] rounded-md border border-gold-400/70 bg-[#031713]/90 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-[10px] font-semibold tracking-wider sm:tracking-[0.14em] uppercase text-gold-300 backdrop-blur-md pointer-events-none leading-snug break-words">
-            {experience.spiritual_dimension}
-          </span>
+          {/* Top Tag & Logo Bar: flex container guarantees a clear gap between tag & logo on all screens */}
+          <div className="absolute top-3 left-3 right-3 z-10 flex items-start justify-between gap-3 pointer-events-none">
+            <span className="rounded-md border border-gold-400/70 bg-[#031713]/90 px-2.5 py-1 text-[9px] sm:text-[10px] font-semibold tracking-wider uppercase text-gold-300 backdrop-blur-md leading-snug break-words shadow-md max-w-[calc(100%-3.5rem)]">
+              {experience.spiritual_dimension}
+            </span>
 
-          {/* Logo Badge */}
-          <span className="absolute top-3 right-3 h-10 w-10 overflow-hidden rounded-full ring-1 ring-gold-400/80 shadow-lg pointer-events-none">
-            <Image src="/images/brand/logo.jpg" alt="" fill sizes="40px" className="object-cover" />
-          </span>
+            <span className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 overflow-hidden rounded-full ring-1 ring-gold-400/80 shadow-lg bg-[#031713]">
+              <Image src="/images/brand/logo.jpg" alt="" fill sizes="40px" className="object-cover" />
+            </span>
+          </div>
 
           {/* Expand Overlay Pill */}
-          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/70 border border-gold-400/40 text-[10px] uppercase tracking-wider text-gold-300 opacity-90 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all shadow-md">
+          <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 border border-gold-400/40 text-[10px] uppercase tracking-wider text-gold-300 opacity-90 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all shadow-md">
             <Maximize2 className="w-3 h-3 text-gold-300" />
             <span>Click to View Photo</span>
           </div>

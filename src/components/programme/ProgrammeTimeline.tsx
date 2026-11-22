@@ -112,7 +112,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
             </div>
 
             <p className="text-[11px] text-stone-subtle/60 italic pt-2">
-              Note: Exact hour-by-hour sequence is attuned organically by Pradeep Muthukulam based on group energetic receptivity and atmospheric rhythms. Strict vegetarian food during retreat.
+              Note: Exact hour-by-hour sequence is attuned organically by Pradeep Muthukulam based on group energetic receptivity and atmospheric rhythms.
             </p>
           </div>
         ))}

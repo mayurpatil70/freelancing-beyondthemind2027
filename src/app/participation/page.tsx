@@ -3,17 +3,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { SectionHeading } from '@/components/ui/SectionHeading';
 import {
-  Home,
-  Users,
-  Utensils,
-  BookOpen,
-  Car,
   ShieldAlert,
-  ArrowRight,
   CheckCircle2,
-  HelpCircle,
   Calendar,
   Video,
   Languages,
@@ -178,33 +170,7 @@ export default function ParticipationPage() {
             ))}
           </div>
 
-          {/* Dining & Atmosphere Features */}
-          <div className="p-8 sm:p-12 rounded-3xl bg-[#07261F]/40 border border-gold-500/20 space-y-8">
-            <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 text-center font-light">
-              Nourishment for Body & Spirit
-            </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 sm:gap-8">
-              <div className="p-6 rounded-2xl bg-emerald-950/60 border border-gold-500/15 space-y-2">
-                <Utensils className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-100 font-medium">Strict Vegetarian Food During Retreat</h4>
-                <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
-                  Strict vegetarian food during retreat. Wholesome, carefully prepared fresh sattvic vegetarian meals
-                  designed to keep the digestive tract calm and subtle energy channels responsive. We do not provide
-                  any welcome drinks or non-vegetarian items.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-emerald-950/60 border border-gold-500/15 space-y-2">
-                <HelpCircle className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-100 font-medium">Dietary Accommodations</h4>
-                <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
-                  Strict vegetarian, vegan, gluten-free, or special medical dietary needs can be noted during registration
-                  and accommodated by our dedicated kitchen team.
-                </p>
-              </div>
-            </div>
-          </div>
         </section>
       </main>
 

@@ -47,8 +47,30 @@ export default async function ExperiencesPage() {
   const experiences = await getExperiences();
   const attractions = await getAttractions();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Beyond the Mind 2027 Sacred Retreat Sessions',
+    description: 'Seven transformative sacred meditation & healing sessions in Rishikesh, India.',
+    itemListElement: experiences.map((exp, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      item: {
+        '@type': 'Course',
+        name: exp.title,
+        description: exp.short_desc || exp.full_desc,
+        keywords: exp.keywords || undefined,
+        url: `https://beyondthemind2027.vercel.app/experiences#${exp.slug}`,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <main className="pt-24 sm:pt-28">

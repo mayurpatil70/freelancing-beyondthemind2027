@@ -37,7 +37,7 @@ export default async function ProgrammePage() {
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
-              Arrival in Rishikesh on <strong>Tuesday, October 5, 2027</strong>. Intensive sessions run across four days from <strong>Wednesday, October 6 to Saturday, October 9, 2027</strong>. Strict vegetarian food during retreat.
+              Arrival in Rishikesh on <strong>Tuesday, October 5, 2027</strong>. Intensive sessions run across four days from <strong>Wednesday, October 6 to Saturday, October 9, 2027</strong>.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-gold-300">

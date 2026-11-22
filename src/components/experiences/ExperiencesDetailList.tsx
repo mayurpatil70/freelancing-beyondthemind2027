@@ -70,18 +70,26 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                 <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                   <div
                     onClick={() => setActiveLightboxIndex(idx)}
-                    className="relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[4/5] border border-gold-500/40 shadow-xl cursor-pointer group/img"
+                    className="relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[4/5] border border-gold-500/40 shadow-xl cursor-pointer group/img bg-[#02100d]"
                     title="Click to view full photo"
                   >
+                    <Image
+                      src={exp.image}
+                      alt=""
+                      fill
+                      unoptimized
+                      aria-hidden="true"
+                      className="object-cover w-full h-full blur-md opacity-40 scale-110 pointer-events-none"
+                    />
                     <Image
                       src={exp.image}
                       alt={exp.title}
                       fill
                       unoptimized
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
+                      className="object-contain w-full h-full relative z-[1] transition-transform duration-700 ease-out group-hover/img:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#07261F] via-transparent to-transparent opacity-80 group-hover/img:opacity-60 transition-opacity" />
+                    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#07261F]/80 via-transparent to-transparent opacity-70 group-hover/img:opacity-50 transition-opacity pointer-events-none" />
                     
                     <div className="absolute top-4 left-4 z-10 w-11 h-11 rounded-full bg-[#031713]/90 border border-gold-500/50 flex items-center justify-center font-serif text-sm text-gold-300 font-bold shadow-lg">
                       {String(exp.order).padStart(2, '0')}
@@ -134,24 +142,7 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                     </div>
                   )}
 
-                  {/* SEO Search Keywords for Google & AI Engines */}
-                  {exp.keywords && (
-                    <div className="pt-3">
-                      <span className="text-[10px] uppercase tracking-widest text-gold-400/80 font-semibold block mb-1.5">
-                        Focus Dimensions & SEO Keywords:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {exp.keywords.split(',').map((kw, ki) => (
-                          <span
-                            key={ki}
-                            className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-gold-500/25 text-gold-300 font-light"
-                          >
-                            #{kw.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+
 
                   <div className="pt-4 flex flex-wrap items-center gap-4">
                     <Link

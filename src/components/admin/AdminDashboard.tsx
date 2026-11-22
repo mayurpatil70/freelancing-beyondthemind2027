@@ -55,6 +55,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowUpDown,
+  Tag,
+  Hash,
+  GitBranch,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -88,6 +91,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [metaKeywords, setMetaKeywords] = useState<Record<string, string>>({});
 
   const [saving, setSaving] = useState(false);
+  const [pushingGithub, setPushingGithub] = useState(false);
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
 
   // Note Modal state
@@ -109,6 +113,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     short_desc: '',
     full_desc: '',
     highlights: [],
+    keywords: '',
   });
 
   // New Attraction Creation Modal state
@@ -209,6 +214,34 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       alert('Error connecting to server.');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handlePushToGitHub = async (cardTitle?: string) => {
+    setPushingGithub(true);
+    try {
+      // First save all experiences to CMS store
+      await saveContent('experiences', experiences, 'Session cards saved to live CMS.');
+      const res = await fetch('/api/admin/github-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: cardTitle
+            ? `feat(cms): update SEO keywords for session "${cardTitle}"`
+            : 'feat(cms): update session cards & SEO keywords via admin',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        showSaveSuccess(data.message || 'Pushed card updates to GitHub successfully!');
+      } else {
+        alert(data.message || 'Unable to complete push to GitHub.');
+      }
+    } catch (e) {
+      console.error('GitHub push error:', e);
+      alert('Network error communicating with GitHub push endpoint.');
+    } finally {
+      setPushingGithub(false);
     }
   };
 
@@ -655,6 +688,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       short_desc: '',
                       full_desc: '',
                       highlights: [],
+                      keywords: '',
                     });
                     setShowAddSessionModal(true);
                   }}
@@ -672,6 +706,17 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>{saving ? 'Saving...' : 'Save Sessions'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handlePushToGitHub()}
+                  disabled={pushingGithub || saving}
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-900 border border-gold-400/40 text-gold-300 hover:bg-emerald-800 text-xs font-semibold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50"
+                  title="Save and push all card updates directly to GitHub"
+                >
+                  <GitBranch className="w-3.5 h-3.5 text-gold-400" />
+                  <span>{pushingGithub ? 'Pushing to GitHub...' : 'Push to GitHub'}</span>
                 </button>
               </div>
             </div>
@@ -894,13 +939,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         </label>
                       </div>
                       {exp.image && (
-                        <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/35 mt-2 bg-black/40 group/prev">
-                          <img src={exp.image} alt={exp.title} className="w-full h-full object-cover object-top" />
+                        <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/35 mt-2 bg-black/60 group/prev">
+                          <img src={exp.image} alt="" className="absolute inset-0 w-full h-full object-cover blur-md opacity-35" />
+                          <img src={exp.image} alt={exp.title} className="relative z-10 w-full h-full object-contain" />
                           <a
                             href={exp.image}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="absolute bottom-2 right-2 px-2.5 py-1 rounded-md bg-black/75 border border-gold-400/40 text-[10px] text-gold-300 font-semibold tracking-wider uppercase hover:bg-black transition-colors flex items-center gap-1 shadow-md"
+                            className="absolute bottom-2 right-2 z-20 px-2.5 py-1 rounded-md bg-black/75 border border-gold-400/40 text-[10px] text-gold-300 font-semibold tracking-wider uppercase hover:bg-black transition-colors flex items-center gap-1 shadow-md"
                           >
                             <ExternalLink className="w-3 h-3" />
                             <span>Open Full Photo</span>
@@ -960,6 +1006,171 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         }}
                         className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                       />
+                    </div>
+
+                    {/* SEO Search Keywords for this Card */}
+                    <div className="sm:col-span-12 space-y-3 p-4 rounded-xl bg-emerald-950/60 border border-gold-500/25">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gold-500/15 pb-2.5">
+                        <div>
+                          <label className="text-[11px] uppercase tracking-wider text-gold-300 font-bold flex items-center gap-1.5">
+                            <Tag className="w-3.5 h-3.5 text-gold-400" />
+                            <span>Card SEO &amp; Discovery Keywords</span>
+                          </label>
+                          <p className="text-[10px] text-stone-subtle/70 font-light mt-0.5">
+                            Search keywords and AI entity discovery terms for this session. (Not rendered on public cards to keep them clean, but indexed by Google &amp; AI bots).
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (confirm(`Delete all keywords for "${exp.title}"?`)) {
+                                const updated = [...experiences];
+                                updated[index].keywords = '';
+                                setExperiences(updated);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-950/70 hover:bg-red-900 border border-red-500/30 text-red-300 text-[10px] font-medium transition-colors"
+                            title="Delete all keywords for this session card"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                            <span>Delete All Keywords</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              saveContent('experiences', experiences, `Keywords for "${exp.title}" saved!`);
+                            }}
+                            disabled={saving}
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-gold-500/20 hover:bg-gold-500/30 border border-gold-400/40 text-gold-300 text-[10px] font-semibold uppercase tracking-wider transition-colors disabled:opacity-50"
+                          >
+                            <Save className="w-3 h-3" />
+                            <span>Save Keywords</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handlePushToGitHub(exp.title)}
+                            disabled={pushingGithub}
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-emerald-900/90 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 text-[10px] font-semibold uppercase tracking-wider transition-colors disabled:opacity-50"
+                            title="Push updated keywords for this card to GitHub"
+                          >
+                            <GitBranch className="w-3 h-3 text-gold-400" />
+                            <span>{pushingGithub ? 'Pushing...' : 'Push to GitHub'}</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Keyword Pills with Individual Delete (X) */}
+                      <div>
+                        <span className="text-[10px] uppercase tracking-wider text-gold-400/80 font-semibold block mb-1.5">
+                          Active Keywords ({exp.keywords ? exp.keywords.split(',').filter((k) => k.trim()).length : 0}):
+                        </span>
+                        {exp.keywords && exp.keywords.trim().length > 0 ? (
+                          <div className="flex flex-wrap gap-1.5">
+                            {exp.keywords.split(',').map((kw, ki) => {
+                              const trimmed = kw.trim();
+                              if (!trimmed) return null;
+                              return (
+                                <span
+                                  key={ki}
+                                  className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-emerald-900/90 border border-gold-500/30 text-gold-200 shadow-sm"
+                                >
+                                  <span>#{trimmed}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const allKw = exp.keywords
+                                        ? exp.keywords.split(',').map((k) => k.trim()).filter(Boolean)
+                                        : [];
+                                      const updatedKw = allKw.filter((_, i) => i !== ki).join(', ');
+                                      const updated = [...experiences];
+                                      updated[index].keywords = updatedKw;
+                                      setExperiences(updated);
+                                    }}
+                                    className="w-4 h-4 rounded-full hover:bg-red-800 hover:text-white flex items-center justify-center text-gold-400 transition-colors font-bold text-xs"
+                                    title={`Delete keyword "${trimmed}"`}
+                                  >
+                                    ×
+                                  </button>
+                                </span>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <p className="text-[11px] text-stone-subtle/60 italic">
+                            No keywords currently set. Add keywords below.
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Add Keyword & Edit Comma-separated Text */}
+                      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-1">
+                        <div className="sm:col-span-8 space-y-1">
+                          <label className="text-[10px] uppercase text-gold-400/90 font-semibold">
+                            Edit Keywords (Comma-Separated Text)
+                          </label>
+                          <input
+                            type="text"
+                            value={exp.keywords || ''}
+                            placeholder="Stress Buster, Nervous System Reset, Himalayan Breathwork..."
+                            onChange={(e) => {
+                              const updated = [...experiences];
+                              updated[index].keywords = e.target.value;
+                              setExperiences(updated);
+                            }}
+                            className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 placeholder:text-stone-subtle/40"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-4 space-y-1">
+                          <label className="text-[10px] uppercase text-gold-400/90 font-semibold">
+                            Quick Add Keyword Chip
+                          </label>
+                          <div className="flex gap-1.5">
+                            <input
+                              type="text"
+                              id={`add-kw-${exp.id}`}
+                              placeholder="Type keyword &amp; click Add..."
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  e.preventDefault();
+                                  const input = e.currentTarget;
+                                  const val = input.value.trim();
+                                  if (val) {
+                                    const current = exp.keywords ? exp.keywords.trim() : '';
+                                    const updatedKw = current ? `${current}, ${val}` : val;
+                                    const updated = [...experiences];
+                                    updated[index].keywords = updatedKw;
+                                    setExperiences(updated);
+                                    input.value = '';
+                                  }
+                                }
+                              }}
+                              className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 placeholder:text-stone-subtle/40"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const el = document.getElementById(`add-kw-${exp.id}`) as HTMLInputElement;
+                                if (el && el.value.trim()) {
+                                  const val = el.value.trim();
+                                  const current = exp.keywords ? exp.keywords.trim() : '';
+                                  const updatedKw = current ? `${current}, ${val}` : val;
+                                  const updated = [...experiences];
+                                  updated[index].keywords = updatedKw;
+                                  setExperiences(updated);
+                                  el.value = '';
+                                }
+                              }}
+                              className="px-3.5 py-2 rounded-xl bg-emerald-900 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 text-xs font-semibold shrink-0"
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
