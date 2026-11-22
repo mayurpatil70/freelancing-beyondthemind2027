@@ -34,7 +34,7 @@ const CMSContext = createContext<CMSContextType>({
   updateCMSData: () => {},
 });
 
-const STORAGE_KEY = 'btm_cms_client_store_v3';
+const LEGACY_STORAGE_KEYS = ['btm_cms_client_store_v1', 'btm_cms_client_store_v2', 'btm_cms_client_store_v3'];
 const CHANNEL_NAME = 'btm_cms_sync_channel';
 
 export function CMSProvider({
@@ -60,54 +60,26 @@ export function CMSProvider({
   const [gallery, setGallery] = useState<GalleryItem[]>(initialGalleryList || []);
   const [liveUpdated, setLiveUpdated] = useState<Record<string, boolean>>({});
 
-  // Purge any stale legacy localStorage on mount
+  // Server data is the source of truth. When the server sends fresher props (after an admin save
+  // revalidates the layout), adopt them instead of keeping the first render's values.
+  useEffect(() => {
+    if (initialSettings) setSettings(initialSettings);
+  }, [initialSettings]);
+  useEffect(() => {
+    if (initialExperiencesList) setExperiences(initialExperiencesList);
+  }, [initialExperiencesList]);
+  useEffect(() => {
+    if (initialAttractionsList) setAttractions(initialAttractionsList);
+  }, [initialAttractionsList]);
+  useEffect(() => {
+    if (initialGalleryList) setGallery(initialGalleryList);
+  }, [initialGalleryList]);
+
+  // Older builds cached CMS content in localStorage and replayed it over server data. Clear it.
   useEffect(() => {
     try {
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('btm_cms_client_store_v1');
-        localStorage.removeItem('btm_cms_client_store_v2');
-      }
+      for (const key of LEGACY_STORAGE_KEYS) localStorage.removeItem(key);
     } catch {}
-  }, []);
-
-  // Hydrate from localStorage on client mount ONLY when an active admin editing session exists
-  // For standard site visitors, authoritative server/build-time data must never be overwritten
-  useEffect(() => {
-    try {
-      if (typeof window === 'undefined') return;
-
-      const isAdminSession = !!(
-        localStorage.getItem('btm_admin_session') ||
-        sessionStorage.getItem('btm_admin_session') ||
-        window.location.pathname.startsWith('/admin')
-      );
-
-      // Public visitors always receive the fresh SSR/build data directly
-      if (!isAdminSession) return;
-
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed.settings) {
-          setSettings((prev) => ({ ...prev, ...parsed.settings }));
-          setLiveUpdated((prev) => ({ ...prev, settings: true }));
-        }
-        if (parsed.experiences && Array.isArray(parsed.experiences)) {
-          setExperiences(parsed.experiences);
-          setLiveUpdated((prev) => ({ ...prev, experiences: true }));
-        }
-        if (parsed.attractions && Array.isArray(parsed.attractions)) {
-          setAttractions(parsed.attractions);
-          setLiveUpdated((prev) => ({ ...prev, attractions: true }));
-        }
-        if (parsed.gallery && Array.isArray(parsed.gallery)) {
-          setGallery(parsed.gallery);
-          setLiveUpdated((prev) => ({ ...prev, gallery: true }));
-        }
-      }
-    } catch (e) {
-      console.warn('CMS localStorage hydration error:', e);
-    }
   }, []);
 
   // Listen for real-time BroadcastChannel updates across all tabs
@@ -137,37 +109,8 @@ export function CMSProvider({
       // BroadcastChannel not supported in older browser
     }
 
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          if (parsed.settings) {
-            setSettings((prev) => ({ ...prev, ...parsed.settings }));
-            setLiveUpdated((prev) => ({ ...prev, settings: true }));
-          }
-          if (parsed.experiences) {
-            setExperiences(parsed.experiences);
-            setLiveUpdated((prev) => ({ ...prev, experiences: true }));
-          }
-          if (parsed.attractions) {
-            setAttractions(parsed.attractions);
-            setLiveUpdated((prev) => ({ ...prev, attractions: true }));
-          }
-          if (parsed.gallery) {
-            setGallery(parsed.gallery);
-            setLiveUpdated((prev) => ({ ...prev, gallery: true }));
-          }
-        } catch {
-          // ignore
-        }
-      }
-    };
-
-    window.addEventListener('storage', onStorage);
-
     return () => {
       channel?.close();
-      window.removeEventListener('storage', onStorage);
     };
   }, []);
 
@@ -176,22 +119,17 @@ export function CMSProvider({
     try {
       if (type === 'settings' && data) {
         setSettings((prev) => {
-          const updated = { ...prev, ...(data as Partial<SiteSettings>) };
-          saveToStorage({ settings: updated });
-          return updated;
+          return { ...prev, ...(data as Partial<SiteSettings>) };
         });
         setLiveUpdated((prev) => ({ ...prev, settings: true }));
       } else if (type === 'experiences' && Array.isArray(data)) {
         setExperiences(data as SacredExperience[]);
-        saveToStorage({ experiences: data });
         setLiveUpdated((prev) => ({ ...prev, experiences: true }));
       } else if (type === 'attractions' && Array.isArray(data)) {
         setAttractions(data as RishikeshAttraction[]);
-        saveToStorage({ attractions: data });
         setLiveUpdated((prev) => ({ ...prev, attractions: true }));
       } else if (type === 'gallery' && Array.isArray(data)) {
         setGallery(data as GalleryItem[]);
-        saveToStorage({ gallery: data });
         setLiveUpdated((prev) => ({ ...prev, gallery: true }));
       }
 
@@ -207,17 +145,6 @@ export function CMSProvider({
       console.warn('updateCMSData error:', err);
     }
   }, []);
-
-  const saveToStorage = (partial: Record<string, unknown>) => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const current = raw ? JSON.parse(raw) : {};
-      const updated = { ...current, ...partial };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    } catch (e) {
-      console.warn('saveToStorage error:', e);
-    }
-  };
 
   const customContacts = settings.custom_contacts || [];
 
@@ -242,15 +169,10 @@ export function useCMS() {
   return useContext(CMSContext);
 }
 
-// Helper to broadcast from Admin or external components
+// Lets other open tabs of this browser show an admin save instantly (in memory only, nothing persisted).
 export function broadcastCMSUpdate(type: string, data: unknown) {
   if (typeof window === 'undefined') return;
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const current = raw ? JSON.parse(raw) : {};
-    current[type] = data;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
-
     const bc = new BroadcastChannel(CHANNEL_NAME);
     bc.postMessage({ type, data });
     bc.close();

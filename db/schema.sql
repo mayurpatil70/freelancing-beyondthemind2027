@@ -45,3 +45,8 @@ CREATE TABLE IF NOT EXISTS media_assets (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS media_assets_created_at_idx ON media_assets (created_at DESC);
+
+CREATE TABLE IF NOT EXISTS cms_patches (
+  id TEXT PRIMARY KEY,
+  applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import { withCmsKeywords } from '@/lib/seo/keywords';
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
@@ -25,11 +26,15 @@ import {
 import { AttractionsGrid } from "@/components/rishikesh/AttractionsGrid";
 import { ExperiencesDetailList } from "@/components/experiences/ExperiencesDetailList";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Seven Retreat Sessions & Rishikesh Attractions | Beyond the Mind 2027",
   description:
     "Explore the 7 retreat sessions of Beyond the Mind 2027: Stress Buster, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, and Guided Meditation. Plus top Rishikesh attractions.",
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return withCmsKeywords(baseMetadata, 'sessions');
+}
 
 const iconMap: Record<string, React.ElementType> = {
   Feather,

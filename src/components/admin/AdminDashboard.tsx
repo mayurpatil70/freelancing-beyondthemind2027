@@ -205,9 +205,11 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.success !== false) {
         showSaveSuccess(successMsg);
-        broadcastCMSUpdate(type, payload);
+        broadcastCMSUpdate(type, data.data ?? payload);
+      } else if (res.status === 401) {
+        alert('Your admin session has expired. Please log in again, then save your changes.');
       } else {
-        alert(data.message || 'Failed to save changes. Please try again.');
+        alert(data.message || `Failed to save changes (error ${res.status}). Please try again.`);
       }
     } catch (e) {
       console.error('Save error:', e);
@@ -2314,7 +2316,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     type="text"
                     value={settings.youtube_url || ''}
                     onChange={(e) => setSettings({ ...settings, youtube_url: e.target.value })}
-                    placeholder="https://www.youtube.com/@BeyondTheMindRetreat"
+                    placeholder="https://www.youtube.com/@bodymindintellect"
                     className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                   />
                 </div>
