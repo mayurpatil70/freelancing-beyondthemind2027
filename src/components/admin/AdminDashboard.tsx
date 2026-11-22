@@ -2893,6 +2893,19 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 font-mono"
                 />
               </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-gold-400 font-semibold block">
+                  SEO Keywords (Comma-separated)
+                </label>
+                <input
+                  type="text"
+                  value={newSessionData.keywords || ''}
+                  placeholder="e.g. Stress Buster, Somatic Release, Himalayan Breathwork..."
+                  onChange={(e) => setNewSessionData({ ...newSessionData, keywords: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                />
+              </div>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-3 border-t border-gold-500/20">
@@ -2925,6 +2938,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       newSessionData.highlights && newSessionData.highlights.length > 0
                         ? newSessionData.highlights
                         : ['Sacred energy alignment', 'Experiential inner stillness'],
+                    keywords: newSessionData.keywords?.trim() || '',
                   };
                   const updated = [...experiences, newSession];
                   setExperiences(updated);
