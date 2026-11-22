@@ -34,7 +34,7 @@ const CMSContext = createContext<CMSContextType>({
   updateCMSData: () => {},
 });
 
-const STORAGE_KEY = 'btm_cms_client_store_v2';
+const STORAGE_KEY = 'btm_cms_client_store_v3';
 const CHANNEL_NAME = 'btm_cms_sync_channel';
 
 export function CMSProvider({
@@ -65,13 +65,26 @@ export function CMSProvider({
     try {
       if (typeof window !== 'undefined') {
         localStorage.removeItem('btm_cms_client_store_v1');
+        localStorage.removeItem('btm_cms_client_store_v2');
       }
     } catch {}
   }, []);
 
-  // Hydrate from localStorage on client mount if newer/present (only when an active local edit exists)
+  // Hydrate from localStorage on client mount ONLY when an active admin editing session exists
+  // For standard site visitors, authoritative server/build-time data must never be overwritten
   useEffect(() => {
     try {
+      if (typeof window === 'undefined') return;
+
+      const isAdminSession = !!(
+        localStorage.getItem('btm_admin_session') ||
+        sessionStorage.getItem('btm_admin_session') ||
+        window.location.pathname.startsWith('/admin')
+      );
+
+      // Public visitors always receive the fresh SSR/build data directly
+      if (!isAdminSession) return;
+
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);

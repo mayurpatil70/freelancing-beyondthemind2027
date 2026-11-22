@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     template: '%s | Beyond the Mind 2027',
   },
   description:
-    'A transformative 4-day spiritual retreat into the Infinite within. Guided by Pradeep Muthukulam in sacred Rishikesh, Uttarakhand from October 6–9, 2027 (Arrival: October 5). Featuring Kundalini Awakening, Energy Field Activation, Soul Liberation & Shiva Mandala.',
+    'A transformative 4-day spiritual retreat into the Infinite within. Guided by Pradeep Muthukulam in sacred Rishikesh, Uttarakhand from October 6–9, 2027 (Arrival: October 5). Featuring Kundalini Awakening, Energy Field Activation, Soul Liberation & Guided Meditation.',
   keywords: [
     'Beyond the Mind 2027',
     'The Divine Retreat',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     'Meditation Retreat Rishikesh',
     'Moola Brahman Retreat',
     'Ganges Meditation Retreat',
-    'Soul Liberation Shiva Mandala',
+    'Soul Liberation Guided Meditation',
     'Bio Field Dimensional Expansion',
     'Daily Guided Meditation Zoom',
     'Strict vegetarian food during retreat',

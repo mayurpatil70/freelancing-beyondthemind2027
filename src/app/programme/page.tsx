@@ -11,7 +11,7 @@ import { Calendar, Languages, ShieldCheck, ArrowRight, Sun, Shirt } from 'lucide
 export const metadata: Metadata = {
   title: 'Retreat Timetable (Arrival Oct 5 • Sessions Oct 6–9, 2027) | Beyond the Mind',
   description:
-    'Detailed retreat schedule for Beyond the Mind 2027 in Rishikesh. Arrival on Tuesday, October 5, followed by four days of sacred sessions from Stress Buster to Shiva Mandala.',
+    'Detailed retreat schedule for Beyond the Mind 2027 in Rishikesh. Arrival on Tuesday, October 5, followed by four days of sacred sessions from Stress Buster to Soul Liberation & Guided Meditation.',
 };
 
 export const revalidate = 300;

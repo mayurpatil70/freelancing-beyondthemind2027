@@ -82,7 +82,7 @@ export default async function HomePage() {
                     alt="Meditation along the Holy Ganges in the Sacred Foothills of Rishikesh"
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#031713]/85 via-black/20 to-transparent" />
