@@ -910,6 +910,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
                           Session Photo
                         </label>
+                        <span className="text-[11px] text-gold-400/90 font-mono bg-black/40 px-2 py-0.5 rounded border border-gold-500/20">
+                          Exact Aspect Ratio: 16:10 (e.g. 1600 × 1000 px)
+                        </span>
                       </div>
                       <div className="flex flex-col sm:flex-row gap-2 items-center">
                         <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 border border-gold-500/30 text-gold-300 hover:text-white cursor-pointer text-xs shrink-0 whitespace-nowrap transition-colors">
@@ -940,7 +943,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       </div>
                       {exp.image && (
                         <div className="relative w-full max-w-sm aspect-[16/10] rounded-xl overflow-hidden border border-gold-500/35 mt-2 bg-black/60 group/prev">
-                          <img src={exp.image} alt={exp.title} className="w-full h-full object-cover" />
+                          <img src={exp.image} alt={exp.title} className="w-full h-full object-cover object-top" />
                           <a
                             href={exp.image}
                             target="_blank"

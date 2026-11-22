@@ -79,7 +79,7 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                       fill
                       unoptimized
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
+                      className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#07261F]/80 via-transparent to-transparent opacity-50 group-hover/img:opacity-30 transition-opacity" />
                     

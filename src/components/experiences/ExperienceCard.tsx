@@ -61,14 +61,14 @@ export function ExperienceCard({ experience, featured = false }: ExperienceCardP
           className="relative w-full aspect-[16/10] overflow-hidden cursor-pointer group/img bg-[#031713]"
           title="Click to view full photo in high resolution"
         >
-          {/* Clean, unobstructed full photo */}
+          {/* Clean, unobstructed full photo anchored from the top to prevent clipping heads */}
           <Image
             src={experience.image}
             alt={experience.title}
             fill
             unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
+            className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-50 group-hover/img:opacity-30 transition-opacity" />
 
