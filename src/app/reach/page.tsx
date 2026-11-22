@@ -175,7 +175,7 @@ export default function ReachPage() {
                 prefetch={true}
                 className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-950 border border-gold-500/30 text-gold-300 font-semibold text-xs tracking-widest uppercase hover:bg-emerald-900 transition-all text-center"
               >
-                Enquire for Retreat
+                Enquire
               </Link>
             </div>
           </div>

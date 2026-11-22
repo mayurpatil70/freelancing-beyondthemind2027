@@ -11,9 +11,10 @@ import {
   MapPin,
   MessageCircle,
   ExternalLink,
+  Globe,
 } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
-import { formatWhatsAppUrl } from '@/lib/utils';
+import { formatWhatsAppUrl, handleWhatsAppClick } from '@/lib/utils';
 import { ContactForm } from '@/components/forms/ContactForm';
 
 export function ContactDetailsSection() {
@@ -66,6 +67,14 @@ export function ContactDetailsSection() {
                   href={`https://wa.me/${phone.replace(/[^0-9]/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) =>
+                    handleWhatsAppClick(
+                      e,
+                      `https://wa.me/${phone.replace(/[^0-9]/g, '')}`,
+                      'Retreat Enquiry - Beyond the Mind 2027',
+                      'Namaste Beyond the Mind Team,\n\nI would like to enquire about participation in Beyond the Mind 2027 in Rishikesh.'
+                    )
+                  }
                   className="group flex items-start gap-3.5 p-3.5 rounded-2xl bg-emerald-950/60 border border-gold-500/15 hover:border-gold-400/40 transition-colors"
                 >
                   <Phone className="w-5 h-5 text-gold-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
@@ -87,6 +96,14 @@ export function ContactDetailsSection() {
                     href={`https://wa.me/${secondaryPhone.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) =>
+                      handleWhatsAppClick(
+                        e,
+                        `https://wa.me/${secondaryPhone.replace(/[^0-9]/g, '')}`,
+                        'Retreat Enquiry - Beyond the Mind 2027',
+                        'Namaste Beyond the Mind Team,\n\nI would like to enquire about participation in Beyond the Mind 2027 in Rishikesh.'
+                      )
+                    }
                     className="group flex items-start gap-3.5 p-3.5 rounded-2xl bg-emerald-950/60 border border-gold-500/15 hover:border-gold-400/40 transition-colors"
                   >
                     <Phone className="w-5 h-5 text-gold-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
@@ -99,6 +116,26 @@ export function ContactDetailsSection() {
                   </a>
                 </li>
               )}
+
+              {/* International & Outside India Customers Guidance */}
+              <li>
+                <div className="p-4 rounded-2xl bg-[#041d17] border border-gold-400/35 space-y-2 shadow-inner">
+                  <div className="flex items-center gap-2 text-gold-300 font-semibold text-xs tracking-wider uppercase">
+                    <Globe className="w-4 h-4 text-gold-400 shrink-0" />
+                    <span>International Seekers (Outside India)</span>
+                  </div>
+                  <p className="text-xs text-stone-subtle/90 font-light leading-relaxed">
+                    We gladly welcome seekers from outside India! If WhatsApp is not working or unavailable in your country, you can connect with us directly through email at{' '}
+                    <a
+                      href={`mailto:${email}?subject=International%20Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027`}
+                      className="text-gold-300 underline font-medium hover:text-white"
+                    >
+                      {email}
+                    </a>{' '}
+                    or message our team across our official social media channels.
+                  </p>
+                </div>
+              </li>
 
               <li>
                 <a
@@ -284,6 +321,14 @@ export function ContactDetailsSection() {
               href={formatWhatsAppUrl(phone, inq.msg)}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) =>
+                handleWhatsAppClick(
+                  e,
+                  formatWhatsAppUrl(phone, inq.msg),
+                  inq.label,
+                  inq.msg
+                )
+              }
               className="p-5 rounded-2xl bg-emerald-950/70 border border-gold-500/15 hover:border-gold-400/50 transition-all flex flex-col justify-between group"
             >
               <div className="space-y-1.5">

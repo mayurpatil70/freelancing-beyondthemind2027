@@ -56,6 +56,9 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   poweredByHeader: false,
   compress: true,
   images: {

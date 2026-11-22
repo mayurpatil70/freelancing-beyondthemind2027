@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, User, Phone, Calendar, Users, MessageSquare } from 'lucide-react';
+import { X, User, Phone, Calendar, Users, MessageSquare, Globe, Mail } from 'lucide-react';
 import { ThemeSelect, ThemeSelectOption } from '@/components/ui/ThemeSelect';
 import { openWhatsApp } from '@/lib/utils';
 import { useCMS } from '@/contexts/CMSContext';
@@ -133,8 +133,12 @@ export function WhatsAppInquiryModal({
       console.error('Enquiry failed to save:', err);
     }
 
-    // Direct redirection to WhatsApp
-    openWhatsApp(whatsappUrl);
+    // Direct redirection to WhatsApp with fallback
+    openWhatsApp(
+      whatsappUrl,
+      `Retreat Enquiry: ${chosenProgram} - ${fullName || 'Seeker'}`,
+      text
+    );
     onClose();
   };
 
@@ -262,8 +266,23 @@ export function WhatsAppInquiryModal({
             />
           </div>
 
+          {/* Outside India & WhatsApp Fallback Notice */}
+          <div className="p-3 rounded-xl bg-[#041512] border border-gold-500/25 flex items-start gap-2.5 text-xs text-stone-subtle/85 font-light">
+            <Globe className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
+            <p className="leading-relaxed">
+              <strong className="text-gold-300 font-medium">Outside India or WhatsApp not working?</strong> You can also connect directly via email at{' '}
+              <a
+                href="mailto:moolabrahman@gmail.com?subject=Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027"
+                className="text-gold-300 underline font-medium hover:text-white"
+              >
+                moolabrahman@gmail.com
+              </a>{' '}
+              or via social media.
+            </p>
+          </div>
+
           {/* WhatsApp Submit Button (Matching Screenshot 3) */}
-          <div className="pt-2">
+          <div className="pt-1 space-y-2">
             <button
               type="submit"
               className="w-full py-3.5 px-6 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(37,211,102,0.4)] hover:shadow-[0_6px_25px_rgba(37,211,102,0.55)] active:scale-[0.99]"
@@ -273,6 +292,13 @@ export function WhatsAppInquiryModal({
               </svg>
               <span>CONNECT ON WHATSAPP</span>
             </button>
+            <a
+              href="mailto:moolabrahman@gmail.com?subject=Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027"
+              className="w-full py-2.5 px-4 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 font-semibold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <Mail className="w-3.5 h-3.5 text-gold-400" />
+              <span>Or Email Concierge (moolabrahman@gmail.com)</span>
+            </a>
           </div>
 
           {/* Privacy Trust Footer (Matching Screenshot 3) */}

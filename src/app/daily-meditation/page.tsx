@@ -115,7 +115,7 @@ export default async function DailyMeditationPage() {
                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase shadow-gold-md hover:scale-105 transition-all flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
-                <span>Enquire via WhatsApp for Zoom Details</span>
+                <span>Enquire</span>
               </a>
 
               <a

@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Send, CheckCircle2, MessageCircle } from 'lucide-react';
+import { Send, CheckCircle2, MessageCircle, Mail } from 'lucide-react';
 import { ThemeSelect } from '@/components/ui/ThemeSelect';
-import { openWhatsApp } from '@/lib/utils';
+import { openWhatsApp, handleWhatsAppClick } from '@/lib/utils';
 
 const NUMBER = '918075572018';
 
@@ -65,8 +65,12 @@ export function MeditationEnquiryForm() {
       console.error('Enquiry logging failed:', err);
     }
 
-    // Direct redirect to WhatsApp
-    openWhatsApp(whatsappUrl);
+    // Direct redirect to WhatsApp with email fallback
+    openWhatsApp(
+      whatsappUrl,
+      `Daily Meditation Enquiry: ${form.name}`,
+      messageText
+    );
     setSubmitting(false);
   };
 
@@ -79,7 +83,7 @@ export function MeditationEnquiryForm() {
         <div className="space-y-1">
           <h4 className="font-serif text-xl text-ivory-50">Enquiry Forwarded to WhatsApp</h4>
           <p className="text-xs text-stone-subtle/80 max-w-md mx-auto">
-            Your inquiry for Daily Guided Meditation has been initiated. If WhatsApp didn’t open automatically, tap below:
+            Your inquiry for Daily Guided Meditation has been initiated. If WhatsApp didn’t open automatically or is unavailable in your region, tap below:
           </p>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -87,10 +91,29 @@ export function MeditationEnquiryForm() {
             href={submittedUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) =>
+              handleWhatsAppClick(
+                e,
+                submittedUrl,
+                `Daily Meditation Enquiry: ${form.name}`,
+                'Namaste Beyond the Mind Team,\n\nI would like to join Daily Guided Meditation.'
+              )
+            }
             className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-semibold text-xs tracking-wider uppercase shadow-md hover:scale-105 transition-all"
           >
             <MessageCircle className="w-4 h-4" />
             <span>Open in WhatsApp</span>
+          </a>
+          <a
+            href={`mailto:moolabrahman@gmail.com?subject=${encodeURIComponent(
+              `Daily Meditation Enquiry: ${form.name}`
+            )}&body=${encodeURIComponent(
+              `Namaste Beyond the Mind Team,\n\nI would like to enquire about Daily Guided Meditation.\nName: ${form.name}\nPhone: ${form.phone}`
+            )}`}
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 font-semibold text-xs tracking-wider uppercase hover:bg-emerald-900 transition-all"
+          >
+            <Mail className="w-4 h-4" />
+            <span>Email (moolabrahman@gmail.com)</span>
           </a>
           <button
             type="button"

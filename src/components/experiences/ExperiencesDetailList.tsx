@@ -150,7 +150,7 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                       prefetch={true}
                       className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-semibold text-xs tracking-widest uppercase hover:scale-105 transition-all shadow-gold-sm"
                     >
-                      <span>Enquire For This Session</span>
+                      <span>Enquire</span>
                     </Link>
                   </div>
                 </div>

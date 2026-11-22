@@ -303,7 +303,7 @@ export default async function HomePage() {
                   className="w-full sm:w-auto px-7 py-3 rounded-full border border-gold-500/50 text-gold-300 hover:text-white hover:bg-gold-500/20 font-semibold text-xs tracking-widest uppercase transition-all text-center flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
-                  <span>Enquire via WhatsApp</span>
+                  <span>Enquire</span>
                 </a>
               </div>
             </div>

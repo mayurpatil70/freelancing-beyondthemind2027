@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema, ContactFormData } from '@/lib/validation/registration';
-import { Send, CheckCircle, MessageCircle, Calendar, Users } from 'lucide-react';
-import { formatWhatsAppUrl, openWhatsApp } from '@/lib/utils';
+import { Send, CheckCircle, MessageCircle, Calendar, Users, Globe, Mail } from 'lucide-react';
+import { formatWhatsAppUrl, openWhatsApp, handleWhatsAppClick } from '@/lib/utils';
 import { ThemeSelect } from '@/components/ui/ThemeSelect';
 import { RETREAT_INQUIRY_OPTIONS } from '@/components/layout/WhatsAppInquiryModal';
 
@@ -68,8 +68,12 @@ export function ContactForm() {
       console.error('Contact form error:', err);
     }
 
-    // Direct redirect to WhatsApp
-    openWhatsApp(whatsappUrl);
+    // Direct redirect to WhatsApp with automatic mailto fallback
+    openWhatsApp(
+      whatsappUrl,
+      `Retreat Enquiry: ${chosenProgram} - ${data.name}`,
+      messageText
+    );
     setSubmitting(false);
     reset();
   };
@@ -87,10 +91,29 @@ export function ContactForm() {
             href={submittedUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) =>
+              handleWhatsAppClick(
+                e,
+                submittedUrl,
+                `Retreat Enquiry: ${selectedProgram || 'Beyond the Mind 2027'}`,
+                'Namaste Beyond the Mind Team,\n\nI have submitted my retreat enquiry.'
+              )
+            }
             className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-semibold text-xs tracking-wider uppercase shadow-md hover:scale-105 transition-all"
           >
             <MessageCircle className="w-4 h-4" />
             <span>Open in WhatsApp</span>
+          </a>
+          <a
+            href={`mailto:moolabrahman@gmail.com?subject=${encodeURIComponent(
+              `Retreat Enquiry: ${selectedProgram || 'The Divine Retreat 2027'}`
+            )}&body=${encodeURIComponent(
+              'Namaste Beyond the Mind Concierge Team,\n\nI would like to enquire about retreat participation and details.'
+            )}`}
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 font-semibold text-xs tracking-wider uppercase hover:bg-emerald-900 transition-all"
+          >
+            <Mail className="w-4 h-4" />
+            <span>Email (moolabrahman@gmail.com)</span>
           </a>
           <button
             type="button"
@@ -191,9 +214,21 @@ export function ContactForm() {
         {errors.message && <p className="text-[11px] text-red-400">{errors.message.message}</p>}
       </div>
 
-      <p className="text-[11px] text-stone-subtle/70">
-        Your enquiry details are safely registered and forwarded directly to WhatsApp (+91 80755 72018).
-      </p>
+      <div className="space-y-1.5 pt-1">
+        <p className="text-[11px] text-stone-subtle/75">
+          Your enquiry details are safely registered and forwarded directly to WhatsApp (+91 80755 72018).
+        </p>
+        <p className="text-[11px] text-gold-300/90 leading-relaxed font-light">
+          <strong className="text-gold-300 font-medium">Outside India / WhatsApp not working?</strong> For seekers outside India or if WhatsApp is not working, connect with us directly via email at{' '}
+          <a
+            href="mailto:moolabrahman@gmail.com?subject=Retreat%20Enquiry%20-%20Beyond%20the%20Mind%202027"
+            className="text-gold-300 underline font-medium hover:text-white"
+          >
+            moolabrahman@gmail.com
+          </a>{' '}
+          or through our social media.
+        </p>
+      </div>
 
       <button
         type="submit"

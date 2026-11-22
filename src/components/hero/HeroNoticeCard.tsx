@@ -94,7 +94,7 @@ export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
               onClick={() => setIsModalOpen(true)}
               className="hidden md:inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-transform whitespace-nowrap"
             >
-              <span>{notice?.cta_text || 'Enquire for Retreat'}</span>
+              <span>{notice?.cta_text || 'Enquire'}</span>
               <ArrowRight className="w-3 h-3" />
             </button>
           ) : (
@@ -103,7 +103,7 @@ export function HeroNoticeCard({ notice: initialNotice }: HeroNoticeCardProps) {
               prefetch={true}
               className="hidden md:inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-transform whitespace-nowrap"
             >
-              <span>{notice?.cta_text || 'Enquire for Retreat'}</span>
+              <span>{notice?.cta_text || 'Enquire'}</span>
               <ArrowRight className="w-3 h-3" />
             </Link>
           )}

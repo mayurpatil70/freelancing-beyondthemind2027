@@ -32,8 +32,6 @@ export default function ParticipationPage() {
         'Four days of retreat sessions with Pradeep Muthukulam',
         'Personal Guidance Sessions – Available by Appointment',
         'Strictly Vegetarian Cuisine Throughout the Retreat',
-        'Retreat initiation materials & journal',
-        'Direct personal energetic check-ins',
       ],
       statusNote: 'Enquiry-based availability • Limited single rooms',
     },
@@ -47,8 +45,6 @@ export default function ParticipationPage() {
         'Four days of retreat sessions with Pradeep Muthukulam',
         'Personal Guidance Sessions – Available by Appointment',
         'Strictly Vegetarian Cuisine Throughout the Retreat',
-        'Retreat initiation materials & journal',
-        'Shared communal kinship & reflection',
       ],
       statusNote: 'Enquiry-based availability • Popular option',
     },
@@ -60,9 +56,7 @@ export default function ParticipationPage() {
       inclusions: [
         'Full daily access to all retreat sessions & ceremonies',
         'Personal Guidance Sessions – Available by Appointment',
-        'Strictly Vegetarian Cuisine Throughout the Retreat (Midday sattvic lunch & dinner)',
-        'Herbal infusions & drinking water',
-        'Complete retreat materials & ceremony access',
+        'Strictly Vegetarian Cuisine Throughout the Retreat',
       ],
       statusNote: 'Enquiry-based availability • Subject to venue capacity',
     },
@@ -163,7 +157,7 @@ export default function ParticipationPage() {
                     prefetch={true}
                     className="w-full py-2.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-semibold text-xs tracking-wider uppercase text-center block hover:scale-102 transition-all shadow-sm"
                   >
-                    Enquire For Availability
+                    Enquire
                   </Link>
                 </div>
               </div>

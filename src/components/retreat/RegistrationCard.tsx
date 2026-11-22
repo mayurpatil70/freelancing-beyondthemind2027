@@ -102,7 +102,7 @@ export function RegistrationCard({
               onClick={() => openWhatsApp('The Divine Retreat - Rishikesh 2027 (Offline)')}
               className="w-full py-3 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-emerald-950 font-bold text-xs tracking-wider uppercase text-center shadow-gold-sm hover:scale-[1.02] transition-all"
             >
-              Enquire via WhatsApp
+              Enquire
             </button>
             <p className="text-[10px] text-center text-stone-subtle/70">
               Limited sanctuary cohort • Single & twin rooms
@@ -161,7 +161,7 @@ export function RegistrationCard({
               onClick={() => openWhatsApp('The Divine Retreat 2027 (Online Live Stream)')}
               className="w-full py-3 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 font-semibold text-xs tracking-wider uppercase text-center hover:bg-emerald-900 transition-all"
             >
-              Enquire for Online Access
+              Enquire
             </button>
             <p className="text-[10px] text-center text-stone-subtle/70">
               Worldwide accessibility • Zoom link shared upon registration
@@ -219,7 +219,7 @@ export function RegistrationCard({
               onClick={() => openWhatsApp('Daily Guided Meditation (Online Zoom Mon-Fri 7:30 PM)')}
               className="w-full py-3 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 font-semibold text-xs tracking-wider uppercase text-center hover:bg-emerald-900 transition-all"
             >
-              Enquire for Daily Zoom Pass
+              Enquire
             </button>
             <p className="text-[10px] text-center text-stone-subtle/70">
               monthly passes available
