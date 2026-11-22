@@ -15,9 +15,7 @@ import {
   getActiveSession,
   touchActiveSession,
 } from '@/lib/security/singleSession';
-
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || process.env.ADMIN_EMAIL || 'pradeep123';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pradeep123';
+import { adminConfigErrorMessage, getAdminConfig } from '@/lib/security/adminConfig';
 
 /**
  * Constant-time comparison between two strings via SHA-256 hashing.
@@ -30,12 +28,21 @@ function timingSafeCompare(submitted: string, expected: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
+  // 0. Refuse to run without explicit credentials. There are no defaults.
+  const adminConfig = getAdminConfig();
+  if (!adminConfig.ok) {
+    const message = adminConfigErrorMessage(adminConfig.missing);
+    console.error(message);
+    return NextResponse.json({ success: false, message }, { status: 503 });
+  }
+  const { username: configuredUsername, email: configuredEmail, password: configuredPassword } = adminConfig.config;
+
   const ip = getClientIp(req);
   const clientDeviceId = req.headers.get('x-client-device-id') || undefined;
   const deviceHash = getClientFingerprint(req, clientDeviceId);
 
   // 1. Rate Limiting Check (Device + IP)
-  const rateLimitStatus = checkLoginRateLimit(ip, deviceHash);
+  const rateLimitStatus = await checkLoginRateLimit(ip, deviceHash);
   if (!rateLimitStatus.allowed) {
     return NextResponse.json(
       {
@@ -71,7 +78,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== 'object') {
-      recordFailedLogin(ip, deviceHash, 'Malformed JSON payload');
+      await recordFailedLogin(ip, deviceHash, 'Malformed JSON payload');
       return NextResponse.json(
         { success: false, message: 'Invalid request payload.' },
         { status: 400 }
@@ -86,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     // Prevent oversized payload attacks
     if (username.length > 100 || password.length > 128) {
-      recordFailedLogin(ip, deviceHash, 'Abnormally large credentials submitted');
+      await recordFailedLogin(ip, deviceHash, 'Abnormally large credentials submitted');
       return NextResponse.json(
         { success: false, message: 'Credentials exceed allowed character limits.' },
         { status: 400 }
@@ -100,8 +107,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const expectedUsername = ADMIN_USERNAME.toLowerCase();
-    const expectedEmail = (process.env.ADMIN_EMAIL || '').toLowerCase();
+    const expectedUsername = configuredUsername.toLowerCase();
+    const expectedEmail = configuredEmail.toLowerCase();
 
     // Timing-safe user check
     const isUserMatch = timingSafeCompare(username.toLowerCase(), expectedUsername);
@@ -109,10 +116,10 @@ export async function POST(req: NextRequest) {
     const isValidUser = isUserMatch || isEmailMatch;
 
     // Timing-safe password check
-    const isValidPass = timingSafeCompare(password, ADMIN_PASSWORD);
+    const isValidPass = timingSafeCompare(password, configuredPassword);
 
     if (!isValidUser || !isValidPass) {
-      const failResult = recordFailedLogin(ip, deviceHash, `Invalid credentials for user: ${username.slice(0, 16)}`);
+      const failResult = await recordFailedLogin(ip, deviceHash, `Invalid credentials for user: ${username.slice(0, 16)}`);
 
       if (failResult.locked) {
         return NextResponse.json(
@@ -142,7 +149,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Login Successful: Reset rate limit tracker
-    recordSuccessfulLogin(ip, deviceHash);
+    await recordSuccessfulLogin(ip, deviceHash);
 
     const sessionToken = createSessionToken(username);
 
@@ -152,7 +159,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({
       success: true,
       message: 'Authenticated successfully',
-      user: { username: username || 'pradeep123', role: 'admin' },
+      user: { username, role: 'admin' },
     });
 
     response.cookies.set({
