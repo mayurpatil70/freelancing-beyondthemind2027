@@ -1761,17 +1761,21 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   const updatedSettings = {
                     ...settings,
                     meta_keywords: metaKeywords,
                   };
                   setSettings(updatedSettings);
-                  saveContent(
+                  await saveContent(
                     'settings',
                     updatedSettings,
                     'SEO, Google Console & Analytics settings saved successfully!'
                   );
+                  // Per-session keywords live on each session card (experiences), so save them too.
+                  if (experiences.length > 0) {
+                    await saveContent('experiences', experiences, 'SEO settings and per-session keywords saved!');
+                  }
                 }}
                 disabled={saving}
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50 shrink-0"
@@ -1787,7 +1791,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
                   Sitemap Status
                 </span>
-                <span className="text-xl font-serif text-gold-300 font-bold">14 Routes</span>
+                <span className="text-xl font-serif text-gold-300 font-bold">{13 + experiences.length} Routes</span>
                 <span className="text-[10px] text-emerald-400 block font-mono">/sitemap.xml (Active)</span>
               </div>
 
@@ -2036,7 +2040,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <div className="space-y-4">
                 {[
                   { key: 'home', label: 'Homepage Meta Keywords' },
-                  { key: 'sessions', label: '7 Retreat Sessions Page Keywords' },
+                  { key: 'sessions', label: '7 Retreat Sessions Overview Page Keywords (all sessions)' },
                   { key: 'daily', label: 'Daily Guided Meditation Keywords' },
                   { key: 'rishikesh', label: 'Rishikesh Attractions & Destination Keywords' },
                   { key: 'register', label: 'Registration & Inquiry Keywords' },
@@ -2054,6 +2058,60 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     />
                   </div>
                 ))}
+              </div>
+
+              {/* Per-session keywords: one field for each of the 7 retreat sessions */}
+              <div className="pt-4 mt-2 border-t border-gold-500/15 space-y-4">
+                <div>
+                  <h5 className="font-serif text-base text-ivory-50 font-medium">
+                    Individual Retreat Session Keywords
+                  </h5>
+                  <p className="text-xs text-stone-subtle/70 font-light mt-0.5">
+                    Separate keywords for each session. They are never shown on the website; they are used only
+                    in each session&apos;s own page meta tags and Google structured data, so a search for them leads
+                    straight to that session card. Click &quot;Save All SEO &amp; Console Settings&quot; to publish.
+                  </p>
+                </div>
+
+                {experiences.length === 0 ? (
+                  <p className="text-xs text-stone-subtle/60 italic">No retreat sessions found.</p>
+                ) : (
+                  [...experiences]
+                    .map((exp, index) => ({ exp, index }))
+                    .sort((a, b) => a.exp.order - b.exp.order)
+                    .map(({ exp, index }) => (
+                      <div key={exp.id} className="space-y-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                          <label
+                            htmlFor={`session-kw-${exp.id}`}
+                            className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block"
+                          >
+                            Session {String(exp.order).padStart(2, '0')} · {exp.title} Keywords
+                          </label>
+                          <a
+                            href={`/experiences/${exp.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-stone-subtle/60 hover:text-gold-300 break-all"
+                          >
+                            /experiences/{exp.slug}
+                          </a>
+                        </div>
+                        <textarea
+                          id={`session-kw-${exp.id}`}
+                          rows={2}
+                          value={exp.keywords || ''}
+                          onChange={(e) => {
+                            const updated = [...experiences];
+                            updated[index] = { ...updated[index], keywords: e.target.value };
+                            setExperiences(updated);
+                          }}
+                          placeholder={`e.g. ${exp.title}, ${exp.title} Rishikesh, ${exp.subtitle || 'guided meditation'}...`}
+                          className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 focus:outline-none focus:border-gold-400"
+                        />
+                      </div>
+                    ))
+                )}
               </div>
             </div>
           </div>

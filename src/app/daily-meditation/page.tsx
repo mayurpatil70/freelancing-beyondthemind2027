@@ -30,7 +30,7 @@ const baseMetadata: Metadata = {
 };
 
 export function generateMetadata(): Promise<Metadata> {
-  return withCmsKeywords(baseMetadata, 'daily');
+  return withCmsKeywords(baseMetadata, 'daily', '/daily-meditation');
 }
 
 export const revalidate = 300;

@@ -36,7 +36,7 @@ export const revalidate = 300;
 
 // Home keywords come from the admin SEO tab; without any, the root layout's keywords apply.
 export function generateMetadata(): Promise<Metadata> {
-  return withCmsKeywords({}, 'home');
+  return withCmsKeywords({}, 'home', '/');
 }
 
 export default async function HomePage() {
@@ -415,9 +415,6 @@ export default async function HomePage() {
               </span>
               <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
                 English & Malayalam (Hindi translation upon request)
-              </span>
-              <span className="px-4 py-2 rounded-full bg-emerald-950/80 border border-gold-500/25">
-                Nourishing Sattvic Dining
               </span>
             </div>
           </div>

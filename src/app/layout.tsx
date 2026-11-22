@@ -7,6 +7,7 @@ import { LanguageProvider } from '@/contexts/LanguageContext';
 import { CMSProvider } from '@/contexts/CMSContext';
 import { getSiteSettings, getExperiences, getAttractions, getGallery } from '@/lib/storage/store';
 import type { SiteSettings } from '@/types';
+import { siteUrl } from '@/lib/seo/siteUrl';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -34,20 +35,6 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const siteUrl = (() => {
-  const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  if (envUrl && !envUrl.includes('localhost') && !envUrl.includes('beyondthemindretreat.org')) {
-    return envUrl.replace(/\/$/, '');
-  }
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  return 'https://beyondthemind2027.vercel.app';
-})();
-
 const baseMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -74,9 +61,6 @@ const baseMetadata: Metadata = {
   authors: [{ name: 'Beyond the Mind' }],
   creator: 'Beyond the Mind',
   publisher: 'Beyond the Mind',
-  alternates: {
-    canonical: siteUrl,
-  },
   icons: {
     icon: '/images/brand/logo.jpg',
     shortcut: '/images/brand/logo.jpg',

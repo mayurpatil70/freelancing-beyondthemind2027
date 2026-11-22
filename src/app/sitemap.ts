@@ -1,14 +1,10 @@
 import { MetadataRoute } from 'next';
+import { siteUrl as baseUrl } from '@/lib/seo/siteUrl';
+import { getExperiences } from '@/lib/storage/store';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  const baseUrl =
-    envUrl && !envUrl.includes('localhost') && !envUrl.includes('beyondthemindretreat.org')
-      ? envUrl.replace(/\/$/, '')
-      : process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : 'https://beyondthemind2027.vercel.app';
+export const revalidate = 300;
 
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routeConfig: Array<{ path: string; priority: number; changeFrequency: 'daily' | 'weekly' | 'monthly' }> = [
     { path: '', priority: 1.0, changeFrequency: 'daily' },
     { path: '/register', priority: 0.95, changeFrequency: 'daily' },
@@ -25,7 +21,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/privacy-policy', priority: 0.5, changeFrequency: 'monthly' },
   ];
 
-  return routeConfig.map((item) => ({
+  // One URL per retreat session, so a search for that session's keywords lands on its own card.
+  let sessionRoutes: typeof routeConfig = [];
+  try {
+    const experiences = await getExperiences();
+    sessionRoutes = experiences.map((exp) => ({
+      path: `/experiences/${exp.slug}`,
+      priority: 0.85,
+      changeFrequency: 'weekly' as const,
+    }));
+  } catch (err) {
+    console.warn('Sitemap: could not load retreat sessions', err);
+  }
+
+  return [...routeConfig, ...sessionRoutes].map((item) => ({
     url: `${baseUrl}${item.path}`,
     lastModified: new Date(),
     changeFrequency: item.changeFrequency,

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, User, Phone, Calendar, Users, MessageSquare, Globe, Mail } from 'lucide-react';
 import { ThemeSelect, ThemeSelectOption } from '@/components/ui/ThemeSelect';
 import { openWhatsApp } from '@/lib/utils';
@@ -93,7 +94,12 @@ export function WhatsAppInquiryModal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  // Render into <body> so an ancestor with a transform/filter (page transitions, sticky headers) can't
+  // turn `fixed` into "relative to that ancestor" and push the card or its close button off-screen.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!isOpen || !mounted) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,32 +148,35 @@ export function WhatsAppInquiryModal({
     onClose();
   };
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md animate-in fade-in duration-200 px-3 sm:px-6 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]"
       onClick={onClose}
       aria-modal="true"
       role="dialog"
     >
       <div
-        className="relative w-full max-w-lg rounded-2xl bg-[#071F1B] border border-[#D4AF37]/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(212,175,55,0.15)] text-[#FAF8F5] p-6 sm:p-8 overflow-visible animate-in zoom-in-95 duration-200"
+        className="relative flex flex-col w-full max-w-lg max-h-full rounded-2xl bg-[#071F1B] border border-[#D4AF37]/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(212,175,55,0.15)] text-[#FAF8F5] overflow-hidden animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Subtle Ambient Radial Gold Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-32 bg-gradient-to-b from-[#D4AF37]/15 to-transparent blur-2xl pointer-events-none" />
-
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#031713]/80 border border-gold-400/30 flex items-center justify-center text-ivory-200 hover:text-white hover:border-gold-300 transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-9 h-9 rounded-full bg-[#031713]/80 border border-gold-400/30 flex items-center justify-center text-ivory-200 hover:text-white hover:border-gold-300 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
 
+        {/* The card always fits the visible screen; on short screens its content scrolls inside while the close button stays put. */}
+        <div className="overflow-y-auto overscroll-contain p-5 sm:p-8 [@media(max-height:700px)]:py-4">
+        {/* Subtle Ambient Radial Gold Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-32 bg-gradient-to-b from-[#D4AF37]/15 to-transparent blur-2xl pointer-events-none" />
+
+
         {/* Header Badge */}
-        <div className="text-center space-y-1 mb-6">
+        <div className="text-center space-y-1 mb-6 [@media(max-height:760px)]:mb-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-400/40 text-[11px] font-semibold tracking-[0.2em] text-gold-300 uppercase">
             <span>BEYOND THE MIND</span>
           </div>
@@ -186,7 +195,7 @@ export function WhatsAppInquiryModal({
         </div>
 
         {/* Inquiry Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 text-left">
+        <form onSubmit={handleSubmit} className="space-y-4 [@media(max-height:760px)]:space-y-3 text-left">
           {/* Full Name */}
           <div className="space-y-1.5">
             <label className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
@@ -306,7 +315,9 @@ export function WhatsAppInquiryModal({
             🔒 100% Confidential • Instant Response • Verified Spiritual Coordinators
           </p>
         </form>
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

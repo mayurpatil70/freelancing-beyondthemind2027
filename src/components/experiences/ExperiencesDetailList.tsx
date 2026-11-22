@@ -30,14 +30,18 @@ const iconMap: Record<string, React.ElementType> = {
 
 interface ExperiencesDetailListProps {
   initialExperiences: SacredExperience[];
+  /** Render only this session (its own page at /experiences/[slug]). */
+  onlySlug?: string;
 }
 
-export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailListProps) {
+export function ExperiencesDetailList({ initialExperiences, onlySlug }: ExperiencesDetailListProps) {
   const { experiences, liveUpdated } = useCMS();
   const hasLiveUpdate = liveUpdated?.experiences;
-  const list = hasLiveUpdate && experiences && experiences.length > 0
+  const fullList = hasLiveUpdate && experiences && experiences.length > 0
     ? experiences
     : (initialExperiences && initialExperiences.length > 0 ? initialExperiences : experiences);
+  const onlyMatch = onlySlug ? fullList.filter((exp) => exp.slug === onlySlug) : [];
+  const list = onlySlug ? (onlyMatch.length > 0 ? onlyMatch : initialExperiences) : fullList;
   const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null);
 
   const lightboxImages = list.map((exp) => ({
@@ -105,7 +109,13 @@ export function ExperiencesDetailList({ initialExperiences }: ExperiencesDetailL
                   </div>
 
                   <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-snug">
-                    {exp.title}
+                    {onlySlug ? (
+                      exp.title
+                    ) : (
+                      <Link href={`/experiences/${exp.slug}`} className="hover:text-gold-200 transition-colors">
+                        {exp.title}
+                      </Link>
+                    )}
                   </h2>
 
                   <span className="text-xs uppercase tracking-[0.2em] text-gold-400 font-medium block">

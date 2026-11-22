@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { withCmsKeywords } from '@/lib/seo/keywords';
+import { absoluteUrl } from '@/lib/seo/siteUrl';
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
@@ -33,7 +34,7 @@ const baseMetadata: Metadata = {
 };
 
 export function generateMetadata(): Promise<Metadata> {
-  return withCmsKeywords(baseMetadata, 'sessions');
+  return withCmsKeywords(baseMetadata, 'sessions', '/experiences');
 }
 
 const iconMap: Record<string, React.ElementType> = {
@@ -65,7 +66,7 @@ export default async function ExperiencesPage() {
         name: exp.title,
         description: exp.short_desc || exp.full_desc,
         keywords: exp.keywords || undefined,
-        url: `https://beyondthemind2027.vercel.app/experiences#${exp.slug}`,
+        url: absoluteUrl(`/experiences/${exp.slug}`),
       },
     })),
   };

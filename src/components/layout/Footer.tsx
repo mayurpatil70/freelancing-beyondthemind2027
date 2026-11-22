@@ -163,7 +163,7 @@ export function Footer() {
                   className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-gold-400 shrink-0" />
-                  <span className="break-all">{email}</span>
+                  <span className="whitespace-nowrap text-[11px] sm:text-xs lg:text-[length:clamp(9px,0.82vw,12px)]">{email}</span>
                 </a>
               </li>
               {settings.secondary_email && (
@@ -173,7 +173,7 @@ export function Footer() {
                     className="flex items-center gap-2 hover:text-gold-300 transition-colors"
                   >
                     <Mail className="w-4 h-4 text-gold-400/80 shrink-0" />
-                    <span className="break-all">{settings.secondary_email}</span>
+                    <span className="whitespace-nowrap text-[11px] sm:text-xs lg:text-[length:clamp(9px,0.82vw,12px)]">{settings.secondary_email}</span>
                   </a>
                 </li>
               )}
@@ -200,7 +200,7 @@ export function Footer() {
                     ) : (
                       <ExternalLink className="w-4 h-4 text-gold-400 shrink-0" />
                     )}
-                    <span className="break-all">
+                    <span className={c.type === 'email' ? 'whitespace-nowrap text-[11px] sm:text-xs lg:text-[length:clamp(9px,0.82vw,12px)]' : 'break-words min-w-0'}>
                       <strong className="font-medium text-gold-300/90">{c.label}:</strong> {c.value}
                     </span>
                   </a>

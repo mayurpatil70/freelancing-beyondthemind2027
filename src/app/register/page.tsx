@@ -15,7 +15,7 @@ const baseMetadata: Metadata = {
 };
 
 export function generateMetadata(): Promise<Metadata> {
-  return withCmsKeywords(baseMetadata, 'register');
+  return withCmsKeywords(baseMetadata, 'register', '/register');
 }
 
 export const revalidate = 300;
