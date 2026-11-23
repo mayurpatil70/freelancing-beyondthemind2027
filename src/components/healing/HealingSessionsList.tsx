@@ -1,9 +1,12 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SacredExperience } from '@/types';
-import { Feather, Flame, Sun, Heart, Compass, Flower2, CircleDot, MessageCircle } from 'lucide-react';
+import { Feather, Flame, Sun, Heart, Compass, Flower2, CircleDot, MessageCircle, Maximize2 } from 'lucide-react';
 import { formatWhatsAppUrl } from '@/lib/utils';
+import { ImageLightbox } from '@/components/media/ImageLightbox';
 
 const iconMap: Record<string, React.ElementType> = {
   Feather,
@@ -34,12 +37,26 @@ interface HealingSessionsListProps {
 // Sessions without a photo show a decorative panel with the session's icon until one is uploaded in admin.
 export function HealingSessionsList({ sessions, whatsappNumber, single = false }: HealingSessionsListProps) {
   const phone = whatsappNumber || '+91 8075572018';
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Only sessions with a photo go into the full-photo viewer.
+  const withPhotos = sessions.filter((s) => s.image);
+  const lightboxImages = withPhotos.map((s) => ({
+    src: s.image,
+    alt: s.title,
+    title: s.title,
+    caption: s.subtitle,
+    location: 'Transformative Healing Sessions • Beyond the Mind',
+  }));
 
   return (
+    <>
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
       {sessions.map((session, idx) => {
         const Icon = iconMap[session.icon_name] || CircleDot;
         const isEven = idx % 2 === 1;
+        const photoIndex = withPhotos.indexOf(session);
+        const openPhoto = () => photoIndex >= 0 && setLightboxIndex(photoIndex);
         const paragraphs = toParagraphs(session.full_desc);
         const enquiryUrl = formatWhatsAppUrl(
           phone,
@@ -55,7 +72,26 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               {/* Media column */}
               <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[4/5] border border-gold-500/40 shadow-xl bg-[#031713]">
+                <div
+                  className={`relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[4/5] border border-gold-500/40 shadow-xl bg-[#031713] ${
+                    session.image ? 'cursor-pointer group/img' : ''
+                  }`}
+                  {...(session.image
+                    ? {
+                        role: 'button',
+                        tabIndex: 0,
+                        title: 'Click to view photo',
+                        'aria-label': `View full photo: ${session.title}`,
+                        onClick: openPhoto,
+                        onKeyDown: (e: React.KeyboardEvent) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openPhoto();
+                          }
+                        },
+                      }
+                    : {})}
+                >
                   {session.image ? (
                     <>
                       <Image
@@ -64,7 +100,7 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
                         fill
                         unoptimized
                         sizes="(max-width: 1024px) 100vw, 40vw"
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                         style={{ objectPosition: session.image_position || 'center' }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#07261F]/80 via-transparent to-transparent opacity-50" />
@@ -89,7 +125,14 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
 
                   <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between text-[11px] text-ivory-100 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-gold-400/20">
                     <span>Session {session.order}</span>
-                    <span className="text-gold-300">By appointment</span>
+                    {session.image ? (
+                      <span className="text-gold-300 flex items-center gap-1">
+                        <Maximize2 className="w-3 h-3" />
+                        <span>Click to view photo</span>
+                      </span>
+                    ) : (
+                      <span className="text-gold-300">By appointment</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -144,5 +187,16 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
         );
       })}
     </div>
+
+    {lightboxIndex !== null && (
+      <ImageLightbox
+        isOpen
+        onClose={() => setLightboxIndex(null)}
+        images={lightboxImages}
+        currentIndex={lightboxIndex}
+        onNavigate={setLightboxIndex}
+      />
+    )}
+    </>
   );
 }
