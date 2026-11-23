@@ -17,6 +17,7 @@ import { TestimonialCarousel } from '@/components/testimonials/TestimonialCarous
 import {
   getSiteSettings,
   getExperiences,
+  getHealingSessions,
   getProgramme,
   getTestimonials,
 } from '@/lib/storage/store';
@@ -42,6 +43,7 @@ export function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const settings = await getSiteSettings();
   const experiences = await getExperiences();
+  const healingSessions = [...(await getHealingSessions())].sort((a, b) => a.order - b.order);
   const programme = await getProgramme();
   const testimonials = await getTestimonials();
 
@@ -175,6 +177,56 @@ export default async function HomePage() {
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm"
               >
                 <span>Discover All Seven Retreat Sessions & Attractions</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION 4b: TRANSFORMATIVE HEALING SESSIONS (individual, by appointment) */}
+        {/* ========================================================================= */}
+        <section className="py-24 sm:py-28 bg-[#02100d] border-t border-gold-500/20 relative overflow-hidden">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <SectionHeading
+              eyebrow="Individual Sessions • By Appointment"
+              title="Transformative Healing Sessions"
+              subtitle="A collection of specialised healing sessions designed to support inner balance, emotional release and profound personal transformation."
+            />
+
+            {healingSessions.length > 0 && (
+              <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {healingSessions.map((s) => (
+                  <li key={s.id}>
+                    <Link
+                      href={`/healing-sessions/${s.slug}`}
+                      prefetch={true}
+                      className="group flex items-start gap-4 h-full p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/25 hover:border-gold-400/60 transition-colors"
+                    >
+                      <span className="w-10 h-10 shrink-0 rounded-full bg-[#031713] border border-gold-500/50 flex items-center justify-center font-serif text-sm text-gold-300 font-bold">
+                        {String(s.order).padStart(2, '0')}
+                      </span>
+                      <span className="min-w-0 space-y-1">
+                        <span className="block font-serif text-xl text-ivory-50 leading-tight group-hover:text-gold-200 transition-colors">
+                          {s.title}
+                        </span>
+                        <span className="block text-sm text-stone-subtle/85 font-light leading-relaxed">
+                          {s.subtitle}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            )}
+
+            <div className="text-center mt-14">
+              <Link
+                href="/healing-sessions"
+                prefetch={true}
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm"
+              >
+                <span>Explore Transformative Healing Sessions</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
