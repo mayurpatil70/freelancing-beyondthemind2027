@@ -20,7 +20,7 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
       <div className="p-4 rounded-xl bg-emerald-950/70 border border-gold-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2 text-gold-300">
           <Languages className="w-4 h-4 text-gold-400 shrink-0" />
-          <span className="font-medium tracking-wide">Language Accommodations:</span>
+          <span className="font-medium tracking-wide">Language:</span>
           <span className="text-ivory-100 font-light">
             Sessions and retreat are conducted in English and Malayalam. Hindi translation is available upon request.
           </span>
