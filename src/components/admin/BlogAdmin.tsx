@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { BlogCategory, BlogFAQ, BlogPost } from '@/types';
+import { BlogFAQ, BlogPost } from '@/types';
 import { IMAGE_ACCEPT } from '@/lib/media/rules';
 import {
   ChevronDown,
@@ -19,8 +19,6 @@ import {
   Upload,
   X,
 } from 'lucide-react';
-
-const ICON_OPTIONS = ['Flower2', 'Sun', 'Eye', 'Heart', 'Sparkles', 'Leaf', 'Wind', 'Mountain', 'Compass', 'Feather', 'Flame', 'BookOpen'];
 
 const inputClass =
   'w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 focus:outline-none focus:border-gold-400';
@@ -41,8 +39,6 @@ const today = () => new Date().toISOString().slice(0, 10);
 interface BlogAdminProps {
   posts: BlogPost[];
   setPosts: (posts: BlogPost[]) => void;
-  categories: BlogCategory[];
-  setCategories: (categories: BlogCategory[]) => void;
   saving: boolean;
   saveContent: (type: string, payload: unknown, successMsg: string) => Promise<void>;
   handleUploadMedia: (file: File, onDone: (url: string) => void, uploadId: string) => Promise<void>;
@@ -67,20 +63,15 @@ function checkSlugs(items: { slug: string }[], what: string): boolean {
 export function BlogAdmin({
   posts,
   setPosts,
-  categories,
-  setCategories,
   saving,
   saveContent,
   handleUploadMedia,
   uploading,
   uploadProgress,
 }: BlogAdminProps) {
-  const [view, setView] = React.useState<'articles' | 'categories'>('articles');
   const [openId, setOpenId] = React.useState<string | null>(null);
   const [newIds, setNewIds] = React.useState<Set<string>>(new Set());
 
-  const sortedCats = [...categories].sort((a, b) => a.order - b.order);
-  const catName = (slug: string) => categories.find((c) => c.slug === slug)?.name || 'No category';
 
   // ---------------------------------------------------------------- articles
   const updatePost = (id: string, changes: Partial<BlogPost>) => {
@@ -104,7 +95,6 @@ export function BlogAdmin({
         title: 'New Article',
         excerpt: '',
         content: '',
-        category: sortedCats[0]?.slug || '',
         author: 'Beyond the Mind Team',
         published_at: today(),
         updated_at: '',
@@ -113,7 +103,8 @@ export function BlogAdmin({
         image_position: 'center',
         featured: false,
         popular: false,
-        published: false,
+        // New articles go live on Save, like every other tab. Switch to Draft to keep one hidden.
+        published: true,
         keywords: '',
         faqs: [],
       },
@@ -128,7 +119,14 @@ export function BlogAdmin({
       alert('Every article needs a title.');
       return;
     }
-    saveContent('blogPosts', posts, 'Blog articles saved and published!');
+    const drafts = posts.filter((p) => !p.published).length;
+    saveContent(
+      'blogPosts',
+      posts,
+      drafts
+        ? `Blog articles saved! ${drafts} draft article${drafts === 1 ? ' is' : 's are'} hidden from the website until switched to Published.`
+        : 'Blog articles saved and published! The website updates within a few seconds.'
+    );
   };
 
   const updateFaq = (post: BlogPost, index: number, changes: Partial<BlogFAQ>) => {
@@ -136,47 +134,6 @@ export function BlogAdmin({
     faqs[index] = { ...faqs[index], ...changes };
     updatePost(post.id, { faqs });
   };
-
-  // -------------------------------------------------------------- categories
-  const renumber = (list: BlogCategory[]) => list.map((c, i) => ({ ...c, order: i + 1 }));
-
-  const updateCat = (id: string, changes: Partial<BlogCategory>) => {
-    setCategories(categories.map((c) => (c.id === id ? { ...c, ...changes } : c)));
-  };
-
-  const moveCat = (from: number, to: number) => {
-    if (to < 0 || to >= sortedCats.length) return;
-    const list = [...sortedCats];
-    const [moved] = list.splice(from, 1);
-    list.splice(to, 0, moved);
-    setCategories(renumber(list));
-  };
-
-  const addCategory = () => {
-    const id = `cat-${Date.now().toString(36)}`;
-    setNewIds((prev) => new Set(prev).add(id));
-    setCategories([
-      ...sortedCats,
-      { id, slug: `new-category-${sortedCats.length + 1}`, name: 'New Category', description: '', order: sortedCats.length + 1, icon_name: 'BookOpen', keywords: '' },
-    ]);
-  };
-
-  const saveCategories = () => {
-    if (!checkSlugs(categories, 'category')) return;
-    saveContent('blogCategories', renumber(sortedCats), 'Blog categories saved and published!');
-  };
-
-  const tabBtn = (id: 'articles' | 'categories', label: string) => (
-    <button
-      type="button"
-      onClick={() => setView(id)}
-      className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider border ${
-        view === id ? 'bg-gold-500/30 border-gold-400 text-gold-200' : 'bg-emerald-950 border-gold-500/25 text-ivory-200/80'
-      }`}
-    >
-      {label}
-    </button>
-  );
 
   const saveButton = (onClick: () => void, label: string) => (
     <button
@@ -196,22 +153,17 @@ export function BlogAdmin({
         <div>
           <h3 className="font-serif text-2xl text-ivory-50 font-light">Blog: Wisdom Beyond the Mind</h3>
           <p className="text-xs text-stone-subtle/80 mt-1">
-            Write and manage the articles and categories shown on{' '}
+            Write and manage the articles shown on{' '}
             <Link href="/blog" target="_blank" className="text-gold-300 underline">
               /blog
             </Link>
             . Only articles marked Published appear on the site. Click Save to publish your changes.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          {tabBtn('articles', `Articles (${posts.length})`)}
-          {tabBtn('categories', `Categories (${categories.length})`)}
-        </div>
       </div>
 
       {/* ================================================================ ARTICLES */}
-      {view === 'articles' && (
-        <>
+      <>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
@@ -253,7 +205,7 @@ export function BlogAdmin({
                       {p.featured && <span className="text-[10px] uppercase tracking-wider text-gold-300">★ Featured</span>}
                       {p.popular && <span className="text-[10px] uppercase tracking-wider text-gold-300">Popular</span>}
                       <span className="text-[10px] uppercase tracking-wider text-stone-subtle/60">
-                        {catName(p.category)} • {p.published_at}
+                        {p.published_at}
                       </span>
                     </span>
                     <span className="block font-serif text-lg text-ivory-50 font-medium truncate mt-1">{p.title || 'Untitled article'}</span>
@@ -332,7 +284,7 @@ export function BlogAdmin({
                         className={inputClass}
                       />
                     </div>
-                    <div className="sm:col-span-6 space-y-1">
+                    <div className="sm:col-span-12 space-y-1">
                       <label className={labelClass}>Page URL (slug)</label>
                       <div className="flex items-center gap-1">
                         <span className="text-[11px] text-stone-subtle/60 whitespace-nowrap">/blog/</span>
@@ -343,17 +295,6 @@ export function BlogAdmin({
                           className={inputClass}
                         />
                       </div>
-                    </div>
-                    <div className="sm:col-span-6 space-y-1">
-                      <label className={labelClass}>Category</label>
-                      <select value={p.category} onChange={(e) => updatePost(p.id, { category: e.target.value })} className={inputClass}>
-                        {!sortedCats.some((c) => c.slug === p.category) && <option value={p.category}>Choose a category</option>}
-                        {sortedCats.map((c) => (
-                          <option key={c.id} value={c.slug}>
-                            {c.name}
-                          </option>
-                        ))}
-                      </select>
                     </div>
                     <div className="sm:col-span-4 space-y-1">
                       <label className={labelClass}>Author</label>
@@ -441,7 +382,7 @@ export function BlogAdmin({
                           </div>
                         </div>
                       ) : (
-                        <p className="text-[11px] text-stone-subtle/60">No photo: cards show the category icon on a green panel instead.</p>
+                        <p className="text-[11px] text-stone-subtle/60">No photo: cards show a gold book icon on a green panel instead.</p>
                       )}
                       {p.image && (
                         <input
@@ -521,114 +462,7 @@ export function BlogAdmin({
           })}
 
           {posts.length > 0 && <div className="flex justify-end">{saveButton(savePosts, 'Save Articles')}</div>}
-        </>
-      )}
-
-      {/* ============================================================== CATEGORIES */}
-      {view === 'categories' && (
-        <>
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={addCategory}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-950 border border-gold-500/40 text-gold-300 hover:bg-emerald-900 text-xs font-semibold uppercase tracking-wider"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Add Category</span>
-            </button>
-            {saveButton(saveCategories, 'Save Categories')}
-          </div>
-
-          {sortedCats.map((c, index) => {
-            const used = posts.filter((p) => p.category === c.slug).length;
-            return (
-              <div key={c.id} className="p-5 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4 shadow-xl">
-                <div className="flex items-center justify-between gap-3 border-b border-gold-500/15 pb-3">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="w-8 h-8 shrink-0 rounded-full bg-gold-500/20 text-gold-300 flex items-center justify-center font-serif text-sm font-bold">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <h4 className="font-serif text-lg text-ivory-50 font-medium truncate">{c.name || 'Untitled category'}</h4>
-                    <span className="text-[10px] uppercase tracking-wider text-stone-subtle/60 shrink-0">{used} articles</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <button type="button" disabled={index === 0} onClick={() => moveCat(index, index - 1)} className={smallBtn} title="Move up">
-                      <ChevronUp className="w-3.5 h-3.5" />
-                    </button>
-                    <button type="button" disabled={index === sortedCats.length - 1} onClick={() => moveCat(index, index + 1)} className={smallBtn} title="Move down">
-                      <ChevronDown className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const msg = used
-                          ? `"${c.name}" has ${used} article(s). They will show without a category until you move them. Delete anyway?`
-                          : `Delete "${c.name}"?`;
-                        if (confirm(`${msg} Click Save Categories afterwards to publish the change.`)) {
-                          setCategories(renumber(sortedCats.filter((x) => x.id !== c.id)));
-                        }
-                      }}
-                      className="p-1.5 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-500/30 text-red-300 ml-1"
-                      title="Delete category"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
-                  <div className="sm:col-span-5 space-y-1">
-                    <label className={labelClass}>Category Name</label>
-                    <input
-                      type="text"
-                      value={c.name}
-                      onChange={(e) => {
-                        const name = e.target.value;
-                        const autoSlug = newIds.has(c.id) && (/^new-category-\d+$/.test(c.slug) || c.slug === slugify(c.name));
-                        updateCat(c.id, { name, ...(autoSlug && slugify(name) ? { slug: slugify(name) } : {}) });
-                      }}
-                      className={inputClass}
-                    />
-                  </div>
-                  <div className="sm:col-span-4 space-y-1">
-                    <label className={labelClass}>Page URL (slug)</label>
-                    <div className="flex items-center gap-1">
-                      <span className="text-[11px] text-stone-subtle/60 whitespace-nowrap">/blog/category/</span>
-                      <input
-                        type="text"
-                        value={c.slug}
-                        disabled={used > 0}
-                        title={used > 0 ? 'Move or delete this category’s articles before changing its URL' : undefined}
-                        onChange={(e) => updateCat(c.id, { slug: slugify(e.target.value) || e.target.value.toLowerCase() })}
-                        className={`${inputClass} disabled:opacity-60`}
-                      />
-                    </div>
-                  </div>
-                  <div className="sm:col-span-3 space-y-1">
-                    <label className={labelClass}>Icon</label>
-                    <select value={c.icon_name} onChange={(e) => updateCat(c.id, { icon_name: e.target.value })} className={inputClass}>
-                      {ICON_OPTIONS.map((icon) => (
-                        <option key={icon} value={icon}>
-                          {icon}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="sm:col-span-12 space-y-1">
-                    <label className={labelClass}>Description (shown on the category card and page)</label>
-                    <textarea rows={2} value={c.description} onChange={(e) => updateCat(c.id, { description: e.target.value })} className={inputClass} />
-                  </div>
-                  <div className="sm:col-span-12 space-y-1">
-                    <label className={labelClass}>SEO Keywords (comma separated, not shown on the site)</label>
-                    <input type="text" value={c.keywords || ''} onChange={(e) => updateCat(c.id, { keywords: e.target.value })} className={inputClass} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-          {sortedCats.length > 0 && <div className="flex justify-end">{saveButton(saveCategories, 'Save Categories')}</div>}
-        </>
-      )}
+      </>
     </div>
   );
 }

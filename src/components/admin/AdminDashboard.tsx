@@ -15,7 +15,6 @@ import {
   CustomContactLink,
   MediaAsset,
   BlogPost,
-  BlogCategory,
 } from '@/types';
 import { IMAGE_ACCEPT, isVideoUrl } from '@/lib/media/rules';
 import { uploadMediaFile } from '@/lib/media/upload-client';
@@ -95,7 +94,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [experiences, setExperiences] = useState<SacredExperience[]>([]);
   const [healingSessions, setHealingSessions] = useState<SacredExperience[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [blogCategories, setBlogCategories] = useState<BlogCategory[]>([]);
   const [attractions, setAttractions] = useState<RishikeshAttraction[]>([]);
   const [weatherGuide, setWeatherGuide] = useState<WeatherClothingGuide | null>(null);
   const [metaKeywords, setMetaKeywords] = useState<Record<string, string>>({});
@@ -184,7 +182,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         if (data?.experiences) setExperiences(data.experiences);
         if (data?.healingSessions) setHealingSessions(data.healingSessions);
         if (data?.blogPosts) setBlogPosts(data.blogPosts);
-        if (data?.blogCategories) setBlogCategories(data.blogCategories);
         if (data?.attractions) setAttractions(data.attractions);
         if (data?.weatherClothing) setWeatherGuide(data.weatherClothing);
       }
@@ -240,9 +237,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
     setUploadProgress(0);
     try {
       const result = await uploadMediaFile(file, setUploadProgress);
-      onDone(result.url, result.kind);
       if (result.asset) setMediaAssets((prev) => [result.asset!, ...prev.filter((m) => m.id !== result.asset!.id)]);
       showSaveSuccess(`${result.kind === 'video' ? 'Video' : 'Photo'} uploaded successfully! Remember to click save.`);
+      // onDone last: tabs that save straight after an upload show their own "saved" message instead.
+      onDone(result.url, result.kind);
     } catch (err) {
       console.error('Upload error:', err);
       alert(err instanceof Error ? err.message : 'Upload failed. Please check your network connection.');
@@ -1166,8 +1164,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           <BlogAdmin
             posts={blogPosts}
             setPosts={setBlogPosts}
-            categories={blogCategories}
-            setCategories={setBlogCategories}
             saving={saving}
             saveContent={saveContent}
             handleUploadMedia={handleUploadMedia}
@@ -1833,7 +1829,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
                   Sitemap Status
                 </span>
-                <span className="text-xl font-serif text-gold-300 font-bold">{15 + experiences.length + healingSessions.length + blogCategories.length + blogPosts.filter((p) => p.published).length} Routes</span>
+                <span className="text-xl font-serif text-gold-300 font-bold">{15 + experiences.length + healingSessions.length + blogPosts.filter((p) => p.published).length} Routes</span>
                 <span className="text-[10px] text-emerald-400 block font-mono">/sitemap.xml (Active)</span>
               </div>
 

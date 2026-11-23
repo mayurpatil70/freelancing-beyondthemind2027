@@ -216,18 +216,6 @@ export interface MediaAsset {
 // Blog: "Wisdom Beyond the Mind" (/blog). Edited in the admin Blog tab.
 // ----------------------------------------------------------------------------
 
-export interface BlogCategory {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  order: number;
-  /** Lucide icon name shown on the category card. */
-  icon_name: string;
-  /** Comma separated SEO keywords for the category page. Never shown on the page. */
-  keywords?: string;
-}
-
 export interface BlogFAQ {
   question: string;
   answer: string;
@@ -241,8 +229,6 @@ export interface BlogPost {
   excerpt: string;
   /** Article body. Empty line = new paragraph, "## " heading, "### " subheading, "- " list item, "> " quote, **bold**. */
   content: string;
-  /** Slug of a BlogCategory. */
-  category: string;
   author: string;
   /** YYYY-MM-DD */
   published_at: string;

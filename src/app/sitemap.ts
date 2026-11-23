@@ -51,9 +51,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let blogRoutes: Array<(typeof routeConfig)[number] & { lastModified?: string }> = [];
   try {
-    const { posts, categories } = await loadBlog();
+    const { posts } = await loadBlog();
     blogRoutes = [
-      ...categories.map((c) => ({ path: `/blog/category/${c.slug}`, priority: 0.7, changeFrequency: 'weekly' as const })),
       ...posts.map((p) => ({
         path: `/blog/${p.slug}`,
         priority: 0.8,

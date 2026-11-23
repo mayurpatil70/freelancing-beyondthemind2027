@@ -1,5 +1,5 @@
-import type { BlogCategory, BlogPost } from '@/types';
-import { getBlogCategories, getBlogPosts } from '@/lib/storage/store';
+import type { BlogPost } from '@/types';
+import { getBlogPosts } from '@/lib/storage/store';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
 
 export const BLOG_NAME = 'Wisdom Beyond the Mind';
@@ -18,13 +18,9 @@ export function publishedPosts(posts: BlogPost[]): BlogPost[] {
     .map(({ p }) => p);
 }
 
-export function sortedCategories(categories: BlogCategory[]): BlogCategory[] {
-  return [...categories].sort((a, b) => a.order - b.order);
-}
-
 export async function loadBlog() {
-  const [posts, categories] = await Promise.all([getBlogPosts(), getBlogCategories()]);
-  return { posts: publishedPosts(posts || []), categories: sortedCategories(categories || []) };
+  const posts = await getBlogPosts();
+  return { posts: publishedPosts(posts || []) };
 }
 
 export function readingMinutes(content: string): number {

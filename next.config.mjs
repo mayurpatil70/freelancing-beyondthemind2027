@@ -89,6 +89,10 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    // Blog categories were removed; send any old category links to the blog home.
+    return [{ source: '/blog/category/:slug*', destination: '/blog', permanent: true }];
+  },
   async headers() {
     return [
       {
