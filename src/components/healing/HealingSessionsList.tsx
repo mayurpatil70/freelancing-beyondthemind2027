@@ -64,7 +64,8 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
                         fill
                         unoptimized
                         sizes="(max-width: 1024px) 100vw, 40vw"
-                        className="object-cover object-top"
+                        className="object-cover"
+                        style={{ objectPosition: session.image_position || 'center' }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#07261F]/80 via-transparent to-transparent opacity-50" />
                     </>
