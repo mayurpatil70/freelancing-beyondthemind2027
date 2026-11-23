@@ -5,7 +5,6 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import {
-  CategoryCard,
   ExploreLinks,
   FeaturedPostCard,
   PopularPostRow,
@@ -37,13 +36,11 @@ export function generateMetadata(): Promise<Metadata> {
 export const revalidate = 300;
 
 export default async function BlogHomePage() {
-  const { posts, categories } = await loadBlog();
-  const categoryBySlug = new Map(categories.map((c) => [c.slug, c]));
+  const { posts } = await loadBlog();
 
   const featured = posts.find((p) => p.featured) || posts[0];
   const latest = posts.filter((p) => p !== featured).slice(0, 6);
   const popular = posts.filter((p) => p.popular).slice(0, 6);
-  const countFor = (slug: string) => posts.filter((p) => p.category === slug).length;
 
   const jsonLd = [
     {
@@ -69,7 +66,6 @@ export default async function BlogHomePage() {
         dateModified: p.updated_at || p.published_at,
         image: imageUrl(p.image),
         author: { '@type': 'Organization', name: p.author || 'Beyond the Mind' },
-        articleSection: categoryBySlug.get(p.category)?.name,
       })),
     },
     {
@@ -111,7 +107,7 @@ export default async function BlogHomePage() {
         {/* Featured */}
         {featured && (
           <section aria-label="Featured article" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-            <FeaturedPostCard post={featured} category={categoryBySlug.get(featured.category)} />
+            <FeaturedPostCard post={featured} />
           </section>
         )}
 
@@ -121,41 +117,25 @@ export default async function BlogHomePage() {
             <SectionHeading eyebrow="Fresh Insights" title="Latest Articles" />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {latest.map((p) => (
-                <PostCard key={p.id} post={p} category={categoryBySlug.get(p.category)} />
+                <PostCard key={p.id} post={p} />
               ))}
-            </div>
-          </section>
-        )}
-
-        {/* Categories */}
-        {categories.length > 0 && (
-          <section className="py-24 bg-[#02100d] border-y border-gold-500/20">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <SectionHeading
-                eyebrow="Explore by Theme"
-                title="Blog Categories"
-                subtitle="Choose a path of inquiry and explore the articles gathered under it."
-              />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {categories.map((c) => (
-                  <CategoryCard key={c.id} category={c} count={countFor(c.slug)} />
-                ))}
-              </div>
             </div>
           </section>
         )}
 
         {/* Popular */}
         {popular.length > 0 && (
-          <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-            <SectionHeading eyebrow="Most Read" title="Popular Articles" />
-            <ol className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {popular.map((p, i) => (
-                <li key={p.id}>
-                  <PopularPostRow post={p} category={categoryBySlug.get(p.category)} rank={i + 1} />
-                </li>
-              ))}
-            </ol>
+          <section className="py-24 bg-[#02100d] border-y border-gold-500/20 mb-24">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeading eyebrow="Most Read" title="Popular Articles" />
+              <ol className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {popular.map((p, i) => (
+                  <li key={p.id}>
+                    <PopularPostRow post={p} rank={i + 1} />
+                  </li>
+                ))}
+              </ol>
+            </div>
           </section>
         )}
 

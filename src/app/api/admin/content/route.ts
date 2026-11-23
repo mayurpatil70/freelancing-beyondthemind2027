@@ -8,8 +8,6 @@ import {
   updateExperiencesData,
   getHealingSessions,
   updateHealingSessionsData,
-  getBlogCategories,
-  updateBlogCategoriesData,
   getBlogPosts,
   updateBlogPostsData,
   getProgramme,
@@ -46,7 +44,6 @@ function revalidateAllPages() {
     revalidatePath('/healing-sessions/[slug]', 'page');
     revalidatePath('/blog');
     revalidatePath('/blog/[slug]', 'page');
-    revalidatePath('/blog/category/[slug]', 'page');
     revalidatePath('/sitemap.xml');
   } catch (err) {
     console.warn('Revalidate error:', err);
@@ -60,7 +57,6 @@ export async function GET() {
   const settings = await getSiteSettings();
   const experiences = await getExperiences();
   const healingSessions = await getHealingSessions();
-  const blogCategories = await getBlogCategories();
   const blogPosts = await getBlogPosts();
   const programme = await getProgramme();
   const faqs = await getFAQs();
@@ -75,7 +71,6 @@ export async function GET() {
       settings,
       experiences,
       healingSessions,
-      blogCategories,
       blogPosts,
       programme,
       faqs,
@@ -110,12 +105,6 @@ export async function POST(req: NextRequest) {
 
     if (type === 'healingSessions') {
       const updated = await updateHealingSessionsData(payload);
-      revalidateAllPages();
-      return NextResponse.json({ success: true, data: updated });
-    }
-
-    if (type === 'blogCategories') {
-      const updated = await updateBlogCategoriesData(payload);
       revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }

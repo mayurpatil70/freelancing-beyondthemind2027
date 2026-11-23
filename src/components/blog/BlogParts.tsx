@@ -1,53 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  BookOpen,
-  Clock,
-  Compass,
-  Eye,
-  Feather,
-  Flame,
-  Flower2,
-  Heart,
-  Leaf,
-  Mountain,
-  Sparkles,
-  Sun,
-  Wind,
-  type LucideIcon,
-} from 'lucide-react';
-import type { BlogCategory, BlogPost } from '@/types';
+import { ArrowRight, BookOpen, Clock, Flower2, Heart, Mountain } from 'lucide-react';
+import type { BlogPost } from '@/types';
 import { formatBlogDate, readingMinutes } from '@/lib/blog';
-
-export const BLOG_ICONS: Record<string, LucideIcon> = {
-  Flower2,
-  Sun,
-  Eye,
-  Heart,
-  Sparkles,
-  Leaf,
-  Wind,
-  Mountain,
-  Compass,
-  Feather,
-  Flame,
-  BookOpen,
-};
-
-export function CategoryIcon({ name, className }: { name?: string; className?: string }) {
-  const Icon = (name && BLOG_ICONS[name]) || BookOpen;
-  return <Icon className={className} aria-hidden="true" />;
-}
 
 function Cover({
   post,
-  category,
   className,
   sizes = 'small',
 }: {
   post: BlogPost;
-  category?: BlogCategory;
   className?: string;
   sizes?: 'small' | 'large';
 }) {
@@ -64,7 +26,7 @@ function Cover({
         />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center">
-          <CategoryIcon name={category?.icon_name} className={sizes === 'large' ? 'w-16 h-16 text-gold-400/70' : 'w-10 h-10 text-gold-400/70'} />
+          <BookOpen aria-hidden="true" className={sizes === 'large' ? 'w-16 h-16 text-gold-400/70' : 'w-10 h-10 text-gold-400/70'} />
         </div>
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-[#031713]/70 via-transparent to-transparent" />
@@ -85,29 +47,16 @@ export function PostMeta({ post, className }: { post: BlogPost; className?: stri
   );
 }
 
-export function CategoryPill({ category }: { category?: BlogCategory }) {
-  if (!category) return null;
-  return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 text-gold-300 text-[10px] tracking-widest uppercase font-semibold border border-gold-400/30">
-      <CategoryIcon name={category.icon_name} className="w-3 h-3" />
-      {category.name}
-    </span>
-  );
-}
-
-export function FeaturedPostCard({ post, category }: { post: BlogPost; category?: BlogCategory }) {
+export function FeaturedPostCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
       prefetch={true}
       className="group grid grid-cols-1 lg:grid-cols-2 rounded-3xl overflow-hidden bg-[#07261F]/70 border border-gold-500/30 hover:border-gold-400/60 transition-colors shadow-2xl"
     >
-      <Cover post={post} category={category} sizes="large" className="aspect-[16/10] lg:aspect-auto lg:min-h-[360px]" />
+      <Cover post={post} sizes="large" className="aspect-[16/10] lg:aspect-auto lg:min-h-[360px]" />
       <div className="p-6 sm:p-10 flex flex-col justify-center space-y-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold">Featured Article</span>
-          <CategoryPill category={category} />
-        </div>
+        <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold">Featured Article</span>
         <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-tight group-hover:text-gold-200 transition-colors">
           {post.title}
         </h2>
@@ -122,14 +71,12 @@ export function FeaturedPostCard({ post, category }: { post: BlogPost; category?
   );
 }
 
-// headingLevel: 'h2' where the cards sit straight under the page H1 (category pages), else 'h3'.
+// headingLevel: 'h2' where the cards sit straight under the page H1, else 'h3'.
 export function PostCard({
   post,
-  category,
   headingLevel: Heading = 'h3',
 }: {
   post: BlogPost;
-  category?: BlogCategory;
   headingLevel?: 'h2' | 'h3';
 }) {
   return (
@@ -138,9 +85,8 @@ export function PostCard({
       prefetch={true}
       className="group flex flex-col h-full rounded-2xl overflow-hidden bg-[#07261F]/70 border border-gold-500/25 hover:border-gold-400/60 transition-colors"
     >
-      <Cover post={post} category={category} className="aspect-[16/10]" />
+      <Cover post={post} className="aspect-[16/10]" />
       <div className="flex flex-col flex-1 p-5 sm:p-6 space-y-3">
-        <CategoryPill category={category} />
         <Heading className="font-serif text-xl sm:text-2xl text-ivory-50 font-light leading-snug group-hover:text-gold-200 transition-colors">
           {post.title}
         </Heading>
@@ -151,7 +97,7 @@ export function PostCard({
   );
 }
 
-export function PopularPostRow({ post, category, rank }: { post: BlogPost; category?: BlogCategory; rank: number }) {
+export function PopularPostRow({ post, rank }: { post: BlogPost; rank: number }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -162,32 +108,10 @@ export function PopularPostRow({ post, category, rank }: { post: BlogPost; categ
         {String(rank).padStart(2, '0')}
       </span>
       <span className="min-w-0 space-y-1.5">
-        {category && <span className="block text-[10px] uppercase tracking-widest text-gold-400">{category.name}</span>}
         <span className="block font-serif text-xl text-ivory-50 leading-tight group-hover:text-gold-200 transition-colors">
           {post.title}
         </span>
         <PostMeta post={post} />
-      </span>
-    </Link>
-  );
-}
-
-export function CategoryCard({ category, count }: { category: BlogCategory; count: number }) {
-  return (
-    <Link
-      href={`/blog/category/${category.slug}`}
-      prefetch={true}
-      className="group flex flex-col h-full p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/25 hover:border-gold-400/60 transition-colors space-y-3"
-    >
-      <span className="w-11 h-11 rounded-full bg-[#031713] border border-gold-500/50 flex items-center justify-center">
-        <CategoryIcon name={category.icon_name} className="w-5 h-5 text-gold-300" />
-      </span>
-      <span className="block font-serif text-xl text-ivory-50 leading-tight group-hover:text-gold-200 transition-colors">
-        {category.name}
-      </span>
-      <span className="block text-sm text-stone-subtle/85 font-light leading-relaxed flex-1">{category.description}</span>
-      <span className="block text-[10px] uppercase tracking-widest text-gold-400">
-        {count === 1 ? '1 article' : `${count} articles`}
       </span>
     </Link>
   );

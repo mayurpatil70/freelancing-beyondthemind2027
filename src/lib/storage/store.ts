@@ -15,14 +15,12 @@ import {
   RishikeshAttraction,
   WeatherClothingGuide,
   MediaAsset,
-  BlogCategory,
   BlogPost,
 } from '@/types';
 import {
   initialSiteSettings,
   initialExperiences,
   initialHealingSessions,
-  initialBlogCategories,
   initialBlogPosts,
   initialProgramme,
   initialTestimonials,
@@ -38,7 +36,6 @@ export interface ContentMap {
   settings: SiteSettings;
   experiences: SacredExperience[];
   healingSessions: SacredExperience[];
-  blogCategories: BlogCategory[];
   blogPosts: BlogPost[];
   programme: ProgrammeDay[];
   testimonials: Testimonial[];
@@ -54,7 +51,6 @@ export const CONTENT_KEYS: ContentKey[] = [
   'settings',
   'experiences',
   'healingSessions',
-  'blogCategories',
   'blogPosts',
   'programme',
   'testimonials',
@@ -68,7 +64,6 @@ const defaults: ContentMap = {
   settings: initialSiteSettings,
   experiences: initialExperiences,
   healingSessions: initialHealingSessions,
-  blogCategories: initialBlogCategories,
   blogPosts: initialBlogPosts,
   programme: initialProgramme,
   testimonials: initialTestimonials,
@@ -311,7 +306,6 @@ export async function setContent<K extends ContentKey>(key: K, data: ContentMap[
 export const getSiteSettings = () => getContent('settings');
 export const getExperiences = () => getContent('experiences');
 export const getHealingSessions = () => getContent('healingSessions');
-export const getBlogCategories = () => getContent('blogCategories');
 export const getBlogPosts = () => getContent('blogPosts');
 export const getProgramme = () => getContent('programme');
 export const getTestimonials = () => getContent('testimonials');
@@ -327,7 +321,6 @@ export async function updateSiteSettings(updates: Partial<SiteSettings>): Promis
 
 export const updateExperiencesData = (data: SacredExperience[]) => setContent('experiences', data);
 export const updateHealingSessionsData = (data: SacredExperience[]) => setContent('healingSessions', data);
-export const updateBlogCategoriesData = (data: BlogCategory[]) => setContent('blogCategories', data);
 export const updateBlogPostsData = (data: BlogPost[]) => setContent('blogPosts', data);
 export const updateProgrammeData = (data: ProgrammeDay[]) => setContent('programme', data);
 export const updateFAQsData = (data: FAQItem[]) => setContent('faqs', data);

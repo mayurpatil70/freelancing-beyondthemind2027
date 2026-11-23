@@ -2,11 +2,11 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ArticleBody } from '@/components/blog/ArticleBody';
-import { CategoryPill, ExploreLinks, PostCard, PostMeta } from '@/components/blog/BlogParts';
+import { ExploreLinks, PostCard, PostMeta } from '@/components/blog/BlogParts';
 import { BLOG_NAME, formatBlogDate, imageUrl, loadBlog, plainText, readingMinutes } from '@/lib/blog';
 import { parseKeywords } from '@/lib/seo/keywords';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
@@ -19,9 +19,9 @@ export const revalidate = 300;
 type Params = { params: { slug: string } };
 
 async function findPost(slug: string) {
-  const { posts, categories } = await loadBlog();
+  const { posts } = await loadBlog();
   const post = posts.find((p) => p.slug === slug);
-  return { posts, categories, post, category: categories.find((c) => c.slug === post?.category) };
+  return { posts, post };
 }
 
 export async function generateStaticParams() {
@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { post, category } = await findPost(params.slug);
+  const { post } = await findPost(params.slug);
   if (!post) return { title: 'Article Not Found' };
 
   const path = `/blog/${post.slug}`;
@@ -53,7 +53,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: 'article',
       publishedTime: post.published_at,
       modifiedTime: post.updated_at || post.published_at,
-      section: category?.name,
       tags: keywords.length ? keywords : undefined,
       images: image ? [{ url: image, alt: post.image_alt || post.title }] : undefined,
     },
@@ -62,15 +61,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function BlogArticlePage({ params }: Params) {
-  const { posts, categories, post, category } = await findPost(params.slug);
+  const { posts, post } = await findPost(params.slug);
   if (!post) notFound();
 
   const url = absoluteUrl(`/blog/${post.slug}`);
   const faqs = (post.faqs || []).filter((f) => f.question?.trim() && f.answer?.trim());
-  const sameCategory = posts.filter((p) => p.slug !== post.slug && p.category === post.category);
-  const others = posts.filter((p) => p.slug !== post.slug && p.category !== post.category);
-  const related = [...sameCategory, ...others].slice(0, 3);
-  const categoryBySlug = new Map(categories.map((c) => [c.slug, c]));
+  const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
   const body = plainText(post.content);
 
   const jsonLd: Record<string, unknown>[] = [
@@ -91,7 +87,6 @@ export default async function BlogArticlePage({ params }: Params) {
       },
       mainEntityOfPage: { '@type': 'WebPage', '@id': url },
       url,
-      articleSection: category?.name,
       keywords: post.keywords || undefined,
       wordCount: body.split(' ').filter(Boolean).length,
       timeRequired: `PT${readingMinutes(post.content)}M`,
@@ -104,10 +99,7 @@ export default async function BlogArticlePage({ params }: Params) {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
         { '@type': 'ListItem', position: 2, name: BLOG_NAME, item: absoluteUrl('/blog') },
-        ...(category
-          ? [{ '@type': 'ListItem', position: 3, name: category.name, item: absoluteUrl(`/blog/category/${category.slug}`) }]
-          : []),
-        { '@type': 'ListItem', position: category ? 4 : 3, name: post.title, item: url },
+        { '@type': 'ListItem', position: 3, name: post.title, item: url },
       ],
     },
   ];
@@ -135,16 +127,7 @@ export default async function BlogArticlePage({ params }: Params) {
               <Link href="/blog" className="hover:text-gold-300 transition-colors">
                 {BLOG_NAME}
               </Link>
-              {category && (
-                <>
-                  <ChevronRight className="w-3 h-3 opacity-60" />
-                  <Link href={`/blog/category/${category.slug}`} className="hover:text-gold-300 transition-colors">
-                    {category.name}
-                  </Link>
-                </>
-              )}
             </nav>
-            <CategoryPill category={category} />
             <h1 className="font-serif text-4xl sm:text-5xl text-ivory-50 font-light leading-tight">{post.title}</h1>
             <p className="text-base sm:text-lg text-stone-subtle/90 font-light leading-relaxed">{post.excerpt}</p>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] uppercase tracking-widest text-gold-300">
@@ -210,7 +193,7 @@ export default async function BlogArticlePage({ params }: Params) {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((p) => (
-                <PostCard key={p.id} post={p} category={categoryBySlug.get(p.category)} />
+                <PostCard key={p.id} post={p} />
               ))}
             </div>
           </section>

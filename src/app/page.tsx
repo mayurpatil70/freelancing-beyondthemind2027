@@ -49,7 +49,6 @@ export default async function HomePage() {
   const programme = await getProgramme();
   const testimonials = await getTestimonials();
   const blog = await loadBlog();
-  const blogCategoryBySlug = new Map(blog.categories.map((c) => [c.slug, c]));
   const latestPosts = blog.posts.slice(0, 3);
 
   return (
@@ -530,7 +529,7 @@ export default async function HomePage() {
               />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {latestPosts.map((p) => (
-                  <PostCard key={p.id} post={p} category={blogCategoryBySlug.get(p.category)} />
+                  <PostCard key={p.id} post={p} />
                 ))}
               </div>
               <div className="text-center mt-14">
