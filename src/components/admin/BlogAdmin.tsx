@@ -388,7 +388,16 @@ export function BlogAdmin({
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (!file) return;
-                              handleUploadMedia(file, (url) => updatePost(p.id, { image: url }), `blog-${p.id}`);
+                              handleUploadMedia(
+                                file,
+                                (url) => {
+                                  // Like the other tabs, a new photo is saved and published straight away.
+                                  const updated = posts.map((x) => (x.id === p.id ? { ...x, image: url } : x));
+                                  setPosts(updated);
+                                  saveContent('blogPosts', updated, `Photo for "${p.title}" uploaded & saved!`);
+                                },
+                                `blog-${p.id}`
+                              );
                             }}
                           />
                         </label>

@@ -21,6 +21,8 @@ import {
   getProgramme,
   getTestimonials,
 } from '@/lib/storage/store';
+import { loadBlog } from '@/lib/blog';
+import { PostCard } from '@/components/blog/BlogParts';
 import {
   MapPin,
   ArrowRight,
@@ -46,6 +48,9 @@ export default async function HomePage() {
   const healingSessions = [...(await getHealingSessions())].sort((a, b) => a.order - b.order);
   const programme = await getProgramme();
   const testimonials = await getTestimonials();
+  const blog = await loadBlog();
+  const blogCategoryBySlug = new Map(blog.categories.map((c) => [c.slug, c]));
+  const latestPosts = blog.posts.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
@@ -511,6 +516,36 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION 12: LATEST FROM THE BLOG (Wisdom Beyond the Mind, edited in admin Blog tab) */}
+        {/* ========================================================================= */}
+        {latestPosts.length > 0 && (
+          <section className="py-24 sm:py-28 bg-[#031713] border-t border-gold-500/20">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeading
+                eyebrow="Blog & Journal"
+                title="Wisdom Beyond the Mind"
+                subtitle="Explore the Journey Within. Insights on meditation, spirituality, consciousness, healing and inner transformation."
+              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {latestPosts.map((p) => (
+                  <PostCard key={p.id} post={p} category={blogCategoryBySlug.get(p.category)} />
+                ))}
+              </div>
+              <div className="text-center mt-14">
+                <Link
+                  href="/blog"
+                  prefetch={true}
+                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm"
+                >
+                  <span>Read All Articles</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
       {/* Premium Footer */}
