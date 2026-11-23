@@ -211,3 +211,54 @@ export interface MediaAsset {
   original_name: string;
   created_at: string;
 }
+
+// ----------------------------------------------------------------------------
+// Blog: "Wisdom Beyond the Mind" (/blog). Edited in the admin Blog tab.
+// ----------------------------------------------------------------------------
+
+export interface BlogCategory {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  order: number;
+  /** Lucide icon name shown on the category card. */
+  icon_name: string;
+  /** Comma separated SEO keywords for the category page. Never shown on the page. */
+  keywords?: string;
+}
+
+export interface BlogFAQ {
+  question: string;
+  answer: string;
+}
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  /** One or two sentence summary, used on cards and as the meta description. */
+  excerpt: string;
+  /** Article body. Empty line = new paragraph, "## " heading, "### " subheading, "- " list item, "> " quote, **bold**. */
+  content: string;
+  /** Slug of a BlogCategory. */
+  category: string;
+  author: string;
+  /** YYYY-MM-DD */
+  published_at: string;
+  /** YYYY-MM-DD, optional */
+  updated_at?: string;
+  image?: string;
+  image_alt?: string;
+  image_position?: string;
+  /** The one article shown large at the top of /blog. */
+  featured?: boolean;
+  /** Shown under "Popular Articles". */
+  popular?: boolean;
+  /** Draft articles are hidden from the site. */
+  published: boolean;
+  /** Comma separated SEO keywords. Never shown on the page. */
+  keywords?: string;
+  /** Short questions and answers shown at the end and given to search engines as FAQ structured data. */
+  faqs?: BlogFAQ[];
+}

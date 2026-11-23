@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Lock, Globe, ExternalLink } from 'lucide-react';
+import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Globe, ExternalLink } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
 
 export function Footer() {
@@ -119,6 +119,11 @@ export function Footer() {
               <li>
                 <Link href="/faq" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Frequently Asked
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" prefetch={true} className="hover:text-gold-300 transition-colors">
+                  Wisdom Beyond the Mind (Blog)
                 </Link>
               </li>
               <li>
@@ -299,14 +304,6 @@ export function Footer() {
             <span className="opacity-30">•</span>
             <Link href="/contact" prefetch={true} className="hover:text-gold-300 transition-colors">
               Concierge
-            </Link>
-            <span className="opacity-30">•</span>
-            <Link
-              href="/admin"
-              className="text-gold-400 hover:text-gold-300 font-medium transition-colors flex items-center gap-1.5 underline underline-offset-4 decoration-gold-400/60"
-            >
-              <Lock className="w-3 h-3 text-gold-400" />
-              <span>/admin Login</span>
             </Link>
           </div>
         </div>

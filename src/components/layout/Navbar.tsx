@@ -24,6 +24,7 @@ const rightLinks = [
 
 const moreLinks = [
   { label: 'Healing Sessions', href: '/healing-sessions', note: 'Individual sessions by appointment' },
+  { label: 'Blog', href: '/blog', note: 'Wisdom Beyond the Mind' },
   { label: 'Participation', href: '/participation', note: 'Rooms, inclusions and what to bring' },
   { label: 'Testimonials', href: '/testimonials', note: 'Reflections from the 2026 circle' },
   { label: 'How to Reach', href: '/reach', note: 'Air, rail and road to Rishikesh' },
@@ -38,6 +39,7 @@ const sheetLinks = [
   { label: 'Programme', href: '/programme', tag: '4 days' },
   { label: 'Rishikesh', href: '/rishikesh', tag: 'Ganga' },
   { label: 'Daily Meditation', href: '/daily-meditation', tag: '7:30 pm' },
+  { label: 'Blog', href: '/blog', tag: 'Journal' },
   { label: 'Participation', href: '/participation' },
   { label: 'How to Reach', href: '/reach' },
   { label: 'FAQ', href: '/faq' },

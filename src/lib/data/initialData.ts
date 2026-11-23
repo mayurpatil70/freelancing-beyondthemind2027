@@ -7,12 +7,16 @@ import {
   SiteSettings,
   RishikeshAttraction,
   WeatherClothingGuide,
+  BlogCategory,
+  BlogPost,
 } from "@/types";
 import dbData from "@/data/db.json";
 
 export const initialSiteSettings: SiteSettings = dbData.settings as SiteSettings;
 export const initialExperiences: SacredExperience[] = dbData.experiences as SacredExperience[];
 export const initialHealingSessions: SacredExperience[] = dbData.healingSessions as SacredExperience[];
+export const initialBlogCategories: BlogCategory[] = dbData.blogCategories as BlogCategory[];
+export const initialBlogPosts: BlogPost[] = dbData.blogPosts as BlogPost[];
 export const initialAttractions: RishikeshAttraction[] = dbData.attractions as RishikeshAttraction[];
 export const initialGallery: GalleryItem[] = dbData.gallery as GalleryItem[];
 export const initialProgramme: ProgrammeDay[] = dbData.programme as ProgrammeDay[];

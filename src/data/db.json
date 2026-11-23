@@ -630,6 +630,222 @@
       "Reusable water bottle & light daypack"
     ]
   },
+  "blogCategories": [
+    {
+      "id": "cat-meditation",
+      "slug": "meditation",
+      "name": "Meditation",
+      "description": "Practical guidance on sitting, breathing and resting in stillness, for beginners and seasoned meditators alike.",
+      "order": 1,
+      "icon_name": "Flower2",
+      "keywords": ""
+    },
+    {
+      "id": "cat-spirituality",
+      "slug": "spirituality",
+      "name": "Spirituality",
+      "description": "Reflections on the timeless teachings that point us back to our true nature.",
+      "order": 2,
+      "icon_name": "Sun",
+      "keywords": ""
+    },
+    {
+      "id": "cat-consciousness",
+      "slug": "consciousness",
+      "name": "Consciousness",
+      "description": "Exploring awareness, the witnessing self and what lies beyond the thinking mind.",
+      "order": 3,
+      "icon_name": "Eye",
+      "keywords": ""
+    },
+    {
+      "id": "cat-healing",
+      "slug": "healing",
+      "name": "Healing",
+      "description": "Gentle insights on emotional release, inner balance and wholeness of body and mind.",
+      "order": 4,
+      "icon_name": "Heart",
+      "keywords": ""
+    },
+    {
+      "id": "cat-inner-transformation",
+      "slug": "inner-transformation",
+      "name": "Inner Transformation",
+      "description": "Stories and practices for shifting old patterns and awakening a new way of being.",
+      "order": 5,
+      "icon_name": "Sparkles",
+      "keywords": ""
+    },
+    {
+      "id": "cat-mindful-living",
+      "slug": "mindful-living",
+      "name": "Mindful Living",
+      "description": "Bringing presence, kindness and awareness into relationships, work and everyday moments.",
+      "order": 6,
+      "icon_name": "Leaf",
+      "keywords": ""
+    },
+    {
+      "id": "cat-yoga-and-breathwork",
+      "slug": "yoga-and-breathwork",
+      "name": "Yoga & Breathwork",
+      "description": "Breath, posture and energy practices that prepare the body for deeper stillness.",
+      "order": 7,
+      "icon_name": "Wind",
+      "keywords": ""
+    },
+    {
+      "id": "cat-rishikesh-and-sacred-places",
+      "slug": "rishikesh-and-sacred-places",
+      "name": "Rishikesh & Sacred Places",
+      "description": "The Ganga, the Himalaya and the sacred landscapes that have called seekers inward for centuries.",
+      "order": 8,
+      "icon_name": "Mountain",
+      "keywords": ""
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": "post-1",
+      "slug": "what-is-meditation-a-gentle-beginning",
+      "title": "What Is Meditation? A Gentle Beginning for the Curious Mind",
+      "excerpt": "Meditation is not about stopping thoughts. It is the simple art of noticing, and of resting in the awareness that notices. Here is a gentle way to begin.",
+      "content": "Many people come to meditation believing they must empty the mind. They sit down, thoughts keep arriving, and they decide they are \"bad at it\". In truth, meditation begins exactly there: in noticing that thoughts arise, and that something in you is aware of them.\n\n## Meditation is attention at rest\n\nAt its heart, meditation is the practice of resting attention gently on one thing, such as the breath, a sound or a feeling in the body, and returning to it each time the mind wanders. The returning is the practice. Every time you notice you have drifted and come back, you strengthen the quiet muscle of awareness.\n\n## A simple way to begin\n\n- Sit comfortably, with your spine upright but not rigid.\n- Close your eyes or let your gaze soften towards the floor.\n- Feel the natural rhythm of your breath, without changing it.\n- When a thought pulls you away, notice it kindly and return to the breath.\n- Begin with five to ten minutes, and let the time grow naturally.\n\n## What you may notice\n\nIn the first days, the mind may seem busier than ever. This is not failure; you are simply seeing what was always there. Over time, small gaps of stillness appear between thoughts. In those gaps, many seekers discover a calm that does not depend on circumstances.\n\n> Meditation is not an escape from life. It is a way of meeting life fully, from a place of stillness.\n\nIf you would like to practise with others, you are welcome to join our **Daily Guided Meditation** sessions.",
+      "category": "meditation",
+      "author": "Beyond the Mind Team",
+      "published_at": "2026-11-23",
+      "updated_at": "",
+      "image": "/images/rishikesh/meditation-ganges.jpg",
+      "image_alt": "A seeker meditating beside the Ganga in Rishikesh",
+      "image_position": "center",
+      "featured": true,
+      "popular": true,
+      "published": true,
+      "keywords": "what is meditation, meditation for beginners, how to meditate, guided meditation, stillness",
+      "faqs": [
+        {
+          "question": "Do I need to stop my thoughts to meditate?",
+          "answer": "No. Thoughts will come and go. Meditation is the practice of noticing them without following them, and gently returning your attention to the breath or another anchor."
+        },
+        {
+          "question": "How long should a beginner meditate?",
+          "answer": "Five to ten minutes a day is a good start. Regular short practice is more helpful than occasional long sessions."
+        },
+        {
+          "question": "Is guided meditation good for beginners?",
+          "answer": "Yes. A guiding voice helps the mind settle and gives beginners a clear structure to follow, which is why many people start with guided sessions."
+        }
+      ]
+    },
+    {
+      "id": "post-2",
+      "slug": "beyond-thought-the-witnessing-self",
+      "title": "Beyond Thought: Understanding Consciousness and the Witnessing Self",
+      "excerpt": "You are aware of your thoughts, your feelings and the world around you. But who, or what, is aware? An introduction to the witnessing self.",
+      "content": "Throughout the day we are carried by a stream of thoughts, memories, plans and feelings. Most of the time we believe we are that stream. Yet there is something quieter that notices it all: the awareness in which every experience appears.\n\n## The witness behind experience\n\nAncient traditions describe this awareness as the witness, or sakshi. It sees thoughts arise and dissolve, emotions build and fade, and the body change through the years. The witness itself does not come and go. It is the steady background of every moment.\n\n## A short practice of self inquiry\n\n- Sit quietly and notice whatever thought is present.\n- Ask gently: \"Who is aware of this thought?\"\n- Do not look for a verbal answer. Simply rest in the sense of being aware.\n- When the mind becomes busy again, ask once more and rest.\n\n## Why it matters\n\nRecognising the witnessing self does not remove life's challenges, but it changes our relationship with them. Difficult emotions are seen as passing weather rather than as who we are. Many seekers describe this shift as the beginning of true inner freedom: a journey beyond the mind.",
+      "category": "consciousness",
+      "author": "Beyond the Mind Team",
+      "published_at": "2026-11-23",
+      "updated_at": "",
+      "image": "/images/rishikesh/meditation-himalayas.jpg",
+      "image_alt": "Meditation facing the Himalayan peaks at sunrise",
+      "image_position": "center",
+      "featured": false,
+      "popular": true,
+      "published": true,
+      "keywords": "consciousness, witness consciousness, awareness, self inquiry, beyond the mind",
+      "faqs": [
+        {
+          "question": "What is witness consciousness?",
+          "answer": "Witness consciousness is the awareness that observes thoughts, feelings and sensations without being identified with them. It is described in many contemplative traditions as our deeper nature."
+        },
+        {
+          "question": "How can I experience the witnessing self?",
+          "answer": "Simple self inquiry helps: sit quietly, notice a thought, and ask who is aware of it. Then rest in the sense of awareness itself rather than in the thought."
+        }
+      ]
+    },
+    {
+      "id": "post-3",
+      "slug": "emotional-healing-making-space-for-what-you-feel",
+      "title": "Emotional Healing: Making Space for What You Feel",
+      "excerpt": "Healing rarely means getting rid of feelings. More often it means allowing them, gently and safely, until they are free to move on.",
+      "content": "Many of us learned early in life to push difficult feelings away. Grief, anger and fear were kept out of sight so we could carry on. Over the years, what is not felt can settle into the body and mind as heaviness, tension or a sense of being stuck.\n\n## Feeling is part of healing\n\nEmotional healing often begins with a simple, courageous step: allowing a feeling to be here. When we stop resisting an emotion and meet it with gentle attention, it can begin to move, soften and eventually release.\n\n## A gentle practice for difficult moments\n\n- Pause and take three slow breaths.\n- Notice where the feeling lives in your body: the chest, the throat, the belly.\n- Name it softly: \"This is sadness,\" or \"This is fear.\"\n- Breathe into that place and let it be exactly as it is for a few moments.\n- Close with a kind word to yourself.\n\n## When to seek support\n\nSome patterns run deep and are easier to explore with experienced guidance. Our **Transformative Healing Sessions** offer one-to-one support for emotional release, relationships and inner balance.\n\nPlease note that spiritual and emotional healing practices complement, and do not replace, professional medical or psychological care. If you are struggling, reach out to a qualified professional.",
+      "category": "healing",
+      "author": "Beyond the Mind Team",
+      "published_at": "2026-11-23",
+      "updated_at": "",
+      "image": "/images/rishikesh/stillness-ganges.jpg",
+      "image_alt": "Still water of the Ganga at dawn",
+      "image_position": "center",
+      "featured": false,
+      "popular": true,
+      "published": true,
+      "keywords": "emotional healing, emotional release, inner healing, emotional detox, healing sessions",
+      "faqs": [
+        {
+          "question": "What is emotional healing?",
+          "answer": "Emotional healing is the process of acknowledging, feeling and gently releasing emotions that have been held back, so that they no longer weigh on the body and mind."
+        },
+        {
+          "question": "Can meditation help with emotional healing?",
+          "answer": "Meditation can create a calm, safe space in which feelings can be noticed and allowed. It is a supportive practice, and works best alongside professional care where that is needed."
+        }
+      ]
+    },
+    {
+      "id": "post-4",
+      "slug": "five-breaths-to-come-home-a-daily-practice",
+      "title": "Five Breaths to Come Home: A Simple Daily Practice",
+      "excerpt": "You do not need an hour to return to yourself. Five conscious breaths, taken anywhere, can bring the mind back to the present moment.",
+      "content": "The breath is always with us, and it is always happening now. That is why it is one of the simplest doorways back to the present moment. This short practice takes less than a minute and can be done anywhere.\n\n## The practice\n\n- **Breath one:** Simply notice that you are breathing.\n- **Breath two:** Feel the air entering and leaving through the nose.\n- **Breath three:** Let the exhale become a little longer than the inhale.\n- **Breath four:** Relax the shoulders, the jaw and the space between the eyebrows.\n- **Breath five:** Rest for a moment in the stillness after the exhale.\n\n## When to use it\n\nTry it before you open your phone in the morning, before an important conversation, or whenever you notice the mind racing. Over time, these small moments of presence add up to a calmer, clearer way of living.",
+      "category": "yoga-and-breathwork",
+      "author": "Beyond the Mind Team",
+      "published_at": "2026-11-23",
+      "updated_at": "",
+      "image": "/images/rishikesh/river-meditation-landscape.jpg",
+      "image_alt": "A river flowing through the Himalayan foothills",
+      "image_position": "center",
+      "featured": false,
+      "popular": false,
+      "published": true,
+      "keywords": "breathwork, conscious breathing, pranayama for beginners, daily practice, calm the mind",
+      "faqs": [
+        {
+          "question": "How does conscious breathing calm the mind?",
+          "answer": "Slow, attentive breathing, especially with a slightly longer exhale, helps the body relax and draws attention away from racing thoughts into the present moment."
+        }
+      ]
+    },
+    {
+      "id": "post-5",
+      "slug": "why-rishikesh-the-call-to-go-within",
+      "title": "Why Rishikesh? The Ganga, the Himalaya and the Call to Go Within",
+      "excerpt": "For centuries, seekers have travelled to Rishikesh to meditate beside the Ganga at the foot of the Himalaya. What makes this place so special?",
+      "content": "Rishikesh sits where the Ganga leaves the Himalayan foothills and opens onto the plains. For centuries, sages, yogis and ordinary seekers have come here to pray, practise and listen to the silence within.\n\n## A landscape that invites stillness\n\nThe sound of the river, the mountains rising on every side and the evening Ganga Aarti create a natural atmosphere of reverence. Many visitors notice that meditation feels easier here, as if the place itself supports going inward.\n\n## A living spiritual tradition\n\nRishikesh is often called the yoga capital of the world. Ashrams, temples and teachers keep ancient practices alive, and people from every corner of the world gather to learn and to rest.\n\n## Retreating in Rishikesh\n\nIt is for these reasons that **The Divine Retreat**, Beyond the Mind 2027, will be held in Rishikesh. Four days of meditation, healing and inner transformation beside the sacred Ganga offer a rare opportunity to step away from daily life and reconnect with your true self.",
+      "category": "rishikesh-and-sacred-places",
+      "author": "Beyond the Mind Team",
+      "published_at": "2026-11-23",
+      "updated_at": "",
+      "image": "/images/rishikesh/ganga-aarti-landscape.jpg",
+      "image_alt": "Evening Ganga Aarti on the banks of the river in Rishikesh",
+      "image_position": "center",
+      "featured": false,
+      "popular": false,
+      "published": true,
+      "keywords": "Rishikesh, spiritual retreat Rishikesh, meditation retreat India, Ganga, Himalaya",
+      "faqs": [
+        {
+          "question": "Why is Rishikesh good for a meditation retreat?",
+          "answer": "Rishikesh combines a peaceful natural setting on the Ganga at the foot of the Himalaya with a long living tradition of yoga and meditation, which many seekers find deeply supportive for inner work."
+        },
+        {
+          "question": "When is the Beyond the Mind retreat in Rishikesh?",
+          "answer": "Beyond the Mind 2027 takes place in Rishikesh from 6 to 9 October 2027, with arrival on 5 October."
+        }
+      ]
+    }
+  ],
   "registrations": [
     {
       "id": "BTM27-1001",
@@ -684,5 +900,13 @@
         }
       ]
     }
-  ]
+  ],
+  "active_admin_session": {
+    "token": "eyJ1c2VyIjoidCIsImlzc3VlZEF0IjoxNzk1NDUwMDg2MzI5LCJub25jZSI6ImMwZDBkZjdkZjQyZTQ4MzcifQ.ge4mr8pmDbyZ19KLuCQvZE3LUjmdqvH2_Ut0n_3RNQ8",
+    "ip": "127.0.0.1",
+    "deviceId": "5e694ec1ccd77be57e1f845a78907be6",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.8103.78 Safari/537.36",
+    "loginTime": 1795450086330,
+    "lastActivity": 1795450086330
+  }
 }
