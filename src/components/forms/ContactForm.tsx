@@ -7,6 +7,7 @@ import { contactSchema, ContactFormData } from '@/lib/validation/registration';
 import { Send, CheckCircle, MessageCircle, Calendar, Users, Globe, Mail } from 'lucide-react';
 import { formatWhatsAppUrl, openWhatsApp, handleWhatsAppClick } from '@/lib/utils';
 import { ThemeSelect } from '@/components/ui/ThemeSelect';
+import { NumberStepper } from '@/components/ui/NumberStepper';
 import { RETREAT_INQUIRY_OPTIONS } from '@/components/layout/WhatsAppInquiryModal';
 
 const RETREAT_WHATSAPP = '+91 8075572018';
@@ -174,17 +175,19 @@ export function ContactForm() {
         </div>
 
         <div className="sm:col-span-4 space-y-1">
-          <label className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium flex items-center gap-1.5">
+          <label htmlFor="contact-travelers" className="text-xs uppercase tracking-wider text-ivory-200/90 font-medium flex items-center gap-1.5">
             <Users className="w-3.5 h-3.5 text-gold-400" />
             <span>Travelers *</span>
           </label>
-          <input
-            type="number"
+          <NumberStepper
+            id="contact-travelers"
+            label="Number of travelers"
+            value={participants}
+            onChange={setParticipants}
             min={1}
             max={25}
-            value={participants}
-            onChange={(e) => setParticipants(parseInt(e.target.value) || 1)}
-            className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/60 border border-gold-500/20 text-ivory-100 text-xs text-center focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400"
+            size="sm"
+            className="w-full rounded-xl bg-emerald-950/60 border border-gold-500/20 focus-within:border-gold-400 focus-within:ring-1 focus-within:ring-gold-400 transition-all"
           />
         </div>
       </div>

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, User, Phone, Calendar, Users, MessageSquare, Globe, Mail } from 'lucide-react';
 import { ThemeSelect, ThemeSelectOption } from '@/components/ui/ThemeSelect';
+import { NumberStepper } from '@/components/ui/NumberStepper';
 import { openWhatsApp } from '@/lib/utils';
 import { useCMS } from '@/contexts/CMSContext';
 
@@ -199,13 +200,15 @@ export function WhatsAppInquiryModal({
         <form onSubmit={handleSubmit} className="space-y-4 [@media(max-height:760px)]:space-y-3 text-left">
           {/* Full Name */}
           <div className="space-y-1.5">
-            <label className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
+            <label htmlFor="inquiry-name" className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
               <User className="w-3.5 h-3.5 text-gold-400" />
               <span>Full Name</span>
             </label>
             <input
+              id="inquiry-name"
               type="text"
               required
+              autoComplete="name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your full name"
@@ -215,13 +218,16 @@ export function WhatsAppInquiryModal({
 
           {/* Phone / WhatsApp */}
           <div className="space-y-1.5">
-            <label className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
+            <label htmlFor="inquiry-phone" className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
               <Phone className="w-3.5 h-3.5 text-gold-400" />
               <span>Phone / WhatsApp Number</span>
             </label>
             <input
+              id="inquiry-phone"
               type="tel"
+              inputMode="tel"
               required
+              autoComplete="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="e.g. +91 9876543210"
@@ -246,33 +252,35 @@ export function WhatsAppInquiryModal({
             </div>
 
             <div className="sm:col-span-4 space-y-1.5">
-              <label className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
+              <label htmlFor="inquiry-travelers" className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
                 <Users className="w-3.5 h-3.5 text-gold-400" />
                 <span>Travelers</span>
               </label>
-              <input
-                type="number"
-                min={1}
-                max={15}
+              <NumberStepper
+                id="inquiry-travelers"
+                label="Number of travelers"
                 value={participants}
-                onChange={(e) => setParticipants(parseInt(e.target.value) || 1)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#041512] border border-gold-500/30 text-sm text-ivory-50 text-center focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400/40 transition-all"
+                onChange={setParticipants}
+                min={1}
+                max={20}
+                className="w-full rounded-lg bg-[#041512] border border-gold-500/30 focus-within:border-gold-400 focus-within:ring-1 focus-within:ring-gold-400/40 transition-all"
               />
             </div>
           </div>
 
           {/* Optional Message */}
           <div className="space-y-1.5">
-            <label className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
+            <label htmlFor="inquiry-note" className="text-[10px] tracking-[0.18em] uppercase font-semibold text-gold-400 flex items-center gap-1.5">
               <MessageSquare className="w-3.5 h-3.5 text-gold-400" />
               <span>Questions / Custom Note (Optional)</span>
             </label>
-            <input
-              type="text"
+            <textarea
+              id="inquiry-note"
+              rows={2}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="e.g. Inquiring about single occupancy room or Zoom links"
-              className="w-full px-4 py-2 rounded-lg bg-[#041512] border border-gold-500/30 text-xs sm:text-sm text-ivory-50 placeholder:text-stone-500 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400/40 transition-all"
+              placeholder="e.g. Single occupancy room, Zoom links, travel dates"
+              className="w-full px-4 py-2.5 rounded-lg bg-[#041512] border border-gold-500/30 text-sm text-ivory-50 placeholder:text-stone-500 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400/40 transition-all resize-none leading-relaxed"
             />
           </div>
 
