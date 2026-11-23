@@ -106,7 +106,7 @@ export default async function RishikeshPage() {
             <div className="p-8 rounded-3xl bg-[#07261F]/60 border border-gold-500/20 space-y-4">
               <Waves className="w-8 h-8 text-gold-400" />
               <h3 className="font-serif text-xl text-ivory-50 font-medium">Mother Ganga</h3>
-              <p className="text-xs sm:text-sm text-stone-subtle/80 leading-relaxed font-light">
+              <p className="text-sm sm:text-base text-stone-subtle/80 leading-relaxed font-light">
                 The sacred waters act as a natural purifier of subtle bio-fields. Sitting by the riverbanks
                 clears psychic heaviness and attunes your inner rhythm to eternal flow.
               </p>
@@ -115,7 +115,7 @@ export default async function RishikeshPage() {
             <div className="p-8 rounded-3xl bg-[#07261F]/60 border border-gold-500/20 space-y-4">
               <Mountain className="w-8 h-8 text-gold-400" />
               <h3 className="font-serif text-xl text-ivory-50 font-medium">Garhwal Foothills</h3>
-              <p className="text-xs sm:text-sm text-stone-subtle/80 leading-relaxed font-light">
+              <p className="text-sm sm:text-base text-stone-subtle/80 leading-relaxed font-light">
                 Surrounded by pine-scented hills, forest sanctuaries, and high ridgelines that block out urban
                 frenzy, creating ideal acoustic and atmospheric conditions for deep stillness.
               </p>
@@ -124,7 +124,7 @@ export default async function RishikeshPage() {
             <div className="p-8 rounded-3xl bg-[#07261F]/60 border border-gold-500/20 space-y-4">
               <Sun className="w-8 h-8 text-gold-400" />
               <h3 className="font-serif text-xl text-ivory-50 font-medium">Sacred Aarti & Heritage</h3>
-              <p className="text-xs sm:text-sm text-stone-subtle/80 leading-relaxed font-light">
+              <p className="text-sm sm:text-base text-stone-subtle/80 leading-relaxed font-light">
                 Witness the timeless resonance of evening bell chimes, butter lamps, and Sanskrit chanting
                 echoing across the water as dusk descends over the Himalayan riverbend.
               </p>
@@ -146,7 +146,7 @@ export default async function RishikeshPage() {
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-ivory-50 font-light">
                 Weather & Needed Clothes in Night in Low Temperature
               </h2>
-              <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed">
                 {weather.summary}
               </p>
             </div>
@@ -172,22 +172,26 @@ export default async function RishikeshPage() {
                   <div className="space-y-1">
                     <span className="text-[10px] uppercase tracking-widest text-gold-400/80 block">Daytime Warmth</span>
                     <span className="font-serif text-2xl text-ivory-50 font-medium">{weather.day_temp}</span>
-                    <span className="text-[11px] text-stone-subtle/70 block">Bright & comfortable</span>
+                    <span className="text-sm text-stone-subtle/70 block">Bright & comfortable</span>
                   </div>
                   <div className="space-y-1">
                     <span className="text-[10px] uppercase tracking-widest text-gold-400/80 block">Night & Morning</span>
                     <span className="font-serif text-2xl text-ivory-50 font-medium">{weather.night_temp}</span>
-                    <span className="text-[11px] text-stone-subtle/70 block">Crisp Himalayan breeze</span>
+                    <span className="text-sm text-stone-subtle/70 block">Crisp Himalayan breeze</span>
                   </div>
                 </div>
 
-                <ul className="space-y-2.5 text-xs text-ivory-200/90 font-light">
-                  {weather.clothing_tips.map((tip, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
-                      <span>{tip}</span>
-                    </li>
-                  ))}
+                <ul className="space-y-3 text-sm sm:text-base text-ivory-200/90 font-light leading-relaxed">
+                  {weather.clothing_tips.map((tip, idx) => {
+                    // Short lines without a closing full stop (e.g. "1. Meditation Attire") are titles.
+                    const isTitle = tip.trim().length <= 60 && !/[.!?]$/.test(tip.trim());
+                    return (
+                      <li key={idx} className={`flex items-start gap-2.5 ${isTitle && idx > 0 ? 'pt-2' : ''}`}>
+                        <CheckCircle2 className="w-4 h-4 text-gold-400 shrink-0 mt-0.5 sm:mt-1" />
+                        <span className={isTitle ? 'font-medium text-ivory-50' : undefined}>{tip}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
@@ -211,7 +215,7 @@ export default async function RishikeshPage() {
                   {weather.recommended_items.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-emerald-950/60 border border-gold-500/15 flex items-center gap-3 text-xs text-ivory-100"
+                      className="p-3.5 rounded-xl bg-emerald-950/60 border border-gold-500/15 flex items-center gap-3 text-sm sm:text-base text-ivory-100"
                     >
                       <span className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-300 flex items-center justify-center font-serif text-[10px] font-bold shrink-0">
                         0{idx + 1}
@@ -221,7 +225,7 @@ export default async function RishikeshPage() {
                   ))}
                 </div>
 
-                <p className="text-[11px] text-stone-subtle/75 font-light italic border-t border-gold-500/15 pt-4">
+                <p className="text-sm sm:text-base text-stone-subtle/75 font-light italic border-t border-gold-500/15 pt-4">
                   Note: Rishikesh is a sacred vegetarian pilgrimage town. Respectful modest attire covering shoulders and knees is strictly requested in ashram and temple premises.
                 </p>
               </div>
@@ -248,7 +252,7 @@ export default async function RishikeshPage() {
             <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
               Plan Your Journey to Rishikesh
             </h3>
-            <p className="text-xs sm:text-sm text-stone-subtle/85 font-light">
+            <p className="text-sm sm:text-base text-stone-subtle/85 font-light">
               Arrival on Tuesday, October 5, 2027. Connect with our concierge for assistance with airport transfers, train connectivity, and local travel arrangements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
