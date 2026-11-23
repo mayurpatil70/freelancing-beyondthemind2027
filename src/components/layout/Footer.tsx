@@ -73,6 +73,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/healing-sessions" prefetch={true} className="hover:text-gold-300 transition-colors">
+                  Transformative Healing Sessions
+                </Link>
+              </li>
+              <li>
                 <Link href="/programme" prefetch={true} className="hover:text-gold-300 transition-colors">
                   4-Day Programme
                 </Link>

@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { siteUrl as baseUrl } from '@/lib/seo/siteUrl';
-import { getExperiences } from '@/lib/storage/store';
+import { getExperiences, getHealingSessions } from '@/lib/storage/store';
 
 export const revalidate = 300;
 
@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/daily-meditation', priority: 0.95, changeFrequency: 'daily' },
     { path: '/programme', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/experiences', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/healing-sessions', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/rishikesh', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/about', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/participation', priority: 0.8, changeFrequency: 'weekly' },
@@ -34,7 +35,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn('Sitemap: could not load retreat sessions', err);
   }
 
-  return [...routeConfig, ...sessionRoutes].map((item) => ({
+  let healingRoutes: typeof routeConfig = [];
+  try {
+    const healingSessions = await getHealingSessions();
+    healingRoutes = healingSessions.map((s) => ({
+      path: `/healing-sessions/${s.slug}`,
+      priority: 0.85,
+      changeFrequency: 'weekly' as const,
+    }));
+  } catch (err) {
+    console.warn('Sitemap: could not load healing sessions', err);
+  }
+
+  return [...routeConfig, ...sessionRoutes, ...healingRoutes].map((item) => ({
     url: `${baseUrl}${item.path}`,
     lastModified: new Date(),
     changeFrequency: item.changeFrequency,

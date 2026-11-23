@@ -18,6 +18,7 @@ import {
 import { IMAGE_ACCEPT, isVideoUrl } from '@/lib/media/rules';
 import { uploadMediaFile } from '@/lib/media/upload-client';
 import { broadcastCMSUpdate } from '@/contexts/CMSContext';
+import { HealingSessionsAdmin } from '@/components/admin/HealingSessionsAdmin';
 import {
   Users,
   Settings,
@@ -57,6 +58,7 @@ import {
   ArrowUpDown,
   Tag,
   Hash,
+  Heart,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -67,6 +69,7 @@ interface AdminDashboardProps {
 type AdminTab =
   | 'registrations'
   | 'sessions'
+  | 'healing-sessions'
   | 'daily-meditation'
   | 'registration-settings'
   | 'attractions'
@@ -85,6 +88,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   // CMS Content State
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [experiences, setExperiences] = useState<SacredExperience[]>([]);
+  const [healingSessions, setHealingSessions] = useState<SacredExperience[]>([]);
   const [attractions, setAttractions] = useState<RishikeshAttraction[]>([]);
   const [weatherGuide, setWeatherGuide] = useState<WeatherClothingGuide | null>(null);
   const [metaKeywords, setMetaKeywords] = useState<Record<string, string>>({});
@@ -171,6 +175,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           setMetaKeywords(data.settings.meta_keywords || {});
         }
         if (data?.experiences) setExperiences(data.experiences);
+        if (data?.healingSessions) setHealingSessions(data.healingSessions);
         if (data?.attractions) setAttractions(data.attractions);
         if (data?.weatherClothing) setWeatherGuide(data.weatherClothing);
       }
@@ -414,6 +419,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           {[
             { id: 'registrations', label: 'Registrations CRM', icon: Users },
             { id: 'sessions', label: '7 Retreat Sessions', icon: Layers },
+            { id: 'healing-sessions', label: 'Healing Sessions', icon: Heart },
             { id: 'daily-meditation', label: 'Daily Meditation', icon: Clock },
             { id: 'registration-settings', label: 'Registration & Google Form', icon: Calendar },
             { id: 'attractions', label: 'Rishikesh Attractions', icon: MapPin },
@@ -1134,6 +1140,18 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         {/* ========================================================================= */}
         {/* TAB 3: DAILY GUIDED MEDITATION SETTINGS */}
         {/* ========================================================================= */}
+        {activeTab === 'healing-sessions' && (
+          <HealingSessionsAdmin
+            sessions={healingSessions}
+            setSessions={setHealingSessions}
+            saving={saving}
+            saveContent={saveContent}
+            handleUploadMedia={handleUploadMedia}
+            uploading={uploading}
+            uploadProgress={uploadProgress}
+          />
+        )}
+
         {activeTab === 'daily-meditation' && settings && (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/20">
@@ -1791,7 +1809,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <span className="text-[10px] uppercase tracking-wider text-stone-subtle/70 block">
                   Sitemap Status
                 </span>
-                <span className="text-xl font-serif text-gold-300 font-bold">{13 + experiences.length} Routes</span>
+                <span className="text-xl font-serif text-gold-300 font-bold">{14 + experiences.length + healingSessions.length} Routes</span>
                 <span className="text-[10px] text-emerald-400 block font-mono">/sitemap.xml (Active)</span>
               </div>
 
@@ -2041,6 +2059,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 {[
                   { key: 'home', label: 'Homepage Meta Keywords' },
                   { key: 'sessions', label: '7 Retreat Sessions Overview Page Keywords (all sessions)' },
+                  { key: 'healing', label: 'Transformative Healing Sessions Page Keywords' },
                   { key: 'daily', label: 'Daily Guided Meditation Keywords' },
                   { key: 'rishikesh', label: 'Rishikesh Attractions & Destination Keywords' },
                   { key: 'register', label: 'Registration & Inquiry Keywords' },

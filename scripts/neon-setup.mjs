@@ -22,7 +22,7 @@ console.log('Schema applied');
 const localDbPath = path.join(root, 'src', 'data', 'db.json');
 if (fs.existsSync(localDbPath)) {
   const local = JSON.parse(fs.readFileSync(localDbPath, 'utf-8'));
-  const keys = ['settings', 'experiences', 'programme', 'testimonials', 'gallery', 'faqs', 'attractions', 'weatherClothing'];
+  const keys = ['settings', 'experiences', 'healingSessions', 'programme', 'testimonials', 'gallery', 'faqs', 'attractions', 'weatherClothing'];
   for (const key of keys) {
     if (local[key] === undefined) continue;
     const rows = await sql.query(

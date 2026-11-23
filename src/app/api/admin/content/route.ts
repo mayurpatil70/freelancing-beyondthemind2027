@@ -6,6 +6,8 @@ import {
   updateSiteSettings,
   getExperiences,
   updateExperiencesData,
+  getHealingSessions,
+  updateHealingSessionsData,
   getProgramme,
   updateProgrammeData,
   getFAQs,
@@ -36,6 +38,8 @@ function revalidateAllPages() {
     revalidatePath('/register');
     revalidatePath('/contact');
     revalidatePath('/experiences/[slug]', 'page');
+    revalidatePath('/healing-sessions');
+    revalidatePath('/healing-sessions/[slug]', 'page');
     revalidatePath('/sitemap.xml');
   } catch (err) {
     console.warn('Revalidate error:', err);
@@ -48,6 +52,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   const settings = await getSiteSettings();
   const experiences = await getExperiences();
+  const healingSessions = await getHealingSessions();
   const programme = await getProgramme();
   const faqs = await getFAQs();
   const attractions = await getAttractions();
@@ -60,6 +65,7 @@ export async function GET() {
     data: {
       settings,
       experiences,
+      healingSessions,
       programme,
       faqs,
       attractions,
@@ -87,6 +93,12 @@ export async function POST(req: NextRequest) {
 
     if (type === 'experiences') {
       const updated = await updateExperiencesData(payload);
+      revalidateAllPages();
+      return NextResponse.json({ success: true, data: updated });
+    }
+
+    if (type === 'healingSessions') {
+      const updated = await updateHealingSessionsData(payload);
       revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }

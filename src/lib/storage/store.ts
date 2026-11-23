@@ -19,6 +19,7 @@ import {
 import {
   initialSiteSettings,
   initialExperiences,
+  initialHealingSessions,
   initialProgramme,
   initialTestimonials,
   initialGallery,
@@ -32,6 +33,7 @@ import contentSnapshot from '@/data/db.json';
 export interface ContentMap {
   settings: SiteSettings;
   experiences: SacredExperience[];
+  healingSessions: SacredExperience[];
   programme: ProgrammeDay[];
   testimonials: Testimonial[];
   gallery: GalleryItem[];
@@ -45,6 +47,7 @@ export type ContentKey = keyof ContentMap;
 export const CONTENT_KEYS: ContentKey[] = [
   'settings',
   'experiences',
+  'healingSessions',
   'programme',
   'testimonials',
   'gallery',
@@ -56,6 +59,7 @@ export const CONTENT_KEYS: ContentKey[] = [
 const defaults: ContentMap = {
   settings: initialSiteSettings,
   experiences: initialExperiences,
+  healingSessions: initialHealingSessions,
   programme: initialProgramme,
   testimonials: initialTestimonials,
   gallery: initialGallery,
@@ -247,6 +251,7 @@ export async function setContent<K extends ContentKey>(key: K, data: ContentMap[
 
 export const getSiteSettings = () => getContent('settings');
 export const getExperiences = () => getContent('experiences');
+export const getHealingSessions = () => getContent('healingSessions');
 export const getProgramme = () => getContent('programme');
 export const getTestimonials = () => getContent('testimonials');
 export const getGallery = () => getContent('gallery');
@@ -260,6 +265,7 @@ export async function updateSiteSettings(updates: Partial<SiteSettings>): Promis
 }
 
 export const updateExperiencesData = (data: SacredExperience[]) => setContent('experiences', data);
+export const updateHealingSessionsData = (data: SacredExperience[]) => setContent('healingSessions', data);
 export const updateProgrammeData = (data: ProgrammeDay[]) => setContent('programme', data);
 export const updateFAQsData = (data: FAQItem[]) => setContent('faqs', data);
 export const updateAttractionsData = (data: RishikeshAttraction[]) => setContent('attractions', data);
