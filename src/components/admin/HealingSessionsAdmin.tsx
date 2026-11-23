@@ -284,7 +284,7 @@ export function HealingSessionsAdmin({
               {s.image ? (
                 <div className="relative w-40 aspect-[4/5] rounded-xl overflow-hidden border border-gold-500/35 bg-black/60">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={s.image} alt={s.title} className="w-full h-full object-cover object-top" />
+                  <img src={s.image} alt={s.title} className="w-full h-full object-cover" style={{ objectPosition: s.image_position || 'center' }} />
                   <a
                     href={s.image}
                     target="_blank"
@@ -297,6 +297,29 @@ export function HealingSessionsAdmin({
                 </div>
               ) : (
                 <p className="text-[11px] text-stone-subtle/60">No photo: the page shows a gold icon panel instead.</p>
+              )}
+              {s.image && (
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <span className="text-[11px] text-stone-subtle/70">Photo focus (which part stays in view):</span>
+                  {[
+                    ['Left', '20% center'],
+                    ['Centre', 'center'],
+                    ['Right', '80% center'],
+                  ].map(([label, value]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => update(index, { image_position: value })}
+                      className={`px-3 py-1 rounded-lg border text-[11px] ${
+                        (s.image_position || 'center') === value
+                          ? 'bg-gold-500/30 border-gold-400 text-gold-200'
+                          : 'bg-emerald-950 border-gold-500/25 text-ivory-200/80'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
 

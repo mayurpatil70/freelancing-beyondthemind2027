@@ -210,12 +210,13 @@
       "subtitle": "Heal inner wounds and nurture deeper, meaningful connections.",
       "short_desc": "Heal inner wounds and nurture deeper, meaningful connections.",
       "full_desc": "Our relationships often reflect the emotions, experiences and patterns we carry within.\n\nThis healing session invites you to explore unresolved feelings, release emotional barriers and understand recurring relationship patterns.\n\nCreate space for forgiveness, self-love, deeper connections and more harmonious relationships.",
-      "image": "",
+      "image": "/images/healing/relationship-transformation.jpg",
       "icon_name": "Heart",
       "order": 2,
       "spiritual_dimension": "Relationship Healing",
       "highlights": [],
-      "keywords": "Relationship Transformation, Relationship Healing, Relationship Healing Session, Healing Relationship Patterns, Forgiveness Healing, Self-Love Healing, Emotional Healing for Relationships, Beyond the Mind"
+      "keywords": "Relationship Transformation, Relationship Healing, Relationship Healing Session, Healing Relationship Patterns, Forgiveness Healing, Self-Love Healing, Emotional Healing for Relationships, Beyond the Mind",
+      "image_position": "center"
     },
     {
       "id": "heal-3",
@@ -224,12 +225,13 @@
       "subtitle": "Release emotional burdens and rediscover the freedom of inner peace.",
       "short_desc": "Release emotional burdens and rediscover the freedom of inner peace.",
       "full_desc": "Unresolved emotions and past experiences can quietly shape how we think, feel and experience life.\n\nThis healing session offers an opportunity to explore suppressed emotions, release accumulated emotional burdens and gently let go of what no longer serves you.\n\nRediscover emotional freedom, inner clarity and a deeper sense of peace.",
-      "image": "",
+      "image": "/images/healing/emotional-liberation.jpg",
       "icon_name": "Feather",
       "order": 3,
       "spiritual_dimension": "Emotional Detox",
       "highlights": [],
-      "keywords": "Emotional Liberation, Emotional Detox, Emotional Release Session, Emotional Healing, Release Suppressed Emotions, Inner Peace Healing, Beyond the Mind"
+      "keywords": "Emotional Liberation, Emotional Detox, Emotional Release Session, Emotional Healing, Release Suppressed Emotions, Inner Peace Healing, Beyond the Mind",
+      "image_position": "80% center"
     },
     {
       "id": "heal-4",

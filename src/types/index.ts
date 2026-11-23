@@ -52,6 +52,8 @@ export interface SacredExperience {
   spiritual_dimension: string;
   highlights: string[];
   keywords?: string;
+  /** CSS object-position for the card photo, e.g. "80% center" to keep a subject on the right in view. */
+  image_position?: string;
 }
 
 export interface ProgrammeDay {

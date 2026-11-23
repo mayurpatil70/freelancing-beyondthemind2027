@@ -127,9 +127,12 @@ function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T
 // never reaches the live site. Each patch is merged into its key once, then recorded in cms_patches so a
 // later admin edit of the same field is never overwritten. Add new patches to the end; never edit old ones.
 // `merge` shallow-merges into an object key; `replace` overwrites the whole key once.
+// `fillItems` sets fields on items of an array key (matched by slug) only where the field is still empty,
+// so it never overwrites something an admin already set.
 type ContentPatch =
   | { id: string; key: ContentKey; merge: Record<string, unknown> }
-  | { id: string; key: ContentKey; replace: unknown };
+  | { id: string; key: ContentKey; replace: unknown }
+  | { id: string; key: ContentKey; fillItems: Array<{ slug: string; set: Record<string, unknown> }> };
 
 const CONTENT_PATCHES: ContentPatch[] = [
   {
@@ -148,6 +151,14 @@ const CONTENT_PATCHES: ContentPatch[] = [
   { id: '2026-11-22-neon-takes-over-programme-v2', key: 'programme', replace: seed.programme },
   { id: '2026-11-22-neon-takes-over-faqs-v2', key: 'faqs', replace: seed.faqs },
   { id: '2026-11-22-neon-takes-over-testimonials-v2', key: 'testimonials', replace: seed.testimonials },
+  {
+    id: '2026-11-23-healing-session-photos',
+    key: 'healingSessions',
+    fillItems: [
+      { slug: 'relationship-transformation', set: { image: '/images/healing/relationship-transformation.jpg', image_position: 'center' } },
+      { slug: 'emotional-liberation', set: { image: '/images/healing/emotional-liberation.jpg', image_position: '80% center' } },
+    ],
+  },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
@@ -161,6 +172,30 @@ function applyContentPatches(sql: Sql): Promise<void> {
     patchesApplied = (async () => {
       await sql`CREATE TABLE IF NOT EXISTS cms_patches (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`;
       for (const patch of CONTENT_PATCHES) {
+        if ('fillItems' in patch) {
+          const rows = await sql`SELECT data FROM cms_content WHERE key = ${patch.key}`;
+          const current = rows[0]?.data;
+          if (!Array.isArray(current)) {
+            // Neon has no copy yet, so the db.json seed (which already has these values) is served. Nothing to do.
+            await sql`INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING`;
+            continue;
+          }
+          const filled = current.map((item: Record<string, unknown>) => {
+            const fill = patch.fillItems.find((f) => f.slug === item?.slug);
+            if (!fill) return item;
+            const next = { ...item };
+            for (const [field, value] of Object.entries(fill.set)) if (!next[field]) next[field] = value;
+            return next;
+          });
+          await sql`
+            WITH claimed AS (
+              INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
+            )
+            UPDATE cms_content SET data = ${JSON.stringify(filled)}::jsonb, updated_at = now()
+            WHERE key = ${patch.key} AND EXISTS (SELECT 1 FROM claimed)
+          `;
+          continue;
+        }
         // One statement, so the patch is recorded only if the update runs too.
         if ('replace' in patch) {
           if (patch.replace === undefined) continue;
