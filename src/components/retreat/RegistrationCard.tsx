@@ -84,11 +84,11 @@ export function RegistrationCard({
               </div>
             </div>
 
-            <p className="text-xs text-stone-subtle/80 leading-relaxed font-light">
+            <p className="text-sm sm:text-base text-stone-subtle/80 leading-relaxed font-light">
               Complete immersive residential experience beside holy Ganga. Includes all 7 transformative sessions, Strictly Vegetarian Cuisine Throughout the Retreat.
             </p>
 
-            <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
+            <ul className="space-y-2 text-sm sm:text-base text-ivory-200/90 pt-1">
               {[
                 'All 7 Retreat Sessions with Pradeep Muthukulam',
                 'Personal Guidance Sessions – Available by Appointment',
@@ -97,7 +97,7 @@ export function RegistrationCard({
                 'Dedicated Concierge & Airport Assistance',
               ].map((inc, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-gold-400 shrink-0 mt-0.5 sm:mt-1" />
                   <span>{inc}</span>
                 </li>
               ))}
@@ -144,17 +144,17 @@ export function RegistrationCard({
               </div>
             </div>
 
-            <p className="text-xs text-stone-subtle/80 leading-relaxed font-light">
+            <p className="text-sm sm:text-base text-stone-subtle/80 leading-relaxed font-light">
               Join the sacred circle from anywhere in the world. Receive live teacher guidance, energetic attunements, and full immersion from home.
             </p>
 
-            <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
+            <ul className="space-y-2 text-sm sm:text-base text-ivory-200/90 pt-1">
               {[
                 'Full live stream access to all 7 sessions',
                 'Live interactive Q&A segments',
               ].map((inc, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-gold-400 shrink-0 mt-0.5 sm:mt-1" />
                   <span>{inc}</span>
                 </li>
               ))}
@@ -201,18 +201,18 @@ export function RegistrationCard({
               </div>
             </div>
 
-            <p className="text-xs text-stone-subtle/80 leading-relaxed font-light">
+            <p className="text-sm sm:text-base text-stone-subtle/80 leading-relaxed font-light">
               A regular spiritual practice to explore inner stillness, self-awareness and spiritual growth through continuous weekday guidance. Pause. Observe. Transcend.
             </p>
 
-            <ul className="space-y-2 text-xs text-ivory-200/90 pt-1">
+            <ul className="space-y-2 text-sm sm:text-base text-ivory-200/90 pt-1">
               {[
                 'Live weekday guided sessions at 7:30 PM',
                 'Breathwork & subtle channel purification',
                 'Ongoing spiritual community kinship',
               ].map((inc, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-gold-400 shrink-0 mt-0.5 sm:mt-1" />
                   <span>{inc}</span>
                 </li>
               ))}
@@ -262,7 +262,7 @@ export function RegistrationCard({
             <p className="text-ivory-50 font-medium text-base">
               Sunny Days (28°C–30°C) • Crisp Evenings (15°C–18°C)
             </p>
-            <p className="text-stone-subtle/85 font-light leading-relaxed text-xs">
+            <p className="text-stone-subtle/85 font-light leading-relaxed text-sm sm:text-base">
               October is the most pleasant post-monsoon month in the Garhwal Himalayas. The river flows clear emerald green and humidity is low.
             </p>
           </div>
@@ -275,7 +275,7 @@ export function RegistrationCard({
             <p className="text-ivory-50 font-medium text-base">
               Loose Cotton / Linen Clothes
             </p>
-            <p className="text-stone-subtle/85 font-light leading-relaxed text-xs">
+            <p className="text-stone-subtle/85 font-light leading-relaxed text-sm sm:text-base">
               Comfortable, modest clothes covering shoulders and knees. White or light natural earth tones are recommended for energetic openness.
             </p>
           </div>
@@ -288,7 +288,7 @@ export function RegistrationCard({
             <p className="text-ivory-50 font-medium text-base">
               Warm Shawl, Cardigan, Light Jacket & Layers
             </p>
-            <p className="text-stone-subtle/85 font-light leading-relaxed text-xs">
+            <p className="text-stone-subtle/85 font-light leading-relaxed text-sm sm:text-base">
               Night and dawn temperatures in Rishikesh drop to 15°C–18°C with crisp Himalayan river winds. Warm woolens, shawls, cardigans, or light jackets are strictly needed for evening riverside Ganga Aarti and dawn meditations, along with easy slip-on sandals.
             </p>
           </div>
