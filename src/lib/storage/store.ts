@@ -166,6 +166,13 @@ const CONTENT_PATCHES: ContentPatch[] = [
       { slug: 'embodied-transformation', set: { image: '/images/healing/embodied-transformation.jpg', image_position: '20% center' } },
     ],
   },
+  {
+    id: '2026-11-23-healing-session-photo-journey',
+    key: 'healingSessions',
+    fillItems: [
+      { slug: 'journey-beyond-lifetimes', set: { image: '/images/healing/journey-beyond-lifetimes.jpg', image_position: '30% center' } },
+    ],
+  },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
