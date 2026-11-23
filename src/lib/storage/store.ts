@@ -159,6 +159,13 @@ const CONTENT_PATCHES: ContentPatch[] = [
       { slug: 'emotional-liberation', set: { image: '/images/healing/emotional-liberation.jpg', image_position: '80% center' } },
     ],
   },
+  {
+    id: '2026-11-23-healing-session-photo-embodied',
+    key: 'healingSessions',
+    fillItems: [
+      { slug: 'embodied-transformation', set: { image: '/images/healing/embodied-transformation.jpg', image_position: '20% center' } },
+    ],
+  },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
