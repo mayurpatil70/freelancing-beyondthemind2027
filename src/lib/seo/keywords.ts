@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getSiteSettings } from '@/lib/storage/store';
 
-export type KeywordSection = 'home' | 'daily' | 'register' | 'sessions' | 'healing' | 'rishikesh';
+export type KeywordSection = 'home' | 'daily' | 'register' | 'sessions' | 'healing' | 'blog' | 'rishikesh';
 
 export function parseKeywords(raw: string | undefined | null): string[] {
   return (raw || '')
