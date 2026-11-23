@@ -9,9 +9,9 @@ import { MessageCircle, HelpCircle, ArrowRight } from "lucide-react";
 import { formatWhatsAppUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Beyond the Mind 2027",
+  title: 'Retreat FAQs: Travel, Food & Language',
   description:
-    "Answers to common questions regarding Beyond the Mind 2027 in Rishikesh, travel arrangements, dietary needs, session languages, and daily online meditation.",
+    'Answers to common questions about Beyond the Mind 2027 in Rishikesh: travel, food, session languages, online participation and daily meditation.',
 };
 
 export const revalidate = 300;
@@ -59,9 +59,9 @@ export default async function FAQPage() {
               <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">
                 Direct Inquiry
               </span>
-              <h3 className="font-serif text-2xl text-ivory-50 font-medium">
+              <h2 className="font-serif text-2xl text-ivory-50 font-medium">
                 Have a specific requirement or question?
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-stone-subtle/80 font-light">
                 Our retreat coordinators are readily available to answer
                 personal queries via WhatsApp or phone.

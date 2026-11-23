@@ -9,9 +9,9 @@ import { getTestimonials } from '@/lib/storage/store';
 import { Quote, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Guest Testimonials & Participant Reflections | Beyond the Mind 2027',
+  title: 'Participant Testimonials & Reflections',
   description:
-    'Read authentic reflections from Beyond the Mind participants sharing their transformative experiences of Maha Theerthas, Shiva Lingams, and the Shiva Mandala.',
+    'Read reflections from Beyond the Mind participants on their transformative experiences of the Maha Theerthas, Shiva Lingams and the Shiva Mandala.',
 };
 
 export const revalidate = 300;
@@ -49,9 +49,9 @@ export default async function TestimonialsPage() {
           {/* Testimonial Integrity Guarantee */}
           <div className="p-8 rounded-3xl bg-emerald-950/60 border border-gold-500/25 max-w-4xl mx-auto text-center space-y-3">
             <ShieldCheck className="w-6 h-6 text-gold-400 mx-auto" />
-            <h4 className="font-serif text-lg text-ivory-100 font-medium">
+            <h2 className="font-serif text-lg text-ivory-100 font-medium">
               Authentic Seeker Transparency
-            </h4>
+            </h2>
             <p className="text-xs sm:text-sm text-stone-subtle/80 font-light leading-relaxed max-w-2xl mx-auto">
               We never fabricate ratings, buy reviews, or publish simulated endorsements. Every testimony
               published by Beyond the Mind originates from a real participant who completed an in-person or online

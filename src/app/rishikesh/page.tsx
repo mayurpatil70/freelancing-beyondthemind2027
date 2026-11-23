@@ -11,9 +11,9 @@ import { MapPin, Sun, Compass, Waves, Mountain, ArrowRight, Calendar, Shirt, Che
 import { AttractionsGrid } from '@/components/rishikesh/AttractionsGrid';
 
 const baseMetadata: Metadata = {
-  title: 'Rishikesh Sanctuary, Attractions & Weather Guide | Beyond the Mind 2027',
+  title: 'Rishikesh Guide: Attractions & Weather',
   description:
-    'Discover Rishikesh, Uttarakhand — holy Ganges, top attractions including bungee jumping and river rafting, October weather, and packing guidance for Beyond the Mind 2027.',
+    'Discover Rishikesh, Uttarakhand: the holy Ganga, top attractions, river rafting, October weather and what to pack for Beyond the Mind 2027.',
 };
 
 export function generateMetadata(): Promise<Metadata> {

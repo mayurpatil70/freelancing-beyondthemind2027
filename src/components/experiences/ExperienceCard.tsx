@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
 import { cn } from '@/lib/utils';
+import { canOptimizeImage } from '@/lib/media/rules';
 
 const iconMap: Record<string, React.ElementType> = {
   Feather,
@@ -66,7 +67,7 @@ export function ExperienceCard({ experience, featured = false }: ExperienceCardP
             src={experience.image}
             alt={experience.title}
             fill
-            unoptimized
+            unoptimized={!canOptimizeImage(experience.image)}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
           />

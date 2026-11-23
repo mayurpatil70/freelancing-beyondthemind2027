@@ -38,11 +38,13 @@ export const viewport: Viewport = {
 const baseMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Beyond the Mind 2027 — The Divine Retreat | Rishikesh, Uttarakhand',
-    template: '%s | Beyond the Mind 2027',
+    // Page titles carry the brand once, through this template. Keep each page's own part short
+    // (about 35 characters) so the full title stays within ~60 characters.
+    default: 'The Divine Retreat | Spiritual Retreat in Rishikesh',
+    template: '%s | The Divine Retreat',
   },
   description:
-    'A transformative 4-day spiritual retreat into the Infinite within. Guided by Pradeep Muthukulam in sacred Rishikesh, Uttarakhand from October 6–9, 2027 (Arrival: October 5). Featuring Kundalini Awakening, Energy Field Activation, Soul Liberation & Guided Meditation.',
+    'Join Beyond the Mind 2027, a four-day spiritual retreat in Rishikesh, 6–9 October 2027, guided by Pradeep Muthukulam. Attend in person or online.',
   keywords: [
     'Beyond the Mind 2027',
     'The Divine Retreat',
@@ -65,9 +67,6 @@ const baseMetadata: Metadata = {
     icon: '/images/brand/logo.jpg',
     shortcut: '/images/brand/logo.jpg',
     apple: '/images/brand/logo.jpg',
-  },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'beyond-the-mind-2027',
   },
   openGraph: {
     title: 'Beyond the Mind 2027 — The Divine Retreat | Rishikesh',
@@ -135,8 +134,9 @@ function searchConsoleCode(settings: SiteSettings): string | undefined {
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const google = process.env.NEXT_PUBLIC_GSC_VERIFICATION || searchConsoleCode(settings) || 'beyond-the-mind-2027';
-  return { ...baseMetadata, verification: { ...baseMetadata.verification, google } };
+  // No placeholder: a made-up code only adds a meta tag Google can never match.
+  const google = process.env.NEXT_PUBLIC_GSC_VERIFICATION || searchConsoleCode(settings);
+  return google ? { ...baseMetadata, verification: { google } } : baseMetadata;
 }
 
 // Re-render with fresh CMS content at most every 5 minutes; admin saves revalidate immediately.

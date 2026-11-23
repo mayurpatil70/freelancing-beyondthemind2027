@@ -39,3 +39,19 @@ export function buildObjectKey(folder: string, fileName: string, mime: string) {
   const month = `${now.getUTCFullYear()}/${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
   return `${folder}/${month}/${base}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}${ext}`;
 }
+
+// Card photos go through Next's image optimizer (resized, WebP/AVIF) when their host is one that
+// next.config.mjs allows; any other pasted URL is shown as-is, because next/image throws on unknown hosts.
+// Keep this list in step with images.remotePatterns in next.config.mjs.
+const OPTIMIZABLE_HOSTS = [/(^|\.)neon\.tech$/i, /^images\.unsplash\.com$/i, /^images\.pexels\.com$/i];
+
+export function canOptimizeImage(src: string | undefined | null): boolean {
+  if (!src) return false;
+  if (src.startsWith('/') && !src.startsWith('//')) return !/\.svg(\?|#|$)/i.test(src);
+  try {
+    const url = new URL(src);
+    return url.protocol === 'https:' && OPTIMIZABLE_HOSTS.some((re) => re.test(url.hostname));
+  } catch {
+    return false;
+  }
+}

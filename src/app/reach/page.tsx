@@ -8,9 +8,9 @@ import { Plane, Train, Car, MessageCircle, MapPin, ArrowRight, ShieldCheck, Cale
 import { formatWhatsAppUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'How to Reach Rishikesh (Arrival: Oct 5) | Travel Guide | Beyond the Mind 2027',
+  title: 'How to Reach Rishikesh: Travel Guide',
   description:
-    'Travel guide and connectivity for arriving in Rishikesh on October 5, 2027 via Dehradun Airport, Yog Nagari railway, and Delhi highways. Plus October weather & packing guide.',
+    'Plan your arrival in Rishikesh on 5 October 2027: Dehradun airport, Yog Nagari Rishikesh railway station and road routes from Delhi, plus packing tips.',
 };
 
 export const revalidate = 300;
@@ -64,9 +64,9 @@ export default function ReachPage() {
                 <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
                   By Air
                 </span>
-                <h3 className="font-serif text-2xl text-ivory-50 font-medium mt-0.5">
+                <h2 className="font-serif text-2xl text-ivory-50 font-medium mt-0.5">
                   Jolly Grant Airport, Dehradun (DED)
-                </h3>
+                </h2>
               </div>
 
               <div className="space-y-3 text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
@@ -94,9 +94,9 @@ export default function ReachPage() {
                 <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
                   By Rail
                 </span>
-                <h3 className="font-serif text-2xl text-ivory-50 font-medium mt-0.5">
+                <h2 className="font-serif text-2xl text-ivory-50 font-medium mt-0.5">
                   Yog Nagari Rishikesh (YNRK) & Haridwar (HW)
-                </h3>
+                </h2>
               </div>
 
               <div className="space-y-3 text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
@@ -124,9 +124,9 @@ export default function ReachPage() {
                 <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
                   By Road
                 </span>
-                <h3 className="font-serif text-2xl text-ivory-50 font-medium mt-0.5">
+                <h2 className="font-serif text-2xl text-ivory-50 font-medium mt-0.5">
                   Delhi – Meerut – Rishikesh Expressway
-                </h3>
+                </h2>
               </div>
 
               <div className="space-y-3 text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
@@ -150,9 +150,9 @@ export default function ReachPage() {
               <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">
                 Concierge Assistance
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
+              <h2 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
                 Need Help Coordinating Flights or Pickups?
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
                 Whether arriving from overseas via New Delhi International Airport (DEL) or traveling from within
                 India, our concierge team is happy to advise on recommended flight timings and local cab arrangements.

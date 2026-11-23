@@ -28,9 +28,9 @@ import { AttractionsGrid } from "@/components/rishikesh/AttractionsGrid";
 import { ExperiencesDetailList } from "@/components/experiences/ExperiencesDetailList";
 
 const baseMetadata: Metadata = {
-  title: "Seven Retreat Sessions & Rishikesh Attractions | Beyond the Mind 2027",
+  title: { absolute: '7 Retreat Sessions in Rishikesh | Beyond the Mind 2027' },
   description:
-    "Explore the 7 retreat sessions of Beyond the Mind 2027: Stress Buster, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, and Guided Meditation. Plus top Rishikesh attractions.",
+    'Explore the seven sessions of Beyond the Mind 2027, from Stress Buster and Soul Retrieval to Kundalini Awakening and Merkaba Activation, in Rishikesh.',
 };
 
 export function generateMetadata(): Promise<Metadata> {

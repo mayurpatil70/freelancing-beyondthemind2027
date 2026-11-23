@@ -7,6 +7,7 @@ import { SacredExperience } from '@/types';
 import { Feather, Flame, Sun, Heart, Compass, Flower2, CircleDot, MessageCircle, Maximize2 } from 'lucide-react';
 import { formatWhatsAppUrl } from '@/lib/utils';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
+import { canOptimizeImage } from '@/lib/media/rules';
 
 const iconMap: Record<string, React.ElementType> = {
   Feather,
@@ -48,6 +49,9 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
     caption: s.subtitle,
     location: 'Transformative Healing Sessions • Beyond the Mind',
   }));
+
+  // On a session's own page its title is the page H1; on the list page each title is an H2.
+  const TitleTag = single ? 'h1' : 'h2';
 
   return (
     <>
@@ -98,7 +102,7 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
                         src={session.image}
                         alt={session.title}
                         fill
-                        unoptimized
+                        unoptimized={!canOptimizeImage(session.image)}
                         sizes="(max-width: 1024px) 100vw, 40vw"
                         className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                         style={{ objectPosition: session.image_position || 'center' }}
@@ -146,7 +150,7 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
                   </div>
                 )}
 
-                <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-snug">
+                <TitleTag className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-snug">
                   {single ? (
                     session.title
                   ) : (
@@ -154,7 +158,7 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
                       {session.title}
                     </Link>
                   )}
-                </h2>
+                </TitleTag>
 
                 {session.subtitle && (
                   <p className="font-serif text-lg sm:text-xl italic text-gold-300 font-light leading-snug">

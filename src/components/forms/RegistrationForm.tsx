@@ -169,9 +169,9 @@ export function RegistrationForm({
           <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-semibold block">
             Enquiry Received
           </span>
-          <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light mt-1">
+          <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light mt-1">
             Namaste, {submittedData.full_name}
-          </h3>
+          </h2>
           <p className="text-sm text-stone-subtle/85 mt-2 leading-relaxed font-light">
             Your retreat enquiry has been securely registered in our system. A retreat coordinator will review
             your details and connect with you shortly.
@@ -218,9 +218,9 @@ export function RegistrationForm({
           <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
           Frictionless Participation Enquiry
         </div>
-        <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
+        <h2 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light">
           Reserve Your Sanctuary Presence
-        </h3>
+        </h2>
         <p className="text-xs sm:text-sm text-stone-subtle/80 max-w-xl mx-auto font-light">
           No account or password is required. Fill in your details below and our concierge team will reach out directly.
         </p>

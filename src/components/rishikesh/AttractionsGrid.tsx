@@ -6,6 +6,7 @@ import { RishikeshAttraction } from '@/types';
 import { MapPin, Clock, CheckCircle2, Maximize2 } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
+import { canOptimizeImage } from '@/lib/media/rules';
 
 interface AttractionsGridProps {
   attractions: RishikeshAttraction[];
@@ -40,7 +41,7 @@ function AttractionCardItem({ attraction, onOpenLightbox }: AttractionCardItemPr
           src={imgSrc}
           alt={attraction.title}
           fill
-          unoptimized
+          unoptimized={!canOptimizeImage(imgSrc)}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
           onError={() => setImgSrc('/images/rishikesh/ganga-aarti.jpg')}

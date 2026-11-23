@@ -59,7 +59,7 @@ export function ContactDetailsSection() {
         {/* Direct Official Channels Column */}
         <div className="lg:col-span-5 space-y-6">
           <div className="p-8 rounded-3xl bg-[#07261F]/70 border border-gold-500/25 space-y-6 shadow-xl">
-            <h3 className="font-serif text-2xl text-ivory-50 font-medium">Official Contact Details</h3>
+            <h2 className="font-serif text-2xl text-ivory-50 font-medium">Official Contact Details</h2>
 
             <ul className="space-y-4 text-xs sm:text-sm">
               <li>
@@ -292,9 +292,9 @@ export function ContactDetailsSection() {
               <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold block">
                 Direct Inquiry
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light mt-0.5">
+              <h2 className="font-serif text-2xl sm:text-3xl text-ivory-50 font-light mt-0.5">
                 Send a Note to Our Coordinators
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-stone-subtle/80 font-light mt-1">
                 Have questions about retreat preparation, arrival schedules, or dietary requirements?
               </p>
@@ -311,9 +311,9 @@ export function ContactDetailsSection() {
           <span className="text-xs uppercase tracking-widest text-gold-400 font-semibold">
             Instant Chat Shortcuts
           </span>
-          <h3 className="font-serif text-2xl text-ivory-50 font-light">
+          <h2 className="font-serif text-2xl text-ivory-50 font-light">
             One-Click WhatsApp Enquiries
-          </h3>
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

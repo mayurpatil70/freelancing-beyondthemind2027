@@ -82,35 +82,49 @@ export function CMSProvider({
     } catch {}
   }, []);
 
-  // Listen for real-time BroadcastChannel updates across all tabs
+  // Listen for real-time BroadcastChannel updates across all tabs.
+  // An open BroadcastChannel stops the browser's back/forward cache, so the channel is closed on
+  // pagehide and reopened on pageshow (Lighthouse flagged this on mobile).
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || typeof BroadcastChannel === 'undefined') return;
 
     let channel: BroadcastChannel | null = null;
-    try {
-      channel = new BroadcastChannel(CHANNEL_NAME);
-      channel.onmessage = (event) => {
-        const { type, data } = event.data || {};
-        if (type === 'settings' && data) {
-          setSettings((prev) => ({ ...prev, ...data }));
-          setLiveUpdated((prev) => ({ ...prev, settings: true }));
-        } else if (type === 'experiences' && Array.isArray(data)) {
-          setExperiences(data);
-          setLiveUpdated((prev) => ({ ...prev, experiences: true }));
-        } else if (type === 'attractions' && Array.isArray(data)) {
-          setAttractions(data);
-          setLiveUpdated((prev) => ({ ...prev, attractions: true }));
-        } else if (type === 'gallery' && Array.isArray(data)) {
-          setGallery(data);
-          setLiveUpdated((prev) => ({ ...prev, gallery: true }));
-        }
-      };
-    } catch {
-      // BroadcastChannel not supported in older browser
-    }
-
-    return () => {
+    const open = () => {
+      if (channel) return;
+      try {
+        channel = new BroadcastChannel(CHANNEL_NAME);
+        channel.onmessage = (event) => {
+          const { type, data } = event.data || {};
+          if (type === 'settings' && data) {
+            setSettings((prev) => ({ ...prev, ...data }));
+            setLiveUpdated((prev) => ({ ...prev, settings: true }));
+          } else if (type === 'experiences' && Array.isArray(data)) {
+            setExperiences(data);
+            setLiveUpdated((prev) => ({ ...prev, experiences: true }));
+          } else if (type === 'attractions' && Array.isArray(data)) {
+            setAttractions(data);
+            setLiveUpdated((prev) => ({ ...prev, attractions: true }));
+          } else if (type === 'gallery' && Array.isArray(data)) {
+            setGallery(data);
+            setLiveUpdated((prev) => ({ ...prev, gallery: true }));
+          }
+        };
+      } catch {
+        channel = null;
+      }
+    };
+    const close = () => {
       channel?.close();
+      channel = null;
+    };
+
+    open();
+    window.addEventListener('pagehide', close);
+    window.addEventListener('pageshow', open);
+    return () => {
+      window.removeEventListener('pagehide', close);
+      window.removeEventListener('pageshow', open);
+      close();
     };
   }, []);
 

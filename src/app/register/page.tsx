@@ -9,9 +9,9 @@ import { ShieldCheck, Lock, CheckCircle2, Calendar, Languages, Video } from 'luc
 import { LanguageNote } from '@/components/retreat/LanguageNote';
 
 const baseMetadata: Metadata = {
-  title: 'Enquiry & Registration | The Divine Retreat & Daily Meditation | Beyond the Mind',
+  title: 'Enquire & Register for the Retreat',
   description:
-    'Reserve your sanctuary place for Beyond the Mind 2027 in Rishikesh (Arrival Oct 5 • Sessions Oct 6–9) or join Daily Guided Meditation on Zoom. Strict vegetarian food during retreat.',
+    'Enquire about Beyond the Mind 2027 in Rishikesh, 6–9 October 2027, or join the weekday online guided meditation sessions on Zoom.',
 };
 
 export function generateMetadata(): Promise<Metadata> {
