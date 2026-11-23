@@ -6,9 +6,9 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ContactDetailsSection } from '@/components/contact/ContactDetailsSection';
 
 export const metadata: Metadata = {
-  title: 'Contact Concierge & Official Channels | Beyond the Mind 2027',
+  title: 'Contact the Retreat Team',
   description:
-    'Contact the Beyond the Mind coordination team via WhatsApp (+91 8075572018), email (moolabrahman@gmail.com), or our concierge enquiry desk.',
+    'Contact the Beyond the Mind team on WhatsApp (+91 8075572018) or by email with questions about the Rishikesh retreat and daily guided meditation.',
 };
 
 export const revalidate = 300;

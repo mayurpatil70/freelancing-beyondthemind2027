@@ -31,9 +31,9 @@ export function Footer() {
                 />
               </div>
               <div>
-                <h3 className="font-serif text-lg tracking-widest text-ivory-50 font-semibold group-hover:text-gold-300 transition-colors">
+                <p className="font-serif text-lg tracking-widest text-ivory-50 font-semibold group-hover:text-gold-300 transition-colors">
                   BEYOND THE MIND 2027
-                </h3>
+                </p>
                 <p className="text-xs tracking-[0.25em] text-gold-400 uppercase">The Divine Retreat</p>
               </div>
             </Link>
@@ -58,9 +58,9 @@ export function Footer() {
 
           {/* Retreat Navigation */}
           <div>
-            <h4 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
+            <h2 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
               The Sanctuary
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-xs tracking-wider uppercase">
               <li>
                 <Link href="/about" prefetch={true} className="hover:text-gold-300 transition-colors">
@@ -102,9 +102,9 @@ export function Footer() {
 
           {/* Seeker Information */}
           <div>
-            <h4 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
+            <h2 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
               Guest Services
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-xs tracking-wider uppercase">
               <li>
                 <Link href="/testimonials" prefetch={true} className="hover:text-gold-300 transition-colors">
@@ -141,9 +141,9 @@ export function Footer() {
 
           {/* Official Contact & Socials */}
           <div className="space-y-4 lg:col-span-2">
-            <h4 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
+            <h2 className="font-serif text-sm tracking-widest uppercase text-gold-300 mb-4 font-semibold">
               Retreat Concierge
-            </h4>
+            </h2>
             <ul className="space-y-3 text-sm">
               <li>
                 <a

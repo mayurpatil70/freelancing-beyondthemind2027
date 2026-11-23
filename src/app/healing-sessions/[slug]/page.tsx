@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/Footer';
 import { HealingSessionsList } from '@/components/healing/HealingSessionsList';
 import { getHealingSessions, getSiteSettings } from '@/lib/storage/store';
 import { parseKeywords } from '@/lib/seo/keywords';
+import { composeDescription, fitTitle, sentences, titleCase } from '@/lib/seo/meta';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
 
 // Each healing session gets its own indexable URL. Its admin keywords are used only in
@@ -34,8 +35,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!session) return { title: 'Healing Session Not Found' };
 
   const path = `/healing-sessions/${session.slug}`;
-  const description = `${session.subtitle || session.short_desc} ${session.full_desc || ''}`.trim().slice(0, 300);
-  const title = `${session.title} | Transformative Healing Sessions | Beyond the Mind`;
+  const name = titleCase(session.title);
+  const description = composeDescription([
+    session.short_desc || session.subtitle,
+    [
+      'A one-to-one healing session by prior appointment with The Divine Retreat.',
+      'A one-to-one healing session, by prior appointment.',
+      'One-to-one, by appointment.',
+    ],
+    ...sentences(session.full_desc),
+  ]);
+  const title = fitTitle(name, [' | Healing Session · The Divine Retreat', ' | One-to-One Healing Session', ' | Healing Session']);
   const keywords = parseKeywords(session.keywords);
 
   return {
@@ -49,7 +59,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: absoluteUrl(path),
       siteName: 'Beyond the Mind',
       type: 'article',
-      images: session.image ? [{ url: session.image, alt: session.title }] : undefined,
+      images: session.image ? [{ url: session.image, alt: name }] : undefined,
     },
     twitter: {
       card: 'summary_large_image',

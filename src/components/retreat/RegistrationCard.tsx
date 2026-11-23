@@ -61,9 +61,9 @@ export function RegistrationCard({
               In-Person • Rishikesh
             </span>
 
-            <h3 className="font-serif text-2xl text-ivory-50 font-medium">
+            <h2 className="font-serif text-2xl text-ivory-50 font-medium">
               The Divine Retreat 2027
-            </h3>
+            </h2>
 
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
               <div className="flex items-center gap-2 text-gold-300 font-medium">
@@ -125,9 +125,9 @@ export function RegistrationCard({
               Online Live Access
             </span>
 
-            <h3 className="font-serif text-2xl text-ivory-50 font-medium">
+            <h2 className="font-serif text-2xl text-ivory-50 font-medium">
               The Divine Retreat
-            </h3>
+            </h2>
 
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
               <div className="flex items-center gap-2 text-gold-300 font-medium">
@@ -182,9 +182,9 @@ export function RegistrationCard({
               Regular Ongoing Activity
             </span>
 
-            <h3 className="font-serif text-2xl text-ivory-50 font-medium">
+            <h2 className="font-serif text-2xl text-ivory-50 font-medium">
               Daily Guided Meditation
-            </h3>
+            </h2>
 
             <div className="space-y-2 text-xs text-stone-subtle/90 font-light border-y border-gold-500/20 py-3">
               <div className="flex items-center gap-2 text-gold-300 font-medium">
@@ -243,9 +243,9 @@ export function RegistrationCard({
             <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold block">
               Travel Preparation & Packing
             </span>
-            <h3 className="font-serif text-2xl text-ivory-50 font-light">
+            <h2 className="font-serif text-2xl text-ivory-50 font-light">
               Weather & Recommended Clothing for October in Rishikesh
-            </h3>
+            </h2>
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950 border border-gold-400/30 text-xs text-gold-300 font-medium shrink-0">
             <Sun className="w-4 h-4 text-gold-400" />

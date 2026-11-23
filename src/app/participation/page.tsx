@@ -13,9 +13,9 @@ import {
 import { LanguageNote } from '@/components/retreat/LanguageNote';
 
 export const metadata: Metadata = {
-  title: 'Participation & Accommodation Inclusions | Beyond the Mind 2027',
+  title: 'Participation & Accommodation Options',
   description:
-    'Overview of retreat participation options for Beyond the Mind 2027 in Rishikesh, including private room, twin sharing, sattvic dining, and retreat materials.',
+    'Participation options for Beyond the Mind 2027 in Rishikesh, including private and twin-sharing rooms, sattvic vegetarian meals and retreat materials.',
 };
 
 export const revalidate = 300;
@@ -127,7 +127,7 @@ export default function ParticipationPage() {
                   <span className="text-[10px] uppercase tracking-widest text-gold-400 font-semibold block">
                     {tier.subtitle}
                   </span>
-                  <h3 className="font-serif text-2xl text-ivory-50 font-medium">{tier.title}</h3>
+                  <h2 className="font-serif text-2xl text-ivory-50 font-medium">{tier.title}</h2>
                   <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
                     {tier.description}
                   </p>

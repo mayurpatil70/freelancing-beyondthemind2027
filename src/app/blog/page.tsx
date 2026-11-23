@@ -15,7 +15,7 @@ import { BLOG_DESCRIPTION, BLOG_NAME, BLOG_TAGLINE, imageUrl, loadBlog } from '@
 import { withCmsKeywords } from '@/lib/seo/keywords';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
 
-const title = `${BLOG_NAME} | Blog on Meditation, Spirituality & Healing | Beyond the Mind`;
+const title = `${BLOG_NAME} | Meditation & Healing Blog`;
 
 const baseMetadata: Metadata = {
   title: { absolute: title },

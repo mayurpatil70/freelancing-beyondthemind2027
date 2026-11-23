@@ -206,9 +206,9 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
 
           {/* Author & Location */}
           <div className="text-center space-y-1 pt-1">
-            <h4 className="font-serif text-2xl sm:text-3xl text-gold-300 font-medium tracking-wide">
+            <p className="font-serif text-2xl sm:text-3xl text-gold-300 font-medium tracking-wide">
               {current.name}
-            </h4>
+            </p>
             <p className="text-xs sm:text-sm text-stone-subtle/80 tracking-widest uppercase font-light">
               {current.location}
             </p>

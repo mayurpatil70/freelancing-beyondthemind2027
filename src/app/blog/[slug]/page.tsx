@@ -10,6 +10,7 @@ import { CategoryPill, ExploreLinks, PostCard, PostMeta } from '@/components/blo
 import { BLOG_NAME, formatBlogDate, imageUrl, loadBlog, plainText, readingMinutes } from '@/lib/blog';
 import { parseKeywords } from '@/lib/seo/keywords';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
+import { composeDescription, fitTitle, sentences } from '@/lib/seo/meta';
 
 // One indexable page per article. The article's admin keywords are used only in meta tags and JSON-LD.
 
@@ -33,8 +34,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!post) return { title: 'Article Not Found' };
 
   const path = `/blog/${post.slug}`;
-  const title = `${post.title} | ${BLOG_NAME}`;
-  const description = (post.excerpt || plainText(post.content)).slice(0, 300);
+  const title = fitTitle(post.title, [` | ${BLOG_NAME}`, ' | The Divine Retreat']);
+  const description = composeDescription(sentences(post.excerpt || plainText(post.content)));
   const keywords = parseKeywords(post.keywords);
   const image = imageUrl(post.image);
 

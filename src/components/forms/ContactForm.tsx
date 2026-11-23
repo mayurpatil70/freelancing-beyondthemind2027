@@ -83,7 +83,7 @@ export function ContactForm() {
     return (
       <div className="p-8 rounded-2xl bg-emerald-950/80 border border-gold-400/40 text-center space-y-4 animate-in fade-in duration-200">
         <CheckCircle className="w-10 h-10 text-gold-400 mx-auto" />
-        <h4 className="font-serif text-xl text-ivory-50 font-medium">Enquiry Forwarded to WhatsApp</h4>
+        <p className="font-serif text-xl text-ivory-50 font-medium">Enquiry Forwarded to WhatsApp</p>
         <p className="text-xs text-stone-subtle/80 leading-relaxed font-light max-w-md mx-auto">
           Thank you for reaching out to the Beyond the Mind Concierge. Your inquiry details have been forwarded to our coordinators on WhatsApp.
         </p>

@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
 import { useCMS } from '@/contexts/CMSContext';
+import { canOptimizeImage } from '@/lib/media/rules';
 
 const iconMap: Record<string, React.ElementType> = {
   Feather,
@@ -52,6 +53,9 @@ export function ExperiencesDetailList({ initialExperiences, onlySlug }: Experien
     location: 'Rishikesh, Uttarakhand • Beyond the Mind 2027',
   }));
 
+  // On a session's own page its title is the page H1; on the list page each title is an H2.
+  const TitleTag = onlySlug ? 'h1' : 'h2';
+
   return (
     <>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -81,7 +85,7 @@ export function ExperiencesDetailList({ initialExperiences, onlySlug }: Experien
                       src={exp.image}
                       alt={exp.title}
                       fill
-                      unoptimized
+                      unoptimized={!canOptimizeImage(exp.image)}
                       sizes="(max-width: 1024px) 100vw, 40vw"
                       className="object-cover object-top w-full h-full transition-transform duration-700 ease-out group-hover/img:scale-105"
                     />
@@ -108,7 +112,7 @@ export function ExperiencesDetailList({ initialExperiences, onlySlug }: Experien
                     <span>{exp.spiritual_dimension}</span>
                   </div>
 
-                  <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-snug">
+                  <TitleTag className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-snug">
                     {onlySlug ? (
                       exp.title
                     ) : (
@@ -116,7 +120,7 @@ export function ExperiencesDetailList({ initialExperiences, onlySlug }: Experien
                         {exp.title}
                       </Link>
                     )}
-                  </h2>
+                  </TitleTag>
 
                   <span className="text-xs uppercase tracking-[0.2em] text-gold-400 font-medium block">
                     {exp.subtitle}

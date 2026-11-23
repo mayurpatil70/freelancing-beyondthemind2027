@@ -6,9 +6,9 @@ import { Footer } from '@/components/layout/Footer';
 import { ShieldCheck, Lock, Eye, Trash2, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy & Sanctuary Data Discretion | Beyond the Mind 2027',
+  title: 'Privacy Policy',
   description:
-    'Our privacy commitments regarding registration details, contact numbers, payment proof documents, and personal reflection data for Beyond the Mind.',
+    'How The Divine Retreat collects, uses and protects your registration details, contact numbers and payment proof documents for Beyond the Mind 2027.',
 };
 
 export default function PrivacyPolicyPage() {

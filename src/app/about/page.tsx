@@ -9,9 +9,9 @@ import { getSiteSettings } from '@/lib/storage/store';
 import { Heart, Compass, ShieldCheck, ArrowRight, Sun, Award, Calendar } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'About the Retreat & Spiritual Guidance | Beyond the Mind 2027',
+  title: 'About the Retreat & Pradeep Muthukulam',
   description:
-    'Discover the vision, sacred philosophy, and personal guidance behind Beyond the Mind 2027 in Rishikesh. An experiential sanctuary guided by Pradeep Muthukulam under Moola Brahman.',
+    'The vision and philosophy behind Beyond the Mind 2027 in Rishikesh, an experiential retreat guided by Pradeep Muthukulam under Moola Brahman.',
 };
 
 export const revalidate = 300;
@@ -96,7 +96,7 @@ export default async function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-gold-500/20">
               <div className="p-6 rounded-2xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-3">
                 <Compass className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-50 font-semibold">Direct Experience</h4>
+                <h3 className="font-serif text-lg text-ivory-50 font-semibold">Direct Experience</h3>
                 <p className="text-xs text-ivory-200/70 leading-relaxed">
                   Focusing on tangible energetic and somatic shifts rather than philosophical theorizing.
                 </p>
@@ -104,7 +104,7 @@ export default async function AboutPage() {
 
               <div className="p-6 rounded-2xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-3">
                 <Heart className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-50 font-semibold">Compassionate Space</h4>
+                <h3 className="font-serif text-lg text-ivory-50 font-semibold">Compassionate Space</h3>
                 <p className="text-xs text-ivory-200/70 leading-relaxed">
                   A tender, judgment-free field where inner child wounds and grief can safely emerge and resolve.
                 </p>
@@ -112,7 +112,7 @@ export default async function AboutPage() {
 
               <div className="p-6 rounded-2xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-3">
                 <Sun className="w-6 h-6 text-gold-400" />
-                <h4 className="font-serif text-lg text-ivory-50 font-semibold">Grounded Awakening</h4>
+                <h3 className="font-serif text-lg text-ivory-50 font-semibold">Grounded Awakening</h3>
                 <p className="text-xs text-ivory-200/70 leading-relaxed">
                   Harmonizing the subtle spiritual channels with practical daily living in modern society.
                 </p>

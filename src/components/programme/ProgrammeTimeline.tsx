@@ -9,9 +9,14 @@ import { cn } from '@/lib/utils';
 interface ProgrammeTimelineProps {
   days: ProgrammeDay[];
   showCta?: boolean;
+  /** Heading level of each day's title: 2 when the timeline sits right under the page H1, 3 under a section H2. */
+  headingLevel?: 2 | 3;
 }
 
-export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelineProps) {
+export function ProgrammeTimeline({ days, showCta = true, headingLevel = 3 }: ProgrammeTimelineProps) {
+  const DayHeading = `h${headingLevel}` as 'h2' | 'h3';
+  const FlowHeading = `h${headingLevel + 1}` as 'h3' | 'h4';
+  const SessionHeading = `h${headingLevel + 2}` as 'h4' | 'h5';
   const [activeDay, setActiveDay] = useState<number>(days.length > 0 ? days[0].day_number : 0);
 
   return (
@@ -67,9 +72,9 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
                 <span className="text-xs uppercase tracking-[0.25em] text-gold-400 block font-medium">
                   {day.formatted_date}
                 </span>
-                <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light mt-1">
+                <DayHeading  className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light mt-1">
                   {day.theme}
-                </h3>
+                </DayHeading>
                 {day.subtitle ? (
                   <p className="text-sm text-gold-200/90 font-light italic mt-1">{day.subtitle}</p>
                 ) : null}
@@ -87,10 +92,10 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
 
             {/* Sessions Timeline */}
             <div className="space-y-4 pt-4">
-              <h4 className="text-xs uppercase tracking-widest text-gold-400 font-semibold flex items-center gap-2">
+              <FlowHeading  className="text-xs uppercase tracking-widest text-gold-400 font-semibold flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-gold-400" />
                 <span>Day Flow & Focus Areas</span>
-              </h4>
+              </FlowHeading>
 
               <div className={cn('grid grid-cols-1 gap-4', day.sessions.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3')}>
                 {day.sessions.map((session, idx) => (
@@ -101,9 +106,9 @@ export function ProgrammeTimeline({ days, showCta = true }: ProgrammeTimelinePro
                     <span className="text-[10px] tracking-widest uppercase font-semibold text-gold-400 px-2 py-0.5 rounded bg-emerald-900/60 inline-block">
                       {session.phase}
                     </span>
-                    <h5 className="font-serif text-lg text-ivory-100 font-medium leading-snug">
+                    <SessionHeading  className="font-serif text-lg text-ivory-100 font-medium leading-snug">
                       {session.title}
-                    </h5>
+                    </SessionHeading>
                     <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
                       {session.description}
                     </p>

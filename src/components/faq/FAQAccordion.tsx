@@ -71,7 +71,7 @@ export function FAQAccordion({ faqs }: FAQAccordionProps) {
         {filteredFaqs.length === 0 ? (
           <div className="text-center py-12 p-6 rounded-2xl bg-emerald-950/40 border border-gold-500/15">
             <HelpCircle className="w-8 h-8 text-gold-400/60 mx-auto mb-2" />
-            <h4 className="font-serif text-lg text-ivory-100 font-medium">No matching questions found</h4>
+            <p className="font-serif text-lg text-ivory-100 font-medium">No matching questions found</p>
             <p className="text-xs text-stone-subtle/80 mt-1 max-w-md mx-auto">
               Our retreat team is always here to assist with personalized details.
             </p>

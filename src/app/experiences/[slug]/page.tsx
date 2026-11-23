@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/Footer';
 import { ExperiencesDetailList } from '@/components/experiences/ExperiencesDetailList';
 import { getExperiences } from '@/lib/storage/store';
 import { parseKeywords } from '@/lib/seo/keywords';
+import { composeDescription, fitTitle, sentences, titleCase } from '@/lib/seo/meta';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
 
 // Each of the 7 retreat sessions gets its own indexable URL. The session's admin keywords are used
@@ -34,8 +35,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!session) return { title: 'Retreat Session Not Found' };
 
   const path = `/experiences/${session.slug}`;
-  const description = (session.short_desc || session.full_desc || '').slice(0, 300);
-  const title = `${session.title} | Beyond the Mind 2027 Retreat, Rishikesh`;
+  const name = titleCase(session.title);
+  const description = composeDescription([
+    session.short_desc || session.subtitle,
+    [
+      'A session of Beyond the Mind 2027 in Rishikesh, 6–9 October 2027.',
+      'Part of Beyond the Mind 2027, Rishikesh.',
+      'Beyond the Mind 2027, Rishikesh.',
+    ],
+    ...sentences(session.full_desc),
+  ]);
+  const title = fitTitle(name, [' | Beyond the Mind 2027 Retreat', ' | Rishikesh Retreat Session', ' | The Divine Retreat']);
   const keywords = parseKeywords(session.keywords);
 
   return {
@@ -49,7 +59,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: absoluteUrl(path),
       siteName: 'Beyond the Mind 2027',
       type: 'article',
-      images: session.image ? [{ url: session.image, alt: session.title }] : undefined,
+      images: session.image ? [{ url: session.image, alt: name }] : undefined,
     },
     twitter: {
       card: 'summary_large_image',

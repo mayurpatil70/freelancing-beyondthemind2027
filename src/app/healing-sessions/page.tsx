@@ -11,9 +11,9 @@ import { absoluteUrl } from '@/lib/seo/siteUrl';
 import { formatWhatsAppUrl } from '@/lib/utils';
 
 const baseMetadata: Metadata = {
-  title: 'Transformative Healing Sessions | Beyond the Mind',
+  title: 'Personalised Healing Sessions',
   description:
-    'Specialised one-to-one healing sessions with Beyond the Mind: Abundance Alignment, Relationship Transformation, Emotional Liberation, Embodied Transformation and Journey Beyond Lifetimes. Individually conducted, by prior appointment.',
+    'Explore one-to-one healing sessions for emotional release, relationships, abundance, conscious business and personal transformation, by appointment.',
 };
 
 export function generateMetadata(): Promise<Metadata> {

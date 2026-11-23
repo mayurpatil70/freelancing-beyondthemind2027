@@ -9,6 +9,7 @@ import { CategoryIcon, ExploreLinks, PostCard } from '@/components/blog/BlogPart
 import { BLOG_NAME, loadBlog } from '@/lib/blog';
 import { parseKeywords } from '@/lib/seo/keywords';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
+import { composeDescription, fitTitle, sentences } from '@/lib/seo/meta';
 
 export const revalidate = 300;
 
@@ -29,8 +30,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { category } = await findCategory(params.slug);
   if (!category) return { title: 'Category Not Found' };
   const path = `/blog/category/${category.slug}`;
-  const title = `${category.name} Articles | ${BLOG_NAME} | Beyond the Mind`;
-  const description = category.description;
+  const title = fitTitle(`${category.name} Articles`, [` | ${BLOG_NAME}`, ' | The Divine Retreat']);
+  const description = composeDescription([
+    ...sentences(category.description),
+    [`Articles from ${BLOG_NAME}, the blog of The Divine Retreat.`, `Articles from ${BLOG_NAME}.`, 'From the blog of The Divine Retreat.'],
+  ]);
   const keywords = parseKeywords(category.keywords);
   return {
     title: { absolute: title },
@@ -103,7 +107,7 @@ export default async function BlogCategoryPage({ params }: Params) {
           {posts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {posts.map((p) => (
-                <PostCard key={p.id} post={p} category={category} />
+                <PostCard key={p.id} post={p} category={category} headingLevel="h2" />
               ))}
             </div>
           ) : (

@@ -108,9 +108,9 @@ export function FeaturedPostCard({ post, category }: { post: BlogPost; category?
           <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold">Featured Article</span>
           <CategoryPill category={category} />
         </div>
-        <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-tight group-hover:text-gold-200 transition-colors">
+        <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light leading-tight group-hover:text-gold-200 transition-colors">
           {post.title}
-        </h3>
+        </h2>
         <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed">{post.excerpt}</p>
         <PostMeta post={post} />
         <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-gold-300 pt-2">
@@ -122,7 +122,16 @@ export function FeaturedPostCard({ post, category }: { post: BlogPost; category?
   );
 }
 
-export function PostCard({ post, category }: { post: BlogPost; category?: BlogCategory }) {
+// headingLevel: 'h2' where the cards sit straight under the page H1 (category pages), else 'h3'.
+export function PostCard({
+  post,
+  category,
+  headingLevel: Heading = 'h3',
+}: {
+  post: BlogPost;
+  category?: BlogCategory;
+  headingLevel?: 'h2' | 'h3';
+}) {
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -132,9 +141,9 @@ export function PostCard({ post, category }: { post: BlogPost; category?: BlogCa
       <Cover post={post} category={category} className="aspect-[16/10]" />
       <div className="flex flex-col flex-1 p-5 sm:p-6 space-y-3">
         <CategoryPill category={category} />
-        <h3 className="font-serif text-xl sm:text-2xl text-ivory-50 font-light leading-snug group-hover:text-gold-200 transition-colors">
+        <Heading className="font-serif text-xl sm:text-2xl text-ivory-50 font-light leading-snug group-hover:text-gold-200 transition-colors">
           {post.title}
-        </h3>
+        </Heading>
         <p className="text-sm text-stone-subtle/85 font-light leading-relaxed flex-1">{post.excerpt}</p>
         <PostMeta post={post} />
       </div>

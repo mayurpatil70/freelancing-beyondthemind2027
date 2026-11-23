@@ -9,9 +9,9 @@ import { getProgramme } from '@/lib/storage/store';
 import { Calendar, Languages, ShieldCheck, ArrowRight, Sun, Shirt } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Retreat Timetable (Arrival Oct 5 • Sessions Oct 6–9, 2027) | Beyond the Mind',
+  title: 'Beyond the Mind 2027 Retreat Programme',
   description:
-    'Detailed retreat schedule for Beyond the Mind 2027 in Rishikesh. Arrival on Tuesday, October 5, followed by four days of sacred sessions from Stress Buster to Soul Liberation & Guided Meditation.',
+    'Day-by-day programme for Beyond the Mind 2027 in Rishikesh: arrival on Tuesday 5 October, then four days of sessions from Stress Buster to Soul Liberation.',
 };
 
 export const revalidate = 300;
@@ -55,15 +55,15 @@ export default async function ProgrammePage() {
 
         {/* Detailed Timeline Component */}
         <section className="py-12 pb-28 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          <ProgrammeTimeline days={programme} showCta={false} />
+          <ProgrammeTimeline days={programme} showCta={false} headingLevel={2} />
 
           {/* Weather & Clothes Guidance Note */}
           <div className="p-6 sm:p-8 rounded-2xl bg-[#07261F]/70 border border-gold-500/25 space-y-4">
             <div className="flex items-center gap-3">
               <Sun className="w-5 h-5 text-gold-400" />
-              <h4 className="font-serif text-lg text-ivory-50 font-medium">
+              <h2 className="font-serif text-lg text-ivory-50 font-medium">
                 Weather & Needed Clothes in Night in Low Temperature
-              </h4>
+              </h2>
             </div>
             <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
               October brings crystal-clear autumn skies to Rishikesh. Expect comfortable warm daytime temperatures around <strong>28°C–30°C</strong> and cool, crisp mornings and nights around <strong>15°C–18°C</strong>. <strong>Needed clothes in night in low temperature:</strong> Please pack warm woolen shawls, cardigans, light jackets, or layers for early morning and evening riverside sessions by Ganga, along with comfortable, loose cotton/linen clothing for daytime meditation postures (modest attire covering shoulders and knees) and easy slip-on sandals.
@@ -75,9 +75,9 @@ export default async function ProgrammePage() {
             <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-semibold block">
               Sanctuary Reservation
             </span>
-            <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">
+            <h2 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">
               Secure Your Place in the Four-Day Circle
-            </h3>
+            </h2>
             <p className="text-sm text-stone-subtle/85 font-light max-w-xl mx-auto leading-relaxed">
               We maintain a limited sanctuary circle to ensure personal guidance and unhurried experiential attention. Available in both offline (in-person at Rishikesh) and online live streaming modes.
             </p>

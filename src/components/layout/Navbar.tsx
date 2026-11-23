@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { shouldPlayIntro } from '@/components/hero/intro';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -141,7 +140,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
       onFocus={() => setHovered(l.href)}
     >
       {l.label}
-      {binduAt === l.href && <motion.span layoutId="nav-bindu" className={styles.bindu} transition={{ type: 'spring', stiffness: 380, damping: 26 }} />}
+      {binduAt === l.href && <span className={styles.bindu} />}
     </Link>
   );
 
@@ -201,7 +200,7 @@ export function Navbar({ syncWithHeroIntro = false }: NavbarProps) {
                 <svg className={styles.chev} viewBox="0 0 10 6" fill="none" aria-hidden="true">
                   <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
-                {binduAt === 'more' && <motion.span layoutId="nav-bindu" className={styles.bindu} transition={{ type: 'spring', stiffness: 380, damping: 26 }} />}
+                {binduAt === 'more' && <span className={styles.bindu} />}
               </button>
               <div id="nav-more" className={cn(styles.panel, moreOpen && styles.panelOpen)}>
                 {moreLinks.map((l) => (

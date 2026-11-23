@@ -24,9 +24,9 @@ import {
 import { formatWhatsAppUrl } from "@/lib/utils";
 
 const baseMetadata: Metadata = {
-  title: "Daily Meditation - A Journey Within | Beyond the Mind",
+  title: 'Online Guided Meditation on Zoom',
   description:
-    "Join our live Monday to Friday 7:30 PM online guided meditation on Zoom. Cultivate awareness, explore inner silence, and pause, observe, and transcend.",
+    'Join live guided meditation on Zoom, Monday to Friday at 7:30 PM IST, and make space for awareness, stillness and inner clarity.',
 };
 
 export function generateMetadata(): Promise<Metadata> {
@@ -171,9 +171,9 @@ export default async function DailyMeditationPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="p-8 rounded-3xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-4">
                 <Brain className="w-8 h-8 text-gold-400" />
-                <h4 className="font-serif text-xl font-semibold text-ivory-50">
+                <h3 className="font-serif text-xl font-semibold text-ivory-50">
                   Cultivating Awareness
-                </h4>
+                </h3>
                 <p className="text-xs sm:text-sm text-ivory-200/70 leading-relaxed font-light">
                   Step away from constant mental chatter. Develop clear witness consciousness to observe thoughts without getting swept into automatic reactions.
                 </p>
@@ -181,9 +181,9 @@ export default async function DailyMeditationPage() {
 
               <div className="p-8 rounded-3xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-4">
                 <Heart className="w-8 h-8 text-gold-400" />
-                <h4 className="font-serif text-xl font-semibold text-ivory-50">
+                <h3 className="font-serif text-xl font-semibold text-ivory-50">
                   Exploring Inner Silence
-                </h4>
+                </h3>
                 <p className="text-xs sm:text-sm text-ivory-200/70 leading-relaxed font-light">
                   Access the restorative stillness beneath cognitive noise. Calm the nervous system, release stress, and nurture deep emotional balance.
                 </p>
@@ -191,9 +191,9 @@ export default async function DailyMeditationPage() {
 
               <div className="p-8 rounded-3xl bg-[#07261F]/60 backdrop-blur-sm border border-gold-500/25 shadow-emerald-deep space-y-4">
                 <Feather className="w-8 h-8 text-gold-400" />
-                <h4 className="font-serif text-xl font-semibold text-ivory-50">
+                <h3 className="font-serif text-xl font-semibold text-ivory-50">
                   Deepening Self-Understanding
-                </h4>
+                </h3>
                 <p className="text-xs sm:text-sm text-ivory-200/70 leading-relaxed font-light">
                   Reconnect with your essential nature. Daily practice keeps subtle energy channels open, providing continuity between our annual intensive retreats.
                 </p>
