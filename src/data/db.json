@@ -240,12 +240,13 @@
       "subtitle": "Reconnect with your body's wisdom and awaken a deeper sense of harmony.",
       "short_desc": "Reconnect with your body's wisdom and awaken a deeper sense of harmony.",
       "full_desc": "Our bodies carry the imprints of experiences, emotions and patterns accumulated through life. Embodied Transformation invites you to move beyond the mind and reconnect with the intelligence of your body.\n\nThrough guided body processes, explore areas of tension, resistance and stored emotional experiences, allowing space for release, renewed awareness and a deeper connection with yourself.\n\nIt is an invitation to listen to your body, honour its wisdom and experience a greater sense of ease, balance and wholeness.",
-      "image": "",
+      "image": "/images/healing/embodied-transformation.jpg",
       "icon_name": "Flower2",
       "order": 4,
       "spiritual_dimension": "Transformative Body Processes",
       "highlights": [],
-      "keywords": "Embodied Transformation, Body Processes, Somatic Healing, Body Wisdom Healing, Release Stored Emotions, Mind Body Healing Session, Beyond the Mind"
+      "keywords": "Embodied Transformation, Body Processes, Somatic Healing, Body Wisdom Healing, Release Stored Emotions, Mind Body Healing Session, Beyond the Mind",
+      "image_position": "20% center"
     },
     {
       "id": "heal-5",
