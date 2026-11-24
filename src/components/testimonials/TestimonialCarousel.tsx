@@ -133,7 +133,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
     <div className="relative max-w-4xl mx-auto px-2 sm:px-4">
       {/* Sliding Testimonial Card Container */}
       <div
-        className="relative rounded-3xl bg-gradient-to-br from-[#07261F] via-[#05211b] to-[#031713] border-2 border-gold-500/40 p-6 sm:p-10 md:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(212,175,55,0.15)] overflow-hidden transition-all duration-500"
+        className="relative rounded-3xl bg-gradient-to-br from-[#07261F] via-[#05211b] to-[#031713] border border-gold-500/30 p-6 sm:p-8 md:p-10 shadow-2xl overflow-hidden transition-all duration-500"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -143,10 +143,10 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
         <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-gold-radial opacity-15 pointer-events-none" />
 
         {/* Card Header: Edition Badge & Slide Navigation */}
-        <div className="relative z-10 flex items-center justify-between border-b border-gold-500/20 pb-5 mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950/90 border border-gold-400/50 shadow-sm">
+        <div className="relative z-10 flex items-center justify-between border-b border-gold-500/20 pb-4 mb-6 gap-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-950/90 border border-gold-400/50 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
-            <span className="text-xs sm:text-sm font-serif tracking-widest text-gold-300 font-semibold uppercase">
+            <span className="text-[10px] sm:text-xs tracking-wider sm:tracking-widest whitespace-nowrap text-gold-400 font-semibold uppercase">
               {current.badge}
             </span>
           </div>
@@ -156,84 +156,84 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
             <button
               type="button"
               onClick={handlePrev}
-              className="p-2 sm:p-2.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95"
+              className="p-2 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95"
               aria-label="Previous Testimonial"
               title="Previous Testimonial"
             >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               type="button"
               onClick={handleNext}
-              className="p-2 sm:p-2.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95"
+              className="p-2 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-gold-500/30 text-gold-300 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95"
               aria-label="Next Testimonial"
               title="Next Testimonial"
             >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
 
         {/* Testimonial Quote & Paragraphs (Exact clone content, no image) */}
-        <div className="relative z-10 space-y-6 min-h-[280px] sm:min-h-[260px] flex flex-col justify-between">
-          <div className="space-y-4">
+        <div className="relative z-10 space-y-4">
+          <div className="space-y-3">
             {/* Opening Golden Quote Mark */}
-            <div className="text-gold-400/80 font-serif text-5xl sm:text-6xl -mb-4 leading-none select-none" aria-hidden="true">
+            <div className="text-gold-400/80 font-serif text-4xl sm:text-5xl -mb-5 leading-none select-none" aria-hidden="true">
               “
             </div>
 
             {/* Paragraphs rendered with clean serene typography */}
-            <div className="space-y-4 text-sm sm:text-base text-ivory-100 font-light leading-relaxed sm:leading-loose">
+            <div className="space-y-4 text-sm sm:text-base text-ivory-100 font-light leading-relaxed">
               {current.paragraphs.map((p, pIdx) => (
-                <p key={pIdx} className="tracking-wide text-[#FAF8F5]/95">
+                <p key={pIdx} className="text-[#FAF8F5]/95">
                   {p}
                 </p>
               ))}
             </div>
 
             {/* Closing Golden Quote Mark */}
-            <div className="text-right text-gold-400/80 font-serif text-5xl sm:text-6xl -mt-2 leading-none select-none" aria-hidden="true">
+            <div className="text-right text-gold-400/80 font-serif text-4xl sm:text-5xl -mt-3 -mb-4 leading-none select-none" aria-hidden="true">
               ”
             </div>
           </div>
 
           {/* Golden Lotus Divider */}
-          <div className="flex items-center justify-center gap-3 pt-2">
+          <div className="flex items-center justify-center gap-3">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold-400/50" />
             <span className="text-gold-400 text-sm select-none" aria-hidden="true">🪷</span>
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold-400/50" />
           </div>
 
           {/* Author & Location */}
-          <div className="text-center space-y-1 pt-1">
-            <p className="font-serif text-2xl sm:text-3xl text-gold-300 font-medium tracking-wide">
+          <div className="text-center space-y-1">
+            <p className="font-serif text-xl sm:text-2xl text-gold-300 font-medium tracking-wide">
               {current.name}
             </p>
-            <p className="text-xs sm:text-sm text-stone-subtle/80 tracking-widest uppercase font-light">
+            <p className="text-[11px] sm:text-xs text-stone-subtle/80 tracking-widest uppercase font-light">
               {current.location}
             </p>
           </div>
         </div>
 
         {/* Bottom Sliding Pagination Dots & Slide Counter */}
-        <div className="relative z-10 mt-8 pt-6 border-t border-gold-500/15 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="relative z-10 mt-6 pt-5 border-t border-gold-500/15 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             {cards.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                className={`h-2 rounded-full transition-all duration-300 ${
                   currentIndex === idx
-                    ? 'w-8 bg-gradient-to-r from-gold-400 to-gold-500 shadow-gold-sm'
-                    : 'w-2.5 bg-emerald-900/90 hover:bg-gold-500/50'
+                    ? 'w-7 bg-gradient-to-r from-gold-400 to-gold-500 shadow-gold-sm'
+                    : 'w-2 bg-emerald-900/90 hover:bg-gold-500/50'
                 }`}
                 aria-label={`Go to testimonial ${idx + 1}`}
               />
             ))}
           </div>
 
-          <div className="text-xs text-stone-subtle/70 font-mono tracking-wider">
+          <div className="text-[11px] text-stone-subtle/70 tracking-widest uppercase">
             Testimonial <span className="text-gold-400 font-semibold">{currentIndex + 1}</span> of{' '}
             <span className="text-gold-400">{cards.length}</span>
           </div>
