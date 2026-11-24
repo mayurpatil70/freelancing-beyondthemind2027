@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 import Image from 'next/image';
 import { SacredExperience } from '@/types';
 import { Feather, Flame, Sun, Heart, Compass, Flower2, CircleDot, MessageCircle, Maximize2 } from 'lucide-react';
@@ -18,14 +19,6 @@ const iconMap: Record<string, React.ElementType> = {
   Flower2,
   CircleDot,
 };
-
-/** A blank line in the admin description starts a new paragraph. */
-export function toParagraphs(text: string | undefined): string[] {
-  return (text || '')
-    .split(/\n\s*\n/)
-    .map((p) => p.replace(/\s*\n\s*/g, ' ').trim())
-    .filter(Boolean);
-}
 
 interface HealingSessionsListProps {
   sessions: SacredExperience[];
@@ -61,7 +54,6 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
         const isEven = idx % 2 === 1;
         const photoIndex = withPhotos.indexOf(session);
         const openPhoto = () => photoIndex >= 0 && setLightboxIndex(photoIndex);
-        const paragraphs = toParagraphs(session.full_desc);
         const enquiryUrl = formatWhatsAppUrl(
           phone,
           `Namaste, I would like to book a "${session.title}" healing session. Could you share the available appointments and details?`
@@ -166,13 +158,7 @@ export function HealingSessionsList({ sessions, whatsappNumber, single = false }
                   </p>
                 )}
 
-                <div className="space-y-3">
-                  {paragraphs.map((p, i) => (
-                    <p key={i} className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
-                      {p}
-                    </p>
-                  ))}
-                </div>
+                <RichTextBody content={session.full_desc} />
 
                 <div className="pt-4 flex flex-wrap items-center gap-4">
                   <a

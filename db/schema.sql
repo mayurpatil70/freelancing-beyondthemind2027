@@ -69,3 +69,10 @@ CREATE TABLE IF NOT EXISTS admin_security_events (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS admin_security_events_created_at_idx ON admin_security_events (created_at DESC);
+
+-- Admin password changed in the admin panel (scrypt hash). Empty = ADMIN_PASSWORD env is used.
+CREATE TABLE IF NOT EXISTS admin_credentials (
+  id TEXT PRIMARY KEY,
+  password_hash TEXT NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

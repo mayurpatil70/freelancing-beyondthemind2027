@@ -123,6 +123,8 @@ npm run start
 
 - **URL**: Navigate to `/admin`
 - **Credentials**: the values of `ADMIN_USERNAME` (or `ADMIN_EMAIL`) and `ADMIN_PASSWORD`. There are no default credentials. If `ADMIN_USERNAME`/`ADMIN_EMAIL`, `ADMIN_PASSWORD` or `ADMIN_SESSION_SECRET` is missing, the login endpoint returns HTTP 503 and names the missing variables.
+- **Changing the password**: admin tab "Change Password" (current password + new password, at least 8 characters). The new password is stored as a scrypt hash in Neon (`admin_credentials`) and replaces `ADMIN_PASSWORD` from then on; the username does not change. Forgotten password: run `DELETE FROM admin_credentials;` in the Neon SQL editor and `ADMIN_PASSWORD` works again.
+- **No public link**: the site has no Admin button or link; open `/admin` directly.
 - **Login rate limiting**: 5 failed attempts per IP or device within 15 minutes triggers a 15 minute lockout. Counters are stored in Neon (`admin_login_attempts`, `admin_security_events`) so they hold across serverless instances; without `DATABASE_URL` they are kept in memory.
 
 ### Key Admin Features:

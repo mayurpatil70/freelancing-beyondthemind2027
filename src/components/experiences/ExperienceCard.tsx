@@ -81,10 +81,10 @@ export function ExperienceCard({ experience, featured = false }: ExperienceCardP
         </div>
 
         <div className="flex flex-1 flex-col p-5 sm:p-6">
-          <h3 className="font-serif text-[22px] font-semibold uppercase leading-tight tracking-wide line-clamp-2">
+          <h3 className="font-serif text-[22px] font-semibold uppercase leading-tight tracking-wide break-words">
             {experience.title}
           </h3>
-          <p className="mt-2 text-[13px] leading-relaxed text-[#031713]/65 line-clamp-2">{experience.short_desc}</p>
+          <p className="mt-2 text-[13px] leading-relaxed text-[#031713]/65 break-words">{experience.short_desc}</p>
 
           <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2 rounded-lg border border-[#E6DCC2] bg-[#F3EEE2] px-4 py-3 mb-5">
             {meta.map(({ icon: MetaIcon, text }) => (

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Globe, Lock, ExternalLink } from 'lucide-react';
+import { Phone, Mail, Instagram, Facebook, Youtube, Twitter, MapPin, Calendar, Heart, Globe, ExternalLink } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
 
 export function Footer() {
@@ -288,11 +288,6 @@ export function Footer() {
             <span className="opacity-30">•</span>
             <Link href="/contact" prefetch={true} className="hover:text-gold-300 transition-colors">
               Concierge
-            </Link>
-            <span className="opacity-30">•</span>
-            <Link href="/admin" prefetch={false} rel="nofollow" className="inline-flex items-center gap-1 hover:text-gold-300 transition-colors">
-              <Lock className="w-3 h-3" />
-              Admin
             </Link>
           </div>
         </div>

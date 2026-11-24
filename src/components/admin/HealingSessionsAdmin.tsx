@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { SacredExperience } from '@/types';
+import { RichTextField } from '@/components/admin/RichTextField';
 import { IMAGE_ACCEPT } from '@/lib/media/rules';
 import { ChevronUp, ChevronDown, ExternalLink, Plus, Save, Tag, Trash2, Upload, X } from 'lucide-react';
 
@@ -324,11 +325,11 @@ export function HealingSessionsAdmin({
             </div>
 
             <div className="sm:col-span-12 space-y-1">
-              <label className={labelClass}>Description (empty line = new paragraph)</label>
-              <textarea
-                rows={8}
+              <label className={labelClass}>Description</label>
+              <RichTextField
+                rows={10}
                 value={s.full_desc}
-                onChange={(e) => update(index, { full_desc: e.target.value })}
+                onChange={(v) => update(index, { full_desc: v })}
                 className={inputClass}
               />
             </div>

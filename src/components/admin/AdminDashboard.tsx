@@ -21,6 +21,8 @@ import { uploadMediaFile } from '@/lib/media/upload-client';
 import { broadcastCMSUpdate } from '@/contexts/CMSContext';
 import { HealingSessionsAdmin } from '@/components/admin/HealingSessionsAdmin';
 import { BlogAdmin } from '@/components/admin/BlogAdmin';
+import { RichTextField } from '@/components/admin/RichTextField';
+import { AdminPasswordPanel } from '@/components/admin/AdminPasswordPanel';
 import {
   Users,
   Settings,
@@ -80,7 +82,8 @@ type AdminTab =
   | 'weather'
   | 'keywords'
   | 'media'
-  | 'settings';
+  | 'settings'
+  | 'password';
 
 export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<AdminTab>('registrations');
@@ -435,6 +438,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             { id: 'keywords', label: 'SEO, GEO & Analytics', icon: Globe },
             { id: 'media', label: 'Media Library', icon: Film },
             { id: 'settings', label: 'General Settings', icon: Settings },
+            { id: 'password', label: 'Change Password', icon: Key },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -954,15 +958,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
                         Full Practice Description
                       </label>
-                      <textarea
-                        rows={3}
+                      <RichTextField
+                        rows={10}
                         value={exp.full_desc}
-                        onChange={(e) => {
+                        onChange={(v) => {
                           const updated = [...experiences];
-                          updated[index].full_desc = e.target.value;
+                          updated[index].full_desc = v;
                           setExperiences(updated);
                         }}
-                        className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
                       />
                     </div>
 
@@ -2250,6 +2253,8 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         {/* ========================================================================= */}
         {/* TAB 9: GENERAL SETTINGS */}
         {/* ========================================================================= */}
+        {activeTab === 'password' && <AdminPasswordPanel />}
+
         {activeTab === 'settings' && settings && (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/20">
@@ -2941,12 +2946,11 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <label className="text-[10px] uppercase text-gold-400 font-semibold block">
                   Full Practice Description
                 </label>
-                <textarea
-                  rows={3}
+                <RichTextField
+                  rows={6}
                   value={newSessionData.full_desc || ''}
                   placeholder="Detailed experiential explanation of what seekers practice..."
-                  onChange={(e) => setNewSessionData({ ...newSessionData, full_desc: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  onChange={(v) => setNewSessionData({ ...newSessionData, full_desc: v })}
                 />
               </div>
 
