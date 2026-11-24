@@ -7,6 +7,7 @@ import { ThemeSelect, ThemeSelectOption } from '@/components/ui/ThemeSelect';
 import { NumberStepper } from '@/components/ui/NumberStepper';
 import { openWhatsApp } from '@/lib/utils';
 import { useCMS } from '@/contexts/CMSContext';
+import { trackLead } from '@/lib/analytics/ga';
 
 interface WhatsAppInquiryModalProps {
   isOpen: boolean;
@@ -125,6 +126,7 @@ export function WhatsAppInquiryModal({
 
     // Also log enquiry to CRM database in background
     try {
+      trackLead('whatsapp_enquiry', selectedProgram);
       fetch('/api/register', {
         method: 'POST',
         keepalive: true,

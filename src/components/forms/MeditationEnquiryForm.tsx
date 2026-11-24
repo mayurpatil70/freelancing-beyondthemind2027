@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Send, CheckCircle2, MessageCircle, Mail } from 'lucide-react';
 import { ThemeSelect } from '@/components/ui/ThemeSelect';
 import { openWhatsApp, handleWhatsAppClick } from '@/lib/utils';
+import { trackLead } from '@/lib/analytics/ga';
 
 const NUMBER = '918075572018';
 
@@ -49,6 +50,7 @@ export function MeditationEnquiryForm() {
 
     // Also persist into backend CRM / Registrations DB asynchronously
     try {
+      trackLead('daily_meditation_enquiry', 'Daily Guided Meditation');
       fetch('/api/register', {
         method: 'POST',
         keepalive: true,

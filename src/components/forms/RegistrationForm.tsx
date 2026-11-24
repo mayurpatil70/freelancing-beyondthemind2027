@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { ThemeSelect } from '@/components/ui/ThemeSelect';
 import { openWhatsApp } from '@/lib/utils';
+import { trackLead } from '@/lib/analytics/ga';
 
 interface RegistrationFormProps {
   allowPaymentProof?: boolean;
@@ -134,6 +135,7 @@ export function RegistrationForm({
         throw new Error(json.message || 'Failed to submit registration. Please verify your details.');
       }
 
+      trackLead('retreat_registration', json.data.programme);
       setSubmittedData({
         id: json.data.id,
         full_name: json.data.full_name,

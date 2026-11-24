@@ -1922,7 +1922,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     onChange={(e) =>
                       setSettings({ ...settings, google_analytics_id: e.target.value })
                     }
-                    placeholder="e.g. G-BTM2027RETREAT"
+                    placeholder="e.g. G-AB12CD34EF (from GA4 → Admin → Data streams)"
                     className="w-full px-4 py-2.5 rounded-xl bg-emerald-950/80 border border-gold-500/20 text-ivory-100 placeholder-stone-subtle/40 text-xs focus:outline-none focus:border-gold-400"
                   />
                   <p className="text-[10px] text-stone-subtle/70 font-light">
