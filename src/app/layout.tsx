@@ -8,6 +8,8 @@ import { CMSProvider } from '@/contexts/CMSContext';
 import { getSiteSettings, getExperiences, getAttractions, getGallery } from '@/lib/storage/store';
 import type { SiteSettings } from '@/types';
 import { siteUrl } from '@/lib/seo/siteUrl';
+import Script from 'next/script';
+import { gaMeasurementId } from '@/lib/analytics/ga';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -156,6 +158,8 @@ export default async function RootLayout({
     getGallery(),
   ]);
 
+  const gaId = gaMeasurementId(cmsSettings.google_analytics_id);
+
   // Enhanced GEO & AEO Knowledge Graph Schemas for AI Agents (ChatGPT, Perplexity, Gemini, Google Search)
   const structuredData = {
     '@context': 'https://schema.org',
@@ -301,6 +305,14 @@ export default async function RootLayout({
         />
       </head>
       <body className="bg-[#031713] text-[#FAF8F5] antialiased selection:bg-[#D4AF37] selection:text-[#031713]">
+        {gaId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            </Script>
+          </>
+        )}
         <CMSProvider
           initialSettings={cmsSettings}
           initialExperiencesList={cmsExperiences}

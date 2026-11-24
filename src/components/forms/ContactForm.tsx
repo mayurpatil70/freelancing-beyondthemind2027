@@ -9,6 +9,7 @@ import { formatWhatsAppUrl, openWhatsApp, handleWhatsAppClick } from '@/lib/util
 import { ThemeSelect } from '@/components/ui/ThemeSelect';
 import { NumberStepper } from '@/components/ui/NumberStepper';
 import { RETREAT_INQUIRY_OPTIONS } from '@/components/layout/WhatsAppInquiryModal';
+import { trackLead } from '@/lib/analytics/ga';
 
 const RETREAT_WHATSAPP = '+91 8075572018';
 
@@ -53,6 +54,7 @@ export function ContactForm() {
 
     // Asynchronously log enquiry into backend CRM
     try {
+      trackLead('contact_enquiry', chosenProgram);
       fetch('/api/register', {
         method: 'POST',
         keepalive: true,
