@@ -6,7 +6,12 @@ export type RichBlock =
   | { kind: 'h2' | 'h3' | 'quote' | 'p'; text: string }
   | { kind: 'ul'; items: string[] };
 
-export function parseRichText(content: string | undefined | null): RichBlock[] {
+export interface RichTextOptions {
+  /** Every line break starts a new paragraph (admins press Enter once and expect a new paragraph). */
+  lineBreaks?: boolean;
+}
+
+export function parseRichText(content: string | undefined | null, options: RichTextOptions = {}): RichBlock[] {
   const blocks: RichBlock[] = [];
   let para: string[] = [];
   const flush = () => {
@@ -36,6 +41,7 @@ export function parseRichText(content: string | undefined | null): RichBlock[] {
       else blocks.push({ kind: 'ul', items: [item] });
     } else {
       para.push(line);
+      if (options.lineBreaks) flush();
     }
   }
   flush();
@@ -44,7 +50,7 @@ export function parseRichText(content: string | undefined | null): RichBlock[] {
 
 /** Plain text without formatting marks, for meta descriptions and JSON-LD. */
 export function stripRichText(content: string | undefined | null): string {
-  return parseRichText(content)
+  return parseRichText(content, { lineBreaks: true })
     .map((b) => {
       const text = b.kind === 'ul' ? b.items.join('. ') : b.text;
       const clean = text.replace(/\*\*([^*]+)\*\*/g, '$1').trim();
