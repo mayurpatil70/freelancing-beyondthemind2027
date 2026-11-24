@@ -1,10 +1,11 @@
 import React from 'react';
+import { parseRichText as parse } from '@/lib/richText';
 
 // Renders an article written in the admin panel. Supported marks (one per line):
 //   "## Heading", "### Subheading", "- list item", "> quote", **bold**. An empty line starts a new paragraph.
 // Text is rendered as React text nodes, never as HTML.
 
-function inline(text: string, keyPrefix: string): React.ReactNode[] {
+export function inline(text: string, keyPrefix: string): React.ReactNode[] {
   return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
     /^\*\*[^*]+\*\*$/.test(part) ? (
       <strong key={`${keyPrefix}-${i}`} className="font-semibold text-gold-200">
@@ -14,46 +15,6 @@ function inline(text: string, keyPrefix: string): React.ReactNode[] {
       <React.Fragment key={`${keyPrefix}-${i}`}>{part}</React.Fragment>
     )
   );
-}
-
-type Block =
-  | { kind: 'h2' | 'h3' | 'quote' | 'p'; text: string }
-  | { kind: 'ul'; items: string[] };
-
-function parse(content: string): Block[] {
-  const blocks: Block[] = [];
-  let para: string[] = [];
-  const flush = () => {
-    if (para.length) blocks.push({ kind: 'p', text: para.join(' ') });
-    para = [];
-  };
-  for (const raw of (content || '').split(/\r?\n/)) {
-    const line = raw.trim();
-    if (!line) {
-      flush();
-      continue;
-    }
-    if (line.startsWith('### ')) {
-      flush();
-      blocks.push({ kind: 'h3', text: line.slice(4) });
-    } else if (line.startsWith('## ')) {
-      flush();
-      blocks.push({ kind: 'h2', text: line.slice(3) });
-    } else if (line.startsWith('> ')) {
-      flush();
-      blocks.push({ kind: 'quote', text: line.slice(2) });
-    } else if (/^[-*]\s+/.test(line)) {
-      flush();
-      const item = line.replace(/^[-*]\s+/, '');
-      const last = blocks[blocks.length - 1];
-      if (last && last.kind === 'ul') last.items.push(item);
-      else blocks.push({ kind: 'ul', items: [item] });
-    } else {
-      para.push(line);
-    }
-  }
-  flush();
-  return blocks;
 }
 
 export function headingId(text: string) {

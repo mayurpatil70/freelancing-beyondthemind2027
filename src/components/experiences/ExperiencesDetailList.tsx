@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 import Image from 'next/image';
 import { SacredExperience } from '@/types';
 import {
@@ -126,9 +127,7 @@ export function ExperiencesDetailList({ initialExperiences, onlySlug }: Experien
                     {exp.subtitle}
                   </span>
 
-                  <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
-                    {exp.full_desc}
-                  </p>
+                  <RichTextBody content={exp.full_desc} />
 
                   {/* Highlights */}
                   {exp.highlights && exp.highlights.length > 0 && (

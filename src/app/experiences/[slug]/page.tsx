@@ -1,3 +1,4 @@
+import { stripRichText } from '@/lib/richText';
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       'Part of Beyond the Mind 2027, Rishikesh.',
       'Beyond the Mind 2027, Rishikesh.',
     ],
-    ...sentences(session.full_desc),
+    ...sentences(stripRichText(session.full_desc)),
   ]);
   const title = fitTitle(name, [' | Beyond the Mind 2027 Retreat', ' | Rishikesh Retreat Session', ' | The Divine Retreat']);
   const keywords = parseKeywords(session.keywords);
@@ -84,7 +85,7 @@ export default async function RetreatSessionPage({ params }: Params) {
       '@type': 'Course',
       name: session.title,
       alternateName: session.subtitle,
-      description: session.full_desc || session.short_desc,
+      description: stripRichText(session.full_desc) || session.short_desc,
       keywords: session.keywords || undefined,
       url,
       image: !session.image ? undefined : /^https?:\/\//.test(session.image) ? session.image : absoluteUrl(session.image.startsWith('/') ? session.image : `/${session.image}`),

@@ -1,3 +1,4 @@
+import { stripRichText } from '@/lib/richText';
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       'A one-to-one healing session, by prior appointment.',
       'One-to-one, by appointment.',
     ],
-    ...sentences(session.full_desc),
+    ...sentences(stripRichText(session.full_desc)),
   ]);
   const title = fitTitle(name, [' | Healing Session · The Divine Retreat', ' | One-to-One Healing Session', ' | Healing Session']);
   const keywords = parseKeywords(session.keywords);
@@ -85,7 +86,7 @@ export default async function HealingSessionPage({ params }: Params) {
       '@type': 'Service',
       name: session.title,
       alternateName: session.spiritual_dimension || undefined,
-      description: session.full_desc || session.short_desc,
+      description: stripRichText(session.full_desc) || session.short_desc,
       keywords: session.keywords || undefined,
       url,
       image: !session.image
