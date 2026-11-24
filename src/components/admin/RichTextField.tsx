@@ -13,7 +13,7 @@ interface RichTextFieldProps {
 }
 
 // Textarea with a small formatting toolbar. Formatting is stored as simple marks
-// ("## " heading, "### " subheading, "- " list item, **bold**, empty line = new paragraph).
+// ("## " heading, "### " subheading, "- " list item, **bold**, each line = its own paragraph).
 export function RichTextField({ value, onChange, rows = 10, placeholder, className }: RichTextFieldProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const [preview, setPreview] = useState(false);
@@ -107,7 +107,7 @@ export function RichTextField({ value, onChange, rows = 10, placeholder, classNa
       )}
 
       <p className="text-[10px] text-stone-subtle/70 leading-relaxed">
-        Empty line = new paragraph. <code className="text-gold-200">## </code> heading,{' '}
+        Press Enter for a new paragraph. <code className="text-gold-200">## </code> heading,{' '}
         <code className="text-gold-200">### </code> subheading, <code className="text-gold-200">- </code> list item,{' '}
         <code className="text-gold-200">**text**</code> bold. Use Preview to check before saving.
       </p>

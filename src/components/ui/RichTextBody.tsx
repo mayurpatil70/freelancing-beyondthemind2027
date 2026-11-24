@@ -3,11 +3,12 @@ import { parseRichText } from '@/lib/richText';
 import { inline } from '@/components/blog/ArticleBody';
 
 // Renders a session description written in the admin panel (see src/lib/richText).
+// Each line break starts a new paragraph.
 // The session title is already the page's H1/H2, so "##" becomes an H3 and "###" an H4.
 export function RichTextBody({ content }: { content: string | undefined | null }) {
   return (
     <div className="space-y-3 text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
-      {parseRichText(content).map((b, i) => {
+      {parseRichText(content, { lineBreaks: true }).map((b, i) => {
         const key = `rt-${i}`;
         switch (b.kind) {
           case 'h2':
