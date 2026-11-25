@@ -409,6 +409,49 @@
       "full_testimonial": "The Beyond the Mind retreat was a really positive experience. Since this was my second time attending, it felt even more special doing it at Kanyakumari.\n\nWe started the first day with Pooja Veppu for ourselves, which was a great way to begin.\n\nDuring the process of activating the Maha Theerthas and the three Shiva Lingams, I could actually feel subtle sensations in my body.\n\nOn the last day's meditation, even though there were many mandalas, I felt something really special during the Shiva Mandala and the merging process.\n\nLearning about entity removal and getting to know about our spirit guides was very insightful. The soul liberation process was also a very good and experiential process.\n\nOverall, it gave me a wonderful sense of calm and connection.\n\nThank you Pradeep Sir and a heartfelt thanks to all the who were part of this retreat."
     }
   ],
+  "participation": [
+    {
+      "id": "tier-private",
+      "title": "Private Sanctuary Room",
+      "subtitle": "Single Occupancy Accommodation",
+      "description": "A tranquil private room designed for deep individual contemplation and undisturbed rest between intensive meditative processes.",
+      "inclusions": [
+        "Single private room with en-suite bath",
+        "Four days of retreat sessions with Pradeep Muthukulam",
+        "Personal Guidance Sessions – Available by Appointment"
+      ],
+      "status_note": "Enquiry-based availability • Limited single rooms",
+      "price": "",
+      "keywords": ""
+    },
+    {
+      "id": "tier-shared",
+      "title": "Shared Sanctuary Room",
+      "subtitle": "Twin-Sharing Accommodation",
+      "description": "Share comfortable accommodations with a fellow retreat participant or come with a friend or partner to share the sacred experience.",
+      "inclusions": [
+        "Twin-sharing room with separate beds & en-suite bath",
+        "Four days of retreat sessions with Pradeep Muthukulam",
+        "Personal Guidance Sessions – Available by Appointment"
+      ],
+      "status_note": "Enquiry-based availability • Popular option",
+      "price": "",
+      "keywords": ""
+    },
+    {
+      "id": "tier-non-residential",
+      "title": "Non-Residential Seeker",
+      "subtitle": "Day Attendance Participation",
+      "description": "Ideal for seekers who have arranged their own accommodations in Rishikesh or residents of Uttarakhand attending the daily programme.",
+      "inclusions": [
+        "Full daily access to all retreat sessions & ceremonies",
+        "Personal Guidance Sessions – Available by Appointment"
+      ],
+      "status_note": "Enquiry-based availability • Subject to venue capacity",
+      "price": "",
+      "keywords": ""
+    }
+  ],
   "gallery": [
     {
       "id": "gal-0",

@@ -441,7 +441,7 @@ export default async function HomePage() {
               subtitle="Authentic reflections from participants who walked the sacred journey of Beyond the Mind."
             />
 
-            <TestimonialCarousel testimonials={testimonials} />
+            <TestimonialCarousel testimonials={testimonials.map(({ keywords: _kw, ...t }) => t)} />
           </div>
         </section>
 

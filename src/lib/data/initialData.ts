@@ -8,6 +8,7 @@ import {
   RishikeshAttraction,
   WeatherClothingGuide,
   BlogPost,
+  ParticipationTier,
 } from "@/types";
 import dbData from "@/data/db.json";
 
@@ -19,5 +20,6 @@ export const initialAttractions: RishikeshAttraction[] = dbData.attractions as R
 export const initialGallery: GalleryItem[] = dbData.gallery as GalleryItem[];
 export const initialProgramme: ProgrammeDay[] = dbData.programme as ProgrammeDay[];
 export const initialTestimonials: Testimonial[] = dbData.testimonials as Testimonial[];
+export const initialParticipation: ParticipationTier[] = ((dbData as { participation?: ParticipationTier[] }).participation || []);
 export const initialFAQs: FAQItem[] = dbData.faqs as FAQItem[];
 export const initialWeatherClothing: WeatherClothingGuide = dbData.weatherClothing as WeatherClothingGuide;
