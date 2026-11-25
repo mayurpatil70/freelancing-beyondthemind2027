@@ -11,56 +11,42 @@ import {
   Languages,
 } from 'lucide-react';
 import { LanguageNote } from '@/components/retreat/LanguageNote';
+import { getParticipation, getSiteSettings } from '@/lib/storage/store';
+import { mergeKeywords, withCmsKeywords } from '@/lib/seo/keywords';
+import { formatInr, parsePrice } from '@/lib/seo/eventSchema';
+import { siteUrl } from '@/lib/seo/siteUrl';
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: 'Participation & Accommodation Options',
   description:
     'Participation options for Beyond the Mind 2027 in Rishikesh, including private and twin-sharing rooms, sattvic vegetarian meals and retreat materials.',
 };
 
+// Section keywords (admin Participation tab) plus each option's keywords: meta tags and JSON-LD only.
+export async function generateMetadata(): Promise<Metadata> {
+  const tiers = await getParticipation();
+  return withCmsKeywords(baseMetadata, 'participation', '/participation', tiers.map((t) => t.keywords));
+}
+
 export const revalidate = 300;
 
-export default function ParticipationPage() {
-  const participationTiers = [
-    {
-      title: 'Private Sanctuary Room',
-      subtitle: 'Single Occupancy Accommodation',
-      description:
-        'A tranquil private room designed for deep individual contemplation and undisturbed rest between intensive meditative processes.',
-      inclusions: [
-        'Single private room with en-suite bath',
-        'Four days of retreat sessions with Pradeep Muthukulam',
-        'Personal Guidance Sessions – Available by Appointment',
-      ],
-      statusNote: 'Enquiry-based availability • Limited single rooms',
-    },
-    {
-      title: 'Shared Sanctuary Room',
-      subtitle: 'Twin-Sharing Accommodation',
-      description:
-        'Share comfortable accommodations with a fellow retreat participant or come with a friend or partner to share the sacred experience.',
-      inclusions: [
-        'Twin-sharing room with separate beds & en-suite bath',
-        'Four days of retreat sessions with Pradeep Muthukulam',
-        'Personal Guidance Sessions – Available by Appointment',
-      ],
-      statusNote: 'Enquiry-based availability • Popular option',
-    },
-    {
-      title: 'Non-Residential Seeker',
-      subtitle: 'Day Attendance Participation',
-      description:
-        'Ideal for seekers who have arranged their own accommodations in Rishikesh or residents of Uttarakhand attending the daily programme.',
-      inclusions: [
-        'Full daily access to all retreat sessions & ceremonies',
-        'Personal Guidance Sessions – Available by Appointment',
-      ],
-      statusNote: 'Enquiry-based availability • Subject to venue capacity',
-    },
-  ];
+export default async function ParticipationPage() {
+  const [participationTiers, settings] = await Promise.all([getParticipation(), getSiteSettings()]);
+  const keywords = mergeKeywords(settings.meta_keywords?.participation, ...participationTiers.map((t) => t.keywords));
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/participation#page`,
+    url: `${siteUrl}/participation`,
+    name: 'Participation & Accommodations',
+    ...(keywords.length ? { keywords: keywords.join(', ') } : {}),
+    about: { '@id': `${siteUrl}/#retreat2027` },
+    isPartOf: { '@id': `${siteUrl}/#website` },
+  };
 
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Navbar />
 
       <main className="pt-24 sm:pt-28">
@@ -118,9 +104,11 @@ export default function ParticipationPage() {
 
         <section className="py-8 pb-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {participationTiers.map((tier, idx) => (
+            {participationTiers.map((tier, idx) => {
+              const price = parsePrice(tier.price);
+              return (
               <div
-                key={idx}
+                key={tier.id || idx}
                 className="p-8 rounded-3xl bg-[#07261F]/70 border border-gold-500/25 flex flex-col justify-between shadow-xl space-y-6 hover:border-gold-400/50 transition-colors"
               >
                 <div className="space-y-3">
@@ -128,6 +116,9 @@ export default function ParticipationPage() {
                     {tier.subtitle}
                   </span>
                   <h2 className="font-serif text-2xl text-ivory-50 font-medium">{tier.title}</h2>
+                  {price !== undefined && (
+                    <p className="font-serif text-xl text-gold-300">{formatInr(price)}</p>
+                  )}
                   <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
                     {tier.description}
                   </p>
@@ -136,7 +127,7 @@ export default function ParticipationPage() {
                     <span className="text-xs uppercase tracking-wider text-gold-300 font-semibold block">
                       Included In Sanctuary:
                     </span>
-                    {tier.inclusions.map((item, i) => (
+                    {(tier.inclusions || []).map((item, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs text-ivory-100 font-light">
                         <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -147,7 +138,7 @@ export default function ParticipationPage() {
 
                 <div className="pt-4 border-t border-gold-500/15 space-y-3">
                   <span className="text-[11px] text-gold-300/80 block font-medium">
-                    {tier.statusNote}
+                    {tier.status_note}
                   </span>
                   <Link
                     href={`/register?programme=${encodeURIComponent(tier.title)}`}
@@ -158,7 +149,8 @@ export default function ParticipationPage() {
                   </Link>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
 

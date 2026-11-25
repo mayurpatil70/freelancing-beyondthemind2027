@@ -12,6 +12,8 @@ import {
   RishikeshAttraction,
   WeatherClothingGuide,
   FAQItem,
+  Testimonial,
+  ParticipationTier,
   CustomContactLink,
   MediaAsset,
   BlogPost,
@@ -23,6 +25,7 @@ import { HealingSessionsAdmin } from '@/components/admin/HealingSessionsAdmin';
 import { BlogAdmin } from '@/components/admin/BlogAdmin';
 import { RichTextField } from '@/components/admin/RichTextField';
 import { AdminPasswordPanel } from '@/components/admin/AdminPasswordPanel';
+import { ParticipationAdmin, TestimonialsAdmin, FAQAdmin } from '@/components/admin/SectionContentAdmin';
 import {
   Users,
   Settings,
@@ -33,6 +36,7 @@ import {
   Clock,
   AlertCircle,
   MessageSquare,
+  HelpCircle,
   FileText,
   LogOut,
   ExternalLink,
@@ -76,6 +80,9 @@ type AdminTab =
   | 'sessions'
   | 'healing-sessions'
   | 'blog'
+  | 'participation'
+  | 'testimonials'
+  | 'faqs'
   | 'daily-meditation'
   | 'registration-settings'
   | 'attractions'
@@ -100,6 +107,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [attractions, setAttractions] = useState<RishikeshAttraction[]>([]);
   const [weatherGuide, setWeatherGuide] = useState<WeatherClothingGuide | null>(null);
   const [metaKeywords, setMetaKeywords] = useState<Record<string, string>>({});
+  const [participation, setParticipation] = useState<ParticipationTier[]>([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [faqs, setFaqs] = useState<FAQItem[]>([]);
 
   const [saving, setSaving] = useState(false);
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
@@ -187,6 +197,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         if (data?.blogPosts) setBlogPosts(data.blogPosts);
         if (data?.attractions) setAttractions(data.attractions);
         if (data?.weatherClothing) setWeatherGuide(data.weatherClothing);
+        if (data?.participation) setParticipation(data.participation);
+        if (data?.testimonials) setTestimonials(data.testimonials);
+        if (data?.faqs) setFaqs(data.faqs);
       }
     } catch (e) {
       console.error('Fetch content error:', e);
@@ -230,6 +243,18 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       setSaving(false);
     }
   };
+
+  // Section keywords (Participation / Testimonials / FAQ tabs) live in settings.meta_keywords, shared with the SEO tab.
+  const sectionKeywordProps = (key: string) => ({
+    sectionKeywords: metaKeywords[key] || '',
+    setSectionKeywords: (value: string) => setMetaKeywords((prev) => ({ ...prev, [key]: value })),
+    saveSectionKeywords: async () => {
+      if (!settings) return;
+      const updatedSettings = { ...settings, meta_keywords: metaKeywords };
+      setSettings(updatedSettings);
+      await saveContent('settings', updatedSettings, 'Section SEO keywords saved!');
+    },
+  });
 
   const handleUploadMedia = async (
     file: File,
@@ -431,6 +456,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             { id: 'sessions', label: '7 Retreat Sessions', icon: Layers },
             { id: 'healing-sessions', label: 'Healing Sessions', icon: Heart },
             { id: 'blog', label: 'Blog', icon: BookOpen },
+            { id: 'participation', label: 'Participation', icon: Users },
+            { id: 'testimonials', label: 'Testimonials', icon: MessageSquare },
+            { id: 'faqs', label: 'FAQ', icon: HelpCircle },
             { id: 'daily-meditation', label: 'Daily Meditation', icon: Clock },
             { id: 'registration-settings', label: 'Registration & Google Form', icon: Calendar },
             { id: 'attractions', label: 'Rishikesh Attractions', icon: MapPin },
@@ -1172,6 +1200,36 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             handleUploadMedia={handleUploadMedia}
             uploading={uploading}
             uploadProgress={uploadProgress}
+          />
+        )}
+
+        {activeTab === 'participation' && (
+          <ParticipationAdmin
+            items={participation}
+            setItems={setParticipation}
+            saving={saving}
+            saveContent={saveContent}
+            {...sectionKeywordProps('participation')}
+          />
+        )}
+
+        {activeTab === 'testimonials' && (
+          <TestimonialsAdmin
+            items={testimonials}
+            setItems={setTestimonials}
+            saving={saving}
+            saveContent={saveContent}
+            {...sectionKeywordProps('testimonials')}
+          />
+        )}
+
+        {activeTab === 'faqs' && (
+          <FAQAdmin
+            items={faqs}
+            setItems={setFaqs}
+            saving={saving}
+            saveContent={saveContent}
+            {...sectionKeywordProps('faq')}
           />
         )}
 
@@ -2087,6 +2145,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   { key: 'daily', label: 'Daily Guided Meditation Keywords' },
                   { key: 'rishikesh', label: 'Rishikesh Attractions & Destination Keywords' },
                   { key: 'register', label: 'Registration & Inquiry Keywords' },
+                  { key: 'participation', label: 'Participation & Accommodations Page Keywords' },
+                  { key: 'testimonials', label: 'Testimonials Page Keywords' },
+                  { key: 'faq', label: 'FAQ Page Keywords' },
                 ].map(({ key, label }) => (
                   <div key={key} className="space-y-1">
                     <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">

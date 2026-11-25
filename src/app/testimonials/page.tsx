@@ -5,22 +5,42 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { TestimonialCarousel } from '@/components/testimonials/TestimonialCarousel';
-import { getTestimonials } from '@/lib/storage/store';
+import { getSiteSettings, getTestimonials } from '@/lib/storage/store';
+import { mergeKeywords, withCmsKeywords } from '@/lib/seo/keywords';
+import { siteUrl } from '@/lib/seo/siteUrl';
 import { Quote, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: 'Participant Testimonials & Reflections',
   description:
     'Read reflections from Beyond the Mind participants on their transformative experiences of the Maha Theerthas, Shiva Lingams and the Shiva Mandala.',
 };
 
+// Section keywords (admin Testimonials tab) plus each testimonial's keywords: meta tags and JSON-LD only.
+export async function generateMetadata(): Promise<Metadata> {
+  const testimonials = await getTestimonials();
+  return withCmsKeywords(baseMetadata, 'testimonials', '/testimonials', testimonials.map((t) => t.keywords));
+}
+
 export const revalidate = 300;
 
 export default async function TestimonialsPage() {
-  const testimonials = await getTestimonials();
+  const [testimonials, settings] = await Promise.all([getTestimonials(), getSiteSettings()]);
+  const keywords = mergeKeywords(settings.meta_keywords?.testimonials, ...testimonials.map((t) => t.keywords));
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${siteUrl}/testimonials#page`,
+    url: `${siteUrl}/testimonials`,
+    name: 'Seeker Testimonials',
+    ...(keywords.length ? { keywords: keywords.join(', ') } : {}),
+    about: { '@id': `${siteUrl}/#retreat2027` },
+    isPartOf: { '@id': `${siteUrl}/#website` },
+  };
 
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Navbar />
 
       <main className="pt-24 sm:pt-28">

@@ -22,6 +22,8 @@ import {
   updateGalleryData,
   getTestimonials,
   updateTestimonialsData,
+  getParticipation,
+  updateParticipationData,
 } from '@/lib/storage/store';
 
 function revalidateAllPages() {
@@ -64,6 +66,7 @@ export async function GET() {
   const weatherClothing = await getWeatherClothing();
   const gallery = await getGallery();
   const testimonials = await getTestimonials();
+  const participation = await getParticipation();
 
   return NextResponse.json({
     success: true,
@@ -78,6 +81,7 @@ export async function GET() {
       weatherClothing,
       gallery,
       testimonials,
+      participation,
     },
   });
 }
@@ -147,6 +151,12 @@ export async function POST(req: NextRequest) {
 
     if (type === 'testimonials') {
       const updated = await updateTestimonialsData(payload);
+      revalidateAllPages();
+      return NextResponse.json({ success: true, data: updated });
+    }
+
+    if (type === 'participation') {
+      const updated = await updateParticipationData(payload);
       revalidateAllPages();
       return NextResponse.json({ success: true, data: updated });
     }

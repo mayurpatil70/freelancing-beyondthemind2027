@@ -81,6 +81,8 @@ export interface Testimonial {
   poster_url?: string;
   is_featured: boolean;
   date?: string;
+  /** Comma-separated SEO keywords. Used only in page meta tags / structured data, never shown on the card. */
+  keywords?: string;
 }
 
 export interface GalleryItem {
@@ -111,6 +113,22 @@ export interface FAQItem {
     | 'Accommodations'
     | 'Daily Guided Meditation'
     | 'Registration & Payment';
+  /** Comma-separated SEO keywords. Used only in page meta tags / structured data, never shown on the card. */
+  keywords?: string;
+}
+
+/** One participation / accommodation option on /participation. Also becomes an Offer in the retreat Event schema. */
+export interface ParticipationTier {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  inclusions: string[];
+  status_note: string;
+  /** Optional price in INR (digits, e.g. "45000"). Shown on the card and sent to Google when set. */
+  price?: string;
+  /** Comma-separated SEO keywords. Used only in page meta tags / structured data, never shown on the card. */
+  keywords?: string;
 }
 
 export interface RishikeshAttraction {

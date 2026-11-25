@@ -16,6 +16,7 @@ import {
   WeatherClothingGuide,
   MediaAsset,
   BlogPost,
+  ParticipationTier,
 } from '@/types';
 import {
   initialSiteSettings,
@@ -24,6 +25,7 @@ import {
   initialBlogPosts,
   initialProgramme,
   initialTestimonials,
+  initialParticipation,
   initialGallery,
   initialFAQs,
   initialAttractions,
@@ -39,6 +41,7 @@ export interface ContentMap {
   blogPosts: BlogPost[];
   programme: ProgrammeDay[];
   testimonials: Testimonial[];
+  participation: ParticipationTier[];
   gallery: GalleryItem[];
   faqs: FAQItem[];
   attractions: RishikeshAttraction[];
@@ -54,6 +57,7 @@ export const CONTENT_KEYS: ContentKey[] = [
   'blogPosts',
   'programme',
   'testimonials',
+  'participation',
   'gallery',
   'faqs',
   'attractions',
@@ -67,6 +71,7 @@ const defaults: ContentMap = {
   blogPosts: initialBlogPosts,
   programme: initialProgramme,
   testimonials: initialTestimonials,
+  participation: initialParticipation,
   gallery: initialGallery,
   faqs: initialFAQs,
   attractions: initialAttractions,
@@ -309,6 +314,7 @@ export const getHealingSessions = () => getContent('healingSessions');
 export const getBlogPosts = () => getContent('blogPosts');
 export const getProgramme = () => getContent('programme');
 export const getTestimonials = () => getContent('testimonials');
+export const getParticipation = () => getContent('participation');
 export const getGallery = () => getContent('gallery');
 export const getFAQs = () => getContent('faqs');
 export const getAttractions = () => getContent('attractions');
@@ -328,6 +334,7 @@ export const updateAttractionsData = (data: RishikeshAttraction[]) => setContent
 export const updateWeatherClothingData = (data: WeatherClothingGuide) => setContent('weatherClothing', data);
 export const updateGalleryData = (data: GalleryItem[]) => setContent('gallery', data);
 export const updateTestimonialsData = (data: Testimonial[]) => setContent('testimonials', data);
+export const updateParticipationData = (data: ParticipationTier[]) => setContent('participation', data);
 
 // ----------------------------------------------------------------------------
 // Registrations

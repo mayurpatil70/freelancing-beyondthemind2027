@@ -5,7 +5,8 @@ import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 import { SiteFlight } from '@/components/layout/SiteFlight';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { CMSProvider } from '@/contexts/CMSContext';
-import { getSiteSettings, getExperiences, getAttractions, getGallery } from '@/lib/storage/store';
+import { getSiteSettings, getExperiences, getAttractions, getGallery, getParticipation } from '@/lib/storage/store';
+import { retreatEvent, dailyMeditationEvent } from '@/lib/seo/eventSchema';
 import type { SiteSettings } from '@/types';
 import { siteUrl } from '@/lib/seo/siteUrl';
 import Script from 'next/script';
@@ -151,11 +152,12 @@ export default async function RootLayout({
 }>) {
   // Live CMS content for client components (footer, contact, hero notice, cards).
   // Without this, CMSProvider only ever had the build-time db.json defaults, so admin saves never showed.
-  const [cmsSettings, cmsExperiences, cmsAttractions, cmsGallery] = await Promise.all([
+  const [cmsSettings, cmsExperiences, cmsAttractions, cmsGallery, cmsParticipation] = await Promise.all([
     getSiteSettings(),
     getExperiences(),
     getAttractions(),
     getGallery(),
+    getParticipation(),
   ]);
 
   const gaId = gaMeasurementId(cmsSettings.google_analytics_id);
@@ -189,96 +191,9 @@ export default async function RootLayout({
           'https://x.com/beyondthemind27?s=11',
         ],
       },
-      {
-        '@type': 'Event',
-        '@id': `${siteUrl}/#retreat2027`,
-        name: 'Beyond the Mind 2027 — The Divine Retreat',
-        description:
-          'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Muthukulam. Arrival: October 5, 2027. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 7 sacred sessions.',
-        startDate: '2027-10-05T00:00:00+05:30',
-        endDate: '2027-10-09T18:00:00+05:30',
-        eventStatus: 'https://schema.org/EventScheduled',
-        eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
-        location: {
-          '@type': 'Place',
-          name: 'Rishikesh Sanctuary beside holy Ganga',
-          geo: {
-            '@type': 'GeoCoordinates',
-            latitude: '30.0869',
-            longitude: '78.2676',
-          },
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Rishikesh',
-            addressRegion: 'Uttarakhand',
-            addressCountry: 'India',
-          },
-        },
-        image: [`${siteUrl}/images/brand/logo.jpg`],
-        organizer: {
-          '@id': `${siteUrl}/#organization`,
-        },
-        performer: {
-          '@type': 'Person',
-          name: 'Pradeep Muthukulam',
-          jobTitle: 'Lead Spiritual Guide',
-          image: `${siteUrl}/images/brand/pradeep-muthukulam.jpg`,
-        },
-      },
-      {
-        '@type': 'EducationalEvent',
-        '@id': `${siteUrl}/#dailymeditation`,
-        name: 'Daily Guided Meditation — A Journey Within',
-        description:
-          'Ongoing weekday guided meditation sessions by Beyond the Mind. Online via Zoom from Monday to Friday at 7:30 PM IST. Paid sessions focusing on cultivating awareness, exploring inner silence, and transcending mental chatter.',
-        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-        eventSchedule: {
-          '@type': 'Schedule',
-          repeatFrequency: 'P1W',
-          byDay: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-          startTime: '19:30:00+05:30',
-        },
-        organizer: {
-          '@id': `${siteUrl}/#organization`,
-        },
-      },
-      {
-        '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'When does Beyond the Mind 2027 take place?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Participants arrive on October 5, 2027. The 4-day retreat sessions run from October 6 to October 9, 2027 in Rishikesh, Uttarakhand, India.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Can I participate online?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Yes! The Divine Retreat 2027 is available both in-person (offline in Rishikesh) and online via live stream.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'What language will the retreat be conducted in?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'The retreat sessions and daily meditations are conducted in English and Malayalam. Hindi translation is available upon request.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'What are the Daily Guided Meditation sessions?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Daily Guided Meditation is an ongoing regular activity of Beyond the Mind conducted online via Zoom Monday to Friday at 7:30 PM IST.',
-            },
-          },
-        ],
-      },
+      retreatEvent(siteUrl, cmsParticipation),
+      dailyMeditationEvent(siteUrl, cmsSettings),
+      // The FAQPage lives on /faq only (built from the admin FAQs); a second copy here duplicated it on every page.
     ],
   };
 

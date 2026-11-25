@@ -7,17 +7,28 @@ import { FAQAccordion } from "@/components/faq/FAQAccordion";
 import { getFAQs } from "@/lib/storage/store";
 import { MessageCircle, HelpCircle, ArrowRight } from "lucide-react";
 import { formatWhatsAppUrl } from "@/lib/utils";
+import { getSiteSettings } from "@/lib/storage/store";
+import { mergeKeywords, withCmsKeywords } from "@/lib/seo/keywords";
+import { faqPageSchema } from "@/lib/seo/eventSchema";
+import { siteUrl } from "@/lib/seo/siteUrl";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: 'Retreat FAQs: Travel, Food & Language',
   description:
     'Answers to common questions about Beyond the Mind 2027 in Rishikesh: travel, food, session languages, online participation and daily meditation.',
 };
 
+// Section keywords (admin FAQ tab) plus each question's keywords go into meta tags only, never onto the page.
+export async function generateMetadata(): Promise<Metadata> {
+  const faqs = await getFAQs();
+  return withCmsKeywords(baseMetadata, 'faq', '/faq', faqs.map((f) => f.keywords));
+}
+
 export const revalidate = 300;
 
 export default async function FAQPage() {
-  const faqs = await getFAQs();
+  const [faqs, settings] = await Promise.all([getFAQs(), getSiteSettings()]);
+  const faqJsonLd = faqPageSchema(siteUrl, faqs, mergeKeywords(settings.meta_keywords?.faq));
 
   const whatsappConciergeUrl = formatWhatsAppUrl(
     "+91 8075572018",
@@ -26,6 +37,7 @@ export default async function FAQPage() {
 
   return (
     <div className="min-h-screen bg-[#031713] text-[#FAF8F5]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Navbar />
 
       <main className="pt-24 sm:pt-28">
