@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { KeyRound, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
+import { KeyRound, Eye, EyeOff, CheckCircle, AlertCircle, UserRound } from 'lucide-react';
 
 const inputClass =
   'w-full px-3 py-2.5 pr-10 rounded-xl bg-emerald-950 border border-gold-500/25 text-sm text-ivory-100 focus:border-gold-400 outline-none';
@@ -43,7 +43,138 @@ function PasswordInput({
   );
 }
 
-// Lets the logged-in admin change the login password at any time.
+function ResultBox({ result }: { result: { ok: boolean; message: string } }) {
+  return (
+    <div
+      className={`p-3 rounded-xl text-xs flex items-start gap-2 ${
+        result.ok ? 'bg-emerald-900/90 border border-gold-400 text-gold-100' : 'bg-red-950/80 border border-red-400/60 text-red-100'
+      }`}
+    >
+      {result.ok ? <CheckCircle className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+      <span>{result.message}</span>
+    </div>
+  );
+}
+
+const submitClass =
+  'inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100';
+
+// Lets the logged-in admin change the login username (confirmed with the current password).
+function AdminUsernameForm() {
+  const [newUsername, setNewUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
+  const [status, setStatus] = useState<{
+    available: boolean;
+    username: string;
+    lastChanged: string | null;
+    minLength: number;
+    maxLength: number;
+  } | null>(null);
+
+  const loadStatus = () =>
+    fetch('/api/admin/auth/username', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then(
+        (d) =>
+          d.success &&
+          setStatus({
+            available: d.available,
+            username: d.username,
+            lastChanged: d.lastChanged,
+            minLength: d.minLength,
+            maxLength: d.maxLength,
+          })
+      )
+      .catch(() => {});
+
+  useEffect(() => {
+    loadStatus();
+  }, []);
+
+  const minLength = status?.minLength ?? 3;
+  const maxLength = status?.maxLength ?? 100;
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setResult(null);
+    const name = newUsername.trim();
+    if (name.length < minLength) {
+      setResult({ ok: false, message: `The username must be at least ${minLength} characters.` });
+      return;
+    }
+    if (!/^[A-Za-z0-9._@+-]+$/.test(name)) {
+      setResult({ ok: false, message: 'The username can only use letters, numbers and . _ @ + - (no spaces).' });
+      return;
+    }
+    setBusy(true);
+    try {
+      const res = await fetch('/api/admin/auth/username', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ newUsername: name, currentPassword: password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      setResult({ ok: Boolean(data.success), message: data.message || (res.ok ? 'Username changed.' : 'Could not change the username.') });
+      if (data.success) {
+        setNewUsername('');
+        setPassword('');
+        loadStatus();
+      }
+    } catch {
+      setResult({ ok: false, message: 'Network error. Please try again.' });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <form onSubmit={submit} className="max-w-md p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+      <div>
+        <h4 className="font-serif text-xl text-ivory-50 font-light">Change Username</h4>
+        {status?.username && (
+          <p className="text-xs text-stone-subtle/80 mt-1">
+            Current username: <span className="text-gold-200 font-semibold">{status.username}</span>
+          </p>
+        )}
+        {status?.lastChanged && (
+          <p className="text-[11px] text-gold-300/80 mt-1">Last changed: {new Date(status.lastChanged).toLocaleString()}</p>
+        )}
+      </div>
+      {status && !status.available && (
+        <div className="p-3 rounded-xl bg-red-950/80 border border-red-400/60 text-red-100 text-xs">
+          Username change needs the database (DATABASE_URL) to be set in Vercel.
+        </div>
+      )}
+      <label className="block space-y-1">
+        <span className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
+          New username ({minLength} to {maxLength} characters, no spaces)
+        </span>
+        <input
+          type="text"
+          value={newUsername}
+          onChange={(e) => setNewUsername(e.target.value)}
+          autoComplete="username"
+          autoCapitalize="none"
+          spellCheck={false}
+          maxLength={maxLength}
+          className={inputClass}
+        />
+      </label>
+      <PasswordInput label="Current password (to confirm)" value={password} onChange={setPassword} autoComplete="current-password" />
+
+      {result && <ResultBox result={result} />}
+
+      <button type="submit" disabled={busy || !newUsername || !password} className={submitClass}>
+        <UserRound className="w-3.5 h-3.5" />
+        <span>{busy ? 'Changing...' : 'Change Username'}</span>
+      </button>
+    </form>
+  );
+}
+
+// Lets the logged-in admin change the login username and password at any time.
 export function AdminPasswordPanel() {
   const [current, setCurrent] = useState('');
   const [next, setNext] = useState('');
@@ -100,18 +231,21 @@ export function AdminPasswordPanel() {
   return (
     <div className="space-y-6">
       <div className="p-5 rounded-2xl bg-[#07261F]/70 border border-gold-500/20">
-        <h3 className="font-serif text-2xl text-ivory-50 font-light">Change Admin Password</h3>
+        <h3 className="font-serif text-2xl text-ivory-50 font-light">Admin Login</h3>
         <p className="text-xs text-stone-subtle/80 mt-1">
-          Change your login password at any time. Your username stays the same. The new password works from your next login.
+          Change your login username or password at any time. Each change needs your current password and works from your next login.
         </p>
-        {status?.lastChanged && (
-          <p className="text-[11px] text-gold-300/80 mt-2">
-            Last changed: {new Date(status.lastChanged).toLocaleString()}
-          </p>
-        )}
       </div>
 
+      <AdminUsernameForm />
+
       <form onSubmit={submit} className="max-w-md p-6 rounded-2xl bg-[#07261F]/60 border border-gold-500/25 space-y-4">
+        <div>
+          <h4 className="font-serif text-xl text-ivory-50 font-light">Change Password</h4>
+          {status?.lastChanged && (
+            <p className="text-[11px] text-gold-300/80 mt-1">Last changed: {new Date(status.lastChanged).toLocaleString()}</p>
+          )}
+        </div>
         {status && !status.available && (
           <div className="p-3 rounded-xl bg-red-950/80 border border-red-400/60 text-red-100 text-xs">
             Password change needs the database (DATABASE_URL) to be set in Vercel.
@@ -121,22 +255,9 @@ export function AdminPasswordPanel() {
         <PasswordInput label={`New password (at least ${minLength} characters)`} value={next} onChange={setNext} autoComplete="new-password" />
         <PasswordInput label="Confirm new password" value={confirm} onChange={setConfirm} autoComplete="new-password" />
 
-        {result && (
-          <div
-            className={`p-3 rounded-xl text-xs flex items-start gap-2 ${
-              result.ok ? 'bg-emerald-900/90 border border-gold-400 text-gold-100' : 'bg-red-950/80 border border-red-400/60 text-red-100'
-            }`}
-          >
-            {result.ok ? <CheckCircle className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
-            <span>{result.message}</span>
-          </div>
-        )}
+        {result && <ResultBox result={result} />}
 
-        <button
-          type="submit"
-          disabled={busy || !current || !next || !confirm}
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-emerald-950 font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100"
-        >
+        <button type="submit" disabled={busy || !current || !next || !confirm} className={submitClass}>
           <KeyRound className="w-3.5 h-3.5" />
           <span>{busy ? 'Changing...' : 'Change Password'}</span>
         </button>
