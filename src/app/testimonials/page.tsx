@@ -64,7 +64,7 @@ export default async function TestimonialsPage() {
 
         {/* Carousel & Featured Testimonials */}
         <section className="py-12 pb-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-          <TestimonialCarousel testimonials={testimonials} />
+          <TestimonialCarousel testimonials={testimonials.map(({ keywords: _kw, ...t }) => t)} />
 
           {/* Testimonial Integrity Guarantee */}
           <div className="p-8 rounded-3xl bg-emerald-950/60 border border-gold-500/25 max-w-4xl mx-auto text-center space-y-3">

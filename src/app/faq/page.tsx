@@ -63,7 +63,7 @@ export default async function FAQPage() {
 
         {/* Searchable Accordion Section */}
         <section className="py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          <FAQAccordion faqs={faqs} />
+          <FAQAccordion faqs={faqs.map(({ keywords: _kw, ...f }) => f)} />
 
           {/* Unanswered Question Concierge Callout */}
           <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#07261F] to-[#041a15] border border-gold-400/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
