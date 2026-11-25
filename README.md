@@ -123,7 +123,10 @@ npm run start
 
 - **URL**: Navigate to `/admin`
 - **Credentials**: the values of `ADMIN_USERNAME` (or `ADMIN_EMAIL`) and `ADMIN_PASSWORD`. There are no default credentials. If `ADMIN_USERNAME`/`ADMIN_EMAIL`, `ADMIN_PASSWORD` or `ADMIN_SESSION_SECRET` is missing, the login endpoint returns HTTP 503 and names the missing variables.
-- **Changing the password**: admin tab "Change Password" (current password + new password, at least 8 characters). The new password is stored as a scrypt hash in Neon (`admin_credentials`) and replaces `ADMIN_PASSWORD` from then on; the username does not change. Forgotten password: run `DELETE FROM admin_credentials;` in the Neon SQL editor and `ADMIN_PASSWORD` works again.
+- **Changing the username or password**: admin tab "Username & Password". Both changes need the current password.
+  - Password: new password at least 8 characters, stored as a scrypt hash in Neon (`admin_credentials`); it replaces `ADMIN_PASSWORD` from then on.
+  - Username: 3 to 100 characters (letters, numbers, `. _ @ + -`), not case sensitive at login. It is stored in Neon (`admin_credentials.username`) and replaces both `ADMIN_USERNAME` and `ADMIN_EMAIL` for login, so the old username stops working.
+  - Forgotten login: run `DELETE FROM admin_credentials;` in the Neon SQL editor and the environment values (`ADMIN_USERNAME`/`ADMIN_EMAIL`, `ADMIN_PASSWORD`) work again. To reset only the username: `UPDATE admin_credentials SET username = NULL;`.
 - **No public link**: the site has no Admin button or link; open `/admin` directly.
 - **Login rate limiting**: 5 failed attempts per IP or device within 15 minutes triggers a 15 minute lockout. Counters are stored in Neon (`admin_login_attempts`, `admin_security_events`) so they hold across serverless instances; without `DATABASE_URL` they are kept in memory.
 

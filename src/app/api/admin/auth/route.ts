@@ -16,7 +16,7 @@ import {
   touchActiveSession,
 } from '@/lib/security/singleSession';
 import { adminConfigErrorMessage, getAdminConfig } from '@/lib/security/adminConfig';
-import { verifyAdminPassword } from '@/lib/security/adminPassword';
+import { getLoginUsernames, verifyAdminPassword } from '@/lib/security/adminPassword';
 
 /**
  * Constant-time comparison between two strings via SHA-256 hashing.
@@ -108,13 +108,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const expectedUsername = configuredUsername.toLowerCase();
-    const expectedEmail = configuredEmail.toLowerCase();
+    // A username changed in the admin panel wins over ADMIN_USERNAME / ADMIN_EMAIL.
+    const allowedUsernames = await getLoginUsernames(configuredUsername, configuredEmail);
 
-    // Timing-safe user check
-    const isUserMatch = timingSafeCompare(username.toLowerCase(), expectedUsername);
-    const isEmailMatch = expectedEmail ? timingSafeCompare(username.toLowerCase(), expectedEmail) : false;
-    const isValidUser = isUserMatch || isEmailMatch;
+    // Timing-safe user check (compare against every allowed name, no early exit)
+    const submitted = username.toLowerCase();
+    const isValidUser = allowedUsernames
+      .map((name) => timingSafeCompare(submitted, name.toLowerCase()))
+      .reduce((a, b) => a || b, false);
 
     // Password check: a password changed in the admin panel wins over ADMIN_PASSWORD.
     const isValidPass = await verifyAdminPassword(password, configuredPassword);

@@ -466,7 +466,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             { id: 'keywords', label: 'SEO, GEO & Analytics', icon: Globe },
             { id: 'media', label: 'Media Library', icon: Film },
             { id: 'settings', label: 'General Settings', icon: Settings },
-            { id: 'password', label: 'Change Password', icon: Key },
+            { id: 'password', label: 'Username & Password', icon: Key },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
