@@ -67,6 +67,7 @@ export default async function ExperiencesPage() {
         description: exp.short_desc || exp.full_desc,
         keywords: exp.keywords || undefined,
         url: absoluteUrl(`/experiences/${exp.slug}`),
+        provider: { '@type': 'Organization', name: 'Beyond the Mind', url: absoluteUrl('/') },
       },
     })),
   };
