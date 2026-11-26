@@ -2,8 +2,10 @@ import type { FAQItem, ParticipationTier, SiteSettings } from '@/types';
 import { parseKeywords } from '@/lib/seo/keywords';
 
 // Schema.org Event markup for the retreat and the daily meditation.
-// Google's Event rich result wants `offers` (url, availability, price, priceCurrency, validFrom) on every
-// event; the retreat's offers come from the admin "Participation" tab so prices added there flow through.
+// Google reports an Offer without a numeric `price` as 'Missing field "price" (in "offers")'. `offers` itself is
+// optional for Events, so an Offer is only emitted when a real price exists: the retreat's from the admin
+// "Participation" tab (one Offer per priced tier), the daily meditation's from the admin "Daily meditation fee".
+// Until the client sets prices there, the events carry no `offers` at all. Never invent a price here.
 
 const IST = '+05:30';
 // Ticket sales / enquiries opened before the site launched; Google only needs a date in the past.
@@ -24,7 +26,7 @@ export function formatInr(value: number): string {
 function offer(
   siteUrl: string,
   path: string,
-  extra: { name?: string; category?: string; price?: number }
+  extra: { name?: string; category?: string; price: number }
 ): Record<string, unknown> {
   return {
     '@type': 'Offer',
@@ -32,26 +34,29 @@ function offer(
     ...(extra.category ? { category: extra.category } : {}),
     url: `${siteUrl}${path}`,
     availability: 'https://schema.org/InStock',
+    price: extra.price,
     priceCurrency: 'INR',
-    ...(extra.price !== undefined ? { price: extra.price } : {}),
     validFrom: OFFERS_VALID_FROM,
   };
 }
 
+// One Offer per Participation tier that has a numeric price. Tiers without one are left out (never sent priceless).
 export function retreatOffers(siteUrl: string, tiers: ParticipationTier[]): Record<string, unknown>[] {
-  const list = tiers
-    .filter((t) => t.title?.trim())
-    .map((t) =>
+  return tiers.flatMap((t) => {
+    const price = parsePrice(t.price);
+    if (!t.title?.trim() || price === undefined) return [];
+    return [
       offer(siteUrl, `/register?programme=${encodeURIComponent(t.title)}`, {
         name: t.title,
         category: t.subtitle || undefined,
-        price: parsePrice(t.price),
-      })
-    );
-  return list.length ? list : [offer(siteUrl, '/register', { name: 'Beyond the Mind 2027 — The Divine Retreat' })];
+        price,
+      }),
+    ];
+  });
 }
 
 export function retreatEvent(siteUrl: string, tiers: ParticipationTier[]): Record<string, unknown> {
+  const offers = retreatOffers(siteUrl, tiers);
   const organizer = { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Beyond the Mind', url: siteUrl };
   return {
     '@type': 'Event',
@@ -89,7 +94,7 @@ export function retreatEvent(siteUrl: string, tiers: ParticipationTier[]): Recor
       image: `${siteUrl}/images/brand/pradeep-muthukulam.jpg`,
     },
     inLanguage: ['en', 'ml'],
-    offers: retreatOffers(siteUrl, tiers),
+    ...(offers.length ? { offers } : {}),
   };
 }
 
@@ -124,6 +129,7 @@ export function nextWeekdaySession(now: Date, hour: number, minute: number, minu
 export function dailyMeditationEvent(siteUrl: string, settings: SiteSettings, now = new Date()): Record<string, unknown> {
   const [hour, minute] = parseTime(settings.daily_meditation_time);
   const { start, end } = nextWeekdaySession(now, hour, minute);
+  const fee = parsePrice(settings.daily_meditation_fee);
   return {
     '@type': 'EducationalEvent',
     '@id': `${siteUrl}/#dailymeditation`,
@@ -152,10 +158,9 @@ export function dailyMeditationEvent(siteUrl: string, settings: SiteSettings, no
     image: [`${siteUrl}/images/brand/og-cover.jpg`],
     organizer: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Beyond the Mind', url: siteUrl },
     performer: { '@type': 'Person', name: 'Pradeep Muthukulam' },
-    offers: offer(siteUrl, '/daily-meditation', {
-      name: 'Daily Guided Meditation',
-      price: parsePrice(settings.daily_meditation_fee),
-    }),
+    ...(fee !== undefined
+      ? { offers: offer(siteUrl, '/daily-meditation', { name: 'Daily Guided Meditation', price: fee }) }
+      : {}),
   };
 }
 
