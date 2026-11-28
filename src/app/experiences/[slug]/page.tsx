@@ -12,7 +12,7 @@ import { parseKeywords } from '@/lib/seo/keywords';
 import { composeDescription, fitTitle, sentences, titleCase } from '@/lib/seo/meta';
 import { absoluteUrl } from '@/lib/seo/siteUrl';
 
-// Each of the 7 retreat sessions gets its own indexable URL. The session's admin keywords are used
+// Each of the 8 retreat sessions gets its own indexable URL. The session's admin keywords are used
 // only in <meta name="keywords"> and JSON-LD here; they are never rendered on the visible card.
 
 export const revalidate = 300;
@@ -126,7 +126,7 @@ export default async function RetreatSessionPage({ params }: Params) {
             className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-300 hover:text-gold-200 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>All Seven Sacred Sessions</span>
+            <span>All Eight Sacred Sessions</span>
           </Link>
         </div>
 

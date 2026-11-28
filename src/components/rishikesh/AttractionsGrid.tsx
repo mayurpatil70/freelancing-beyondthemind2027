@@ -7,6 +7,8 @@ import { MapPin, Clock, CheckCircle2, Maximize2 } from 'lucide-react';
 import { useCMS } from '@/contexts/CMSContext';
 import { ImageLightbox } from '@/components/media/ImageLightbox';
 import { canOptimizeImage } from '@/lib/media/rules';
+import { RichTextBody } from '@/components/ui/RichTextBody';
+import { stripRichText } from '@/lib/richText';
 
 interface AttractionsGridProps {
   attractions: RishikeshAttraction[];
@@ -53,7 +55,7 @@ function AttractionCardItem({ attraction, onOpenLightbox }: AttractionCardItemPr
           {attraction.category}
         </span>
 
-        {/* Logo Badge (matching 7 retreat cards) */}
+        {/* Logo Badge (matching 8 retreat cards) */}
         <span className="absolute top-3 right-3 h-10 w-10 overflow-hidden rounded-full ring-1 ring-gold-400/80 shadow-lg pointer-events-none">
           <Image src="/images/brand/logo.jpg" alt="" fill sizes="40px" className="object-cover" />
         </span>
@@ -64,7 +66,7 @@ function AttractionCardItem({ attraction, onOpenLightbox }: AttractionCardItemPr
           <span>{attraction.duration}</span>
         </span>
 
-        {/* Expand Overlay Pill on bottom-right (matching 7 retreat cards) */}
+        {/* Expand Overlay Pill on bottom-right (matching 8 retreat cards) */}
         <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 border border-gold-400/40 text-[10px] uppercase tracking-wider text-gold-300 opacity-90 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all shadow-md">
           <Maximize2 className="w-3 h-3 text-gold-300" />
           <span>Click to View Photo</span>
@@ -89,9 +91,12 @@ function AttractionCardItem({ attraction, onOpenLightbox }: AttractionCardItemPr
             </div>
           </div>
 
-          <p className="text-xs text-stone-subtle/85 leading-relaxed font-light min-h-[56px]">
-            {attraction.description}
-          </p>
+          <div className="min-h-[56px]">
+            <RichTextBody
+              content={attraction.description}
+              className="space-y-2 text-xs text-stone-subtle/85 leading-relaxed font-light"
+            />
+          </div>
         </div>
 
         {/* Highlights */}
@@ -128,7 +133,7 @@ export function AttractionsGrid({
     src: attr.image_url || '/images/rishikesh/ganga-aarti.jpg',
     alt: attr.title,
     title: attr.title,
-    caption: `${attr.category} • ${attr.duration} • ${attr.description}`,
+    caption: `${attr.category} • ${attr.duration} • ${stripRichText(attr.description)}`,
     location: attr.location_tip,
   }));
 

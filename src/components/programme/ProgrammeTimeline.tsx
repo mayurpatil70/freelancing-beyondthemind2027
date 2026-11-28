@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ProgrammeDay } from '@/types';
 import { Calendar, Clock, ChevronDown, Languages, ArrowRight, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 
 interface ProgrammeTimelineProps {
   days: ProgrammeDay[];
@@ -86,9 +87,10 @@ export function ProgrammeTimeline({ days, showCta = true, headingLevel = 3 }: Pr
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-stone-subtle/90 leading-relaxed font-light whitespace-pre-line">
-              {day.summary}
-            </p>
+            <RichTextBody
+              content={day.summary}
+              className="space-y-2 text-sm sm:text-base text-stone-subtle/90 leading-relaxed font-light"
+            />
 
             {/* Sessions Timeline */}
             <div className="space-y-4 pt-4">
@@ -109,9 +111,10 @@ export function ProgrammeTimeline({ days, showCta = true, headingLevel = 3 }: Pr
                     <SessionHeading  className="font-serif text-lg text-ivory-100 font-medium leading-snug">
                       {session.title}
                     </SessionHeading>
-                    <p className="text-xs text-stone-subtle/80 font-light leading-relaxed">
-                      {session.description}
-                    </p>
+                    <RichTextBody
+                      content={session.description}
+                      className="space-y-2 text-xs text-stone-subtle/80 font-light leading-relaxed"
+                    />
                   </div>
                 ))}
               </div>

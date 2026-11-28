@@ -76,9 +76,13 @@ export interface Testimonial {
   name: string;
   location: string;
   edition: string;
-  highlight_quote: string;
+  /** Optional heading shown at the top of the testimonial card. */
+  heading?: string;
+  /** Legacy short quote. No longer edited or shown. */
+  highlight_quote?: string;
   full_testimonial: string;
   poster_url?: string;
+  /** Featured testimonials are the ones shown on the home page. If none is featured, all are shown. */
   is_featured: boolean;
   date?: string;
   /** Comma-separated SEO keywords. Used only in page meta tags / structured data, never shown on the card. */

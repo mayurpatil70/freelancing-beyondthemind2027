@@ -159,7 +159,7 @@ export default async function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 4: SEVEN RETREAT SESSIONS */}
+        {/* SECTION 4: EIGHT RETREAT SESSIONS */}
         {/* ========================================================================= */}
         <section className="py-24 sm:py-32 bg-[#031713] relative overflow-hidden">
           {/* Subtle background glow */}
@@ -168,7 +168,7 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <SectionHeading
               eyebrow="The Journey Within"
-              title="Seven Retreat Sessions"
+              title="Eight Retreat Sessions"
               subtitle="The exact experiential progression of Beyond the Mind 2027 — from somatic stress release to transcendental stillness."
             />
 
@@ -180,7 +180,7 @@ export default async function HomePage() {
                 prefetch={true}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold border border-gold-400/60 bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 hover:from-gold-500 hover:via-gold-400 hover:to-gold-600 hover:text-emerald-950 text-gold-300 transition-all shadow-gold-sm"
               >
-                <span>Discover All Seven Retreat Sessions & Attractions</span>
+                <span>Discover All Eight Retreat Sessions & Attractions</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -336,7 +336,7 @@ export default async function HomePage() {
 
               <div className="space-y-4 text-sm sm:text-base text-ivory-200/90 leading-relaxed font-light">
                 <p>
-                  &ldquo;Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within.&rdquo;
+                  Meditation is an invitation to move beyond the constant activity of the mind and discover the stillness within.
                 </p>
                 <p>
                   Through regular guided meditation sessions, Beyond the Mind encourages individuals to cultivate awareness, explore inner silence and deepen their understanding of themselves.
@@ -420,7 +420,7 @@ export default async function HomePage() {
 
               <div className="p-6 rounded-2xl bg-emerald-950/70 border border-gold-500/20 text-xs sm:text-sm text-stone-subtle/90 leading-relaxed font-light space-y-2 text-center md:text-left">
                 <p className="text-sm sm:text-base text-ivory-100 font-light">
-                  &ldquo;The Divine is not something to be found outside, but a truth to be awakened within.&rdquo;
+                  The Divine is not something to be found outside, but a truth to be awakened within.
                 </p>
                 <span className="text-[11px] text-gold-400 uppercase tracking-widest block font-medium">
                   — Pradeep Muthukulam, Beyond the Mind
@@ -441,7 +441,12 @@ export default async function HomePage() {
               subtitle="Authentic reflections from participants who walked the sacred journey of Beyond the Mind."
             />
 
-            <TestimonialCarousel testimonials={testimonials.map(({ keywords: _kw, ...t }) => t)} />
+            <TestimonialCarousel
+              testimonials={(testimonials.some((t) => t.is_featured)
+                ? testimonials.filter((t) => t.is_featured)
+                : testimonials
+              ).map(({ keywords: _kw, ...t }) => t)}
+            />
           </div>
         </section>
 
