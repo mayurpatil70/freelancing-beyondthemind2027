@@ -17,6 +17,8 @@ import {
   CustomContactLink,
   MediaAsset,
   BlogPost,
+  GalleryItem,
+  ProgrammeDay,
 } from '@/types';
 import { IMAGE_ACCEPT, isVideoUrl } from '@/lib/media/rules';
 import { uploadMediaFile } from '@/lib/media/upload-client';
@@ -26,6 +28,8 @@ import { BlogAdmin } from '@/components/admin/BlogAdmin';
 import { RichTextField } from '@/components/admin/RichTextField';
 import { AdminPasswordPanel } from '@/components/admin/AdminPasswordPanel';
 import { ParticipationAdmin, TestimonialsAdmin, FAQAdmin } from '@/components/admin/SectionContentAdmin';
+import { GalleryAdmin, ProgrammeAdmin } from '@/components/admin/PageContentAdmin';
+import { Images as ImagesIcon, CalendarDays } from 'lucide-react';
 import {
   Users,
   Settings,
@@ -78,6 +82,8 @@ interface AdminDashboardProps {
 type AdminTab =
   | 'registrations'
   | 'sessions'
+  | 'programme'
+  | 'gallery'
   | 'healing-sessions'
   | 'blog'
   | 'participation'
@@ -110,6 +116,8 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [participation, setParticipation] = useState<ParticipationTier[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [faqs, setFaqs] = useState<FAQItem[]>([]);
+  const [programme, setProgramme] = useState<ProgrammeDay[]>([]);
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
 
   const [saving, setSaving] = useState(false);
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
@@ -200,6 +208,8 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         if (data?.participation) setParticipation(data.participation);
         if (data?.testimonials) setTestimonials(data.testimonials);
         if (data?.faqs) setFaqs(data.faqs);
+        if (data?.programme) setProgramme(data.programme);
+        if (data?.gallery) setGallery(data.gallery);
       }
     } catch (e) {
       console.error('Fetch content error:', e);
@@ -453,7 +463,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto py-2 border-t border-gold-500/10 text-xs">
           {[
             { id: 'registrations', label: 'Registrations CRM', icon: Users },
-            { id: 'sessions', label: '7 Retreat Sessions', icon: Layers },
+            { id: 'sessions', label: '8 Retreat Sessions', icon: Layers },
+            { id: 'programme', label: 'Programme', icon: CalendarDays },
+            { id: 'gallery', label: 'Gallery', icon: ImagesIcon },
             { id: 'healing-sessions', label: 'Healing Sessions', icon: Heart },
             { id: 'blog', label: 'Blog', icon: BookOpen },
             { id: 'participation', label: 'Participation', icon: Users },
@@ -679,7 +691,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 2: SEVEN RETREAT SESSIONS MANAGER (Screenshot 1 Order) */}
+        {/* TAB 2: EIGHT RETREAT SESSIONS MANAGER (Screenshot 1 Order) */}
         {/* ========================================================================= */}
         {activeTab === 'sessions' && (
           <div className="space-y-6">
@@ -689,7 +701,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   Retreat Sessions CMS (Cards & Photos)
                 </h3>
                 <p className="text-xs text-stone-subtle/80 mt-1">
-                  Edit titles, subtitles, photo URLs, order, and detailed descriptions for all 7 retreat sessions without touching code.
+                  Edit titles, subtitles, photo URLs, order, and detailed descriptions for all 8 retreat sessions without touching code.
                 </p>
               </div>
 
@@ -1191,6 +1203,22 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           />
         )}
 
+        {activeTab === 'programme' && (
+          <ProgrammeAdmin days={programme} setDays={setProgramme} saving={saving} saveContent={saveContent} />
+        )}
+
+        {activeTab === 'gallery' && (
+          <GalleryAdmin
+            items={gallery}
+            setItems={setGallery}
+            saving={saving}
+            saveContent={saveContent}
+            handleUploadMedia={handleUploadMedia}
+            uploading={uploading}
+            uploadProgress={uploadProgress}
+          />
+        )}
+
         {activeTab === 'blog' && (
           <BlogAdmin
             posts={blogPosts}
@@ -1335,11 +1363,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
                   Main Practice Philosophy & Description
                 </label>
-                <textarea
-                  rows={4}
+                <RichTextField
+                  rows={6}
                   value={settings.daily_meditation_description || ''}
-                  onChange={(e) => setSettings({ ...settings, daily_meditation_description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 leading-relaxed"
+                  onChange={(v) => setSettings({ ...settings, daily_meditation_description: v })}
                 />
               </div>
             </div>
@@ -1703,15 +1730,12 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
                     <div>
                       <label className="text-[10px] uppercase text-gold-400 block font-semibold">Description</label>
-                      <textarea
-                        rows={2}
+                      <RichTextField
+                        rows={4}
                         value={attr.description}
-                        onChange={(e) => {
-                          const updated = [...attractions];
-                          updated[index].description = e.target.value;
-                          setAttractions(updated);
+                        onChange={(v) => {
+                          setAttractions(attractions.map((a, i) => (i === index ? { ...a, description: v } : a)));
                         }}
-                        className="w-full px-3 py-1.5 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 resize-none"
                       />
                     </div>
 
@@ -1794,11 +1818,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
                   Weather Summary
                 </label>
-                <textarea
-                  rows={3}
+                <RichTextField
+                  rows={4}
                   value={weatherGuide.summary}
-                  onChange={(e) => setWeatherGuide({ ...weatherGuide, summary: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 leading-relaxed"
+                  onChange={(v) => setWeatherGuide({ ...weatherGuide, summary: v })}
                 />
               </div>
 
@@ -2139,7 +2162,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <div className="space-y-4">
                 {[
                   { key: 'home', label: 'Homepage Meta Keywords' },
-                  { key: 'sessions', label: '7 Retreat Sessions Overview Page Keywords (all sessions)' },
+                  { key: 'sessions', label: '8 Retreat Sessions Overview Page Keywords (all sessions)' },
                   { key: 'healing', label: 'Transformative Healing Sessions Page Keywords' },
                   { key: 'blog', label: 'Blog (Wisdom Beyond the Mind) Page Keywords' },
                   { key: 'daily', label: 'Daily Guided Meditation Keywords' },
@@ -2147,6 +2170,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   { key: 'register', label: 'Registration & Inquiry Keywords' },
                   { key: 'participation', label: 'Participation & Accommodations Page Keywords' },
                   { key: 'testimonials', label: 'Testimonials Page Keywords' },
+                  { key: 'gallery', label: 'Gallery Page Keywords' },
                   { key: 'faq', label: 'FAQ Page Keywords' },
                 ].map(({ key, label }) => (
                   <div key={key} className="space-y-1">
@@ -2164,7 +2188,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 ))}
               </div>
 
-              {/* Per-session keywords: one field for each of the 7 retreat sessions */}
+              {/* Per-session keywords: one field for each of the 8 retreat sessions */}
               <div className="pt-4 mt-2 border-t border-gold-500/15 space-y-4">
                 <div>
                   <h5 className="font-serif text-base text-ivory-50 font-medium">
@@ -2589,14 +2613,13 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   <label className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">
                     Full Biography & Vision
                   </label>
-                  <textarea
-                    rows={6}
+                  <RichTextField
+                    rows={8}
                     value={
                       settings.guide_bio ||
                       'Pradeep Muthukulam is a seeker and spiritual guide devoted to the timeless wisdom of spirituality, self-realisation and the awakening of inner consciousness. His vision is to inspire individuals to journey beyond the boundaries of the mind, reconnect with their true essence and discover the profound peace, wisdom and divinity that reside within.\n\nThrough spiritual insights, meditation and personal guidance, he encourages seekers to embrace a life of mindfulness, awareness, compassion and higher purpose. His philosophy rests on a simple yet profound truth: The Divine is not something to be found outside, but a truth to be awakened within.\n\nHis endeavour is to guide every seeker towards inner transformation, spiritual clarity and the ultimate experience of inner peace.'
                     }
-                    onChange={(e) => setSettings({ ...settings, guide_bio: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100 font-light leading-relaxed"
+                    onChange={(v) => setSettings({ ...settings, guide_bio: v })}
                   />
                 </div>
               </div>
@@ -3225,12 +3248,11 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 <label className="text-[10px] uppercase text-gold-400 font-semibold block">
                   Description
                 </label>
-                <textarea
-                  rows={3}
+                <RichTextField
+                  rows={4}
                   value={newAttractionData.description || ''}
                   placeholder="Experience details, background, what seekers do..."
-                  onChange={(e) => setNewAttractionData({ ...newAttractionData, description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-emerald-950 border border-gold-500/25 text-xs text-ivory-100"
+                  onChange={(v) => setNewAttractionData({ ...newAttractionData, description: v })}
                 />
               </div>
 

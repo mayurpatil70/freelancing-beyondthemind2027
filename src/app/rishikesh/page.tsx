@@ -9,6 +9,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { getAttractions, getWeatherClothing } from '@/lib/storage/store';
 import { MapPin, Sun, Compass, Waves, Mountain, ArrowRight, Calendar, Shirt, CheckCircle2 } from 'lucide-react';
 import { AttractionsGrid } from '@/components/rishikesh/AttractionsGrid';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 
 const baseMetadata: Metadata = {
   title: 'Rishikesh Guide: Attractions & Weather',
@@ -146,9 +147,10 @@ export default async function RishikeshPage() {
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-ivory-50 font-light">
                 Weather & Needed Clothes in Night in Low Temperature
               </h2>
-              <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed">
-                {weather.summary}
-              </p>
+              <RichTextBody
+                content={weather.summary}
+                className="space-y-3 text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed"
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

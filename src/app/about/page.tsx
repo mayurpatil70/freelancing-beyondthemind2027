@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { getSiteSettings } from '@/lib/storage/store';
 import { Heart, Compass, ShieldCheck, ArrowRight, Sun, Award, Calendar } from 'lucide-react';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 
 export const metadata: Metadata = {
   title: 'About the Retreat & Pradeep Muthukulam',
@@ -151,11 +152,10 @@ export default async function AboutPage() {
                     <h4 className="font-serif text-lg text-gold-300 italic font-normal">{headlineTail}</h4>
                   )}
                   {bioParagraphs.length > 0 ? (
-                    bioParagraphs.map((p, i) => (
-                      <p key={i} className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
-                        {p}
-                      </p>
-                    ))
+                    <RichTextBody
+                      content={settings.guide_bio}
+                      className="space-y-4 text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed"
+                    />
                   ) : (
                   <>
                   <p className="text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
@@ -174,7 +174,7 @@ export default async function AboutPage() {
 
               <div className="p-6 rounded-2xl bg-emerald-950/70 border border-gold-500/20 text-xs sm:text-sm text-stone-subtle/90 leading-relaxed font-light space-y-2 text-center md:text-left">
                 <p className="text-sm sm:text-base text-ivory-100 font-light">
-                  &ldquo;The Divine is not something to be found outside, but a truth to be awakened within.&rdquo;
+                  The Divine is not something to be found outside, but a truth to be awakened within.
                 </p>
                 <span className="text-[11px] text-gold-400 uppercase tracking-widest block font-medium">
                   — Pradeep Muthukulam, Beyond the Mind

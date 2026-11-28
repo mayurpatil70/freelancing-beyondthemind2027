@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { FAQItem } from '@/types';
 import { ChevronDown, Search, HelpCircle, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 
 interface FAQAccordionProps {
   faqs: FAQItem[];
@@ -119,7 +120,7 @@ export function FAQAccordion({ faqs }: FAQAccordionProps) {
 
                 {isOpen && (
                   <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-stone-subtle/90 font-light leading-relaxed border-t border-emerald-900/40">
-                    <p>{faq.answer}</p>
+                    <RichTextBody content={faq.answer} className="space-y-2.5" />
                   </div>
                 )}
               </div>

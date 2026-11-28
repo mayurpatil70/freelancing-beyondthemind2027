@@ -8,6 +8,8 @@ import { Maximize2, MapPin, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCMS } from '@/contexts/CMSContext';
 import { isVideoUrl } from '@/lib/media/rules';
+import { RichTextBody } from '@/components/ui/RichTextBody';
+import { stripRichText } from '@/lib/richText';
 
 const isVideoItem = (item: GalleryItem) => item.media_type === 'video' || isVideoUrl(item.image_url);
 
@@ -50,7 +52,7 @@ export function GalleryGrid({ items: initialItems }: GalleryGridProps) {
     isVideo: isVideoItem(item),
     alt: item.title,
     title: item.title,
-    caption: item.caption,
+    caption: stripRichText(item.caption),
     location: item.location,
   }));
 
@@ -127,9 +129,10 @@ export function GalleryGrid({ items: initialItems }: GalleryGridProps) {
               <h3 className="font-serif text-lg text-ivory-50 group-hover:text-gold-200 transition-colors font-medium">
                 {item.title}
               </h3>
-              <p className="text-xs text-stone-subtle/80 font-light leading-relaxed line-clamp-2">
-                {item.caption}
-              </p>
+              <RichTextBody
+                content={item.caption}
+                className="space-y-1.5 text-xs text-stone-subtle/80 font-light leading-relaxed"
+              />
               {item.location && (
                 <div className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-gold-400/80 pt-1">
                   <MapPin className="w-3 h-3 text-gold-400" />

@@ -22,6 +22,7 @@ import {
   Compass,
 } from "lucide-react";
 import { formatWhatsAppUrl } from "@/lib/utils";
+import { RichTextBody } from '@/components/ui/RichTextBody';
 
 const baseMetadata: Metadata = {
   title: 'Online Guided Meditation on Zoom',
@@ -117,11 +118,7 @@ export default async function DailyMeditationPage() {
             {/* Editorial Philosophy Text */}
             <div className="space-y-5 text-sm sm:text-base text-stone-subtle/90 font-light leading-relaxed">
               {descriptionParagraphs.length > 0 ? (
-                descriptionParagraphs.map((p, i) => (
-                  <p key={i} className={undefined}>
-                    {p}
-                  </p>
-                ))
+                <RichTextBody content={settings.daily_meditation_description} className="space-y-5" />
               ) : (
               <>
               <p>

@@ -90,7 +90,7 @@ export function RegistrationCard({
 
             <ul className="space-y-2 text-sm sm:text-base text-ivory-200/90 pt-1">
               {[
-                'All 7 Retreat Sessions with Pradeep Muthukulam',
+                'All 8 Retreat Sessions with Pradeep Muthukulam',
                 'Personal Guidance Sessions – Available by Appointment',
                 'Strictly Vegetarian Cuisine Throughout the Retreat',
                 'Private single or twin sharing rooms',
@@ -150,7 +150,7 @@ export function RegistrationCard({
 
             <ul className="space-y-2 text-sm sm:text-base text-ivory-200/90 pt-1">
               {[
-                'Full live stream access to all 7 sessions',
+                'Full live stream access to all 8 sessions',
                 'Live interactive Q&A segments',
               ].map((inc, i) => (
                 <li key={i} className="flex items-start gap-2">

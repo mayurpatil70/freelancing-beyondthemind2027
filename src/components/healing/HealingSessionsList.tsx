@@ -27,7 +27,7 @@ interface HealingSessionsListProps {
   single?: boolean;
 }
 
-// Same card layout as the seven retreat sessions (alternating photo and text columns).
+// same card layout as the eight retreat sessions (alternating photo and text columns).
 // Sessions without a photo show a decorative panel with the session's icon until one is uploaded in admin.
 export function HealingSessionsList({ sessions, whatsappNumber, single = false }: HealingSessionsListProps) {
   const phone = whatsappNumber || '+91 8075572018';

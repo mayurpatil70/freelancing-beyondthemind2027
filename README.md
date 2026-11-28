@@ -27,16 +27,16 @@ Every route is fully implemented, responsive, and SEO-optimized:
 
 | Route | Name | Purpose & Features |
 |---|---|---|
-| `/` | **Grand Sanctuary (Home)** | Full-screen cinematic hero with `HeroVideoPlayer`, editorial introduction, Seven Sacred Experiences, 4-day timetable preview, Rishikesh destination showcase, daily online meditation, seeker testimonials, archival poster gallery, registration CTA, and footer. |
+| `/` | **Grand Sanctuary (Home)** | Full-screen cinematic hero with `HeroVideoPlayer`, editorial introduction, Eight Sacred Experiences, 4-day timetable preview, Rishikesh destination showcase, daily online meditation, seeker testimonials, archival poster gallery, registration CTA, and footer. |
 | `/about` | **About the Retreat** | Editorial magazine layout covering the philosophy of Beyond the Mind, meaning of transcending mental narratives, guidance by Pradeep Muthukulam, and community reflections. |
-| `/experiences` | **Seven Sacred Experiences** | Stress Buster Session, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, and Guided Meditation with anchors, highlights, and guidance ethics. |
+| `/experiences` | **Eight Sacred Experiences** | Stress Buster Session, Soul Retrieval, Kundalini Awakening, Soul Liberation, Merkaba Activation, Inner Child Healing, Guided Meditation, and Money, Entities & Consciousness with anchors, highlights, and guidance ethics. |
 | `/daily-meditation` | **Daily Guided Meditation** | Dedicated page for Monday–Friday 7:30 PM IST paid online Zoom sessions with purpose, session flow, WhatsApp inquiry, and registration. |
 | `/programme` | **Four-Day Divine Programme** | Wednesday Oct 6 to Saturday Oct 9, 2027 expandable day timeline with language support (English with Hindi translation assistance). |
 | `/rishikesh` | **Rishikesh Destination** | High-resolution storytelling of Mother Ganga, Garhwal Himalayan foothills, evening aarti, and venue sanctity notice. |
 | `/reach` | **How to Reach** | Detailed travel guide: Air (Jolly Grant Dehradun DED, 21km), Train (Yog Nagari Rishikesh YNRK & Haridwar HW), and Road (Delhi-Meerut-Rishikesh expressway), with WhatsApp concierge. |
 | `/participation` | **Participation & Inclusions** | Configurable options: Single Sanctuary Room, Shared Twin Room, Non-Residential Seeker, Sattvic dining, retreat journals, and inquiry-only transparent booking notes. |
 | `/testimonials` | **Guest Testimonials** | Authentic reflections from BTM 2026 participants on Maha Theerthas, Shiva Lingams, and the Shiva Mandala, plus full-size poster lightboxes. |
-| `/gallery` | **Visual Sanctuary Gallery** | 7-category filtering (Retreat Experience, Participants, Meditation, Kundalini, Nature & Mountains, Rishikesh, Sacred Moments) with full-screen keyboard-accessible lightbox. |
+| `/gallery` | **Visual Sanctuary Gallery** | Admin-managed (Gallery tab), 7-category filtering (Retreat Experience, Participants, Meditation, Kundalini, Nature & Mountains, Rishikesh, Sacred Moments) with full-screen keyboard-accessible lightbox. |
 | `/faq` | **Frequently Asked Questions** | Searchable iOS-style accordion with category tabs and direct WhatsApp routing for custom inquiries. |
 | `/register` | **Enquiry & Registration** | Frictionless booking (no account/password required), Zod client/server validation, unique reference ID generator (e.g. `BTM27-xxxx`), confirmation card, WhatsApp fast-track, and optional payment receipt upload. |
 | `/contact` | **Contact & Concierge** | Official WhatsApp/Phone (`+91 8075572018`), Email (`moolabrahman@gmail.com`), Instagram, Facebook, one-click pre-filled inquiry shortcuts, and contact message form. |

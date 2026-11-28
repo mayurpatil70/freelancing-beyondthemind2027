@@ -11,6 +11,7 @@ import {
   Languages,
 } from 'lucide-react';
 import { LanguageNote } from '@/components/retreat/LanguageNote';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 import { getParticipation, getSiteSettings } from '@/lib/storage/store';
 import { mergeKeywords, withCmsKeywords } from '@/lib/seo/keywords';
 import { formatInr, parsePrice } from '@/lib/seo/eventSchema';
@@ -119,9 +120,10 @@ export default async function ParticipationPage() {
                   {price !== undefined && (
                     <p className="font-serif text-xl text-gold-300">{formatInr(price)}</p>
                   )}
-                  <p className="text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed">
-                    {tier.description}
-                  </p>
+                  <RichTextBody
+                    content={tier.description}
+                    className="space-y-2 text-xs sm:text-sm text-stone-subtle/85 font-light leading-relaxed"
+                  />
 
                   <div className="space-y-2 pt-4 border-t border-emerald-800/50">
                     <span className="text-xs uppercase tracking-wider text-gold-300 font-semibold block">

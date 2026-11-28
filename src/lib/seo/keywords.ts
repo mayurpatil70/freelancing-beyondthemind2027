@@ -11,6 +11,7 @@ export type KeywordSection =
   | 'rishikesh'
   | 'participation'
   | 'testimonials'
+  | 'gallery'
   | 'faq';
 
 export function parseKeywords(raw: string | undefined | null): string[] {

@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Testimonial } from '@/types';
-import { ChevronLeft, ChevronRight, Quote, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { RichTextBody } from '@/components/ui/RichTextBody';
 
 interface TestimonialCarouselProps {
   testimonials?: Testimonial[];
@@ -13,6 +14,7 @@ export interface ClonedTestimonial {
   name: string;
   location: string;
   badge: string;
+  heading?: string;
   paragraphs: string[];
 }
 
@@ -84,7 +86,9 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
         name: t.name,
         location: t.location,
         badge: t.edition || 'Testimonial from BTM 2026',
-        paragraphs: t.full_testimonial.split('\n\n').filter(Boolean),
+        heading: t.heading?.trim() || undefined,
+        // Kept whole: the admin text may contain headings, bold and lists (see src/lib/richText).
+        paragraphs: [t.full_testimonial],
       }));
     }
     return CLONED_TESTIMONIALS;
@@ -174,27 +178,18 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
           </div>
         </div>
 
-        {/* Testimonial Quote & Paragraphs (Exact clone content, no image) */}
+        {/* Testimonial heading & text */}
         <div className="relative z-10 space-y-4">
           <div className="space-y-3">
-            {/* Opening Golden Quote Mark */}
-            <div className="text-gold-400/80 font-serif text-4xl sm:text-5xl -mb-5 leading-none select-none" aria-hidden="true">
-              “
-            </div>
-
-            {/* Paragraphs rendered with clean serene typography */}
-            <div className="space-y-4 text-sm sm:text-base text-ivory-100 font-light leading-relaxed">
-              {current.paragraphs.map((p, pIdx) => (
-                <p key={pIdx} className="text-[#FAF8F5]/95">
-                  {p}
-                </p>
-              ))}
-            </div>
-
-            {/* Closing Golden Quote Mark */}
-            <div className="text-right text-gold-400/80 font-serif text-4xl sm:text-5xl -mt-3 -mb-4 leading-none select-none" aria-hidden="true">
-              ”
-            </div>
+            {current.heading && (
+              <h3 className="font-serif text-2xl sm:text-3xl text-gold-200 font-light leading-snug">
+                {current.heading}
+              </h3>
+            )}
+            <RichTextBody
+              content={current.paragraphs.join('\n\n')}
+              className="space-y-4 text-sm sm:text-base text-[#FAF8F5]/95 font-light leading-relaxed"
+            />
           </div>
 
           {/* Golden Lotus Divider */}

@@ -26,6 +26,7 @@ const moreLinks = [
   { label: 'Blog', href: '/blog', note: 'Wisdom Beyond the Mind' },
   { label: 'Participation', href: '/participation', note: 'Rooms, inclusions and what to bring' },
   { label: 'Testimonials', href: '/testimonials', note: 'Reflections from the 2026 circle' },
+  { label: 'Gallery', href: '/gallery', note: 'Moments from the journey' },
   { label: 'How to Reach', href: '/reach', note: 'Air, rail and road to Rishikesh' },
   { label: 'FAQ', href: '/faq', note: 'Answers before you enquire' },
   { label: 'Contact', href: '/contact', note: 'WhatsApp, phone and email' },
@@ -33,12 +34,13 @@ const moreLinks = [
 
 const sheetLinks = [
   { label: 'Retreat', href: '/about', tag: 'About' },
-  { label: 'Experiences', href: '/experiences', tag: '7 sessions' },
+  { label: 'Experiences', href: '/experiences', tag: '8 sessions' },
   { label: 'Healing Sessions', href: '/healing-sessions', tag: 'By appointment' },
   { label: 'Programme', href: '/programme', tag: '4 days' },
   { label: 'Rishikesh', href: '/rishikesh', tag: 'Ganga' },
   { label: 'Daily Meditation', href: '/daily-meditation', tag: '7:30 pm' },
   { label: 'Blog', href: '/blog', tag: 'Journal' },
+  { label: 'Gallery', href: '/gallery', tag: 'Photos' },
   { label: 'Participation', href: '/participation' },
   { label: 'How to Reach', href: '/reach' },
   { label: 'FAQ', href: '/faq' },

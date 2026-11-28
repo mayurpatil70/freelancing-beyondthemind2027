@@ -168,7 +168,7 @@ export default async function HealingSessionsPage() {
                   prefetch={true}
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-emerald-950 text-gold-300 border border-gold-500/30 font-semibold text-xs tracking-widest uppercase hover:bg-emerald-900 transition-all"
                 >
-                  <span>Seven Retreat Sessions</span>
+                  <span>Eight Retreat Sessions</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

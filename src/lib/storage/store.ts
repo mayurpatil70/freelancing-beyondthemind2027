@@ -139,10 +139,17 @@ function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T
 // `merge` shallow-merges into an object key; `replace` overwrites the whole key once.
 // `fillItems` sets fields on items of an array key (matched by slug) only where the field is still empty,
 // so it never overwrites something an admin already set.
+// `appendItems` adds items to an array key, skipping any whose slug is already there.
 type ContentPatch =
   | { id: string; key: ContentKey; merge: Record<string, unknown> }
   | { id: string; key: ContentKey; replace: unknown }
-  | { id: string; key: ContentKey; fillItems: Array<{ slug: string; set: Record<string, unknown> }> };
+  | { id: string; key: ContentKey; fillItems: Array<{ slug: string; set: Record<string, unknown> }> }
+  | { id: string; key: ContentKey; appendItems: Array<Record<string, unknown> & { slug: string }> };
+
+const seedItem = (key: ContentKey, slug: string) =>
+  ((seed[key] as unknown as Array<Record<string, unknown>> | undefined) || []).find((x) => x?.slug === slug) as
+    | (Record<string, unknown> & { slug: string })
+    | undefined;
 
 const CONTENT_PATCHES: ContentPatch[] = [
   {
@@ -183,6 +190,17 @@ const CONTENT_PATCHES: ContentPatch[] = [
       { slug: 'journey-beyond-lifetimes', set: { image: '/images/healing/journey-beyond-lifetimes.jpg', image_position: '30% center' } },
     ],
   },
+  // Programme has no admin editor, so its Neon copy still matches db.json: copy the updated version over
+  // (Day 3 "Inner Child Healing", Day 4 afternoon "Money, Entities & Consciousness" session).
+  { id: '2026-11-28-programme-eight-sessions', key: 'programme', replace: seed.programme },
+  // The eighth retreat session. Appended only if the admin has not already added it.
+  {
+    id: '2026-11-28-eighth-retreat-session',
+    key: 'experiences',
+    appendItems: [seedItem('experiences', 'money-entities-consciousness')].filter(
+      (x): x is Record<string, unknown> & { slug: string } => !!x
+    ),
+  },
 ];
 
 type Sql = NonNullable<ReturnType<typeof getSql>>;
@@ -196,6 +214,30 @@ function applyContentPatches(sql: Sql): Promise<void> {
     patchesApplied = (async () => {
       await sql`CREATE TABLE IF NOT EXISTS cms_patches (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`;
       for (const patch of CONTENT_PATCHES) {
+        if ('appendItems' in patch) {
+          const rows = await sql`SELECT data FROM cms_content WHERE key = ${patch.key}`;
+          const current = rows[0]?.data;
+          if (!Array.isArray(current)) {
+            // Neon has no copy yet, so the db.json seed (which already has these items) is served.
+            await sql`INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING`;
+            continue;
+          }
+          const missing = patch.appendItems.filter(
+            (item) => !current.some((x: Record<string, unknown>) => x?.slug === item.slug)
+          );
+          const next = [
+            ...current,
+            ...missing.map((item, i) => ('order' in item ? { ...item, order: current.length + i + 1 } : item)),
+          ];
+          await sql`
+            WITH claimed AS (
+              INSERT INTO cms_patches (id) VALUES (${patch.id}) ON CONFLICT (id) DO NOTHING RETURNING id
+            )
+            UPDATE cms_content SET data = ${JSON.stringify(next)}::jsonb, updated_at = now()
+            WHERE key = ${patch.key} AND EXISTS (SELECT 1 FROM claimed)
+          `;
+          continue;
+        }
         if ('fillItems' in patch) {
           const rows = await sql`SELECT data FROM cms_content WHERE key = ${patch.key}`;
           const current = rows[0]?.data;

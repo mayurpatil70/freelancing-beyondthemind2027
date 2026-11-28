@@ -28,9 +28,9 @@ import { AttractionsGrid } from "@/components/rishikesh/AttractionsGrid";
 import { ExperiencesDetailList } from "@/components/experiences/ExperiencesDetailList";
 
 const baseMetadata: Metadata = {
-  title: { absolute: '7 Retreat Sessions in Rishikesh | Beyond the Mind 2027' },
+  title: { absolute: '8 Retreat Sessions in Rishikesh | Beyond the Mind 2027' },
   description:
-    'Explore the seven sessions of Beyond the Mind 2027, from Stress Buster and Soul Retrieval to Kundalini Awakening and Merkaba Activation, in Rishikesh.',
+    'Explore the eight sessions of Beyond the Mind 2027, from Stress Buster and Soul Retrieval to Kundalini Awakening and Merkaba Activation, in Rishikesh.',
 };
 
 export function generateMetadata(): Promise<Metadata> {
@@ -57,7 +57,7 @@ export default async function ExperiencesPage() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Beyond the Mind 2027 Sacred Retreat Sessions',
-    description: 'Seven transformative sacred meditation & healing sessions in Rishikesh, India.',
+    description: 'Eight transformative sacred meditation & healing sessions in Rishikesh, India.',
     itemListElement: experiences.map((exp, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,
@@ -90,7 +90,7 @@ export default async function ExperiencesPage() {
             </span>
 
             <h1 className="font-serif text-4xl sm:text-6xl text-ivory-50 font-light leading-tight">
-              Seven Sacred Sessions
+              Eight Sacred Sessions
             </h1>
 
             <p className="text-sm sm:text-base text-stone-subtle/85 font-light leading-relaxed max-w-2xl mx-auto">
@@ -154,7 +154,7 @@ export default async function ExperiencesPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#07261F] to-[#031713] border border-gold-500/30 space-y-6 shadow-2xl">
               <h3 className="font-serif text-3xl sm:text-4xl text-ivory-50 font-light">
-                Ready to Experience These Seven Dimensions?
+                Ready to Experience These Eight Dimensions?
               </h3>
               <p className="text-sm text-stone-subtle/85 font-light max-w-xl mx-auto leading-relaxed">
                 Join our intimate gathering in Rishikesh. Arrival on October 5, 2027, with sessions running October 6–9, 2027. Available both in-person and online live stream.

@@ -35,6 +35,7 @@ function revalidateAllPages() {
     revalidatePath('/programme');
     revalidatePath('/rishikesh');
     revalidatePath('/testimonials');
+    revalidatePath('/gallery');
     revalidatePath('/faq');
     revalidatePath('/reach');
     revalidatePath('/participation');

@@ -69,7 +69,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/experiences" prefetch={true} className="hover:text-gold-300 transition-colors">
-                  Seven Sacred Experiences
+                  Eight Sacred Experiences
                 </Link>
               </li>
               <li>
@@ -95,6 +95,11 @@ export function Footer() {
               <li>
                 <Link href="/participation" prefetch={true} className="hover:text-gold-300 transition-colors">
                   Participation Details
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" prefetch={true} className="hover:text-gold-300 transition-colors">
+                  Gallery
                 </Link>
               </li>
             </ul>

@@ -186,6 +186,24 @@
       ],
       "short_desc": "Experience deep stillness, clarity and inner connection through powerful guided meditations.",
       "spiritual_dimension": "Transcendental Stillness & Divine Connection"
+    },
+    {
+      "id": "exp-8",
+      "slug": "money-entities-consciousness",
+      "image": "/images/rishikesh/stillness-ganges.jpg",
+      "order": 8,
+      "title": "MONEY, ENTITIES & CONSCIOUSNESS",
+      "keywords": "Money Entities Consciousness, Entity Removal, Abundance Consciousness, Pradeep Muthukulam, Beyond the Mind 2027, Rishikesh Retreat",
+      "subtitle": "Abundance, Energetic Clarity & Higher Awareness",
+      "full_desc": "An insightful session on the subtle forces that shape our relationship with money and wellbeing. Understand how entities and unseen energetic influences affect the mind, and how expanding consciousness clears these blocks. The session closes with a guided meditation to integrate the retreat and anchor clarity, abundance and inner peace.",
+      "icon_name": "Compass",
+      "highlights": [
+        "Insight into the energetic patterns behind money and abundance",
+        "Understanding entities and how to stay energetically clear",
+        "Guided meditation to integrate the full retreat journey"
+      ],
+      "short_desc": "Understand the link between money, entities and consciousness, followed by a guided meditation.",
+      "spiritual_dimension": "Abundance, Energetic Clarity & Higher Awareness"
     }
   ],
   "healingSessions": [
@@ -341,7 +359,7 @@
         },
         {
           "phase": "Afternoon 2:30 PM",
-          "title": "Inner Child Healing & Dialogue",
+          "title": "Inner Child Healing",
           "description": "Healing historical emotional wounds with unconditional self-love and reclaiming natural joy."
         }
       ],
@@ -351,7 +369,7 @@
     },
     {
       "date": "2027-10-09",
-      "theme": "Guided Meditation",
+      "theme": "Guided Meditation and Money, Entities & Consciousness",
       "summary": "Quiet your mind, awaken your inner awareness, and reconnect with the stillness within.\nExperience profound relaxation and inner harmony through guided meditation.\nDiscover the peace, clarity and infinite potential that reside within you.",
       "day_name": "Day 4",
       "sessions": [
@@ -362,8 +380,8 @@
         },
         {
           "phase": "Afternoon 2:30 PM",
-          "title": "Guided Meditation",
-          "description": "Experience profound relaxation and inner harmony through guided meditation. Discover the peace, clarity and infinite potential that reside within you."
+          "title": "Money, Entities & Consciousness Session with Guided Meditation",
+          "description": "Understanding the subtle relationship between money, entities and consciousness, followed by a guided meditation to integrate the retreat and anchor clarity, abundance and inner peace."
         }
       ],
       "subtitle": "",
@@ -456,7 +474,7 @@
     {
       "id": "gal-0",
       "title": "Retreat Sessions Overview Poster",
-      "caption": "Official Beyond the Mind 2027 7 Retreat Sessions curriculum poster.",
+      "caption": "Official Beyond the Mind 2027 Retreat Sessions curriculum poster.",
       "category": "Retreat Experience",
       "location": "Rishikesh, Uttarakhand",
       "image_url": "/images/posters/btm2027-retreat-sessions.jpg"

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { FAQItem, ParticipationTier, Testimonial } from '@/types';
 import { ChevronDown, ChevronUp, Plus, Save, Tag, Trash2 } from 'lucide-react';
+import { RichTextField } from '@/components/admin/RichTextField';
 
 // Admin editors for the Participation, Testimonials and FAQ sections. Every item and every section has an
 // SEO keywords field: those keywords go into meta tags / structured data only and are never shown on cards.
@@ -271,12 +272,7 @@ export function ParticipationAdmin(props: SectionProps<ParticipationTier>) {
             </div>
             <div className="sm:col-span-12 space-y-1">
               <label className={labelClass}>Description</label>
-              <textarea
-                rows={3}
-                value={t.description}
-                onChange={(e) => update(index, { description: e.target.value })}
-                className={inputClass}
-              />
+              <RichTextField rows={4} value={t.description} onChange={(v) => update(index, { description: v })} />
             </div>
             <div className="sm:col-span-12 space-y-1">
               <label className={labelClass}>Included items (one per line)</label>
@@ -368,9 +364,9 @@ export function TestimonialsAdmin(props: SectionProps<Testimonial>) {
               name: '',
               location: '',
               edition: '',
-              highlight_quote: '',
+              heading: '',
               full_testimonial: '',
-              is_featured: false,
+              is_featured: true,
               keywords: '',
             },
           ])
@@ -424,21 +420,21 @@ export function TestimonialsAdmin(props: SectionProps<Testimonial>) {
               />
             </div>
             <div className="sm:col-span-12 space-y-1">
-              <label className={labelClass}>Highlight quote (short line)</label>
+              <label className={labelClass}>Heading (optional, shown at the top of the card)</label>
               <input
                 type="text"
-                value={t.highlight_quote}
-                onChange={(e) => update(index, { highlight_quote: e.target.value })}
+                value={t.heading || ''}
+                onChange={(e) => update(index, { heading: e.target.value })}
+                placeholder="e.g. A Second Birth"
                 className={inputClass}
               />
             </div>
             <div className="sm:col-span-12 space-y-1">
               <label className={labelClass}>Full testimonial</label>
-              <textarea
-                rows={6}
+              <RichTextField
+                rows={8}
                 value={t.full_testimonial}
-                onChange={(e) => update(index, { full_testimonial: e.target.value })}
-                className={inputClass}
+                onChange={(v) => update(index, { full_testimonial: v })}
               />
             </div>
             <div className="sm:col-span-12">
@@ -449,8 +445,11 @@ export function TestimonialsAdmin(props: SectionProps<Testimonial>) {
                   onChange={(e) => update(index, { is_featured: e.target.checked })}
                   className="accent-gold-500"
                 />
-                <span>Featured testimonial</span>
+                <span>Show on the home page</span>
               </label>
+              <p className="text-[10px] text-stone-subtle/70 mt-1">
+                The /testimonials page always shows every testimonial. If none is ticked, the home page shows all of them too.
+              </p>
             </div>
             <div className="sm:col-span-12">
               <KeywordsField
@@ -571,12 +570,7 @@ export function FAQAdmin(props: SectionProps<FAQItem>) {
             </div>
             <div className="sm:col-span-12 space-y-1">
               <label className={labelClass}>Answer</label>
-              <textarea
-                rows={4}
-                value={f.answer}
-                onChange={(e) => update(index, { answer: e.target.value })}
-                className={inputClass}
-              />
+              <RichTextField rows={5} value={f.answer} onChange={(v) => update(index, { answer: v })} />
             </div>
             <div className="sm:col-span-12">
               <KeywordsField

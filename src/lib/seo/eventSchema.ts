@@ -1,5 +1,6 @@
 import type { FAQItem, ParticipationTier, SiteSettings } from '@/types';
 import { parseKeywords } from '@/lib/seo/keywords';
+import { stripRichText } from '@/lib/richText';
 
 // Schema.org Event markup for the retreat and the daily meditation.
 // Google reports an Offer without a numeric `price` as 'Missing field "price" (in "offers")'. `offers` itself is
@@ -63,7 +64,7 @@ export function retreatEvent(siteUrl: string, tiers: ParticipationTier[]): Recor
     '@id': `${siteUrl}/#retreat2027`,
     name: 'Beyond the Mind 2027 — The Divine Retreat',
     description:
-      'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Muthukulam. Arrival: October 5, 2027. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 7 sacred sessions.',
+      'Flagship 4-day spiritual immersion in Rishikesh guided by Pradeep Muthukulam. Arrival: October 5, 2027. Sessions: October 6–9, 2027. Available offline in Rishikesh and online via live stream. Features 8 sacred sessions.',
     url: `${siteUrl}/participation`,
     startDate: `2027-10-05T14:45:00${IST}`,
     endDate: `2027-10-09T18:00:00${IST}`,
@@ -180,7 +181,7 @@ export function faqPageSchema(siteUrl: string, faqs: FAQItem[], pageKeywords: st
           '@type': 'Question',
           name: f.question,
           ...(kw.length ? { keywords: kw.join(', ') } : {}),
-          acceptedAnswer: { '@type': 'Answer', text: f.answer },
+          acceptedAnswer: { '@type': 'Answer', text: stripRichText(f.answer) },
         };
       }),
   };
