@@ -190,7 +190,7 @@
     {
       "id": "exp-8",
       "slug": "money-entities-consciousness",
-      "image": "/images/rishikesh/stillness-ganges.jpg",
+      "image": "/images/experiences/money-entities-consciousness.jpg",
       "order": 8,
       "title": "MONEY, ENTITIES & CONSCIOUSNESS",
       "keywords": "Money Entities Consciousness, Entity Removal, Abundance Consciousness, Pradeep Muthukulam, Beyond the Mind 2027, Rishikesh Retreat",
@@ -203,7 +203,8 @@
         "Guided meditation to integrate the full retreat journey"
       ],
       "short_desc": "Understand the link between money, entities and consciousness, followed by a guided meditation.",
-      "spiritual_dimension": "Abundance, Energetic Clarity & Higher Awareness"
+      "spiritual_dimension": "Abundance, Energetic Clarity & Higher Awareness",
+      "image_position": "55% center"
     }
   ],
   "healingSessions": [
